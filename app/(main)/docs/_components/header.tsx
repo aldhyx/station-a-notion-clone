@@ -1,6 +1,7 @@
 import ButtonHoverTooltip from "@/components/button-hover-tooltip"
 import { Button } from "@/components/ui/button"
-import { MoreHorizontalIcon, Share2Icon, StarIcon } from "lucide-react"
+import { Share2Icon, StarIcon } from "lucide-react"
+import HeaderMore from "./header-more"
 
 export default function HeaderItems() {
   return (
@@ -32,11 +33,7 @@ export default function HeaderItems() {
           </Button>
         </ButtonHoverTooltip>
 
-        <ButtonHoverTooltip text="Delete, lock, duplicate & more..." asChild>
-          <Button variant="zinc-ghost" size="icon" className="h-7 w-7">
-            <MoreHorizontalIcon className="h-4 w-4" />
-          </Button>
-        </ButtonHoverTooltip>
+        <HeaderMore />
       </div>
     </div>
   )
