@@ -5,17 +5,17 @@ import Link from "next/link"
 
 export default function WelcomePage() {
   return (
-    <div className="mx-auto flex min-h-screen flex-col justify-between">
+    <div className="mx-auto flex min-h-screen flex-col justify-between text-zinc-900">
       {/* navbar */}
       <nav className={"flex w-full items-center justify-between bg-background p-5"}>
         <Logo />
 
         <div className="flex gap-x-2">
-          <Button variant="ghost" size="sm" asChild>
+          <Button variant="zinc-ghost" size="sm" asChild>
             <Link href="/login">Log In</Link>
           </Button>
 
-          <Button className="hidden md:flex" size="sm" asChild>
+          <Button className="hidden md:flex" size="sm" asChild variant="zinc">
             <Link href="/signup">Get Station Free</Link>
           </Button>
         </div>
@@ -35,7 +35,7 @@ export default function WelcomePage() {
             Station is the connected workspace where <br /> better, faster work happens.
           </p>
 
-          <Button className="text-base" asChild>
+          <Button className="text-base" asChild variant="zinc">
             <Link href="/signup">Get Station Free</Link>
           </Button>
         </div>
@@ -55,7 +55,7 @@ export default function WelcomePage() {
         <div>
           <div className="mb-2 flex justify-center gap-x-4">
             <Button
-              className="h-min p-0 text-xs font-semibold md:text-sm"
+              className="h-min p-0 text-xs font-semibold text-zinc-700 md:text-sm"
               size="sm"
               variant="link"
             >
@@ -63,7 +63,7 @@ export default function WelcomePage() {
             </Button>
 
             <Button
-              className="h-min p-0 text-xs font-semibold md:text-sm"
+              className="h-min p-0 text-xs font-semibold text-zinc-700 md:text-sm"
               size="sm"
               variant="link"
             >
@@ -71,7 +71,7 @@ export default function WelcomePage() {
             </Button>
           </div>
 
-          <p className="text-right text-xs text-muted-foreground">
+          <p className="text-right text-xs text-zinc-500">
             © {new Date().getFullYear()} Station Labs - All rights reserved.
           </p>
         </div>

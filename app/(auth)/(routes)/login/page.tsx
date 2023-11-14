@@ -6,7 +6,11 @@ export default function LoginPage() {
     <>
       <h1 className="mb-8 font-bold md:text-5xl">Log in</h1>
 
-      <Button className="mb-3 w-full" size="sm" variant="outline">
+      <Button
+        className="mb-3 w-full border border-zinc-200"
+        size="sm"
+        variant="zinc-ghost"
+      >
         <Image
           src="/assets/google.svg"
           alt="google"
@@ -17,7 +21,7 @@ export default function LoginPage() {
         Continue with Google
       </Button>
 
-      <Button className="w-full" size="sm" variant="outline">
+      <Button className="w-full border border-zinc-200" size="sm" variant="zinc-ghost">
         <Image
           src="/assets/facebook.svg"
           alt="facebook"
