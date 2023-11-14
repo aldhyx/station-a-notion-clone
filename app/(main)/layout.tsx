@@ -7,7 +7,11 @@ import { ChevronsLeftIcon, ChevronsRightIcon, MenuIcon } from "lucide-react"
 import React, { useEffect, useRef, useState } from "react"
 import { useMediaQuery } from "usehooks-ts"
 import HeaderItems from "./docs/_components/header-items"
-import SidebarUserButton from "./docs/_components/sidebar-user-button"
+import SidebarNewPage from "./docs/_components/sidebar-new-page"
+import SidebarSearch from "./docs/_components/sidebar-search"
+import SidebarSettings from "./docs/_components/sidebar-settings"
+import SidebarTrash from "./docs/_components/sidebar-trash"
+import SidebarUser from "./docs/_components/sidebar-user"
 
 const MainLayout = ({ children }: { children: React.ReactNode }) => {
   const [mount, setMount] = useState(false)
@@ -104,7 +108,12 @@ const MainLayout = ({ children }: { children: React.ReactNode }) => {
           !minimize && "p-1",
         )}
       >
-        <SidebarUserButton />
+        <SidebarUser />
+        <SidebarSearch />
+        <SidebarSettings />
+        <SidebarTrash />
+        <SidebarNewPage />
+
         <ButtonHoverTooltip text="Close sidebar" asChild>
           <Button
             size="icon"
