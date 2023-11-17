@@ -8,7 +8,7 @@ export default function SidebarUser() {
     <Popover>
       <PopoverTrigger asChild>
         <Button
-          variant="zinc-ghost"
+          variant="ghost"
           size="lg"
           className="flex w-full items-center justify-start px-3 font-normal"
         >
@@ -28,13 +28,7 @@ export default function SidebarUser() {
           <ChevronsUpDownIcon className="h-4 w-4 text-zinc-500" />
         </Button>
       </PopoverTrigger>
-      <PopoverContent
-        asChild
-        className="rounded-sm p-0"
-        side="bottom"
-        align="start"
-        alignOffset={8}
-      >
+      <PopoverContent asChild className="p-0" side="bottom" align="start" alignOffset={8}>
         <div className="w-80">
           <section className="border-b border-zinc-200 p-3">
             <span className="mb-3 block text-xs text-zinc-500">aldyzk@gmail.com</span>
@@ -58,15 +52,15 @@ export default function SidebarUser() {
 
           <section className="w-full bg-zinc-100 p-1">
             <Button
-              variant="zinc-ghost"
-              className="h-8 w-full justify-start rounded-sm px-2 text-xs font-normal text-zinc-600"
+              variant="ghost"
+              className="h-8 w-full justify-start px-2 text-xs font-normal text-zinc-600"
             >
               <SettingsIcon className="mr-2 h-4 w-4" />
               Settings
             </Button>
             <Button
-              variant="zinc-ghost"
-              className="h-8 w-full justify-start rounded-sm px-2 text-xs font-normal text-zinc-600"
+              variant="ghost"
+              className="h-8 w-full justify-start px-2 text-xs font-normal text-zinc-600"
             >
               <LogOutIcon className="mr-2 h-4 w-4" />
               Log out

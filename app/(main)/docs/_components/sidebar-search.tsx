@@ -8,8 +8,8 @@ export default function SidebarSearch() {
     <Dialog>
       <DialogTrigger asChild>
         <Button
-          variant="zinc-ghost"
-          className="h-7 justify-start rounded-sm px-3 font-normal text-zinc-600"
+          variant="ghost"
+          className="h-7 justify-start px-3 font-normal text-zinc-600"
         >
           <SearchIcon className="mr-3 h-4 w-4" />
           Search
@@ -17,7 +17,7 @@ export default function SidebarSearch() {
       </DialogTrigger>
       <DialogContent
         hideCloseButton
-        className="w-[80%] rounded-3xl p-0 sm:rounded-2xl md:max-w-[648px]"
+        className="w-[80%] rounded-3xl bg-zinc-50 p-0 sm:rounded-2xl md:max-w-[648px]"
       >
         <div className="flex items-center border-b border-zinc-200 px-4 py-1">
           <SearchIcon className="h-5 w-5 text-zinc-400" />
@@ -25,7 +25,7 @@ export default function SidebarSearch() {
           <Input
             type="email"
             placeholder="Search Frialdhy Ketty's Station..."
-            className="border-none text-base placeholder:text-zinc-400 focus-visible:ring-transparent"
+            className="border-none bg-zinc-50 text-base placeholder:text-zinc-400 focus-visible:ring-transparent"
           />
         </div>
         <div className="flex h-28 items-center justify-center">

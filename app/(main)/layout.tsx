@@ -118,10 +118,10 @@ const MainLayout = ({ children }: { children: React.ReactNode }) => {
           <Button
             size="icon"
             className={cn(
-              "absolute right-3 top-3 h-7 w-7 rounded-sm opacity-0 transition group-hover/sidebar:opacity-100",
+              "absolute right-3 top-3 h-7 w-7 opacity-0 transition group-hover/sidebar:opacity-100",
               isMobile && "opacity-100",
             )}
-            variant="zinc-ghost"
+            variant="ghost"
             onClick={minimizeHandler}
           >
             <ChevronsLeftIcon className="h-6 w-6" />
@@ -149,9 +149,9 @@ const MainLayout = ({ children }: { children: React.ReactNode }) => {
           <ButtonHoverTooltip text="Open sidebar" asChild>
             <Button
               size="icon"
-              variant="zinc-ghost"
+              variant="ghost"
               className={cn(
-                "group/collapse relative h-7 w-7 rounded-sm",
+                "group/collapse relative h-7 w-7",
                 !minimize && !isMobile && "hidden",
               )}
               onClick={maximizeHandler}

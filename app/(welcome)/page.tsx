@@ -7,15 +7,15 @@ export default function WelcomePage() {
   return (
     <div className="mx-auto flex min-h-screen flex-col justify-between text-zinc-900">
       {/* navbar */}
-      <nav className={"flex w-full items-center justify-between bg-background p-5"}>
+      <nav className={"flex w-full items-center justify-between bg-zinc-50 p-5"}>
         <Logo />
 
         <div className="flex gap-x-2">
-          <Button variant="zinc-ghost" size="sm" asChild>
+          <Button variant="ghost" size="sm" asChild>
             <Link href="/login">Log In</Link>
           </Button>
 
-          <Button className="hidden md:flex" size="sm" asChild variant="zinc">
+          <Button className="hidden md:flex" size="sm" asChild>
             <Link href="/signup">Get Station Free</Link>
           </Button>
         </div>
@@ -35,7 +35,7 @@ export default function WelcomePage() {
             Station is the connected workspace where <br /> better, faster work happens.
           </p>
 
-          <Button className="text-base" asChild variant="zinc">
+          <Button className="text-base" asChild>
             <Link href="/signup">Get Station Free</Link>
           </Button>
         </div>

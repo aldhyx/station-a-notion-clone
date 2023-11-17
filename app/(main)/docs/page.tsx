@@ -12,9 +12,7 @@ export default function DocumentsPage() {
         className="mb-5 object-contain grayscale"
       />
       <p className="mb-5">Create new page to start write your idea.</p>
-      <Button variant="zinc" className="rounded-sm">
-        Create New Page
-      </Button>
+      <Button>Create New Page</Button>
     </div>
   )
 }
