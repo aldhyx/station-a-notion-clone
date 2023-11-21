@@ -1,11 +1,13 @@
 "use client"
-import { cn } from "@/lib/utils"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 
 export default function Footer() {
   const pathname = usePathname()
-  const showAgreement = !pathname.includes("verification")
+  console.log(pathname)
+  const showAgreement =
+    !pathname.startsWith("/signup-verification") &&
+    !pathname.startsWith("/forgot-password")
 
   return (
     <footer className="mx-auto max-w-xl p-8 pt-20">
@@ -23,15 +25,6 @@ export default function Footer() {
           .
         </p>
       )}
-
-      <p
-        className={cn(
-          "text-center text-xs text-zinc-500",
-          showAgreement ? "pt-24" : "pt-40 md:pt-56",
-        )}
-      >
-        © {new Date().getFullYear()} Station Labs - All rights reserved.
-      </p>
     </footer>
   )
 }
