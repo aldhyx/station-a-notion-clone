@@ -26,6 +26,7 @@
     "react": "^18",
     "react-dom": "^18",
     "react-hook-form": "^7.48.2",
+    "server-only": "^0.0.1",
     "supabase": "^1.112.0",
     "tailwind-merge": "^2.0.0",
     "tailwindcss-animate": "^1.0.7",
