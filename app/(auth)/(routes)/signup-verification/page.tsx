@@ -86,10 +86,11 @@ export default function SignUpOTP() {
   if (!email) return redirect("/signup")
 
   const {
-    formState: { isSubmitting, isValid, errors },
+    formState: { isSubmitting, isValid, errors, isSubmitSuccessful },
   } = form
 
-  const isDisableSubmit = !isValid || isSubmitting
+  const isDisableSubmit = !isValid || isSubmitting || isSubmitSuccessful
+  const isLoadingSubmit = isSubmitting || isSubmitSuccessful
 
   return (
     <>
@@ -135,7 +136,9 @@ export default function SignUpOTP() {
             type="submit"
             disabled={isDisableSubmit}
           >
-            {isSubmitting && <LoaderIcon className="animate mr-2 h-4 w-4 animate-spin" />}
+            {isLoadingSubmit && (
+              <LoaderIcon className="animate mr-2 h-4 w-4 animate-spin" />
+            )}
             Verify Email
           </Button>
 

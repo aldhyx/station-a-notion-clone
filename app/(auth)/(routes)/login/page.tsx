@@ -67,13 +67,17 @@ export default function LoginPage() {
   })
 
   const {
-    formState: { isSubmitting, errors },
+    formState: { isSubmitting, errors, isSubmitSuccessful },
     watch,
   } = form
 
   const currentFormState = watch()
   const isDisableSubmit =
-    isSubmitting || !currentFormState.email || !currentFormState.password
+    isSubmitting ||
+    isSubmitSuccessful ||
+    !currentFormState.email ||
+    !currentFormState.password
+  const isLoadingSubmit = isSubmitting || isSubmitSuccessful
 
   return (
     <>
@@ -142,7 +146,9 @@ export default function LoginPage() {
             type="submit"
             disabled={isDisableSubmit}
           >
-            {isSubmitting && <LoaderIcon className="animate mr-2 h-4 w-4 animate-spin" />}
+            {isLoadingSubmit && (
+              <LoaderIcon className="animate mr-2 h-4 w-4 animate-spin" />
+            )}
             Continue with Email & Password
           </Button>
 
