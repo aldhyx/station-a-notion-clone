@@ -7,7 +7,7 @@ import { getApiError } from "@/lib/error/api-error"
 import { supabase } from "@/lib/supabase/client"
 import { cn } from "@/lib/utils"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { LoaderIcon } from "lucide-react"
+import { LoaderIcon, MailCheckIcon } from "lucide-react"
 import { redirect, useRouter, useSearchParams } from "next/navigation"
 import { useForm } from "react-hook-form"
 import { useCountdown } from "usehooks-ts"
@@ -94,14 +94,13 @@ export default function SignUpOTP() {
 
   return (
     <>
-      <h1 className="mb-8 text-3xl font-bold md:text-5xl">Thanks!</h1>
+      <MailCheckIcon className="mb-4 h-20 w-20" />
 
-      <p className="mb-3 w-full text-left text-sm">
-        <span className="mb-2 block">
-          To complete your signup, we&apos;ve sent the verification code to{" "}
-          <strong>{email}</strong> to verify your email.
-        </span>
-        <span>Please check your inbox & enter the verification code below:</span>
+      <h1 className="mb-2 text-3xl font-bold md:text-4xl">Check your email</h1>
+
+      <p className="mb-8 w-full text-center text-sm">
+        To complete your signup, we&apos;ve sent the verification code to{" "}
+        <strong>{email}</strong> to verify your email.
       </p>
 
       <Form {...form}>
@@ -117,7 +116,7 @@ export default function SignUpOTP() {
               <FormItem>
                 <FormControl>
                   <Input
-                    placeholder="Enter your verification code..."
+                    placeholder="Enter the verification code..."
                     type="text"
                     inputSize="lg"
                     {...field}

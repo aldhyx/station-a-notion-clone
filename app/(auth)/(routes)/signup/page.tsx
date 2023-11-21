@@ -88,7 +88,7 @@ export default function SignUpPage() {
 
   return (
     <>
-      <h1 className="mb-8 text-3xl font-bold md:text-5xl">Sign up</h1>
+      <h1 className="mb-8 text-3xl font-bold md:text-4xl">Sign up</h1>
 
       <Form {...form}>
         <form

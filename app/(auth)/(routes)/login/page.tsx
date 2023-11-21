@@ -81,7 +81,7 @@ export default function LoginPage() {
 
   return (
     <>
-      <h1 className="mb-8 text-3xl font-bold md:text-5xl">Log in</h1>
+      <h1 className="mb-8 text-3xl font-bold md:text-4xl">Log in</h1>
 
       <GoogleButton />
       <FacebookButton />
