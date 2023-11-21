@@ -1,28 +1,23 @@
 import Logo from "@/components/logo"
 import { Button } from "@/components/ui/button"
 import Image from "next/image"
-import Link from "next/link"
+import { Suspense } from "react"
+import HeroesAuth from "./_components/heroes-auth"
+import NavAuth from "./_components/nav-auth"
+
+export const revalidate = 0
 
 export default function WelcomePage() {
   return (
     <div className="mx-auto flex min-h-screen flex-col justify-between text-zinc-900">
-      {/* navbar */}
       <nav className={"flex w-full items-center justify-between bg-zinc-50 p-5"}>
         <Logo />
 
-        <div className="flex gap-x-2">
-          <Button variant="ghost" size="sm" asChild>
-            <Link href="/login">Log In</Link>
-          </Button>
-
-          <Button className="hidden md:flex" size="sm" asChild>
-            <Link href="/signup">Get Station Free</Link>
-          </Button>
-        </div>
+        <Suspense fallback={<NavAuth.Loading />}>
+          <NavAuth />
+        </Suspense>
       </nav>
-      {/* end navbar */}
 
-      {/* heroes */}
       <main className="w-100 flex flex-col items-center justify-center">
         <div className="max-w-4xl pt-24 text-center">
           <h1 className="mb-3 text-3xl font-bold md:mb-5 md:text-6xl">
@@ -35,18 +30,16 @@ export default function WelcomePage() {
             Station is the connected workspace where <br /> better, faster work happens.
           </p>
 
-          <Button className="text-base" asChild>
-            <Link href="/signup">Get Station Free</Link>
-          </Button>
+          <Suspense fallback={<HeroesAuth.Loading />}>
+            <HeroesAuth />
+          </Suspense>
         </div>
 
         <div className="relative h-[300px] w-[300px] md:h-[600px] md:w-[800px]">
           <Image src="/assets/heroes.png" alt="heroes" fill className="object-contain" />
         </div>
       </main>
-      {/* end heroes */}
 
-      {/* footer */}
       <footer className="mx-auto flex w-full flex-col items-center justify-between p-6 md:flex-row md:items-start">
         <div className="hidden md:block">
           <Logo />
@@ -76,7 +69,6 @@ export default function WelcomePage() {
           </p>
         </div>
       </footer>
-      {/* end footer */}
     </div>
   )
 }
