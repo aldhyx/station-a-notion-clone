@@ -13,6 +13,7 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
+import { getApiError } from "@/lib/error/api-error"
 import { supabase } from "@/lib/supabase/config"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { LoaderIcon } from "lucide-react"
@@ -53,10 +54,7 @@ export default function SignUpPage() {
 
   const submitHandler = form.handleSubmit(async ({ email, password }) => {
     try {
-      const { data, error } = await supabase.auth.signUp({
-        email,
-        password,
-      })
+      const { data, error } = await supabase.auth.signUp({ email, password })
 
       if (error) {
         // rate limit error
@@ -67,28 +65,22 @@ export default function SignUpPage() {
       // Currently the response of signUp returns a fake user object instead of an error.
       // For now we check the identities object which would be empty if a user already exits.
       const isEmailTaken = data.user?.identities?.length === 0
-      if (isEmailTaken) {
-        throw new Error("Email already in use")
-      }
+      if (isEmailTaken) throw new Error("Email already in use")
 
       router.push(`/signup-verification?mailto=${email}`)
     } catch (error) {
-      form.setError("root.apiError", {
-        message:
-          error instanceof Error && error.message && typeof error.message === "string"
-            ? error.message
-            : "Something went wrong! Try again in a few minutes",
-      })
+      form.setError("root.apiError", { message: getApiError(error) })
     }
   })
 
   const {
-    formState: { isSubmitting, isValid, errors },
+    formState: { isSubmitting, errors },
     watch,
   } = form
 
-  const password = watch("password")
-  const isDisableSubmit = !password || !isValid || isSubmitting
+  const currentFormState = watch()
+  const isDisableSubmit =
+    isSubmitting || !currentFormState.email || !currentFormState.password
 
   return (
     <>

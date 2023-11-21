@@ -13,6 +13,7 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
+import { getApiError } from "@/lib/error/api-error"
 import { supabase } from "@/lib/supabase/config"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { LoaderIcon } from "lucide-react"
@@ -35,15 +36,14 @@ const emailSchema = z.string().email()
 
 export default function LoginPage() {
   const router = useRouter()
+
   const params = useSearchParams()
   const verifyMailto = emailSchema.safeParse(params.get("mailto"))
   const email = verifyMailto.success ? verifyMailto.data : undefined
 
   const form = useForm<z.infer<typeof signInSchema>>({
     resolver: zodResolver(signInSchema),
-    defaultValues: {
-      email,
-    },
+    defaultValues: { email },
   })
 
   const submitHandler = form.handleSubmit(async ({ email, password }) => {
@@ -62,22 +62,18 @@ export default function LoginPage() {
 
       router.push("/docs")
     } catch (error) {
-      form.setError("root.apiError", {
-        message:
-          error instanceof Error && error.message && typeof error.message === "string"
-            ? error.message
-            : "Something went wrong! Try again in a few minutes",
-      })
+      form.setError("root.apiError", { message: getApiError(error) })
     }
   })
 
   const {
-    formState: { isSubmitting, isValid, errors },
+    formState: { isSubmitting, errors },
     watch,
   } = form
 
-  const password = watch("password")
-  const isDisableSubmit = !password || !isValid || isSubmitting
+  const currentFormState = watch()
+  const isDisableSubmit =
+    isSubmitting || !currentFormState.email || !currentFormState.password
 
   return (
     <>
