@@ -22,6 +22,7 @@ import { useRouter } from "next/navigation"
 import { Dispatch, SetStateAction } from "react"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
+import Footer from "../../_components/footer"
 
 const signUpSchema = z.object({
   email: z
@@ -172,6 +173,8 @@ export default function SignUpPage({ setEmail }: Props) {
           <Link href="/login">Log in here</Link>
         </Button>
       </div>
+
+      <Footer />
     </>
   )
 }
