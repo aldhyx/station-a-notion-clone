@@ -1,6 +1,5 @@
 import Logo from "@/components/logo"
 import React from "react"
-import Footer from "../_components/footer"
 
 export default function AuthLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -12,8 +11,6 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
       <main className="mx-auto flex w-full flex-col items-center px-5 pt-24 md:max-w-lg">
         {children}
       </main>
-
-      <Footer />
     </div>
   )
 }
