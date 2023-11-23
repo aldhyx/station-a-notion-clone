@@ -1,4 +1,4 @@
-import ButtonHoverTooltip from "@/components/button-hover-tooltip"
+import ButtonHoverTooltip from "@/components/tooltips/button-hover-tooltip"
 import { Button } from "@/components/ui/button"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { ImportIcon, LockIcon, MoreHorizontalIcon, Trash2Icon } from "lucide-react"

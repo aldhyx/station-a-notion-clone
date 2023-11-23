@@ -1,4 +1,4 @@
-import ButtonHoverTooltip from "@/components/button-hover-tooltip"
+import ButtonHoverTooltip from "@/components/tooltips/button-hover-tooltip"
 import { Button } from "@/components/ui/button"
 import { Share2Icon, StarIcon } from "lucide-react"
 import HeaderMore from "./header-more"

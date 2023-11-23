@@ -1,5 +1,5 @@
 "use client"
-import ButtonHoverTooltip from "@/components/button-hover-tooltip"
+import ButtonHoverTooltip from "@/components/tooltips/button-hover-tooltip"
 import { Button } from "@/components/ui/button"
 import { useLayoutStore } from "@/hooks/use-layout-store"
 import { cn } from "@/lib/utils"

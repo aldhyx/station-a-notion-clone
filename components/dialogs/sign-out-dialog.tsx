@@ -2,7 +2,7 @@ import { supabase } from "@/lib/supabase/client"
 import { useRouter } from "next/navigation"
 import { PropsWithChildren } from "react"
 import { toast } from "sonner"
-import { Button } from "./ui/button"
+import { Button } from "../ui/button"
 import {
   Dialog,
   DialogClose,
@@ -11,7 +11,7 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTrigger,
-} from "./ui/dialog"
+} from "../ui/dialog"
 
 export default function SignOutDialog({ children }: PropsWithChildren) {
   const router = useRouter()

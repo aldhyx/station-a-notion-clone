@@ -1,5 +1,5 @@
 import React from "react"
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "./ui/tooltip"
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../ui/tooltip"
 
 export default function ButtonHoverTooltip({
   children,

@@ -1,6 +1,4 @@
-"use client"
-
-import SignOutDialog from "@/components/sign-out-dialog"
+import SignOutDialog from "@/components/dialogs/sign-out-dialog"
 import { Button } from "@/components/ui/button"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { ChevronsUpDownIcon, LogOutIcon, SettingsIcon } from "lucide-react"
