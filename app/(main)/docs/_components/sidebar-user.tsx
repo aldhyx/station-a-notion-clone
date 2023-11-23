@@ -1,3 +1,6 @@
+"use client"
+
+import SignOutDialog from "@/components/sign-out-dialog"
 import { Button } from "@/components/ui/button"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { ChevronsUpDownIcon, LogOutIcon, SettingsIcon } from "lucide-react"
@@ -28,6 +31,7 @@ export default function SidebarUser() {
           <ChevronsUpDownIcon className="h-4 w-4 text-zinc-500" />
         </Button>
       </PopoverTrigger>
+
       <PopoverContent asChild className="p-0" side="bottom" align="start" alignOffset={8}>
         <div className="w-80">
           <section className="border-b border-zinc-200 p-3">
@@ -58,13 +62,16 @@ export default function SidebarUser() {
               <SettingsIcon className="mr-2 h-4 w-4" />
               Settings
             </Button>
-            <Button
-              variant="ghost"
-              className="h-8 w-full justify-start px-2 text-xs font-normal text-zinc-600"
-            >
-              <LogOutIcon className="mr-2 h-4 w-4" />
-              Log out
-            </Button>
+
+            <SignOutDialog>
+              <Button
+                variant="ghost"
+                className="h-8 w-full justify-start px-2 text-xs font-normal text-zinc-600"
+              >
+                <LogOutIcon className="mr-2 h-4 w-4" />
+                Log out
+              </Button>
+            </SignOutDialog>
           </section>
         </div>
       </PopoverContent>

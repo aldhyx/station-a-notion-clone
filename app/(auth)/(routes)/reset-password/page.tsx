@@ -2,6 +2,7 @@
 
 import ErrorBlock from "@/components/error-block"
 import InputPasswordWrapper from "@/components/input-password-wrapper"
+import SignOutDialog from "@/components/sign-out-dialog"
 import { Button } from "@/components/ui/button"
 import {
   Form,
@@ -91,17 +92,6 @@ export default function ResetPasswordPage() {
   const isLoadingSubmit = isSubmitting
 
   if (isSuccess) {
-    const logOutHandler = async () => {
-      try {
-        const { error } = await supabase.auth.signOut({ scope: "global" })
-
-        if (error) throw new Error(error.message)
-        router.replace("/login")
-      } catch (error) {
-        // todo: fire toast error
-      }
-    }
-
     return (
       <>
         <PartyPopperIcon className="mb-8 h-20 w-20" />
@@ -113,9 +103,9 @@ export default function ResetPasswordPage() {
           <Button variant="default" onClick={() => router.replace("/docs")}>
             Go to dashboard
           </Button>
-          <Button variant="ghost" onClick={logOutHandler}>
-            Log out
-          </Button>
+          <SignOutDialog>
+            <Button variant="ghost">Log out</Button>
+          </SignOutDialog>
         </div>
       </>
     )
