@@ -59,13 +59,13 @@ export default function ForgotPasswordVerificationPage({ email }: Props) {
 
   return (
     <>
-      <MailCheckIcon className="mb-4 h-20 w-20" />
-
-      <h1 className="mb-2 text-2xl font-bold md:text-3xl">Check your email</h1>
-      <p className="mb-8 w-full text-center text-sm">
+      <MailCheckIcon className="mb-3 h-20 w-20" />
+      <h1 className="mb-8 text-3xl font-bold md:text-4xl">Check your email</h1>
+      <p className="mb-3 w-full text-left text-sm">
         We have sent the verification code to <strong>{email}</strong>. Please, enter the
         code down below to reset your password.
       </p>
+
       <Form {...form}>
         <form
           onSubmit={submitHandler}

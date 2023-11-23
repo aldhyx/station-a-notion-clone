@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input"
 import { getApiError } from "@/lib/error/api-error"
 import { supabase } from "@/lib/supabase/client"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { LoaderIcon } from "lucide-react"
+import { LoaderIcon, LockIcon } from "lucide-react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { Dispatch, SetStateAction } from "react"
@@ -56,10 +56,11 @@ export default function ForgotPasswordPage({ setEmail }: Props) {
 
   return (
     <>
+      <LockIcon className="mb-3 h-20 w-20" />
       <h1 className="mb-8 text-3xl font-bold md:text-4xl">Forgot password</h1>
       <p className="mb-3 w-full text-left text-sm">
-        Enter your email address associated with your account, and we&apos;ll send you a
-        link to reset your password.
+        Enter email address associated with your account, we&apos;ll send you a link with
+        instruction to reset your password.
       </p>
 
       <Form {...form}>
@@ -96,7 +97,7 @@ export default function ForgotPasswordPage({ setEmail }: Props) {
             {isLoadingSubmit && (
               <LoaderIcon className="animate mr-2 h-4 w-4 animate-spin" />
             )}
-            Send reset password link
+            Send Instruction Link
           </Button>
 
           <ErrorBlock message={errors.root?.apiError.message} />
