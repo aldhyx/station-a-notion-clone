@@ -11,7 +11,7 @@ export default function ErrorBlock({
   if (!message || typeof message !== "string") return null
 
   return (
-    <p className={cn("flex items-start text-sm leading-none text-red-600", className)}>
+    <p className={cn("flex items-start text-xs leading-none text-red-600", className)}>
       <AlertCircleIcon className="mr-2 h-4 w-4 shrink-0" />
       {message}
     </p>

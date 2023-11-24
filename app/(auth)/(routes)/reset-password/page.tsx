@@ -17,7 +17,7 @@ import { getApiError } from "@/lib/error/api-error"
 import { resetPasswordSchema, type ResetPasswordSchema } from "@/lib/schemas/auth-schema"
 import { supabase } from "@/lib/supabase/client"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { LoaderIcon, PartyPopperIcon, UnlockIcon } from "lucide-react"
+import { LoaderIcon, LockKeyholeIcon, PartyPopperIcon } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
 import { useForm } from "react-hook-form"
@@ -56,7 +56,7 @@ export default function ResetPasswordPage() {
         <PartyPopperIcon className="mb-8 h-20 w-20" />
         <h1 className="mb-2 text-3xl font-bold md:text-4xl">Success</h1>{" "}
         <p className="mb-6 w-full text-center text-sm">
-          Successfully create new password.
+          Password has been changed successfully.
         </p>
         <div className="flex w-full flex-col gap-y-2">
           <Button variant="default" onClick={() => router.replace("/docs")}>
@@ -72,8 +72,8 @@ export default function ResetPasswordPage() {
 
   return (
     <>
-      <UnlockIcon className="mb-3 h-20 w-20" />
-      <h1 className="mb-8 text-3xl font-bold md:text-4xl">Create New password</h1>
+      <LockKeyholeIcon className="mb-3 h-16 w-16" />
+      <h1 className="mb-8 text-3xl font-bold md:text-4xl">Create new password</h1>
 
       <Form {...form}>
         <form
@@ -135,20 +135,14 @@ export default function ResetPasswordPage() {
             )}
           />
 
-          <Button
-            size="lg"
-            className="w-full"
-            variant="outline-blue"
-            type="submit"
-            disabled={isDisableSubmit}
-          >
+          <ErrorBlock className="m-0 mt-5" message={errors.root?.apiError.message} />
+
+          <Button size="lg" className="w-full" type="submit" disabled={isDisableSubmit}>
             {isLoadingSubmit && (
               <LoaderIcon className="animate mr-2 h-4 w-4 animate-spin" />
             )}
-            Submit
+            Change password
           </Button>
-
-          <ErrorBlock message={errors.root?.apiError.message} />
         </form>
       </Form>
     </>
