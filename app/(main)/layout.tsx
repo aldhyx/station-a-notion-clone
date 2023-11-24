@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button"
 import { useLayoutStore } from "@/hooks/use-layout-store"
 import { cn } from "@/lib/utils"
 import { ChevronsLeftIcon, ChevronsRightIcon, MenuIcon } from "lucide-react"
+import { usePathname } from "next/navigation"
 import React, { useEffect, useRef, useState } from "react"
 import { useMediaQuery } from "usehooks-ts"
 import DocsHeader from "./docs/_components/docs-header"
@@ -12,8 +13,11 @@ import SidebarSearch from "./docs/_components/sidebar-search"
 import SidebarSettings from "./docs/_components/sidebar-settings"
 import SidebarTrash from "./docs/_components/sidebar-trash"
 import SidebarUser from "./docs/_components/sidebar-user"
+import SettingsHeader from "./settings/_components/settings-header"
 
 const MainLayout = ({ children }: { children: React.ReactNode }) => {
+  const pathname = usePathname()
+
   const [mount, setMount] = useState(false)
 
   const isResizingRef = useRef(false)
@@ -170,7 +174,8 @@ const MainLayout = ({ children }: { children: React.ReactNode }) => {
             </Button>
           </ButtonHoverTooltip>
 
-          <DocsHeader />
+          {pathname.startsWith("/settings") && <SettingsHeader />}
+          {pathname.startsWith("/docs") && <DocsHeader />}
         </header>
       </div>
 
