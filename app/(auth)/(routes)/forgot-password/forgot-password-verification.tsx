@@ -5,27 +5,21 @@ import { Button } from "@/components/ui/button"
 import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { getApiError } from "@/lib/error/api-error"
+import { otpSchema, type OTPSchema } from "@/lib/schemas/auth-schema"
 import { supabase } from "@/lib/supabase/client"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { LoaderIcon, MailCheckIcon } from "lucide-react"
 import Link from "next/link"
 import { redirect, useRouter } from "next/navigation"
 import { useForm } from "react-hook-form"
-import { z } from "zod"
-
-const verificationSchema = z.object({
-  code: z.string({ required_error: "Invalid verification code" }).min(4, {
-    message: "Invalid verification code",
-  }),
-})
 
 type Props = { email: string | undefined }
 
 export default function ForgotPasswordVerificationPage({ email }: Props) {
   const router = useRouter()
 
-  const form = useForm<z.infer<typeof verificationSchema>>({
-    resolver: zodResolver(verificationSchema),
+  const form = useForm<OTPSchema>({
+    resolver: zodResolver(otpSchema),
   })
 
   const submitHandler = form.handleSubmit(async ({ code }) => {

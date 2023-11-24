@@ -1,10 +1,11 @@
 import { getApiError } from "@/lib/error/api-error"
+import { resetPasswordSchema, type ResetPasswordSchema } from "@/lib/schemas/auth-schema"
 import { supabase } from "@/lib/supabase/client"
+import { simulateAsync } from "@/lib/utils"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { LoaderIcon, PartyPopperIcon } from "lucide-react"
 import { PropsWithChildren } from "react"
 import { useForm } from "react-hook-form"
-import { z } from "zod"
 import ErrorBlock from "../error-block"
 import InputPasswordWrapper from "../input-password-wrapper"
 import { Button } from "../ui/button"
@@ -19,54 +20,14 @@ import {
 } from "../ui/form"
 import { Input } from "../ui/input"
 
-const passwordSchema = z
-  .object({
-    password: z
-      .string({
-        required_error: "Invalid password",
-      })
-      .min(8, {
-        message: "Password must contain at least 8 character(s)",
-      })
-      .max(72, {
-        message: "Password must contain at most 72 character(s)",
-      })
-      .regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+/, {
-        message:
-          "Password must contain at least one lowercase letter, one uppercase letter, and one digit (0-9).",
-      }),
-    confirm_password: z
-      .string({
-        required_error: "Invalid confirm password",
-      })
-      .min(8, {
-        message: "Invalid confirm password",
-      })
-      .max(72, {
-        message: "Invalid confirm password",
-      })
-      .regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+/, {
-        message: "Invalid confirm password",
-      }),
-  })
-  .superRefine((arg, ctx) => {
-    if (arg.password !== arg.confirm_password) {
-      ctx.addIssue({
-        code: z.ZodIssueCode.custom,
-        path: ["confirm_password"],
-        message: "Password & confirm password does not match!",
-      })
-    }
-    return z.NEVER
-  })
-
 export default function ChangePasswordDialog({ children }: PropsWithChildren) {
-  const form = useForm<z.infer<typeof passwordSchema>>({
-    resolver: zodResolver(passwordSchema),
+  const form = useForm<ResetPasswordSchema>({
+    resolver: zodResolver(resetPasswordSchema),
   })
 
   const submitHandler = form.handleSubmit(async ({ password }) => {
     try {
+      await simulateAsync()
       const { error } = await supabase.auth.updateUser({ password })
 
       if (error) throw new Error(error.message)

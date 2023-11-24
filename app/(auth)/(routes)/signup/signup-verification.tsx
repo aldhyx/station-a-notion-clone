@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button"
 import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { getApiError } from "@/lib/error/api-error"
+import { otpSchema, type OTPSchema } from "@/lib/schemas/auth-schema"
 import { supabase } from "@/lib/supabase/client"
 import { cn } from "@/lib/utils"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -12,13 +13,6 @@ import { LoaderIcon, MailCheckIcon } from "lucide-react"
 import { redirect, useRouter } from "next/navigation"
 import { useForm } from "react-hook-form"
 import { useCountdown } from "usehooks-ts"
-import { z } from "zod"
-
-const signUpSchema = z.object({
-  code: z.string({ required_error: "Invalid verification code" }).min(4, {
-    message: "Invalid verification code",
-  }),
-})
 
 type Props = { email: string | undefined }
 
@@ -30,8 +24,8 @@ export default function SignUpVerificationPage({ email }: Props) {
   })
   const showCountdown = count != 0 && count < 60
 
-  const form = useForm<z.infer<typeof signUpSchema>>({
-    resolver: zodResolver(signUpSchema),
+  const form = useForm<OTPSchema>({
+    resolver: zodResolver(otpSchema),
   })
 
   const submitHandler = form.handleSubmit(async ({ code }) => {

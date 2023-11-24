@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { getApiError } from "@/lib/error/api-error"
+import { signUpSchema, type SignUpSchema } from "@/lib/schemas/auth-schema"
 import { supabase } from "@/lib/supabase/client"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { LoaderIcon } from "lucide-react"
@@ -21,31 +22,7 @@ import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { Dispatch, SetStateAction } from "react"
 import { useForm } from "react-hook-form"
-import { z } from "zod"
 import Footer from "../../_components/footer"
-
-const signUpSchema = z.object({
-  email: z
-    .string({
-      required_error: "Invalid email address",
-    })
-    .email({ message: "Invalid email address" })
-    .toLowerCase(),
-  password: z
-    .string({
-      required_error: "Invalid password",
-    })
-    .min(8, {
-      message: "Password must contain at least 8 character(s)",
-    })
-    .max(72, {
-      message: "Password must contain at most 72 character(s)",
-    })
-    .regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+/, {
-      message:
-        "Password must contain at least one lowercase letter, one uppercase letter, and one digit (0-9).",
-    }),
-})
 
 type Props = {
   setEmail: Dispatch<SetStateAction<string | undefined>>
@@ -53,7 +30,7 @@ type Props = {
 
 export default function SignUpPage({ setEmail }: Props) {
   const router = useRouter()
-  const form = useForm<z.infer<typeof signUpSchema>>({
+  const form = useForm<SignUpSchema>({
     resolver: zodResolver(signUpSchema),
   })
 

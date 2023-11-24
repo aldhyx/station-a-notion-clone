@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { getApiError } from "@/lib/error/api-error"
+import { signInSchema, type SignInSchema } from "@/lib/schemas/auth-schema"
 import { supabase } from "@/lib/supabase/client"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { LoaderIcon } from "lucide-react"
@@ -21,18 +22,7 @@ import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { Dispatch, SetStateAction } from "react"
 import { useForm } from "react-hook-form"
-import { z } from "zod"
 import Footer from "../../_components/footer"
-
-const signInSchema = z.object({
-  email: z
-    .string({
-      required_error: "Invalid email address",
-    })
-    .email({ message: "Invalid email address" })
-    .toLowerCase(),
-  password: z.string(),
-})
 
 type Props = {
   setEmail: Dispatch<SetStateAction<string | undefined>>
@@ -41,7 +31,7 @@ type Props = {
 export default function LoginPage({ setEmail }: Props) {
   const router = useRouter()
 
-  const form = useForm<z.infer<typeof signInSchema>>({
+  const form = useForm<SignInSchema>({
     resolver: zodResolver(signInSchema),
   })
 

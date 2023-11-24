@@ -12,42 +12,16 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { getApiError } from "@/lib/error/api-error"
+import { profileSchema, type ProfileSchema } from "@/lib/schemas/auth-schema"
 import { simulateAsync } from "@/lib/utils"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { LoaderIcon, PartyPopperIcon } from "lucide-react"
 import Link from "next/link"
 import { PropsWithChildren } from "react"
 import { useForm } from "react-hook-form"
-import { z } from "zod"
-
-const profileSchema = z.object({
-  name: z
-    .string()
-    .min(6, {
-      message: "Name must contain at least 8 character(s)",
-    })
-    .max(72, {
-      message: "Name must contain at most 72 character(s)",
-    })
-    .toLowerCase()
-    .trim(),
-  username: z
-    .string()
-    .min(6, {
-      message: "Username must contain at least 8 character(s)",
-    })
-    .max(72, {
-      message: "Username must contain at most 72 character(s)",
-    })
-    .regex(/^[a-z0-9]+$/, {
-      message: "Invalid confirm username",
-    })
-    .toLowerCase()
-    .trim(),
-})
 
 export default function ChangeProfilePage({ children }: PropsWithChildren) {
-  const form = useForm<z.infer<typeof profileSchema>>({
+  const form = useForm<ProfileSchema>({
     resolver: zodResolver(profileSchema),
   })
 

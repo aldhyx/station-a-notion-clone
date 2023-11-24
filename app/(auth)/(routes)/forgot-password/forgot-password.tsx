@@ -5,6 +5,10 @@ import { Button } from "@/components/ui/button"
 import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { getApiError } from "@/lib/error/api-error"
+import {
+  emailVerificationSchema,
+  type EmailVerificationSchema,
+} from "@/lib/schemas/auth-schema"
 import { supabase } from "@/lib/supabase/client"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { LoaderIcon, LockIcon } from "lucide-react"
@@ -12,24 +16,14 @@ import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { Dispatch, SetStateAction } from "react"
 import { useForm } from "react-hook-form"
-import { z } from "zod"
-
-const forgotPasswordSchema = z.object({
-  email: z
-    .string({
-      required_error: "Invalid email address",
-    })
-    .email({ message: "Invalid email address" })
-    .toLowerCase(),
-})
 
 type Props = {
   setEmail: Dispatch<SetStateAction<string | undefined>>
 }
 export default function ForgotPasswordPage({ setEmail }: Props) {
   const router = useRouter()
-  const form = useForm<z.infer<typeof forgotPasswordSchema>>({
-    resolver: zodResolver(forgotPasswordSchema),
+  const form = useForm<EmailVerificationSchema>({
+    resolver: zodResolver(emailVerificationSchema),
   })
 
   const submitHandler = form.handleSubmit(async ({ email }) => {
