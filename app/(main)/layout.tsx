@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils"
 import { ChevronsLeftIcon, ChevronsRightIcon, MenuIcon } from "lucide-react"
 import React, { useEffect, useRef, useState } from "react"
 import { useMediaQuery } from "usehooks-ts"
-import HeaderItems from "./docs/_components/header"
+import DocsHeader from "./docs/_components/docs-header"
 import SidebarNewPage from "./docs/_components/sidebar-new-page"
 import SidebarSearch from "./docs/_components/sidebar-search"
 import SidebarSettings from "./docs/_components/sidebar-settings"
@@ -30,6 +30,8 @@ const MainLayout = ({ children }: { children: React.ReactNode }) => {
     setMinimize,
     maxSidebarWidth,
     minSidebarWidth,
+    manualMinimizeTriggered,
+    triggerManualMinimize,
   } = useLayoutStore()
 
   const mouseMoveHandler = (e: MouseEvent) => {
@@ -94,6 +96,13 @@ const MainLayout = ({ children }: { children: React.ReactNode }) => {
     isMobile ? maximizeHandler() : minimizeHandler()
   }, [isMobile])
 
+  useEffect(() => {
+    if (isMobile && manualMinimizeTriggered) {
+      minimizeHandler()
+      triggerManualMinimize()
+    }
+  }, [isMobile, manualMinimizeTriggered])
+
   useEffect(() => setMount(true), [])
   if (!mount) return null
 
@@ -151,7 +160,7 @@ const MainLayout = ({ children }: { children: React.ReactNode }) => {
               size="icon"
               variant="ghost"
               className={cn(
-                "group/collapse relative h-7 w-7",
+                "group/collapse relative mr-3 h-7 w-7",
                 !minimize && !isMobile && "hidden",
               )}
               onClick={maximizeHandler}
@@ -161,7 +170,7 @@ const MainLayout = ({ children }: { children: React.ReactNode }) => {
             </Button>
           </ButtonHoverTooltip>
 
-          <HeaderItems />
+          <DocsHeader />
         </header>
       </div>
 
