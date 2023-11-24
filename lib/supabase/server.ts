@@ -34,3 +34,6 @@ export const createClient = (cookieStore: ReturnType<typeof cookies>) => {
     },
   )
 }
+
+const cookiesStore = cookies()
+export const supabase = createClient(cookiesStore)
