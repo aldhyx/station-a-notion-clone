@@ -14,25 +14,28 @@ export default function Settings() {
           size="lg"
           className="flex h-auto w-full items-center justify-between px-0 hover:bg-zinc-50"
           variant="ghost"
+          asChild
         >
-          <div className="flex items-center">
-            <div className="relative mr-3 h-[60px] w-[60px]">
-              <Image
-                src="/assets/profile.jpg"
-                alt="user profile"
-                fill
-                className="hidden rounded-full object-cover"
-              />
-              <UserCircle2 className=" h-[60px] w-[60px]" />
+          <Link href="/settings/change-profile">
+            <div className="flex items-center">
+              <div className="relative mr-3 h-[60px] w-[60px]">
+                <Image
+                  src="/assets/profile.jpg"
+                  alt="user profile"
+                  fill
+                  className="hidden rounded-full object-cover"
+                />
+                <UserCircle2 className=" h-[60px] w-[60px]" />
+              </div>
+              <div className="flex flex-col items-start ">
+                <span className="mb-0">unknown name</span>
+                <span className="block text-left text-xs font-normal text-zinc-500">
+                  @unknown
+                </span>
+              </div>
             </div>
-            <div className="flex flex-col items-start ">
-              <span className="mb-0">unknown name</span>
-              <span className="block text-left text-xs font-normal text-zinc-500">
-                @unknown
-              </span>
-            </div>
-          </div>
-          <EditIcon className="h-4 w-4" />
+            <EditIcon className="h-4 w-4" />
+          </Link>
         </Button>
       </section>
 

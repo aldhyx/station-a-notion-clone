@@ -9,6 +9,7 @@ export default function SettingsHeader() {
   const title = {
     settings: "Settings",
     "change-password": "Change password",
+    "change-profile": "Change Profile",
   }
 
   return (
