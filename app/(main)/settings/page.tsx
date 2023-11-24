@@ -3,6 +3,7 @@
 import ChangeEmailDialog from "@/components/dialogs/change-email/dialog"
 import ChangePasswordDialog from "@/components/dialogs/change-password-dialog"
 import SignOutDialog from "@/components/dialogs/sign-out-dialog"
+import { ModeToggle } from "@/components/mode-toogle"
 import { Button } from "@/components/ui/button"
 import { ChevronRightIcon, EditIcon, UserCircle2 } from "lucide-react"
 import Image from "next/image"
@@ -48,16 +49,17 @@ export default function Settings() {
 
         <Button
           size="lg"
-          className="flex h-16 w-full flex-col items-start px-0 hover:bg-zinc-50"
+          className="flex h-16 w-full items-center px-0 hover:bg-zinc-50"
           variant="ghost"
         >
-          <div className="mb-1 flex w-full justify-between align-baseline">
-            <span>Appearance</span>
-            <EditIcon className="h-4 w-4" />
+          <div className="flex w-full flex-col items-start">
+            <span className="mb-1 ">Appearance</span>
+
+            <span className="block text-left text-xs font-normal text-zinc-500">
+              Customize how Station looks on your devices
+            </span>
           </div>
-          <span className="block text-left text-xs font-normal text-zinc-500">
-            Customize how Station looks on your devices
-          </span>
+          <ModeToggle />
         </Button>
       </section>
 
