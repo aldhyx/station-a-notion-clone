@@ -1,3 +1,6 @@
+import ErrorBlock from "@/components/error-block"
+import InputPasswordWrapper from "@/components/input-password-wrapper"
+import { Button } from "@/components/ui/button"
 import { getApiError } from "@/lib/error/api-error"
 import { resetPasswordSchema, type ResetPasswordSchema } from "@/lib/schemas/auth-schema"
 import { supabase } from "@/lib/supabase/client"
@@ -6,9 +9,6 @@ import { LoaderIcon, LockKeyholeIcon, PartyPopperIcon, XCircle } from "lucide-re
 import { PropsWithChildren } from "react"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
-import ErrorBlock from "../error-block"
-import InputPasswordWrapper from "../input-password-wrapper"
-import { Button } from "../ui/button"
 import { Dialog, DialogContent, DialogHeader, DialogTrigger } from "../ui/dialog"
 import {
   Form,
@@ -52,22 +52,21 @@ export default function ChangePasswordDialog({ children }: PropsWithChildren) {
     reset,
   } = form
 
+  const resetForm = () => {
+    reset()
+    clearErrors(["confirm_password", "password"])
+  }
   const currentFormState = watch()
   const isDisableSubmit =
     isSubmitting || !currentFormState.confirm_password || !currentFormState.password
   const isLoadingSubmit = isSubmitting
 
   return (
-    <Dialog
-      onOpenChange={() => {
-        reset()
-        clearErrors(["confirm_password", "password"])
-      }}
-    >
+    <Dialog onOpenChange={resetForm}>
       <DialogTrigger asChild>{children}</DialogTrigger>
 
       {isSubmitSuccessful ? (
-        <DialogContent className="top-[5%] max-w-sm translate-y-[0] gap-0 px-4 pb-6 pt-14">
+        <DialogContent className="top-[5%] max-w-sm translate-y-[0] gap-0 px-4 pb-10 pt-14">
           <div className="flex w-full flex-col items-center justify-center">
             <PartyPopperIcon className="mb-8 h-20 w-20" />
             <h1 className="mb-2 text-3xl font-bold md:text-4xl">Success</h1>
@@ -80,7 +79,7 @@ export default function ChangePasswordDialog({ children }: PropsWithChildren) {
         <DialogContent
           className="top-[5%] max-w-sm translate-y-[0] gap-0  px-4 pb-6 pt-14"
           onInteractOutside={e => {
-            if (isSubmitting) return e.preventDefault()
+            return e.preventDefault()
           }}
         >
           <DialogHeader className="mb-8">
