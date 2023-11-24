@@ -1,11 +1,11 @@
 import { getApiError } from "@/lib/error/api-error"
 import { resetPasswordSchema, type ResetPasswordSchema } from "@/lib/schemas/auth-schema"
 import { supabase } from "@/lib/supabase/client"
-import { simulateAsync } from "@/lib/utils"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { LoaderIcon, PartyPopperIcon } from "lucide-react"
+import { LoaderIcon, LockKeyholeIcon, PartyPopperIcon, XCircle } from "lucide-react"
 import { PropsWithChildren } from "react"
 import { useForm } from "react-hook-form"
+import { toast } from "sonner"
 import ErrorBlock from "../error-block"
 import InputPasswordWrapper from "../input-password-wrapper"
 import { Button } from "../ui/button"
@@ -27,12 +27,21 @@ export default function ChangePasswordDialog({ children }: PropsWithChildren) {
 
   const submitHandler = form.handleSubmit(async ({ password }) => {
     try {
-      await simulateAsync()
       const { error } = await supabase.auth.updateUser({ password })
 
       if (error) throw new Error(error.message)
+      toast.success("Password has been changed successfully.")
     } catch (error) {
       form.setError("root.apiError", { message: getApiError(error) })
+
+      toast.error("Failed to change password.", {
+        icon: <XCircle className="h-5 w-5 text-zinc-50" />,
+        classNames: {
+          toast: "!bg-red-600 !border-red-600",
+          title: "!text-zinc-50",
+        },
+        duration: 6000,
+      })
     }
   })
 
@@ -57,43 +66,34 @@ export default function ChangePasswordDialog({ children }: PropsWithChildren) {
     >
       <DialogTrigger asChild>{children}</DialogTrigger>
 
-      {isSubmitting || isSubmitSuccessful ? (
-        <DialogContent
-          className="top-[10%] h-80 max-w-sm translate-y-[0] gap-0 overflow-hidden rounded-sm bg-zinc-50 p-0"
-          hideCloseButton
-          onInteractOutside={e => {
-            if (isSubmitting) e.preventDefault()
-          }}
-        >
+      {isSubmitSuccessful ? (
+        <DialogContent className="top-[5%] max-w-sm translate-y-[0] gap-0 px-4 pb-6 pt-14">
           <div className="flex w-full flex-col items-center justify-center">
-            {isSubmitting && <LoaderIcon className="h-20 w-20 animate-spin" />}
-            {isSubmitSuccessful && (
-              <>
-                <PartyPopperIcon className="mb-8 h-20 w-20" />
-                <h1 className="mb-2 text-3xl font-bold md:text-4xl">Success</h1>{" "}
-                <p className="w-full text-center text-sm">
-                  Successfully change password.
-                </p>
-              </>
-            )}
+            <PartyPopperIcon className="mb-8 h-20 w-20" />
+            <h1 className="mb-2 text-3xl font-bold md:text-4xl">Success</h1>
+            <p className="w-full text-center text-sm">
+              Password has been changed successfully.
+            </p>
           </div>
         </DialogContent>
       ) : (
         <DialogContent
-          className="top-[10%] max-w-sm translate-y-[0] gap-0 overflow-hidden rounded-sm bg-zinc-50 p-0 py-8"
-          hideCloseButton
+          className="top-[5%] max-w-sm translate-y-[0] gap-0  px-4 pb-6 pt-14"
           onInteractOutside={e => {
-            if (isSubmitting) e.preventDefault()
+            if (isSubmitting) return e.preventDefault()
           }}
         >
-          <DialogHeader className="mb-8 px-4 !text-center text-lg font-medium leading-none">
-            Change password
+          <DialogHeader className="mb-8">
+            <LockKeyholeIcon className="mx-auto mb-2" />
+            <p className="!text-center text-lg font-medium leading-none">
+              Change Password
+            </p>
           </DialogHeader>
 
           <Form {...form}>
             <form
               onSubmit={submitHandler}
-              className="flex w-full flex-col gap-y-3 px-4"
+              className="flex w-full flex-col gap-y-3"
               autoComplete="off"
             >
               <FormField
@@ -101,7 +101,7 @@ export default function ChangePasswordDialog({ children }: PropsWithChildren) {
                 name="password"
                 render={({ field, fieldState }) => (
                   <FormItem>
-                    <FormLabel>New Password</FormLabel>
+                    <FormLabel>New password</FormLabel>
                     <FormControl>
                       <InputPasswordWrapper
                         peerClassName="password"
@@ -110,7 +110,7 @@ export default function ChangePasswordDialog({ children }: PropsWithChildren) {
                           <Input
                             className="peer/password border-0 "
                             placeholder={
-                              showPassword ? "Enter your password..." : "********"
+                              showPassword ? "Enter new password..." : "********"
                             }
                             type={showPassword ? "text" : "password"}
                             {...field}
@@ -129,7 +129,7 @@ export default function ChangePasswordDialog({ children }: PropsWithChildren) {
                 name="confirm_password"
                 render={({ field, fieldState }) => (
                   <FormItem>
-                    <FormLabel>Confirm New Password</FormLabel>
+                    <FormLabel>Confirm new password</FormLabel>
                     <FormControl>
                       <InputPasswordWrapper
                         peerClassName="cpassword"
@@ -138,7 +138,7 @@ export default function ChangePasswordDialog({ children }: PropsWithChildren) {
                           <Input
                             className="peer/cpassword border-0 "
                             placeholder={
-                              showPassword ? "Enter your confirm password..." : "********"
+                              showPassword ? "Enter new confirm password..." : "********"
                             }
                             type={showPassword ? "text" : "password"}
                             {...field}
@@ -163,7 +163,7 @@ export default function ChangePasswordDialog({ children }: PropsWithChildren) {
                 {isLoadingSubmit && (
                   <LoaderIcon className="animate mr-2 h-4 w-4 animate-spin" />
                 )}
-                Submit
+                Change password
               </Button>
             </form>
           </Form>

@@ -1,5 +1,6 @@
 "use client"
 
+import ChangePasswordDialog from "@/components/dialogs/change-password-dialog"
 import SignOutDialog from "@/components/dialogs/sign-out-dialog"
 import { Button } from "@/components/ui/button"
 import { ChevronRightIcon, EditIcon, UserCircle2 } from "lucide-react"
@@ -78,13 +79,12 @@ export default function Settings() {
           </span>
         </Button>
 
-        <Button
-          size="lg"
-          className="flex h-16 w-full flex-col items-start px-0 hover:bg-zinc-50"
-          variant="ghost"
-          asChild
-        >
-          <Link href="/settings/change-password">
+        <ChangePasswordDialog>
+          <Button
+            size="lg"
+            className="flex h-16 w-full flex-col items-start px-0 hover:bg-zinc-50"
+            variant="ghost"
+          >
             <div className="mb-1 flex w-full justify-between align-baseline">
               <span>Password</span>
               <EditIcon className="h-4 w-4" />
@@ -92,8 +92,8 @@ export default function Settings() {
             <span className="block text-left text-xs font-normal text-zinc-500">
               Set a permanent password to login to your account.
             </span>
-          </Link>
-        </Button>
+          </Button>
+        </ChangePasswordDialog>
       </section>
 
       <section className="">
