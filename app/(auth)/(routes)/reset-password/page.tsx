@@ -1,8 +1,8 @@
 "use client"
 
+import SignOutDialog from "@/components/dialogs/sign-out-dialog"
 import ErrorBlock from "@/components/error-block"
 import InputPasswordWrapper from "@/components/input-password-wrapper"
-import SignOutDialog from "@/components/sign-out-dialog"
 import { Button } from "@/components/ui/button"
 import {
   Form,
