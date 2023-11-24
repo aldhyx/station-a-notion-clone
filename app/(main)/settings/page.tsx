@@ -1,5 +1,6 @@
 "use client"
 
+import ChangeEmailDialog from "@/components/dialogs/change-email/dialog"
 import ChangePasswordDialog from "@/components/dialogs/change-password-dialog"
 import SignOutDialog from "@/components/dialogs/sign-out-dialog"
 import { Button } from "@/components/ui/button"
@@ -65,19 +66,21 @@ export default function Settings() {
           Accounts security
         </h2>
 
-        <Button
-          size="lg"
-          className="flex h-16 w-full flex-col items-start px-0 hover:bg-zinc-50"
-          variant="ghost"
-        >
-          <div className="mb-1 flex w-full justify-between align-baseline">
-            <span>Email</span>
-            <EditIcon className="h-4 w-4" />
-          </div>
-          <span className="block text-left text-xs font-normal text-zinc-500">
-            unknown@mail.com
-          </span>
-        </Button>
+        <ChangeEmailDialog>
+          <Button
+            size="lg"
+            className="flex h-16 w-full flex-col items-start px-0 hover:bg-zinc-50"
+            variant="ghost"
+          >
+            <div className="mb-1 flex w-full justify-between align-baseline">
+              <span>Email</span>
+              <EditIcon className="h-4 w-4" />
+            </div>
+            <span className="block text-left text-xs font-normal text-zinc-500">
+              unknown@mail.com
+            </span>
+          </Button>
+        </ChangeEmailDialog>
 
         <ChangePasswordDialog>
           <Button
