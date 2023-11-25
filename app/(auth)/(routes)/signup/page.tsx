@@ -7,7 +7,6 @@ import dynamic from "next/dynamic"
 import FullScreenLoading from "../../../../components/full-screen-loading"
 
 const SignUpPage = dynamic(() => import("./signup"), {
-  ssr: false,
   loading: () => <FullScreenLoading />,
 })
 
@@ -26,13 +25,7 @@ export default function SignUp() {
     if (steps === 1) setEmail(undefined)
   }, [steps])
 
-  return (
-    <>
-      {steps === 1 ? (
-        <SignUpPage setEmail={setEmail} />
-      ) : (
-        <SignUpVerificationPage email={email} />
-      )}
-    </>
-  )
+  if (steps === 1) return <SignUpPage setEmail={setEmail} />
+
+  return <SignUpVerificationPage email={email} />
 }

@@ -11,7 +11,8 @@ export async function middleware(request: NextRequest) {
   if (
     !data.session &&
     (request.nextUrl.pathname.startsWith("/docs") ||
-      request.nextUrl.pathname.startsWith("/reset-password"))
+      request.nextUrl.pathname.startsWith("/reset-password") ||
+      request.nextUrl.pathname.startsWith("/setting"))
   ) {
     return NextResponse.redirect(new URL("/login", request.url))
   }
@@ -29,5 +30,12 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/docs/:path*", "/login", "/signup", "/forgot-password", "/reset-password"],
+  matcher: [
+    "/docs/:path*",
+    "/login",
+    "/signup",
+    "/forgot-password",
+    "/reset-password",
+    "/setting/:path*",
+  ],
 }

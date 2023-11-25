@@ -6,7 +6,6 @@ import { useSearchParams } from "next/navigation"
 import { useEffect, useState } from "react"
 
 const LoginPage = dynamic(() => import("./login"), {
-  ssr: false,
   loading: () => <FullScreenLoading />,
 })
 
@@ -25,13 +24,6 @@ export default function Login() {
     if (steps === 1) setEmail(undefined)
   }, [steps])
 
-  return (
-    <>
-      {steps === 1 ? (
-        <LoginPage setEmail={setEmail} />
-      ) : (
-        <SignUpVerificationPage email={email} />
-      )}
-    </>
-  )
+  if (steps === 1) return <LoginPage setEmail={setEmail} />
+  return <SignUpVerificationPage email={email} />
 }

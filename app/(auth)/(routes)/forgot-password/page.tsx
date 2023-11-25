@@ -28,13 +28,6 @@ export default function ForgotPassword() {
     if (steps === 1) setEmail(undefined)
   }, [steps])
 
-  return (
-    <>
-      {steps === 1 ? (
-        <ForgotPasswordPage setEmail={setEmail} />
-      ) : (
-        <ForgotPasswordVerificationPage email={email} />
-      )}
-    </>
-  )
+  if (steps === 1) return <ForgotPasswordPage setEmail={setEmail} />
+  return <ForgotPasswordVerificationPage email={email} />
 }
