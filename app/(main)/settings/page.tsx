@@ -2,24 +2,23 @@
 
 import ChangeEmailDialog from "@/components/dialogs/change-email/dialog"
 import ChangePasswordDialog from "@/components/dialogs/change-password-dialog"
+import ChangeProfileDialog from "@/components/dialogs/change-profile-dialog"
 import SignOutDialog from "@/components/dialogs/sign-out-dialog"
 import { ModeToggle } from "@/components/mode-toogle"
 import { Button } from "@/components/ui/button"
 import { ChevronRightIcon, EditIcon, UserCircle2 } from "lucide-react"
 import Image from "next/image"
-import Link from "next/link"
 
 export default function Settings() {
   return (
     <div className="mx-auto mt-8 flex max-w-3xl flex-col gap-y-8 px-4">
       <section className="">
-        <Button
-          size="lg"
-          className="flex h-auto w-full items-center justify-between px-0 hover:bg-zinc-50"
-          variant="ghost"
-          asChild
-        >
-          <Link href="/settings/change-profile">
+        <ChangeProfileDialog>
+          <Button
+            size="lg"
+            className="flex h-auto w-full items-center justify-between px-0 hover:bg-zinc-50"
+            variant="ghost"
+          >
             <div className="flex items-center">
               <div className="relative mr-3 h-[60px] w-[60px]">
                 <Image
@@ -38,8 +37,8 @@ export default function Settings() {
               </div>
             </div>
             <EditIcon className="h-4 w-4" />
-          </Link>
-        </Button>
+          </Button>
+        </ChangeProfileDialog>
       </section>
 
       <section className="">
