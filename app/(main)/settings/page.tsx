@@ -1,51 +1,48 @@
-"use client"
+// "use client"
 
 import ChangeEmailDialog from "@/components/dialogs/change-email/dialog"
 import ChangePasswordDialog from "@/components/dialogs/change-password-dialog"
 import ChangeProfileDialog from "@/components/dialogs/change-profile-dialog"
 import SignOutDialog from "@/components/dialogs/sign-out-dialog"
-import { ModeToggle } from "@/components/mode-toogle"
+import ModeToggle from "@/components/mode-toogle"
 import { Button } from "@/components/ui/button"
 import { ChevronRightIcon, EditIcon, UserCircle2 } from "lucide-react"
 import Image from "next/image"
 
-export default function Settings() {
+export default function SettingsPage() {
   return (
     <div className="mx-auto mt-8 flex max-w-3xl flex-col gap-y-8 px-4">
-      <section className="">
-        <ChangeProfileDialog>
-          <Button
-            size="lg"
-            className="flex h-auto w-full items-center justify-between px-0 hover:bg-zinc-50"
-            variant="ghost"
-          >
-            <div className="flex items-center">
-              <div className="relative mr-3 h-[60px] w-[60px]">
-                <Image
-                  src="/assets/profile.jpg"
-                  alt="user profile"
-                  fill
-                  className="hidden rounded-full object-cover"
-                />
-                <UserCircle2 className=" h-[60px] w-[60px]" />
-              </div>
-              <div className="flex flex-col items-start ">
-                <span className="mb-0">unknown name</span>
-                <span className="block text-left text-xs font-normal text-zinc-500">
-                  @unknown
-                </span>
-              </div>
+      <ChangeProfileDialog>
+        <Button
+          size="lg"
+          className="flex h-auto w-full items-center justify-between px-0 hover:bg-zinc-50"
+          variant="ghost"
+        >
+          <div className="flex items-center">
+            <div className="relative mr-3 h-[60px] w-[60px]">
+              <Image
+                src="/assets/profile.jpg"
+                alt="user profile"
+                fill
+                className="hidden rounded-full object-cover"
+              />
+              <UserCircle2 className=" h-[60px] w-[60px]" />
             </div>
-            <EditIcon className="h-4 w-4" />
-          </Button>
-        </ChangeProfileDialog>
-      </section>
+            <div className="flex flex-col items-start ">
+              <span className="mb-0">unknown name</span>
+              <span className="block text-left text-xs font-normal text-zinc-500">
+                @unknown
+              </span>
+            </div>
+          </div>
+          <EditIcon className="h-4 w-4" />
+        </Button>
+      </ChangeProfileDialog>
 
-      <section className="">
+      <section>
         <h2 className="mb-2 border-b border-zinc-200 pb-2 text-xs font-medium text-zinc-700">
           My setting
         </h2>
-
         <Button
           size="lg"
           className="flex h-16 w-full items-center px-0 hover:bg-zinc-50"
@@ -62,7 +59,7 @@ export default function Settings() {
         </Button>
       </section>
 
-      <section className="">
+      <section>
         <h2 className="mb-2 border-b border-zinc-200 pb-2 text-xs font-medium text-zinc-700">
           Accounts security
         </h2>
@@ -82,7 +79,6 @@ export default function Settings() {
             </span>
           </Button>
         </ChangeEmailDialog>
-
         <ChangePasswordDialog>
           <Button
             size="lg"
@@ -100,7 +96,7 @@ export default function Settings() {
         </ChangePasswordDialog>
       </section>
 
-      <section className="">
+      <section>
         <h2 className="mb-2 border-b border-zinc-200 pb-2 text-xs font-medium text-zinc-700">
           Support
         </h2>

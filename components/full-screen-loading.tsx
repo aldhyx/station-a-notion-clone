@@ -1,8 +1,14 @@
+import { cn } from "@/lib/utils"
 import { LoaderIcon } from "lucide-react"
 
-export default function FullScreenLoading() {
+export default function FullScreenLoading({ className }: { className?: string }) {
   return (
-    <div className="fixed left-0 top-0 flex min-h-screen w-full items-center justify-center bg-zinc-50">
+    <div
+      className={cn(
+        "fixed left-0 top-0 flex min-h-screen w-full items-center justify-center bg-zinc-50",
+        className,
+      )}
+    >
       <LoaderIcon className="h-6 w-6 animate-spin" />
     </div>
   )

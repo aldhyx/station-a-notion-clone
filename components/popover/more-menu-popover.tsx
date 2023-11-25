@@ -1,18 +1,12 @@
-import ButtonHoverTooltip from "@/components/tooltips/button-hover-tooltip"
 import { Button } from "@/components/ui/button"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
-import { ImportIcon, LockIcon, MoreHorizontalIcon, Trash2Icon } from "lucide-react"
+import { ImportIcon, LockIcon, Trash2Icon } from "lucide-react"
+import { PropsWithChildren } from "react"
 
-export default function HeaderMore() {
+export default function MoreMenuPopover({ children }: PropsWithChildren) {
   return (
     <Popover>
-      <PopoverTrigger>
-        <ButtonHoverTooltip text="Delete, lock, duplicate & more..." asChild>
-          <Button variant="ghost" size="icon" className="h-7 w-7">
-            <MoreHorizontalIcon className="h-4 w-4" />
-          </Button>
-        </ButtonHoverTooltip>
-      </PopoverTrigger>
+      <PopoverTrigger asChild>{children}</PopoverTrigger>
       <PopoverContent className="bg-zinc-50 p-0" align="end">
         <div>
           <section className="border-b border-zinc-200 p-1">

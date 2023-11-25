@@ -5,7 +5,7 @@ import { useLayoutStore } from "@/hooks/use-layout-store"
 import { SettingsIcon } from "lucide-react"
 import { useRouter } from "next/navigation"
 
-export default function SidebarSettings() {
+export default function SidebarSetting() {
   const { triggerManualMinimize } = useLayoutStore()
   const router = useRouter()
 

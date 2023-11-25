@@ -1,3 +1,5 @@
+"use client"
+
 import { supabase } from "@/lib/supabase/client"
 import { type SignOut } from "@supabase/supabase-js"
 import { useRouter } from "next/navigation"

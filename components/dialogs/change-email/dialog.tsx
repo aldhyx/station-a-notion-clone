@@ -1,3 +1,5 @@
+"use client"
+
 import { Dialog, DialogTrigger } from "@/components/ui/dialog"
 import { PropsWithChildren, useState } from "react"
 import RequestDialogContent from "./request-dialog-content"
