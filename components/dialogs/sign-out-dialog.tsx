@@ -49,7 +49,7 @@ export default function SignOutDialog({
       success: data => {
         if (data.error) return message.error[scope]
 
-        router.refresh()
+        router.replace("/login")
         return message.success[scope]
       },
       error: message.error[scope],

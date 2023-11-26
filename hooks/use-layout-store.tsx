@@ -1,14 +1,15 @@
 import { create } from "zustand"
 
+type ManualMinimizeTriggered = "settings" | "trash"
 type LayoutStore = {
   minimize: boolean
   animating: boolean
   minSidebarWidth: 240
   maxSidebarWidth: 480
-  manualMinimizeTriggered?: "settings"
+  manualMinimizeTriggered?: ManualMinimizeTriggered
   setMinimize: (v: boolean) => void
   setAnimating: (v: boolean) => void
-  triggerManualMinimize: (v?: "settings") => void
+  triggerManualMinimize: (v?: ManualMinimizeTriggered) => void
 }
 
 export const useLayoutStore = create<LayoutStore>(set => ({

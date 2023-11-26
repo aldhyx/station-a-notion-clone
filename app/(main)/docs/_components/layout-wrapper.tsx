@@ -1,18 +1,18 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
-import { Skeleton } from "@/components/ui/skeleton"
 import { useLayoutStore } from "@/hooks/use-layout-store"
+import { useUserStore } from "@/hooks/use-user-store"
+import { supabase } from "@/lib/supabase/client"
 import { cn } from "@/lib/utils"
-import { ChevronsLeftIcon } from "lucide-react"
-import { Suspense, useEffect, useRef, type PropsWithChildren } from "react"
-import { useMediaQuery } from "usehooks-ts"
-import Header from "./docs/_components/header"
-import SidebarNewPage from "./docs/_components/sidebar-new-page"
-import SidebarSearch from "./docs/_components/sidebar-search"
-import SidebarSetting from "./docs/_components/sidebar-setting"
-import SidebarTrash from "./docs/_components/sidebar-trash"
-import SidebarUser from "./docs/_components/sidebar-user"
+import { ChevronsLeftIcon, XCircle } from "lucide-react"
+import { useRouter } from "next/navigation"
+import { useEffect, useRef, type PropsWithChildren } from "react"
+import { toast } from "sonner"
+import { useEffectOnce, useMediaQuery } from "usehooks-ts"
+import Header from "./header"
+import SidebarItems from "./sidebar-items"
+import SidebarUser from "./sidebar-user"
 
 export default function LayoutWrapper({ children }: PropsWithChildren) {
   const isResizingRef = useRef(false)
@@ -21,6 +21,8 @@ export default function LayoutWrapper({ children }: PropsWithChildren) {
   const mainRef = useRef<React.ElementRef<"main">>(null)
 
   const isMobile = useMediaQuery("(max-width: 468px)")
+  const { setCurrentUser } = useUserStore()
+  const router = useRouter()
 
   const {
     animating,
@@ -87,18 +89,9 @@ export default function LayoutWrapper({ children }: PropsWithChildren) {
     }
   }
 
-  const resetHandler = () => {
-    if (sidebarRef.current && topbarRef.current && mainRef.current) {
-      sidebarRef.current.style.width = `${minSidebarWidth}px`
-      topbarRef.current.style.left = `${minSidebarWidth}px`
-      topbarRef.current.style.width = `calc(100vw - ${minSidebarWidth}px)`
-      mainRef.current.style.width = `calc(100vw = ${minSidebarWidth}px)`
-    }
-  }
-
   useEffect(() => {
     if (isMobile) minimizeHandler()
-    else maximizeHandler()
+    else if (minimize) maximizeHandler()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isMobile])
 
@@ -110,9 +103,33 @@ export default function LayoutWrapper({ children }: PropsWithChildren) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isMobile, manualMinimizeTriggered])
 
+  const getCurrentUser = async () => {
+    try {
+      const { data, error } = await supabase.auth.getUser()
+
+      if (error) throw new Error(error.message)
+      setCurrentUser(data.user)
+    } catch (error) {
+      toast.error("Something went wrong. Please reload or try login again.", {
+        icon: <XCircle className="h-5 w-5 text-zinc-50" />,
+        classNames: {
+          toast: "!bg-red-500 !border-red-500",
+          title: "!text-zinc-50",
+        },
+
+        duration: 6000,
+      })
+
+      router.replace("/login")
+    }
+  }
+
+  useEffectOnce(() => {
+    getCurrentUser()
+  })
+
   return (
     <div className="relative flex min-h-screen select-none text-zinc-900">
-      {" "}
       <aside
         ref={sidebarRef}
         className={cn(
@@ -122,25 +139,8 @@ export default function LayoutWrapper({ children }: PropsWithChildren) {
           isMobile && "w-0 p-0",
         )}
       >
-        <Suspense fallback={<Skeleton className="mb-1 h-10 w-full bg-zinc-200" />}>
-          <SidebarUser />
-        </Suspense>
-
-        <Suspense fallback={<Skeleton className="mb-1 h-6 w-full bg-zinc-200 px-3" />}>
-          <SidebarSearch />
-        </Suspense>
-
-        <Suspense fallback={<Skeleton className="mb-1 h-6 w-full bg-zinc-200 px-3" />}>
-          <SidebarSetting />
-        </Suspense>
-
-        <Suspense fallback={<Skeleton className="mb-1 h-6 w-full bg-zinc-200 px-3" />}>
-          <SidebarTrash />
-        </Suspense>
-
-        <Suspense fallback={<Skeleton className="mb-1 h-6 w-full bg-zinc-200 px-3" />}>
-          <SidebarNewPage />
-        </Suspense>
+        <SidebarUser />
+        <SidebarItems />
 
         <Button
           size="icon"

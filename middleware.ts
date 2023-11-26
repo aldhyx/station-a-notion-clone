@@ -36,6 +36,6 @@ export const config = {
     "/signup",
     "/forgot-password",
     "/reset-password",
-    "/setting/:path*",
+    "/settings/:path*",
   ],
 }

@@ -1,4 +1,4 @@
-// "use client"
+"use client"
 
 import ChangeEmailDialog from "@/components/dialogs/change-email/dialog"
 import ChangePasswordDialog from "@/components/dialogs/change-password-dialog"
@@ -6,10 +6,13 @@ import ChangeProfileDialog from "@/components/dialogs/change-profile-dialog"
 import SignOutDialog from "@/components/dialogs/sign-out-dialog"
 import ModeToggle from "@/components/mode-toogle"
 import { Button } from "@/components/ui/button"
+import { useUserStore } from "@/hooks/use-user-store"
 import { ChevronRightIcon, EditIcon, UserCircle2 } from "lucide-react"
 import Image from "next/image"
 
 export default function SettingsPage() {
+  const { currentUser } = useUserStore()
+
   return (
     <div className="mx-auto mt-8 flex max-w-3xl flex-col gap-y-8 px-4">
       <ChangeProfileDialog>
@@ -75,7 +78,7 @@ export default function SettingsPage() {
               <EditIcon className="h-4 w-4" />
             </div>
             <span className="block text-left text-xs font-normal text-zinc-500">
-              unknown@mail.com
+              {currentUser?.email}
             </span>
           </Button>
         </ChangeEmailDialog>

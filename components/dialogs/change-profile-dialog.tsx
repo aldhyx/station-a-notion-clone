@@ -42,7 +42,7 @@ export default function ChangeProfileDialog({ children }: PropsWithChildren) {
       toast.error("Failed to change profile.", {
         icon: <XCircle className="h-5 w-5 text-zinc-50" />,
         classNames: {
-          toast: "!bg-red-600 !border-red-600",
+          toast: "!bg-red-500 !border-red-500",
           title: "!text-zinc-50",
         },
         duration: 6000,
