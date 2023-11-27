@@ -25,7 +25,7 @@ export default function ChangeProfilePage({ children }: PropsWithChildren) {
     resolver: zodResolver(profileSchema),
   })
 
-  const submitHandler = form.handleSubmit(async ({ name, username }) => {
+  const submitHandler = form.handleSubmit(async ({ fullname, username }) => {
     try {
       await simulateAsync()
     } catch (error) {
@@ -40,7 +40,7 @@ export default function ChangeProfilePage({ children }: PropsWithChildren) {
 
   const currentFormState = watch()
   const isDisableSubmit =
-    isSubmitting || !currentFormState.name || !currentFormState.username
+    isSubmitting || !currentFormState.fullname || !currentFormState.username
   const isLoadingSubmit = isSubmitting
 
   if (isSubmitSuccessful) {
@@ -74,7 +74,7 @@ export default function ChangeProfilePage({ children }: PropsWithChildren) {
         >
           <FormField
             control={form.control}
-            name="name"
+            name="fullname"
             render={({ field, fieldState }) => (
               <FormItem>
                 <FormLabel>Name</FormLabel>

@@ -14,9 +14,10 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form"
+import { useUserStore } from "@/hooks/use-user-store"
 import { getApiError } from "@/lib/error/api-error"
 import { ProfileSchema, profileSchema } from "@/lib/schemas/auth-schema"
-import { simulateAsync } from "@/lib/utils"
+import { supabase } from "@/lib/supabase/client"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { FormInput, LoaderIcon, PartyPopperIcon, XCircle } from "lucide-react"
 import { PropsWithChildren } from "react"
@@ -27,14 +28,34 @@ import { Button } from "../ui/button"
 import { Input } from "../ui/input"
 
 export default function ChangeProfileDialog({ children }: PropsWithChildren) {
-  const form = useForm<ProfileSchema>({ resolver: zodResolver(profileSchema) })
+  const { setProfile, fullname, username } = useUserStore()
+  const form = useForm<ProfileSchema>({
+    resolver: zodResolver(profileSchema),
+    values: {
+      fullname: fullname ?? "",
+      username: username ?? "",
+    },
+  })
 
-  const submitHandler = form.handleSubmit(async ({ name, username }) => {
+  const submitHandler = form.handleSubmit(async ({ fullname, username }) => {
     try {
-      //   const { error } = await supabase.auth.updateUser({ password })
-      await simulateAsync()
+      const { data, error } = await supabase
+        .from("profiles")
+        .upsert({ username, fullname }, { onConflict: "user_id" })
+        .select(`username, fullname`)
 
-      //   if (error) throw new Error(error.message)
+      if (error) {
+        if (error.message.includes("profiles_username_key")) {
+          throw new Error("username is not available!")
+        }
+        throw new Error(error.message)
+      }
+
+      setProfile({
+        username: data[0].username,
+        fullname: data[0].fullname,
+      })
+
       toast.success("Profile has been changed successfully.")
     } catch (error) {
       form.setError("root.apiError", { message: getApiError(error) })
@@ -52,7 +73,7 @@ export default function ChangeProfileDialog({ children }: PropsWithChildren) {
 
   const resetForm = () => {
     reset()
-    clearErrors(["name", "username"])
+    clearErrors(["fullname", "username"])
   }
 
   const {
@@ -64,7 +85,7 @@ export default function ChangeProfileDialog({ children }: PropsWithChildren) {
 
   const currentFormState = watch()
   const isDisableSubmit =
-    isSubmitting || !currentFormState.name || !currentFormState.username
+    isSubmitting || !currentFormState.fullname || !currentFormState.username
   const isLoadingSubmit = isSubmitting
 
   return (
@@ -103,7 +124,7 @@ export default function ChangeProfileDialog({ children }: PropsWithChildren) {
             >
               <FormField
                 control={form.control}
-                name="name"
+                name="fullname"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Name</FormLabel>

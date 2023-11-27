@@ -11,7 +11,7 @@ import { ChevronRightIcon, EditIcon, UserCircle2 } from "lucide-react"
 import Image from "next/image"
 
 export default function SettingsPage() {
-  const { currentUser } = useUserStore()
+  const { currentUser, fullname, username } = useUserStore()
 
   return (
     <div className="mx-auto mt-8 flex max-w-3xl flex-col gap-y-8 px-4">
@@ -31,12 +31,15 @@ export default function SettingsPage() {
               />
               <UserCircle2 className=" h-[60px] w-[60px]" />
             </div>
-            <div className="flex flex-col items-start ">
-              <span className="mb-0">unknown name</span>
-              <span className="block text-left text-xs font-normal text-zinc-500">
-                @unknown
-              </span>
-            </div>
+
+            {fullname && username && (
+              <div className="flex flex-col items-start ">
+                <span className="mb-0 capitalize">{fullname}</span>
+                <span className="block text-left text-xs font-normal text-zinc-500">
+                  @{username}
+                </span>
+              </div>
+            )}
           </div>
           <EditIcon className="h-4 w-4" />
         </Button>

@@ -21,7 +21,7 @@ export default function LayoutWrapper({ children }: PropsWithChildren) {
   const mainRef = useRef<React.ElementRef<"main">>(null)
 
   const isMobile = useMediaQuery("(max-width: 468px)")
-  const { setCurrentUser } = useUserStore()
+  const { setCurrentUser, setProfile } = useUserStore()
   const router = useRouter()
 
   const {
@@ -106,9 +106,15 @@ export default function LayoutWrapper({ children }: PropsWithChildren) {
   const getCurrentUser = async () => {
     try {
       const { data, error } = await supabase.auth.getUser()
-
       if (error) throw new Error(error.message)
       setCurrentUser(data.user)
+
+      const { data: pData } = await supabase.from("profiles").select(`username, fullname`)
+
+      setProfile({
+        fullname: pData?.length ? pData[0]?.fullname : null,
+        username: pData?.length ? pData[0]?.username : null,
+      })
     } catch (error) {
       toast.error("Something went wrong. Please reload or try login again.", {
         icon: <XCircle className="h-5 w-5 text-zinc-50" />,

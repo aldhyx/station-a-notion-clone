@@ -8,7 +8,7 @@ import { LogOutIcon, UserCircle2 } from "lucide-react"
 import React from "react"
 
 export default function UserPopover({ children }: { children: React.ReactNode }) {
-  const { currentUser } = useUserStore()
+  const { currentUser, fullname, username } = useUserStore()
   return (
     <Popover>
       <PopoverTrigger asChild>{children}</PopoverTrigger>
@@ -22,10 +22,12 @@ export default function UserPopover({ children }: { children: React.ReactNode })
                 <UserCircle2 className=" h-[36px] w-[36px]" />
               </div>
 
-              <div className="flex flex-col">
-                <p className="text-sm">unknown&apos;s Station</p>
-                <p className="text-xs text-zinc-600">@unknown</p>
-              </div>
+              {fullname && username && (
+                <div className="flex flex-col">
+                  <p className="text-sm capitalize">{fullname}&apos;s Station</p>
+                  <p className="text-xs text-zinc-600">@{username}</p>
+                </div>
+              )}
             </div>
           </section>
 

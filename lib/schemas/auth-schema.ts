@@ -82,10 +82,10 @@ export const resetPasswordSchema = z
 export type ResetPasswordSchema = z.infer<typeof resetPasswordSchema>
 
 export const profileSchema = z.object({
-  name: z
+  fullname: z
     .string()
     .min(6, {
-      message: "Name must contain at least 8 character(s)",
+      message: "Name must contain at least 6 character(s)",
     })
     .max(72, {
       message: "Name must contain at most 72 character(s)",
@@ -94,8 +94,8 @@ export const profileSchema = z.object({
     .trim(),
   username: z
     .string()
-    .min(6, {
-      message: "Username must contain at least 8 character(s)",
+    .min(4, {
+      message: "Username must contain at least 4 character(s)",
     })
     .max(72, {
       message: "Username must contain at most 72 character(s)",
