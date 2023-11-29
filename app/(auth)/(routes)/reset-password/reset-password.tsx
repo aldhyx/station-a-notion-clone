@@ -59,7 +59,7 @@ export default function ResetPasswordPage() {
           Password has been changed successfully.
         </p>
         <div className="flex w-full flex-col gap-y-2">
-          <Button variant="default" onClick={() => router.replace("/docs")}>
+          <Button variant="default" onClick={() => router.replace("/pages")}>
             Go to dashboard
           </Button>
           <SignOutDialog>

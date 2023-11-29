@@ -25,7 +25,7 @@ export default function SidebarUser() {
         <p className="mr-1 max-w-[250px] truncate md:max-w-[120px]">
           {currentUser.email}
         </p>
-        <ChevronsUpDownIcon className="h-4 w-4 text-zinc-500" />
+        <ChevronsUpDownIcon className="h-3 w-3 text-zinc-500" />
       </Button>
     </UserPopover>
   )

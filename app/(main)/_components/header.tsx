@@ -50,8 +50,8 @@ const Header = forwardRef<HTMLDivElement, Props>(function Header(
           <ChevronsRightIcon className="absolute h-6 w-6 opacity-0 transition-[opacity] duration-200 group-hover/collapse:opacity-100" />
         </Button>
 
-        {pathname.startsWith("/docs") && (
-          <div className="flex w-full items-center justify-between ">
+        {pathname.startsWith("/pages") && (
+          <div className="flex w-full items-center justify-between">
             <span className="block max-w-[130px] truncate pl-2 text-sm md:max-w-[240px]">
               Getting Started
             </span>
@@ -84,7 +84,7 @@ const Header = forwardRef<HTMLDivElement, Props>(function Header(
           </div>
         )}
 
-        {!pathname.startsWith("/docs") && (
+        {!pathname.startsWith("/pages") && (
           <div className="flex w-full items-center justify-between ">
             <p className="max-w-[130px] text-sm capitalize md:max-w-[240px]">
               {pathname.replaceAll("/", "")}

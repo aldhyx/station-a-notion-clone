@@ -50,7 +50,7 @@ export default function LoginPage({ setEmail }: Props) {
         )
       }
 
-      router.push("/docs")
+      router.push("/pages")
     } catch (error) {
       form.setError("root.apiError", { message: getApiError(error) })
     }

@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button"
 import Image from "next/image"
 
-export default function DocumentsPage() {
+export default function Page() {
   return (
     <div className="flex h-[calc(100vh-48px)] flex-col items-center justify-center">
       <Image

@@ -45,7 +45,7 @@ export default function SignUpVerificationPage({ email }: Props) {
         throw new Error(error.message)
       }
 
-      router.replace("/docs")
+      router.replace("/pages")
     } catch (error) {
       form.setError("root.apiError", { message: getApiError(error) })
     }

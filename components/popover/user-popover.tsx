@@ -25,7 +25,7 @@ export default function UserPopover({ children }: { children: React.ReactNode })
               {fullname && username && (
                 <div className="flex flex-col">
                   <p className="text-sm capitalize">{fullname}&apos;s Station</p>
-                  <p className="text-xs text-zinc-600">@{username}</p>
+                  <p className="text-xs text-zinc-500">@{username}</p>
                 </div>
               )}
             </div>
@@ -35,7 +35,7 @@ export default function UserPopover({ children }: { children: React.ReactNode })
             <SignOutDialog>
               <Button
                 variant="ghost"
-                className="h-8 w-full justify-start px-2 text-xs font-normal text-zinc-600"
+                className="h-8 w-full justify-start px-2 text-xs font-normal text-zinc-500"
               >
                 <LogOutIcon className="mr-2 h-4 w-4" />
                 Log out

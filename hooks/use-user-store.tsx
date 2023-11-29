@@ -14,7 +14,7 @@ type UserStore = {
   setProfile: ({ username, fullname }: SetProfileProps) => void
 }
 
-export const useUserStore = create<UserStore>(set => ({
+export const useUserStore = create<UserStore>()(set => ({
   currentUser: null,
   loading: false,
   fullname: null,

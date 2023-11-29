@@ -12,7 +12,7 @@ type LayoutStore = {
   triggerManualMinimize: (v?: ManualMinimizeTriggered) => void
 }
 
-export const useLayoutStore = create<LayoutStore>(set => ({
+export const useLayoutStore = create<LayoutStore>()(set => ({
   minimize: false,
   animating: false,
   minSidebarWidth: 240,

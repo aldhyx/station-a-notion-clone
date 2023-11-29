@@ -9,7 +9,7 @@ export const revalidate = 0
 
 export default function WelcomePage() {
   return (
-    <div className="mx-auto flex min-h-screen flex-col justify-between text-zinc-900">
+    <div className="mx-auto flex min-h-screen flex-col justify-between text-zinc-800">
       <nav className={"flex w-full items-center justify-between bg-zinc-50 p-5"}>
         <Logo />
 

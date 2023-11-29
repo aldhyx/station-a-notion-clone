@@ -10,7 +10,7 @@ export async function middleware(request: NextRequest) {
 
   if (
     !data.session &&
-    (request.nextUrl.pathname.startsWith("/docs") ||
+    (request.nextUrl.pathname.startsWith("/pages") ||
       request.nextUrl.pathname.startsWith("/reset-password") ||
       request.nextUrl.pathname.startsWith("/setting"))
   ) {
@@ -23,7 +23,7 @@ export async function middleware(request: NextRequest) {
       request.nextUrl.pathname.startsWith("/signup") ||
       request.nextUrl.pathname.startsWith("/forgot-password"))
   ) {
-    return NextResponse.redirect(new URL("/docs", request.url))
+    return NextResponse.redirect(new URL("/pages", request.url))
   }
 
   return response
@@ -31,7 +31,7 @@ export async function middleware(request: NextRequest) {
 
 export const config = {
   matcher: [
-    "/docs/:path*",
+    "/pages/:path*",
     "/login",
     "/signup",
     "/forgot-password",

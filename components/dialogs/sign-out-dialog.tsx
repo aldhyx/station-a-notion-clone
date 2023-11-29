@@ -66,7 +66,7 @@ export default function SignOutDialog({
         hideCloseButton
       >
         <DialogHeader className="p-4">
-          <DialogDescription className="leading-1 text-left text-zinc-900">
+          <DialogDescription className="leading-1 text-left text-zinc-800">
             {title[scope]}
           </DialogDescription>
         </DialogHeader>

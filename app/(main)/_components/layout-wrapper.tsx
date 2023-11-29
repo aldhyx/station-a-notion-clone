@@ -11,7 +11,8 @@ import { useEffect, useRef, type PropsWithChildren } from "react"
 import { toast } from "sonner"
 import { useEffectOnce, useMediaQuery } from "usehooks-ts"
 import Header from "./header"
-import SidebarItems from "./sidebar-items"
+import SidebarMenu from "./sidebar-menu"
+import SidebarPages from "./sidebar-pages"
 import SidebarUser from "./sidebar-user"
 
 export default function LayoutWrapper({ children }: PropsWithChildren) {
@@ -135,7 +136,7 @@ export default function LayoutWrapper({ children }: PropsWithChildren) {
   })
 
   return (
-    <div className="relative flex min-h-screen select-none text-zinc-900">
+    <div className="relative flex min-h-screen select-none text-zinc-800">
       <aside
         ref={sidebarRef}
         className={cn(
@@ -146,12 +147,13 @@ export default function LayoutWrapper({ children }: PropsWithChildren) {
         )}
       >
         <SidebarUser />
-        <SidebarItems />
+        <SidebarMenu />
+        <SidebarPages />
 
         <Button
           size="icon"
           className={cn(
-            "absolute right-3 top-3 h-7 w-7 transition",
+            "absolute right-3 top-3 h-7 w-7 text-zinc-600 transition",
             isMobile ? "opacity-100" : "opacity-0 group-hover/sidebar:opacity-100",
           )}
           variant="ghost"
