@@ -7,7 +7,7 @@ export default function MoreMenuPopover({ children }: PropsWithChildren) {
   return (
     <Popover>
       <PopoverTrigger asChild>{children}</PopoverTrigger>
-      <PopoverContent className="bg-zinc-50 p-0" align="end">
+      <PopoverContent className="bg-background p-0" align="end">
         <div>
           <section className="border-b border-zinc-200 p-1">
             <Button

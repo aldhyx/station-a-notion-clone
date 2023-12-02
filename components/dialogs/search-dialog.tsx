@@ -9,7 +9,7 @@ export default function SearchDialog({ children }: PropsWithChildren) {
       <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent
         hideCloseButton
-        className="top-[5%] max-w-sm translate-y-[0] rounded-sm bg-zinc-50 p-0 md:max-w-xl"
+        className="top-[5%] max-w-sm translate-y-[0] rounded-sm bg-background p-0 md:max-w-xl"
       >
         <div className="flex items-center border-b border-zinc-200 px-4 py-1">
           <SearchIcon className="h-5 w-5 text-zinc-400" />
@@ -17,7 +17,7 @@ export default function SearchDialog({ children }: PropsWithChildren) {
           <Input
             type="email"
             placeholder="Search Frialdhy Ketty's Station..."
-            className="border-none bg-zinc-50 text-base placeholder:text-zinc-400 focus-visible:ring-transparent"
+            className="border-none bg-background text-base placeholder:text-zinc-400 focus-visible:ring-transparent"
           />
         </div>
         <div className="flex h-28 items-center justify-center">

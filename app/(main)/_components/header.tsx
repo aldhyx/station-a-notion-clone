@@ -2,6 +2,8 @@
 
 import MoreMenuPopover from "@/components/popover/more-menu-popover"
 import { Button } from "@/components/ui/button"
+import { Skeleton } from "@/components/ui/skeleton"
+import { usePageStore } from "@/hooks/page-store/use-page-store"
 import { useLayoutStore } from "@/hooks/use-layout-store"
 import { cn } from "@/lib/utils"
 import {
@@ -12,25 +14,29 @@ import {
   StarIcon,
 } from "lucide-react"
 import { usePathname } from "next/navigation"
-import { forwardRef } from "react"
+import { ForwardRefRenderFunction, forwardRef } from "react"
 
 type Props = {
   isMobile: boolean
   maximizeHandler: () => void
 }
 
-const Header = forwardRef<HTMLDivElement, Props>(function Header(
-  { isMobile, maximizeHandler },
-  ref,
-) {
+type HeaderProps = ForwardRefRenderFunction<HTMLDivElement, Props> & {
+  Skeleton: React.FC
+}
+
+const Header: HeaderProps = function Header({ isMobile, maximizeHandler }, ref) {
   const pathname = usePathname()
+  const { page, loadingPage } = usePageStore()
   const { animating, minimize } = useLayoutStore()
+
+  const loading = loadingPage || !page
 
   return (
     <div
       ref={ref}
       className={cn(
-        "fixed left-60 right-0 top-0 w-[calc(100vw-240px)] bg-zinc-50",
+        "fixed left-60 right-0 top-0 w-[calc(100vw-240px)] bg-background",
         animating && "transition-all duration-200 ease-in-out",
         isMobile && "left-0 w-full",
       )}
@@ -52,35 +58,43 @@ const Header = forwardRef<HTMLDivElement, Props>(function Header(
 
         {pathname.startsWith("/pages") && (
           <div className="flex w-full items-center justify-between">
-            <span className="block max-w-[130px] truncate pl-2 text-sm md:max-w-[240px]">
-              Getting Started
-            </span>
+            {loading && <Header.Skeleton />}
 
-            <div className="flex items-center justify-center">
-              <span className="hidden text-sm text-zinc-500 md:block">Edited 1d ago</span>
+            {!loading && page && (
+              <span className="block max-w-[130px] truncate pl-2 text-sm md:max-w-[240px]">
+                {page?.title}
+              </span>
+            )}
 
-              <Button
-                variant="ghost"
-                size="sm"
-                className="ml-2 hidden h-7 text-sm font-normal md:block"
-              >
-                Share
-              </Button>
+            {!loading && page && (
+              <div className="flex items-center justify-center">
+                <span className="hidden text-sm text-zinc-500 md:block">
+                  Edited 1d ago
+                </span>
 
-              <Button variant="ghost" size="icon" className="h-7 w-7 md:hidden">
-                <Share2Icon className="h-4 w-4" />
-              </Button>
-
-              <Button variant="ghost" size="icon" className="h-7 w-7">
-                <StarIcon className="h-4 w-4" />
-              </Button>
-
-              <MoreMenuPopover>
-                <Button variant="ghost" size="icon" className="h-7 w-7">
-                  <MoreHorizontalIcon className="h-4 w-4" />
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="ml-2 hidden h-7 text-sm font-normal md:block"
+                >
+                  Share
                 </Button>
-              </MoreMenuPopover>
-            </div>
+
+                <Button variant="ghost" size="icon" className="h-7 w-7 md:hidden">
+                  <Share2Icon className="h-4 w-4" />
+                </Button>
+
+                <Button variant="ghost" size="icon" className="h-7 w-7">
+                  <StarIcon className="h-4 w-4" />
+                </Button>
+
+                <MoreMenuPopover>
+                  <Button variant="ghost" size="icon" className="h-7 w-7">
+                    <MoreHorizontalIcon className="h-4 w-4" />
+                  </Button>
+                </MoreMenuPopover>
+              </div>
+            )}
           </div>
         )}
 
@@ -94,6 +108,20 @@ const Header = forwardRef<HTMLDivElement, Props>(function Header(
       </header>
     </div>
   )
-})
+}
 
-export default Header
+Header.Skeleton = function HeaderSkeleton() {
+  return (
+    <>
+      <Skeleton className="h-4 w-[130px] bg-zinc-200" />
+      <div className="flex items-center justify-center gap-x-3">
+        <Skeleton className="hidden h-4 w-[100px] bg-zinc-200 md:block" />
+        <Skeleton className="h-5 w-5 bg-zinc-200 md:w-10" />
+        <Skeleton className="h-5 w-5 bg-zinc-200" />
+        <Skeleton className="h-5 w-5 bg-zinc-200" />
+      </div>
+    </>
+  )
+}
+
+export default forwardRef(Header)

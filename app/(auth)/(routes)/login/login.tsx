@@ -108,11 +108,10 @@ export default function LoginPage({ setEmail }: Props) {
                 <FormLabel>Password</FormLabel>
                 <FormControl>
                   <InputPasswordWrapper
-                    peerClassName="password"
                     error={fieldState.error}
                     render={({ showPassword }) => (
                       <Input
-                        className="peer/password border-0 "
+                        className="peer border-0 "
                         placeholder={showPassword ? "Enter your password..." : "********"}
                         type={showPassword ? "text" : "password"}
                         {...field}

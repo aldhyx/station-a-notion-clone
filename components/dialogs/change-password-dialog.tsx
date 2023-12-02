@@ -105,11 +105,10 @@ export default function ChangePasswordDialog({ children }: PropsWithChildren) {
                     <FormLabel>New password</FormLabel>
                     <FormControl>
                       <InputPasswordWrapper
-                        peerClassName="password"
                         error={fieldState.error}
                         render={({ showPassword }) => (
                           <Input
-                            className="peer/password border-0 "
+                            className="peer border-0 "
                             placeholder={
                               showPassword ? "Enter new password..." : "********"
                             }
@@ -133,11 +132,10 @@ export default function ChangePasswordDialog({ children }: PropsWithChildren) {
                     <FormLabel>Confirm new password</FormLabel>
                     <FormControl>
                       <InputPasswordWrapper
-                        peerClassName="cpassword"
                         error={fieldState.error}
                         render={({ showPassword }) => (
                           <Input
-                            className="peer/cpassword border-0 "
+                            className="peer border-0 "
                             placeholder={
                               showPassword ? "Enter new confirm password..." : "********"
                             }

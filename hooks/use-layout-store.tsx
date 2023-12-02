@@ -1,6 +1,6 @@
 import { create } from "zustand"
 
-type ManualMinimizeTriggered = "settings" | "trash"
+type ManualMinimizeTriggered = "settings" | "trash" | "page"
 type LayoutStore = {
   minimize: boolean
   animating: boolean

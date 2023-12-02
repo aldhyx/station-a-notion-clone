@@ -173,7 +173,7 @@ export default function LayoutWrapper({ children }: PropsWithChildren) {
       </aside>
       <Header ref={topbarRef} maximizeHandler={maximizeHandler} isMobile={isMobile} />
       <main
-        className={"mt-12 h-[calc(100vh-48px)] flex-1 overflow-y-auto bg-zinc-50"}
+        className={"mt-12 h-[calc(100vh-48px)] flex-1 overflow-y-auto bg-background"}
         ref={mainRef}
       >
         {children}

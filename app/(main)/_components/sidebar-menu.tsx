@@ -1,14 +1,14 @@
 import SearchDialog from "@/components/dialogs/search-dialog"
 import { Button } from "@/components/ui/button"
+import { useCreatePage } from "@/hooks/page-store/use-create-page"
 import { useLayoutStore } from "@/hooks/use-layout-store"
-import { usePageStore } from "@/hooks/use-page-store"
 import { PlusCircleIcon, SearchIcon, SettingsIcon, Trash2Icon } from "lucide-react"
 import { useRouter } from "next/navigation"
 
 export default function SidebarMenu() {
   const { triggerManualMinimize } = useLayoutStore()
   const router = useRouter()
-  const { createNewPage } = usePageStore()
+  const { createNewPage } = useCreatePage()
 
   const clickHandler = (path: "settings" | "trash") => {
     triggerManualMinimize(path)
@@ -17,7 +17,10 @@ export default function SidebarMenu() {
 
   const createNewPageHandler = async () => {
     const res = await createNewPage()
-    if (res && res.data) router.push(`/pages/${res.data.uuid}`)
+    if (res?.data) {
+      triggerManualMinimize("page")
+      router.push(`/pages/${res.data.uuid}`)
+    }
   }
 
   return (

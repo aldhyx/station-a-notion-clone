@@ -8,11 +8,9 @@ import { type FieldError } from "react-hook-form"
 export default function InputPasswordWrapper({
   error,
   render,
-  peerClassName,
 }: {
   error?: FieldError
   render: ({ showPassword }: { showPassword: boolean }) => React.ReactNode
-  peerClassName: string
 }) {
   const [showPassword, setShowPassword] = useState(false)
 
@@ -27,7 +25,7 @@ export default function InputPasswordWrapper({
 
       <div
         role="button"
-        className={`grid h-10 cursor-pointer items-center rounded-r-sm bg-zinc-100 px-3 peer-focus/${peerClassName}:bg-zinc-50`}
+        className={`grid h-10 cursor-pointer items-center rounded-r-sm bg-zinc-100 px-3 peer-focus:bg-background`}
         onClick={() => setShowPassword(prev => !prev)}
       >
         {!showPassword ? (

@@ -62,7 +62,7 @@ export default function SignOutDialog({
       <DialogTrigger asChild>{children}</DialogTrigger>
 
       <DialogContent
-        className="max-w-sm overflow-hidden rounded-sm bg-zinc-50 p-0"
+        className="max-w-sm overflow-hidden rounded-sm bg-background p-0"
         hideCloseButton
       >
         <DialogHeader className="p-4">

@@ -18,7 +18,7 @@ export default function SettingsPage() {
       <ChangeProfileDialog>
         <Button
           size="lg"
-          className="flex h-auto w-full items-center justify-between px-0 hover:bg-zinc-50"
+          className="flex h-auto w-full items-center justify-between px-0 hover:bg-background"
           variant="ghost"
         >
           <div className="flex items-center">
@@ -51,7 +51,7 @@ export default function SettingsPage() {
         </h2>
         <Button
           size="lg"
-          className="flex h-16 w-full items-center px-0 hover:bg-zinc-50"
+          className="flex h-16 w-full items-center px-0 hover:bg-background"
           variant="ghost"
         >
           <div className="flex w-full flex-col items-start">
@@ -73,7 +73,7 @@ export default function SettingsPage() {
         <ChangeEmailDialog>
           <Button
             size="lg"
-            className="flex h-16 w-full flex-col items-start px-0 hover:bg-zinc-50"
+            className="flex h-16 w-full flex-col items-start px-0 hover:bg-background"
             variant="ghost"
           >
             <div className="mb-1 flex w-full justify-between align-baseline">
@@ -88,7 +88,7 @@ export default function SettingsPage() {
         <ChangePasswordDialog>
           <Button
             size="lg"
-            className="flex h-16 w-full flex-col items-start px-0 hover:bg-zinc-50"
+            className="flex h-16 w-full flex-col items-start px-0 hover:bg-background"
             variant="ghost"
           >
             <div className="mb-1 flex w-full justify-between align-baseline">
@@ -110,7 +110,7 @@ export default function SettingsPage() {
         <SignOutDialog scope="others">
           <Button
             size="lg"
-            className="flex h-16 w-full flex-col items-start px-0 hover:bg-zinc-50"
+            className="flex h-16 w-full flex-col items-start px-0 hover:bg-background"
             variant="ghost"
           >
             <div className="mb-1 flex w-full justify-between align-baseline">
@@ -125,7 +125,7 @@ export default function SettingsPage() {
 
         <Button
           size="lg"
-          className="flex h-16 w-full flex-col items-start px-0 hover:bg-zinc-50"
+          className="flex h-16 w-full flex-col items-start px-0 hover:bg-background"
           variant="ghost"
         >
           <div className="mb-1 flex w-full justify-between align-baseline">
