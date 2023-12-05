@@ -30,7 +30,7 @@ type UsePageStore = {
   updateTitle: ({ uuid, title }: { uuid: string; title?: string }) => Promise<void>
 
   removeCover: ({ uuid }: { uuid: string }) => void
-  changeCover: ({ path, uuid }: { path: string; uuid: string }) => void
+  changeCover: ({ path, uuid }: { path: string | null; uuid?: string }) => void
 }
 
 export const usePageStore = create<UsePageStore>()((set, get) => ({
@@ -124,6 +124,8 @@ export const usePageStore = create<UsePageStore>()((set, get) => ({
   },
 
   async changeCover({ path, uuid }) {
+    if (!path || !uuid) return
+
     set({ saving: "start" })
     const [folder, image_url] = path.split("/")
     const { data, error } = await supabase
