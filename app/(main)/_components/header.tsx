@@ -7,14 +7,17 @@ import { usePageStore } from "@/hooks/page-store/use-page-store"
 import { useLayoutStore } from "@/hooks/use-layout-store"
 import { cn } from "@/lib/utils"
 import {
+  CheckIcon,
   ChevronsRightIcon,
+  LoaderIcon,
   MenuIcon,
   MoreHorizontalIcon,
   Share2Icon,
   StarIcon,
 } from "lucide-react"
 import { usePathname } from "next/navigation"
-import { ForwardRefRenderFunction, forwardRef } from "react"
+import { ForwardRefRenderFunction, forwardRef, useRef } from "react"
+import { useUpdateEffect } from "usehooks-ts"
 
 type Props = {
   isMobile: boolean
@@ -26,11 +29,30 @@ type HeaderProps = ForwardRefRenderFunction<HTMLDivElement, Props> & {
 }
 
 const Header: HeaderProps = function Header({ isMobile, maximizeHandler }, ref) {
+  const savingRef = useRef<NodeJS.Timeout | null>(null)
   const pathname = usePathname()
-  const { page, loadingPage } = usePageStore()
+
+  const { page, saving, loadingPage, setSaving } = usePageStore()
   const { animating, minimize } = useLayoutStore()
 
   const loading = loadingPage || !page
+
+  useUpdateEffect(() => {
+    if (saving) {
+      if (!savingRef.current) {
+        const tmId = setTimeout(() => setSaving(null), 1000)
+        savingRef.current = tmId
+      } else {
+        clearTimeout(savingRef.current)
+        const newTmId = setTimeout(() => setSaving(null), 1000)
+        savingRef.current = newTmId
+      }
+    }
+
+    return () => {
+      if (savingRef.current) clearTimeout(savingRef.current)
+    }
+  }, [saving, setSaving])
 
   return (
     <div
@@ -61,9 +83,25 @@ const Header: HeaderProps = function Header({ isMobile, maximizeHandler }, ref) 
             {loading && <Header.Skeleton />}
 
             {!loading && page && (
-              <span className="block max-w-[130px] truncate pl-2 text-sm md:max-w-[240px]">
-                {page?.title}
-              </span>
+              <div className="flex items-center gap-x-4">
+                <span className="truncatepl-2 block max-w-[130px] text-sm">
+                  {page?.title}
+                </span>
+
+                {saving === "start" && (
+                  <span className="flex items-center gap-x-1 text-xs text-zinc-500">
+                    <LoaderIcon className="h-4 w-4 animate-spin" />
+                    Saving...
+                  </span>
+                )}
+
+                {saving === "success" && (
+                  <span className="flex items-center gap-x-1 text-xs text-zinc-500">
+                    <CheckIcon className="h-4 w-4" />
+                    Saved
+                  </span>
+                )}
+              </div>
             )}
 
             {!loading && page && (
