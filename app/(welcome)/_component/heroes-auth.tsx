@@ -1,12 +1,16 @@
 import { Button } from "@/components/ui/button"
-import { supabase } from "@/lib/supabase/server"
+import { createClient } from "@/lib/supabase/server"
 import { LoaderIcon } from "lucide-react"
+import { cookies } from "next/headers"
 import Link from "next/link"
 
 export default async function HeroesAuth() {
+  const cookiesStore = cookies()
+  const server = createClient(cookiesStore)
+
   const {
     data: { user },
-  } = await supabase.auth.getUser()
+  } = await server.auth.getUser()
 
   if (!user) {
     return (

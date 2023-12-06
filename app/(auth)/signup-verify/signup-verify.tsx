@@ -1,81 +1,25 @@
 "use client"
-
 import ErrorBlock from "@/components/error-block"
 import { Button } from "@/components/ui/button"
 import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { getApiError } from "@/lib/error/api-error"
-import { otpSchema, type OTPSchema } from "@/lib/schemas/auth-schema"
-import { supabase } from "@/lib/supabase/client"
+import { useAuthStore } from "@/hook/store/use-auth-store"
 import { cn } from "@/lib/utils"
-import { zodResolver } from "@hookform/resolvers/zod"
 import { LoaderIcon, MailCheckIcon } from "lucide-react"
-import { redirect, useRouter } from "next/navigation"
-import { useForm } from "react-hook-form"
-import { useCountdown } from "usehooks-ts"
+import useSignUpVerify from "./_hook/use-signup-verify"
 
-type Props = { email: string | undefined }
-
-export default function SignUpVerificationPage({ email }: Props) {
-  const router = useRouter()
-
-  const [count, { startCountdown }] = useCountdown({
-    countStart: 60,
-  })
-  const showCountdown = count != 0 && count < 60
-
-  const form = useForm<OTPSchema>({
-    resolver: zodResolver(otpSchema),
-  })
-
-  const submitHandler = form.handleSubmit(async ({ code }) => {
-    try {
-      const { data, error } = await supabase.auth.verifyOtp({
-        email: email!,
-        token: code,
-        type: "email",
-      })
-
-      if (error) {
-        // rate limit error
-        if (error.status === 429) throw new Error("")
-        // user not found
-        if (error.status === 404) return router.replace(`/signup`)
-
-        throw new Error(error.message)
-      }
-
-      router.replace("/pages")
-    } catch (error) {
-      form.setError("root.apiError", { message: getApiError(error) })
-    }
-  })
-
-  const resendHandler = async () => {
-    startCountdown()
-    try {
-      const { error } = await supabase.auth.resend({ type: "signup", email: email! })
-
-      if (error) {
-        // rate limit error
-        if (error.status === 429) throw new Error("")
-        throw new Error(error.message)
-      }
-
-      form.setError("root.apiError", { message: undefined })
-    } catch (error) {
-      form.setError("root.apiError", { message: getApiError(error) })
-    }
-  }
-
+export default function SignUpVerifyPage() {
+  const { email } = useAuthStore()
   const {
-    formState: { isSubmitting, isValid, errors },
-  } = form
-
-  const isDisableSubmit = !isValid || isSubmitting
-  const isLoadingSubmit = isSubmitting
-
-  if (!email) return redirect("/signup")
+    errors,
+    form,
+    isDisableSubmit,
+    isLoadingSubmit,
+    resendHandler,
+    showCountdown,
+    submitHandler,
+    count,
+  } = useSignUpVerify()
 
   return (
     <>

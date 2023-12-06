@@ -1,8 +1,6 @@
-"use client"
-
+import Footer from "@/app/(auth)/_component/footer"
 import ErrorBlock from "@/components/error-block"
 import InputPasswordWrapper from "@/components/input-password-wrapper"
-import { FacebookButton, GoogleButton } from "@/components/oauth-button"
 import { Button } from "@/components/ui/button"
 import {
   Form,
@@ -13,58 +11,13 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { getApiError } from "@/lib/error/api-error"
-import { signInSchema, type SignInSchema } from "@/lib/schemas/auth-schema"
-import { supabase } from "@/lib/supabase/client"
-import { zodResolver } from "@hookform/resolvers/zod"
 import { LoaderIcon } from "lucide-react"
 import Link from "next/link"
-import { useRouter } from "next/navigation"
-import { Dispatch, SetStateAction } from "react"
-import { useForm } from "react-hook-form"
-import Footer from "../../_components/footer"
+import { FacebookButton, GoogleButton } from "../_component/oauth-button"
+import { useLogin } from "./_hook/use-login"
 
-type Props = {
-  setEmail: Dispatch<SetStateAction<string | undefined>>
-}
-
-export default function LoginPage({ setEmail }: Props) {
-  const router = useRouter()
-
-  const form = useForm<SignInSchema>({
-    resolver: zodResolver(signInSchema),
-  })
-
-  const submitHandler = form.handleSubmit(async ({ email, password }) => {
-    try {
-      const { data, error } = await supabase.auth.signInWithPassword({ email, password })
-
-      if (error) {
-        if (error.message.toLowerCase() === "email not confirmed") {
-          setEmail(email)
-          return router.push(`/login?steps=2`)
-        }
-
-        throw new Error(
-          error.status === 400 ? "Invalid email or password" : error.message,
-        )
-      }
-
-      router.push("/pages")
-    } catch (error) {
-      form.setError("root.apiError", { message: getApiError(error) })
-    }
-  })
-
-  const {
-    formState: { isSubmitting, errors },
-    watch,
-  } = form
-
-  const currentFormState = watch()
-  const isDisableSubmit =
-    isSubmitting || !currentFormState.email || !currentFormState.password
-  const isLoadingSubmit = isSubmitting
+export default function LoginPage() {
+  const { errors, form, isDisableSubmit, isLoadingSubmit, submitHandler } = useLogin()
 
   return (
     <>
@@ -74,7 +27,6 @@ export default function LoginPage({ setEmail }: Props) {
       <FacebookButton />
 
       <hr className="my-8 w-full border-zinc-200" />
-
       <Form {...form}>
         <form
           onSubmit={submitHandler}
