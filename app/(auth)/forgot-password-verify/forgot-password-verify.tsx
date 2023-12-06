@@ -1,55 +1,14 @@
-"use client"
-
 import ErrorBlock from "@/components/error-block"
 import { Button } from "@/components/ui/button"
 import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { getApiError } from "@/lib/error/api-error"
-import { otpSchema, type OTPSchema } from "@/lib/schemas/auth-schema"
-import { supabase } from "@/lib/supabase/client"
-import { zodResolver } from "@hookform/resolvers/zod"
 import { LoaderIcon, MailCheckIcon } from "lucide-react"
 import Link from "next/link"
-import { redirect, useRouter } from "next/navigation"
-import { useForm } from "react-hook-form"
+import useForgotPasswordVerify from "./_hook/use-forgot-password-verify"
 
-type Props = { email: string | undefined }
-
-export default function ForgotPasswordVerificationPage({ email }: Props) {
-  const router = useRouter()
-
-  const form = useForm<OTPSchema>({
-    resolver: zodResolver(otpSchema),
-  })
-
-  const submitHandler = form.handleSubmit(async ({ code }) => {
-    try {
-      const { data, error } = await supabase.auth.verifyOtp({
-        email: email!,
-        token: code,
-        type: "recovery",
-      })
-
-      if (error) {
-        // rate limit error
-        if (error.status === 429) throw new Error("")
-        throw new Error(error.message)
-      }
-
-      router.replace("/reset-password")
-    } catch (error) {
-      form.setError("root.apiError", { message: getApiError(error) })
-    }
-  })
-
-  const {
-    formState: { isSubmitting, isValid, errors },
-  } = form
-
-  const isDisableSubmit = !isValid || isSubmitting
-  const isLoadingSubmit = isSubmitting
-
-  if (!email) return redirect("/forgot-password")
+export default function ForgotPasswordVerifyPage() {
+  const { errors, form, isDisableSubmit, isLoadingSubmit, email, submitHandler } =
+    useForgotPasswordVerify()
 
   return (
     <>

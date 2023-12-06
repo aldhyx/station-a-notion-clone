@@ -6,7 +6,7 @@ import {
 } from "../_schema/signup-verify-schema"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
-import { resendOtp, signUpVerify } from "../_api/signup-verify-api"
+import { resendOtpAsync, signUpVerifyAsync } from "../_api/signup-verify-api"
 import { useAuthStore } from "@/hook/store/use-auth-store"
 
 export default function useSignUpVerify() {
@@ -24,7 +24,7 @@ export default function useSignUpVerify() {
   })
 
   const submitHandler = form.handleSubmit(async ({ code }) => {
-    const { data, error } = await signUpVerify({
+    const { data, error } = await signUpVerifyAsync({
       email: email!,
       token: code,
     })
@@ -37,7 +37,7 @@ export default function useSignUpVerify() {
 
   const resendHandler = async () => {
     startCountdown()
-    const { data, error } = await resendOtp(email!)
+    const { data, error } = await resendOtpAsync(email!)
 
     if (error) form.setError("root.apiError", { message: error.message })
     else form.setError("root.apiError", { message: undefined })
@@ -52,5 +52,6 @@ export default function useSignUpVerify() {
     resendHandler,
     showCountdown,
     count,
+    email,
   }
 }

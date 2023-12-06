@@ -2,7 +2,7 @@ import { useRouter } from "next/navigation"
 import { type LoginSchema, loginSchema } from "../_schema/login-schema"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { signInWithPasswordCredentials } from "../_api/login-api"
+import { signInWithPasswordAsync } from "../_api/login-api"
 import { useAuthStore } from "@/hook/store/use-auth-store"
 
 export const useLogin = () => {
@@ -15,7 +15,7 @@ export const useLogin = () => {
   })
 
   const submitHandler = form.handleSubmit(async props => {
-    const { data, error } = await signInWithPasswordCredentials(props)
+    const { data, error } = await signInWithPasswordAsync(props)
     if (!error) {
       router.replace("/pages")
       return

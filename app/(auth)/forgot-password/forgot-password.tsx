@@ -1,52 +1,14 @@
-"use client"
-
 import ErrorBlock from "@/components/error-block"
 import { Button } from "@/components/ui/button"
 import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { getApiError } from "@/lib/error/api-error"
-import {
-  emailVerificationSchema,
-  type EmailVerificationSchema,
-} from "@/lib/schemas/auth-schema"
-import { supabase } from "@/lib/supabase/client"
-import { zodResolver } from "@hookform/resolvers/zod"
 import { LoaderIcon, LockIcon } from "lucide-react"
 import Link from "next/link"
-import { useRouter } from "next/navigation"
-import { Dispatch, SetStateAction } from "react"
-import { useForm } from "react-hook-form"
+import useForgotPassword from "./_hook/use-forgot-password"
 
-type Props = {
-  setEmail: Dispatch<SetStateAction<string | undefined>>
-}
-export default function ForgotPasswordPage({ setEmail }: Props) {
-  const router = useRouter()
-  const form = useForm<EmailVerificationSchema>({
-    resolver: zodResolver(emailVerificationSchema),
-  })
-
-  const submitHandler = form.handleSubmit(async ({ email }) => {
-    try {
-      const { error } = await supabase.auth.resetPasswordForEmail(email)
-
-      if (error) throw new Error(error.message)
-
-      setEmail(email)
-      router.push("/forgot-password?steps=2")
-    } catch (error) {
-      form.setError("root.apiError", { message: getApiError(error) })
-    }
-  })
-
-  const {
-    formState: { isSubmitting, errors },
-    watch,
-  } = form
-
-  const currentFormState = watch()
-  const isDisableSubmit = isSubmitting || !currentFormState.email
-  const isLoadingSubmit = isSubmitting
+export default function ForgotPasswordPage() {
+  const { errors, form, isDisableSubmit, isLoadingSubmit, submitHandler } =
+    useForgotPassword()
 
   return (
     <>

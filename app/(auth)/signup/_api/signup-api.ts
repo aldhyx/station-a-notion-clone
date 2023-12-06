@@ -6,7 +6,7 @@ type Props = {
   password: string
 }
 
-export const signUpWithPasswordCredentials = async (props: Props) => {
+export const signUpWithPasswordAsync = async (props: Props) => {
   try {
     const { data, error } = await client.auth.signUp(props)
 

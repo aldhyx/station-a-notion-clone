@@ -2,7 +2,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useRouter } from "next/navigation"
 import { useForm } from "react-hook-form"
 import { signUpSchema, type SignUpSchema } from "../_schema/signup-schema"
-import { signUpWithPasswordCredentials } from "../_api/signup-api"
+import { signUpWithPasswordAsync } from "../_api/signup-api"
 import { useAuthStore } from "@/hook/store/use-auth-store"
 
 export const useSignUp = () => {
@@ -15,7 +15,7 @@ export const useSignUp = () => {
   })
 
   const submitHandler = form.handleSubmit(async props => {
-    const { data, error } = await signUpWithPasswordCredentials(props)
+    const { data, error } = await signUpWithPasswordAsync(props)
 
     if (error) form.setError("root.apiError", { message: error.message })
     else {

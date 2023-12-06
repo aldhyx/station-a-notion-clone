@@ -6,7 +6,7 @@ type Props = {
   token: string
 }
 
-export const signUpVerify = async ({ email, token }: Props) => {
+export const signUpVerifyAsync = async ({ email, token }: Props) => {
   try {
     const { data, error } = await client.auth.verifyOtp({
       email,
@@ -27,7 +27,7 @@ export const signUpVerify = async ({ email, token }: Props) => {
   }
 }
 
-export const resendOtp = async (email: string) => {
+export const resendOtpAsync = async (email: string) => {
   try {
     const { error, data } = await client.auth.resend({ type: "signup", email })
 

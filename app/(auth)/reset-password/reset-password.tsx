@@ -13,42 +13,14 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { getApiError } from "@/lib/error/api-error"
-import { resetPasswordSchema, type ResetPasswordSchema } from "@/lib/schemas/auth-schema"
-import { supabase } from "@/lib/supabase/client"
-import { zodResolver } from "@hookform/resolvers/zod"
 import { LoaderIcon, LockKeyholeIcon, PartyPopperIcon } from "lucide-react"
 import { useRouter } from "next/navigation"
-import { useState } from "react"
-import { useForm } from "react-hook-form"
+import { useResetPassword } from "./_hook/use-reset-password"
 
 export default function ResetPasswordPage() {
-  const [isSuccess, setIsSuccess] = useState(false)
   const router = useRouter()
-  const form = useForm<ResetPasswordSchema>({
-    resolver: zodResolver(resetPasswordSchema),
-  })
-
-  const submitHandler = form.handleSubmit(async ({ password }) => {
-    try {
-      const { error } = await supabase.auth.updateUser({ password })
-
-      if (error) throw new Error(error.message)
-      setIsSuccess(true)
-    } catch (error) {
-      form.setError("root.apiError", { message: getApiError(error) })
-    }
-  })
-
-  const {
-    formState: { isSubmitting, errors },
-    watch,
-  } = form
-
-  const currentFormState = watch()
-  const isDisableSubmit =
-    isSubmitting || !currentFormState.confirm_password || !currentFormState.password
-  const isLoadingSubmit = isSubmitting
+  const { errors, form, isDisableSubmit, isLoadingSubmit, isSuccess, submitHandler } =
+    useResetPassword()
 
   if (isSuccess) {
     return (

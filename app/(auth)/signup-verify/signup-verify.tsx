@@ -3,13 +3,11 @@ import ErrorBlock from "@/components/error-block"
 import { Button } from "@/components/ui/button"
 import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { useAuthStore } from "@/hook/store/use-auth-store"
 import { cn } from "@/lib/utils"
 import { LoaderIcon, MailCheckIcon } from "lucide-react"
 import useSignUpVerify from "./_hook/use-signup-verify"
 
 export default function SignUpVerifyPage() {
-  const { email } = useAuthStore()
   const {
     errors,
     form,
@@ -19,6 +17,7 @@ export default function SignUpVerifyPage() {
     showCountdown,
     submitHandler,
     count,
+    email,
   } = useSignUpVerify()
 
   return (

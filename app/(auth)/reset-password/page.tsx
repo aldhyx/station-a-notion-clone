@@ -6,6 +6,6 @@ const ResetPasswordPage = dynamic(() => import("./reset-password"), {
   loading: () => <FullScreenLoading />,
 })
 
-export default function ResetPassword() {
+export default function ResetPasswordRootPage() {
   return <ResetPasswordPage />
 }
