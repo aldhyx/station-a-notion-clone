@@ -1,8 +1,8 @@
-import { Emoji } from "@/components/popover/emoji-picker-popover"
-import { supabase } from "@/lib/supabase/client"
-import { type Database } from "@/lib/supabase/database-types"
+import { type Emoji } from "@/components/popover/emoji-picker-popover"
+import { client } from "@/lib/supabase/client"
+import { type Database } from "@/lib/supabase/database.types"
+import { toastError } from "@/lib/toast"
 import { Dispatch, SetStateAction } from "react"
-import { toast } from "sonner"
 import { create } from "zustand"
 
 type Pages = Pick<
@@ -17,21 +17,21 @@ type ProgressFlag = "start" | "success" | "failed" | null
 type UsePageStore = {
   // sidebar page list state & mutation
   pages: Record<string, Pages | null> | null
-  getPages: (uuid?: string) => Promise<void>
+  getPagesAsync: (uuid?: string) => Promise<void>
 
   // selected page change state & mutation
   page: Page | null
   loadingPage: boolean
-  getPage: (uuid: string) => Promise<void>
+  getPageAsync: (uuid: string) => Promise<void>
 
   // modify selected page change state & mutation
   saving: ProgressFlag
   setSaving: (v: ProgressFlag) => void
-  updateEmoji(options?: { emoji: Emoji }): Promise<void>
-  updateTitle: ({ title }: { title?: string }) => Promise<void>
+  updateEmojiAsync(options?: { emoji: Emoji }): Promise<void>
+  updateTitleAsync: ({ title }: { title?: string }) => Promise<void>
 
-  removeCover: () => void
-  changeCover: ({
+  removeCoverAsync: () => void
+  changeCoverAsync: ({
     path,
     setApplying,
   }: {
@@ -46,8 +46,8 @@ export const usePageStore = create<UsePageStore>()((set, get) => ({
   saving: null,
   loadingPage: false,
   setSaving: saving => set({ saving }),
-  async getPages(uuid) {
-    let query = supabase.from("pages").select("uuid, title, emoji, parent_uuid")
+  async getPagesAsync(uuid) {
+    let query = client.from("pages").select("uuid, title, emoji, parent_uuid")
 
     if (uuid) {
       query = query.eq("parent_uuid", uuid)
@@ -66,12 +66,12 @@ export const usePageStore = create<UsePageStore>()((set, get) => ({
 
     set({ pages: newData })
   },
-  async getPage(uuid) {
+  async getPageAsync(uuid) {
     if (!uuid) return
 
     set({ loadingPage: true, page: null })
 
-    const { data, error } = await supabase
+    const { data, error } = await client
       .from("pages")
       .select("*")
       .eq("uuid", uuid)
@@ -82,13 +82,13 @@ export const usePageStore = create<UsePageStore>()((set, get) => ({
       throw new Error(error.message)
     }
   },
-  async updateEmoji(options) {
+  async updateEmojiAsync(options) {
     const uuid = get().page?.uuid
     if (!uuid) return
 
     set({ saving: "start" })
 
-    const { data, error } = await supabase
+    const { data, error } = await client
       .from("pages")
       .update({ emoji: options?.emoji ?? null })
       .eq("uuid", uuid)
@@ -98,16 +98,18 @@ export const usePageStore = create<UsePageStore>()((set, get) => ({
     if (data) set({ page: data, saving: "success" })
     else {
       set({ saving: null })
-      toast.error(error.message ?? "Failed to change icon.")
+      toastError({
+        message: error.message ?? "Failed to change icon.",
+      })
     }
   },
-  async updateTitle({ title }) {
+  async updateTitleAsync({ title }) {
     const uuid = get().page?.uuid
     if (!uuid) return
 
     set({ saving: "start" })
 
-    const { data, error } = await supabase
+    const { data, error } = await client
       .from("pages")
       .update({ title: title ?? null })
       .eq("uuid", uuid)
@@ -117,15 +119,15 @@ export const usePageStore = create<UsePageStore>()((set, get) => ({
     if (data) set({ page: data, saving: "success" })
     else {
       set({ saving: null })
-      toast.error(error.message ?? "Failed to change title.")
+      toastError({ message: error.message ?? "Failed to change title." })
     }
   },
-  async removeCover() {
+  async removeCoverAsync() {
     const uuid = get().page?.uuid
     if (!uuid) return
 
     set({ saving: "start" })
-    const { data, error } = await supabase
+    const { data } = await client
       .from("pages")
       .update({ image_url: null })
       .eq("uuid", uuid)
@@ -135,18 +137,17 @@ export const usePageStore = create<UsePageStore>()((set, get) => ({
     if (data) set({ page: data, saving: "success" })
     else {
       set({ saving: null })
-      toast.error("Failed to remove cover image!")
+      toastError({ message: "Failed to remove cover image!" })
     }
   },
-
-  async changeCover({ path, setApplying }) {
+  async changeCoverAsync({ path, setApplying }) {
     const uuid = get().page?.uuid
     if (!uuid || !path) return
 
     set({ saving: "start" })
     setApplying(path)
-    const [folder, image_url] = path.split("/")
-    const { data, error } = await supabase
+    const [_, image_url] = path.split("/")
+    const { data } = await client
       .from("pages")
       .update({ image_url })
       .eq("uuid", uuid)
@@ -157,7 +158,7 @@ export const usePageStore = create<UsePageStore>()((set, get) => ({
     if (data) set({ page: data, saving: "success" })
     else {
       set({ saving: null })
-      toast.error("Failed to change cover image!")
+      toastError({ message: "Failed to change cover image!" })
     }
   },
 }))

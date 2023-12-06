@@ -1,22 +1,22 @@
-import { supabase } from "@/lib/supabase/client"
+import { client } from "@/lib/supabase/client"
 import { type PostgrestError } from "@supabase/supabase-js"
 import { toast } from "sonner"
 import { create } from "zustand"
 
 type UseCreatePage = {
   creating: boolean
-  createNewPage: (
+  createNewPageAsync: (
     uuid?: string,
   ) => Promise<
     | void
-    | { data?: undefined; error: PostgrestError | null }
-    | { data: { uuid: string } | null; error?: undefined }
+    | { data: null; error: PostgrestError | null }
+    | { data: { uuid: string } | null; error: null }
   >
 }
 
 export const useCreatePage = create<UseCreatePage>()((set, get) => ({
   creating: false,
-  async createNewPage(uuid) {
+  async createNewPageAsync(uuid) {
     if (get().creating) return
 
     set({ creating: true })
@@ -24,7 +24,7 @@ export const useCreatePage = create<UseCreatePage>()((set, get) => ({
     const toastId = toast(uuid ?? "new-page")
     toast.loading("Creating new page...", { id: toastId })
 
-    const { data, error } = await supabase
+    const { data, error } = await client
       .from("pages")
       .insert({ parent_uuid: uuid })
       .select("uuid")
@@ -33,11 +33,11 @@ export const useCreatePage = create<UseCreatePage>()((set, get) => ({
     set({ creating: false })
     if (error) {
       toast.error("Failed to create new page.", { id: toastId })
-      return { error }
+      return { data: null, error }
     }
 
     toast.success("Successfully created new page.", { id: toastId })
 
-    return { data }
+    return { data, error: null }
   },
 }))

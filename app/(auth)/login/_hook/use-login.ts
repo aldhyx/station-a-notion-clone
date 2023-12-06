@@ -17,7 +17,7 @@ export const useLogin = () => {
   const submitHandler = form.handleSubmit(async props => {
     const { data, error } = await signInWithPasswordAsync(props)
     if (!error) {
-      router.replace("/pages")
+      router.replace("/page")
       return
     }
 

@@ -1,10 +1,8 @@
 "use client"
 
-import { supabase } from "@/lib/supabase/client"
+import { useUserStore } from "@/hook/store/use-user.store"
 import { type SignOut } from "@supabase/supabase-js"
-import { useRouter } from "next/navigation"
 import { PropsWithChildren } from "react"
-import { toast } from "sonner"
 import { Button } from "../ui/button"
 import {
   Dialog,
@@ -20,41 +18,11 @@ export default function SignOutDialog({
   children,
   scope = "local",
 }: PropsWithChildren & SignOut) {
-  const message = {
-    success: {
-      local: "Successfully logged out.",
-      global: "Successfully logged out all device",
-      others: "Successfully logged out other device",
-    },
-    error: {
-      local: "Something went wrong! Failed to log out",
-      global: "Something went wrong! Failed to log out all device",
-      others: "Something went wrong! Failed to log out other device",
-    },
-  }
-
+  const { signOutAsync } = useUserStore()
   const title = {
     local: "Are you sure, do you want to log out?",
     global: "Are you sure, do you want to log out from all logged device?",
     others: "Are you sure, do you want to log out from other logged device?",
-  }
-
-  const router = useRouter()
-
-  const signOutHandler = () => {
-    const promise = supabase.auth.signOut({ scope })
-
-    toast.promise(promise, {
-      loading: "Logging out...",
-      success: data => {
-        if (data.error) return message.error[scope]
-
-        router.replace("/login")
-        return message.success[scope]
-      },
-      error: message.error[scope],
-      dismissible: false,
-    })
   }
 
   return (
@@ -76,7 +44,7 @@ export default function SignOutDialog({
             size="lg"
             variant="secondary"
             className="flex-1 rounded-bl-xl"
-            onClick={signOutHandler}
+            onClick={() => signOutAsync(scope)}
           >
             Yes, log out
           </Button>

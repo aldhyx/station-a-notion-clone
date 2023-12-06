@@ -3,7 +3,7 @@ import { PropsWithChildren } from "react"
 import FullScreenLoading from "@/components/full-screen-loading"
 import dynamic from "next/dynamic"
 
-const LayoutWrapper = dynamic(() => import("./_components/layout-wrapper"), {
+const LayoutWrapper = dynamic(() => import("./_component/layout-wrapper"), {
   ssr: false,
   loading: () => <FullScreenLoading />,
 })

@@ -3,16 +3,16 @@
 import UserPopover from "@/components/popover/user-popover"
 import { Button } from "@/components/ui/button"
 import { Skeleton } from "@/components/ui/skeleton"
-import { useUserStore } from "@/hooks/use-user-store"
+import { useUserStore } from "@/hook/store/use-user.store"
 import { ChevronsUpDownIcon, UserCircle2 } from "lucide-react"
 
 export default function SidebarUser() {
-  const { currentUser } = useUserStore()
+  const { currentUser, fullname, username } = useUserStore()
 
   if (!currentUser?.email) return <Skeleton className="mb-1 h-10 w-full bg-zinc-200" />
 
   return (
-    <UserPopover>
+    <UserPopover email={currentUser.email} fullname={fullname} username={username}>
       <Button
         variant="ghost"
         size="lg"

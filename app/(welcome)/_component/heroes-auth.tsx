@@ -22,7 +22,7 @@ export default async function HeroesAuth() {
 
   return (
     <Button className="text-base" asChild>
-      <Link href="/pages">Dashboard</Link>
+      <Link href="/page">Dashboard</Link>
     </Button>
   )
 }

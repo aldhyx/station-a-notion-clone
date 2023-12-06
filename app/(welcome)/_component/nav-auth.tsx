@@ -28,7 +28,7 @@ export default async function NavAuth() {
   return (
     <div>
       <Button className="md:flex" size="sm" asChild>
-        <Link href="/pages">Dashboard</Link>
+        <Link href="/page">Dashboard</Link>
       </Button>
     </div>
   )

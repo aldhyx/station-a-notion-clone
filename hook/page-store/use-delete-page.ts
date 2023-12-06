@@ -1,22 +1,21 @@
-import { supabase } from "@/lib/supabase/client"
+import { client } from "@/lib/supabase/client"
 import { type PostgrestError } from "@supabase/supabase-js"
 import { toast } from "sonner"
 import { create } from "zustand"
 
 type UseDeletePage = {
-  deletePage: (
+  deletePageAsync: (
     uuid: string,
   ) => Promise<
-    | { error: PostgrestError | null; data?: undefined }
-    | { error?: undefined; data: { uuid: string } }
+    { error: PostgrestError | null; data: null } | { error: null; data: { uuid: string } }
   >
 }
 
 export const useDeletePage = create<UseDeletePage>()(set => ({
-  async deletePage(uuid) {
+  async deletePageAsync(uuid) {
     const toastId = toast(uuid)
 
-    const { error, data } = await supabase
+    const { error, data } = await client
       .from("pages")
       .update({ is_deleted: true, parent_uuid: null })
       .eq("uuid", uuid)
@@ -24,10 +23,10 @@ export const useDeletePage = create<UseDeletePage>()(set => ({
     if (error) {
       toast.error("Move to trash failed.", { id: toastId })
 
-      return { error }
+      return { error, data: null }
     }
 
     toast.success("Moved to trash successfully.", { id: toastId })
-    return { data: { uuid } }
+    return { data: { uuid }, error: null }
   },
 }))

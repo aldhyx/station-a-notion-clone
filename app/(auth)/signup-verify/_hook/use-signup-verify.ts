@@ -31,7 +31,7 @@ export default function useSignUpVerify() {
 
     if (error) form.setError("root.apiError", { message: error.message })
     else {
-      router.replace("/pages")
+      router.replace("/page")
     }
   })
 

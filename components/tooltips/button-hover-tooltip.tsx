@@ -1,17 +1,17 @@
-import React from "react"
+import React, { PropsWithChildren } from "react"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "../ui/tooltip"
 
+type Props = PropsWithChildren & {
+  text?: string
+  content?: React.FC
+  asChild?: boolean
+}
 export default function ButtonHoverTooltip({
   children,
   text,
   content: Content,
   asChild,
-}: {
-  children: React.ReactNode
-  text?: string
-  content?: React.FC
-  asChild?: boolean
-}) {
+}: Props) {
   return (
     <TooltipProvider>
       <Tooltip>

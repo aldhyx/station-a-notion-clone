@@ -1,4 +1,4 @@
-import { useRef, useState } from "react"
+import { useState } from "react"
 import { useUpdateEffect } from "usehooks-ts"
 
 export const useImagePreview = (file: File | null) => {

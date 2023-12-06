@@ -3,8 +3,7 @@
 import MoreMenuPopover from "@/components/popover/more-menu-popover"
 import { Button } from "@/components/ui/button"
 import { Skeleton } from "@/components/ui/skeleton"
-import { usePageStore } from "@/hooks/page-store/use-page-store"
-import { useLayoutStore } from "@/hooks/use-layout-store"
+import { usePageStore } from "@/hook/page-store/use-page-store"
 import { cn } from "@/lib/utils"
 import {
   CheckIcon,
@@ -16,10 +15,12 @@ import {
   StarIcon,
 } from "lucide-react"
 import { usePathname } from "next/navigation"
-import { ForwardRefRenderFunction, forwardRef, useRef } from "react"
-import { useUpdateEffect } from "usehooks-ts"
+import { ForwardRefRenderFunction, forwardRef } from "react"
+import { useSaving } from "../_hook/use-saving"
 
 type Props = {
+  animating: boolean
+  minimize: boolean
   isMobile: boolean
   maximizeHandler: () => void
 }
@@ -28,31 +29,15 @@ type HeaderProps = ForwardRefRenderFunction<HTMLDivElement, Props> & {
   Skeleton: React.FC
 }
 
-const Header: HeaderProps = function Header({ isMobile, maximizeHandler }, ref) {
-  const savingRef = useRef<NodeJS.Timeout | null>(null)
+const Header: HeaderProps = function Header(
+  { isMobile, maximizeHandler, animating, minimize },
+  ref,
+) {
   const pathname = usePathname()
-
-  const { page, saving, loadingPage, setSaving } = usePageStore()
-  const { animating, minimize } = useLayoutStore()
+  const { page, loadingPage, saving } = usePageStore()
+  useSaving()
 
   const loading = loadingPage || !page
-
-  useUpdateEffect(() => {
-    if (saving) {
-      if (!savingRef.current) {
-        const tmId = setTimeout(() => setSaving(null), 1000)
-        savingRef.current = tmId
-      } else {
-        clearTimeout(savingRef.current)
-        const newTmId = setTimeout(() => setSaving(null), 1000)
-        savingRef.current = newTmId
-      }
-    }
-
-    return () => {
-      if (savingRef.current) clearTimeout(savingRef.current)
-    }
-  }, [saving, setSaving])
 
   return (
     <div
@@ -139,7 +124,7 @@ const Header: HeaderProps = function Header({ isMobile, maximizeHandler }, ref) 
         {!pathname.startsWith("/pages") && (
           <div className="flex w-full items-center justify-between ">
             <p className="max-w-[130px] text-sm capitalize md:max-w-[240px]">
-              {pathname.replaceAll("/", "")}
+              {pathname === "/page" ? "Getting started" : pathname.replaceAll("/", "")}
             </p>
           </div>
         )}
