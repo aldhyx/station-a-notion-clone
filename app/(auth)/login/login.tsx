@@ -1,4 +1,3 @@
-import Footer from "@/app/(auth)/_component/footer"
 import ErrorBlock from "@/components/error-block"
 import InputPasswordWrapper from "@/components/input-password-wrapper"
 import { Button } from "@/components/ui/button"
@@ -13,8 +12,9 @@ import {
 import { Input } from "@/components/ui/input"
 import { LoaderIcon } from "lucide-react"
 import Link from "next/link"
-import { FacebookButton, GoogleButton } from "../_component/oauth-button"
-import { useLogin } from "./_hook/use-login"
+import Footer from "../_components/footer"
+import { FacebookButton, GoogleButton } from "../_components/oauth-button"
+import { useLogin } from "./_hooks/use-login"
 
 export default function LoginPage() {
   const { errors, form, isDisableSubmit, isLoadingSubmit, submitHandler } = useLogin()

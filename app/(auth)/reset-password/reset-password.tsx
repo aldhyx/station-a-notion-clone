@@ -15,7 +15,7 @@ import {
 import { Input } from "@/components/ui/input"
 import { LoaderIcon, LockKeyholeIcon, PartyPopperIcon } from "lucide-react"
 import { useRouter } from "next/navigation"
-import { useResetPassword } from "./_hook/use-reset-password"
+import { useResetPassword } from "./_hooks/use-reset-password"
 
 export default function ResetPasswordPage() {
   const router = useRouter()

@@ -5,7 +5,7 @@ import { Form, FormControl, FormField, FormItem, FormMessage } from "@/component
 import { Input } from "@/components/ui/input"
 import { cn } from "@/lib/utils"
 import { LoaderIcon, MailCheckIcon } from "lucide-react"
-import useSignUpVerify from "./_hook/use-signup-verify"
+import useSignUpVerify from "./_hooks/use-signup-verify"
 
 export default function SignUpVerifyPage() {
   const {

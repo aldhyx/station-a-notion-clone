@@ -1,7 +1,7 @@
 "use client"
 
 import FullScreenLoading from "@/components/full-screen-loading"
-import { useAuthStore } from "@/hook/store/use-auth-store"
+import { useAuthStore } from "@/store/use-auth-store"
 import dynamic from "next/dynamic"
 import { redirect } from "next/navigation"
 

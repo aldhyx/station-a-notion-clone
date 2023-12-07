@@ -2,8 +2,8 @@ import Logo from "@/components/logo"
 import { Button } from "@/components/ui/button"
 import Image from "next/image"
 import { Suspense } from "react"
-import HeroesAuth from "./_component/heroes-auth"
-import NavAuth from "./_component/nav-auth"
+import HeroesAuth from "./_components/heroes-auth"
+import NavAuth from "./_components/nav-auth"
 
 export const revalidate = 0
 

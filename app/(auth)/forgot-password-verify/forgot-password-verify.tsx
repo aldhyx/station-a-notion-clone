@@ -2,13 +2,15 @@ import ErrorBlock from "@/components/error-block"
 import { Button } from "@/components/ui/button"
 import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
+import { useAuthStore } from "@/store/use-auth-store"
 import { LoaderIcon, MailCheckIcon } from "lucide-react"
 import Link from "next/link"
-import useForgotPasswordVerify from "./_hook/use-forgot-password-verify"
+import useForgotPasswordVerify from "./_hooks/use-forgot-password-verify"
 
 export default function ForgotPasswordVerifyPage() {
-  const { errors, form, isDisableSubmit, isLoadingSubmit, email, submitHandler } =
+  const { errors, form, isDisableSubmit, isLoadingSubmit, submitHandler } =
     useForgotPasswordVerify()
+  const { email } = useAuthStore()
 
   return (
     <>

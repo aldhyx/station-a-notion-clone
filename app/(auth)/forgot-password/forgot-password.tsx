@@ -4,7 +4,7 @@ import { Form, FormControl, FormField, FormItem, FormMessage } from "@/component
 import { Input } from "@/components/ui/input"
 import { LoaderIcon, LockIcon } from "lucide-react"
 import Link from "next/link"
-import useForgotPassword from "./_hook/use-forgot-password"
+import useForgotPassword from "./_hooks/use-forgot-password"
 
 export default function ForgotPasswordPage() {
   const { errors, form, isDisableSubmit, isLoadingSubmit, submitHandler } =

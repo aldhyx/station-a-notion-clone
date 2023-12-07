@@ -1,13 +1,24 @@
 import { PropsWithChildren } from "react"
 
 import FullScreenLoading from "@/components/full-screen-loading"
+import { createClient } from "@/lib/supabase/server"
 import dynamic from "next/dynamic"
+import { cookies } from "next/headers"
+import { redirect } from "next/navigation"
 
-const LayoutWrapper = dynamic(() => import("./_component/layout-wrapper"), {
+const LayoutWrapper = dynamic(() => import("./_components/layout-wrapper"), {
   ssr: false,
   loading: () => <FullScreenLoading />,
 })
 
-export default function MainLayout({ children }: PropsWithChildren) {
-  return <LayoutWrapper>{children}</LayoutWrapper>
+export default async function MainLayout({ children }: PropsWithChildren) {
+  const cookiesStore = cookies()
+  const server = createClient(cookiesStore)
+
+  const {
+    data: { user },
+  } = await server.auth.getUser()
+  if (!user) return redirect("/")
+
+  return <LayoutWrapper currentUser={user}>{children}</LayoutWrapper>
 }

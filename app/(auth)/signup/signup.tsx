@@ -12,9 +12,9 @@ import {
 import { Input } from "@/components/ui/input"
 import { LoaderIcon } from "lucide-react"
 import Link from "next/link"
-import Footer from "../_component/footer"
-import { FacebookButton, GoogleButton } from "../_component/oauth-button"
-import { useSignUp } from "./_hook/use-signup"
+import Footer from "../_components/footer"
+import { FacebookButton, GoogleButton } from "../_components/oauth-button"
+import { useSignUp } from "./_hooks/use-signup"
 
 export default function SignUpPage() {
   const { errors, form, isDisableSubmit, isLoadingSubmit, submitHandler } = useSignUp()

@@ -1,9 +1,4 @@
-"use client"
-
-import { useUserStore } from "@/store/use-user-store"
-import { type SignOut } from "@supabase/supabase-js"
-import { PropsWithChildren } from "react"
-import { Button } from "../ui/button"
+import { Button } from "@/components/ui/button"
 import {
   Dialog,
   DialogClose,
@@ -12,19 +7,15 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTrigger,
-} from "../ui/dialog"
+} from "@/components/ui/dialog"
+import { type PropsWithChildren } from "react"
 
-export default function SignOutDialog({
+export default function DeleteImageDialog({
   children,
-  scope = "local",
-}: PropsWithChildren & SignOut) {
-  const { signOutAsync } = useUserStore()
-  const title = {
-    local: "Are you sure, do you want to log out?",
-    global: "Are you sure, do you want to log out from all logged device?",
-    others: "Are you sure, do you want to log out from other logged device?",
-  }
-
+  deleteImageHandler,
+}: PropsWithChildren & {
+  deleteImageHandler: () => void
+}) {
   return (
     <Dialog>
       <DialogTrigger asChild>{children}</DialogTrigger>
@@ -35,7 +26,7 @@ export default function SignOutDialog({
       >
         <DialogHeader className="p-4">
           <DialogDescription className="leading-1 text-left text-zinc-800">
-            {title[scope]}
+            Are you sure, dou you want to permanently delete image from gallery ?
           </DialogDescription>
         </DialogHeader>
         <DialogFooter className="w-full flex-row gap-0 border-t border-zinc-200">
@@ -44,9 +35,12 @@ export default function SignOutDialog({
             size="lg"
             variant="secondary"
             className="flex-1 rounded-bl-xl"
-            onClick={() => signOutAsync(scope)}
+            onClick={e => {
+              e.stopPropagation()
+              deleteImageHandler()
+            }}
           >
-            Yes, log out
+            Yes, Delete
           </Button>
           <div className="!m-0 box-border h-full w-[1px] border-r border-zinc-200 p-0" />
           <DialogClose asChild className="!m-0">
