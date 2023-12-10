@@ -16,7 +16,6 @@ export default function CoverBlock() {
   const emoji = doc?.emoji ? (doc.emoji as Emoji) : null
   const loading = loadingDoc || !doc
 
-  console.count("cover block")
   return (
     <div className={cn("group/cover peer/cover relative mx-auto")}>
       {loading && <Skeleton className="h-48 w-full rounded-none bg-zinc-200 md:h-72" />}

@@ -28,7 +28,7 @@ export default function Gallery() {
 
   if (loading && !gallery?.length) return <Gallery.Skeleton />
   if (!gallery?.length) return <Gallery.Empty />
-  console.log({ gallery })
+
   return (
     <div className="relative grid grid-cols-3 gap-2">
       {gallery.map(d => {

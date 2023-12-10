@@ -68,8 +68,6 @@ export const useGalleryStore = create<GalleryState & GalleryAction>()((set, get)
 
     try {
       const { data, error } = await client.storage.from("covers").remove([path])
-      console.log({ data, error })
-
       if (error) throw new Error(error.message)
 
       let gallery = get().gallery ?? []

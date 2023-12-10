@@ -2,7 +2,7 @@ import { useDocStore } from "@/store/use-doc-store"
 import { useRef } from "react"
 import { useUpdateEffect } from "usehooks-ts"
 
-export const useSaving = () => {
+export const useHeader = () => {
   const savingRef = useRef<NodeJS.Timeout | null>(null)
   const { saving, setSavingDoc } = useDocStore()
 

@@ -7,7 +7,7 @@ import { type User } from "@supabase/supabase-js"
 import { ChevronsLeftIcon } from "lucide-react"
 import { type PropsWithChildren } from "react"
 import { useEffectOnce } from "usehooks-ts"
-import { useLayout } from "../_hooks/use-layout"
+import { useLayoutWrapper } from "../_hooks/use-layout-wrapper"
 import Header from "./header"
 import SidebarMenu from "./sidebar-menu"
 import SidebarPages from "./sidebar-pages"
@@ -20,14 +20,17 @@ export default function LayoutWrapper({
   currentUser: User
 }) {
   const {
+    mainRef,
+    topbarRef,
+    sidebarRef,
     animating,
     isMobile,
-    mainRef,
     minimize,
     minimizeHandler,
     resizeHandler,
-    sidebarRef,
-  } = useLayout()
+    maximizeHandler,
+  } = useLayoutWrapper()
+
   const { setCurrentUser, getCurrentProfileUserAsync } = useUserStore()
 
   useEffectOnce(() => {
@@ -72,7 +75,20 @@ export default function LayoutWrapper({
         <div className="absolute right-0 top-0 z-[49] min-h-full w-1 opacity-100 shadow-[rgba(0,0,0,0.028)_-1px_0px_0px_0px_inset] peer-hover:shadow-[rgba(0,0,0,0.1)_-2px_0px_0px_0px_inset]" />
       </aside>
 
-      <Header />
+      <div
+        ref={topbarRef}
+        className={cn(
+          "fixed left-60 right-0 top-0 w-[calc(100vw-240px)] bg-background",
+          animating && "transition-all duration-200 ease-in-out",
+          isMobile && "left-0 w-full",
+        )}
+      >
+        <Header
+          minimize={minimize}
+          isMobile={isMobile}
+          maximizeHandler={maximizeHandler}
+        />
+      </div>
 
       <main
         className={"mt-12 h-[calc(100vh-48px)] flex-1 overflow-y-auto bg-background"}

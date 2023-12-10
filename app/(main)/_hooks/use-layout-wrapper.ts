@@ -2,7 +2,7 @@ import { useEffect, useRef } from "react"
 import { useMediaQuery } from "usehooks-ts"
 import { useLayoutStore } from "../../../store/use-layout-store"
 
-export const useLayout = () => {
+export const useLayoutWrapper = () => {
   const {
     animating,
     minimize,

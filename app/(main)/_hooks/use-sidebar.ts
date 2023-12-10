@@ -23,7 +23,7 @@ export const useSidebar = () => {
     if (res.uuid) router.push(`/doc`)
   }
 
-  const navigateHandler = (path: "settings" | "trash") => {
+  const navigateHandler = (path: "settings" | "trash" | "doc") => {
     triggerMinimize(path)
     router.push(`/${path}`)
   }
