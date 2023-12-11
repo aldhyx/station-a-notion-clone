@@ -1,5 +1,6 @@
 "use client"
 
+import DeletePageDialog from "@/components/dialogs/delete-page-dialog"
 import { Emoji } from "@/components/popover/emoji-picker-popover"
 import { Button } from "@/components/ui/button"
 import { Skeleton } from "@/components/ui/skeleton"
@@ -26,9 +27,10 @@ export default function SidebarPages({ uuid, level = 0 }: Props) {
   const {
     navigateDocHandler,
     createNewDocHandler,
-    deleteDocHandler,
     docCollapseHandler,
     collapsedMap,
+    open,
+    setOpen,
   } = useSidebar()
 
   const { docList, getDocListsAsync } = useSidebarStore()
@@ -52,7 +54,10 @@ export default function SidebarPages({ uuid, level = 0 }: Props) {
           <section key={item.uuid}>
             <div
               role="button"
-              onClick={() => navigateDocHandler(item.uuid)}
+              onClick={e => {
+                e.stopPropagation()
+                navigateDocHandler(item.uuid)
+              }}
               className={
                 "group flex w-full cursor-pointer items-center justify-between rounded-sm py-1 pr-1 text-zinc-600 transition hover:bg-zinc-200"
               }
@@ -100,15 +105,24 @@ export default function SidebarPages({ uuid, level = 0 }: Props) {
                 </span>
               </div>
 
-              <div className="flex items-center pl-2 opacity-100 md:opacity-0 md:group-hover:opacity-100">
-                <Button
-                  size="icon"
-                  variant="ghost"
-                  className="h-5 w-5 text-zinc-600 hover:bg-zinc-400/30"
-                  onClick={() => deleteDocHandler(item.uuid)}
-                >
-                  <TrashIcon className="h-4 w-4" />
-                </Button>
+              <div
+                className="flex items-center pl-2 opacity-100 md:opacity-0 md:group-hover:opacity-100"
+                onClick={e => {
+                  e.stopPropagation()
+                }}
+              >
+                <DeletePageDialog uuid={item.uuid} open={open} setOpen={setOpen}>
+                  <Button
+                    size="icon"
+                    variant="ghost"
+                    className="h-5 w-5 text-zinc-600 hover:bg-zinc-400/30"
+                    onClick={() => {
+                      setOpen(true)
+                    }}
+                  >
+                    <TrashIcon className="h-4 w-4" />
+                  </Button>
+                </DeletePageDialog>
 
                 <Button
                   size="icon"
