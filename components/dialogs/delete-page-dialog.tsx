@@ -36,7 +36,7 @@ export default function DeletePageDialog({ children, uuid, open, setOpen }: Prop
   }
 
   return (
-    <Dialog open={open}>
+    <Dialog defaultOpen={open}>
       <DialogTrigger asChild>{children}</DialogTrigger>
 
       <DialogContent

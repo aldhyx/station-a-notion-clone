@@ -49,6 +49,7 @@ export const useSearchStore = create<SearchState & SearchAction>()((set, get) =>
       const { data, error } = await client
         .from("pages")
         .select("title, emoji, created_at, updated_at, uuid, is_deleted")
+        .or("is_deleted.is.null,is_deleted.is.false")
         .ilike("title", `%${get().prevKeyword}%`)
         .range(start, end)
         .order("is_deleted", { nullsFirst: true })
@@ -84,9 +85,9 @@ export const useSearchStore = create<SearchState & SearchAction>()((set, get) =>
       const { data, error } = await client
         .from("pages")
         .select("title, emoji, created_at, updated_at, uuid, is_deleted")
+        .or("is_deleted.is.null,is_deleted.is.false")
         .ilike("title", `%${keyword}%`)
         .range(start, end)
-        .order("is_deleted", { nullsFirst: true })
       if (error) throw new Error(error.message)
 
       set({
