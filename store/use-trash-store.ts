@@ -24,6 +24,7 @@ type TrashAction = {
   getTrashAsync(keyword?: string | null): Promise<void>
   nextPageAsync(): Promise<void>
   deletePagePermanent(uuid: string): Promise<void>
+  restorePageAsync(uuid: string): Promise<void>
 }
 
 const initialState: TrashState = {
@@ -144,6 +145,19 @@ export const useTrashStore = create<TrashAction & TrashState>()((set, get) => ({
       list = list ? list?.filter(i => i.uuid !== uuid) : null
       set({ list })
       toastSuccess({ message: "Successfully delete page permanently." })
+    } catch (error) {
+      toastError({ message: getErrorMessage(error as Error) })
+    }
+  },
+  async restorePageAsync(uuid) {
+    try {
+      const { data, error, status } = await client
+        .from("pages")
+        .update({ is_deleted: null, parent_uuid: null })
+        .eq("uuid", uuid)
+
+      if (error) throw new Error(error.message)
+      toastSuccess({ message: "Successfully restore page." })
     } catch (error) {
       toastError({ message: getErrorMessage(error as Error) })
     }

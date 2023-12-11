@@ -2,6 +2,7 @@ import { type Emoji } from "@/components/popover/emoji-picker-popover"
 import { Button } from "@/components/ui/button"
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
+import { ScrollArea } from "@/components/ui/scroll-area"
 import useDebounceCallback from "@/hook/use-debounce-callback"
 import { cn } from "@/lib/utils"
 import { useLayoutStore } from "@/store/use-layout-store"
@@ -88,66 +89,68 @@ export default function SearchDialog({ children, open, setOpen }: Props) {
         )}
 
         {hasData && (
-          <div className="flex w-full flex-col pb-3">
-            {list.map(item => {
-              const emoji = item?.emoji ? (item.emoji as Emoji) : null
+          <ScrollArea className="w-full">
+            <div className="max-h-[340px] w-full">
+              {list.map(item => {
+                const emoji = item?.emoji ? (item.emoji as Emoji) : null
 
-              return (
-                <div
-                  key={item.uuid}
-                  role="button"
-                  className="flex h-9 max-w-full items-center gap-x-2 border-b border-b-zinc-200 px-3 text-zinc-800 transition hover:bg-zinc-200"
-                  onClick={() => onClickItemHandler(item.uuid)}
-                >
-                  {emoji?.native ? (
-                    <span
-                      role="img"
-                      aria-label={emoji?.name}
-                      className="block w-5 text-sm antialiased"
-                    >
-                      {emoji.native}
-                    </span>
-                  ) : (
-                    <FileIcon className="h-5 w-5 shrink-0" />
-                  )}
+                return (
+                  <div
+                    key={item.uuid}
+                    role="button"
+                    className="flex h-9 max-w-full items-center gap-x-2 border-b border-b-zinc-200 px-3 text-zinc-800 transition hover:bg-zinc-200"
+                    onClick={() => onClickItemHandler(item.uuid)}
+                  >
+                    {emoji?.native ? (
+                      <span
+                        role="img"
+                        aria-label={emoji?.name}
+                        className="block w-5 text-sm antialiased"
+                      >
+                        {emoji.native}
+                      </span>
+                    ) : (
+                      <FileIcon className="h-5 w-5 shrink-0" />
+                    )}
 
-                  <span className="truncate whitespace-nowrap pr-3 text-sm">
-                    {item.title}
-                  </span>
-                  {item.is_deleted && (
-                    <span className="ml-auto shrink-0 text-xs text-zinc-500">
-                      deleted
+                    <span className="truncate whitespace-nowrap pr-3 text-sm">
+                      {item.title}
                     </span>
-                  )}
+                    {item.is_deleted && (
+                      <span className="ml-auto shrink-0 text-xs text-zinc-500">
+                        deleted
+                      </span>
+                    )}
+                  </div>
+                )
+              })}
+
+              {hasData && !more && (
+                <p className="pb-5 pt-2 text-center align-middle text-xs text-zinc-500">
+                  No more data
+                </p>
+              )}
+
+              {hasData && more && (
+                <div className="grid place-items-center py-3">
+                  <Button
+                    type="button"
+                    variant="secondary"
+                    size="sm"
+                    className="h-9 font-normal"
+                    disabled={loading}
+                    onClick={() => {
+                      if (loading) return
+                      nextPageAsync()
+                    }}
+                  >
+                    Load more
+                    {loading && <LoaderIcon className="ml-2 h-4 w-4 animate-spin" />}
+                  </Button>
                 </div>
-              )
-            })}
-          </div>
-        )}
-
-        {hasData && !more && (
-          <p className="pb-5 pt-2 text-center align-middle text-xs text-zinc-500">
-            No more data
-          </p>
-        )}
-
-        {hasData && more && (
-          <div className="mx-auto pb-3">
-            <Button
-              type="button"
-              variant="secondary"
-              size="sm"
-              className="h-9 font-normal"
-              disabled={loading}
-              onClick={() => {
-                if (loading) return
-                nextPageAsync()
-              }}
-            >
-              Load more
-              {loading && <LoaderIcon className="ml-2 h-4 w-4 animate-spin" />}
-            </Button>
-          </div>
+              )}
+            </div>
+          </ScrollArea>
         )}
       </DialogContent>
     </Dialog>
