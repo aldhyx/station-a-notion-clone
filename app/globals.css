@@ -95,3 +95,7 @@ body {
     @apply bg-background text-foreground;
   }
 }
+.ce-block__content,
+.ce-toolbar__content {
+  @apply max-w-[unset];
+}
