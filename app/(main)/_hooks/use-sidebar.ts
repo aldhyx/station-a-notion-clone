@@ -7,7 +7,6 @@ import { useState } from "react"
 export const useSidebar = () => {
   const params = useParams()
   const router = useRouter()
-  const [open, setOpen] = useState(false)
   const { createDocAsync } = useDocStore()
   const { triggerMinimize } = useLayoutStore()
   const [collapsedMap, collapseActions] = useMap<string, string>([])
@@ -43,7 +42,5 @@ export const useSidebar = () => {
     navigateDocHandler,
     docCollapseHandler,
     collapsedMap,
-    open,
-    setOpen,
   }
 }

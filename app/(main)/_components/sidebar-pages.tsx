@@ -1,6 +1,6 @@
 "use client"
 
-import DeletePageDialog from "@/components/dialogs/delete-page-dialog"
+import MoveToTrashDialog from "@/components/dialogs/move-trash-dialog"
 import { Emoji } from "@/components/popover/emoji-picker-popover"
 import { Button } from "@/components/ui/button"
 import { Skeleton } from "@/components/ui/skeleton"
@@ -24,14 +24,8 @@ type Props = {
 
 export default function SidebarPages({ uuid, level = 0 }: Props) {
   const params = useParams()
-  const {
-    navigateDocHandler,
-    createNewDocHandler,
-    docCollapseHandler,
-    collapsedMap,
-    open,
-    setOpen,
-  } = useSidebar()
+  const { navigateDocHandler, createNewDocHandler, docCollapseHandler, collapsedMap } =
+    useSidebar()
 
   const { docList, getDocListsAsync } = useSidebarStore()
 
@@ -111,18 +105,15 @@ export default function SidebarPages({ uuid, level = 0 }: Props) {
                   e.stopPropagation()
                 }}
               >
-                <DeletePageDialog uuid={item.uuid} open={open} setOpen={setOpen}>
+                <MoveToTrashDialog uuid={item.uuid}>
                   <Button
                     size="icon"
                     variant="ghost"
                     className="h-5 w-5 text-zinc-600 hover:bg-zinc-400/30"
-                    onClick={() => {
-                      setOpen(true)
-                    }}
                   >
                     <TrashIcon className="h-4 w-4" />
                   </Button>
-                </DeletePageDialog>
+                </MoveToTrashDialog>
 
                 <Button
                   size="icon"

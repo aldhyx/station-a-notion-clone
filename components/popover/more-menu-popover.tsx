@@ -2,12 +2,11 @@ import { Button } from "@/components/ui/button"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { useDocStore } from "@/store/use-doc-store"
 import { ImportIcon, LockIcon, Trash2Icon } from "lucide-react"
-import { PropsWithChildren, useState } from "react"
-import DeletePageDialog from "../dialogs/delete-page-dialog"
+import { PropsWithChildren } from "react"
+import MoveToTrashDialog from "../dialogs/move-trash-dialog"
 
 export default function MoreMenuPopover({ children }: PropsWithChildren) {
   const { doc } = useDocStore()
-  const [open, setOpen] = useState(false)
   const createdAt = doc ? new Date(doc.created_at).toLocaleString() : null
 
   return (
@@ -26,18 +25,15 @@ export default function MoreMenuPopover({ children }: PropsWithChildren) {
               <LockIcon className="mr-2 h-4 w-4" />
               Lock
             </Button>
-            <DeletePageDialog uuid={doc?.uuid!} open={open} setOpen={setOpen}>
+            <MoveToTrashDialog uuid={doc?.uuid!}>
               <Button
                 variant="ghost"
                 className="h-9 w-full justify-start rounded-none px-2 text-sm font-normal"
-                onClick={() => {
-                  setOpen(true)
-                }}
               >
                 <Trash2Icon className="mr-2 h-4 w-4" />
                 Move to trash
               </Button>
-            </DeletePageDialog>
+            </MoveToTrashDialog>
           </section>
           <section className="">
             <Button

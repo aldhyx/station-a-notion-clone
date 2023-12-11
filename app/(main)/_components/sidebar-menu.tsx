@@ -1,3 +1,4 @@
+import TrashDialog from "@/components/dialogs/trash-dialog"
 import { Button } from "@/components/ui/button"
 import {
   HomeIcon,
@@ -39,14 +40,15 @@ export default function SidebarMenu() {
         Settings
       </Button>
 
-      <Button
-        variant="ghost"
-        className="h-7 justify-start px-3 font-normal text-zinc-600"
-        onClick={() => navigateHandler("trash")}
-      >
-        <Trash2Icon className="mr-3 h-4 w-4" />
-        Trash
-      </Button>
+      <TrashDialog>
+        <Button
+          variant="ghost"
+          className="h-7 justify-start px-3 font-normal text-zinc-600"
+        >
+          <Trash2Icon className="mr-3 h-4 w-4" />
+          Trash
+        </Button>
+      </TrashDialog>
 
       <Button
         variant="ghost"
