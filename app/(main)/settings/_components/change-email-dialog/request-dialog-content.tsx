@@ -32,7 +32,7 @@ export default function RequestDialogContent({ nextSteps, setNewEmail }: Props) 
 
   return (
     <DialogContent
-      className="top-[5%] max-w-sm translate-y-[0] gap-0  px-4 pb-6 pt-14"
+      className="top-[5%] w-[90%] translate-y-[0] gap-0 rounded-xl px-3 pb-6 pt-14 md:max-w-sm"
       onInteractOutside={e => {
         return e.preventDefault()
       }}

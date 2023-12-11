@@ -29,10 +29,7 @@ export default function SignOutDialog({
     <Dialog>
       <DialogTrigger asChild>{children}</DialogTrigger>
 
-      <DialogContent
-        className="max-w-sm overflow-hidden rounded-sm bg-background p-0"
-        hideCloseButton
-      >
+      <DialogContent className="w-[90%] gap-0 rounded-xl p-0 md:max-w-sm" hideCloseButton>
         <DialogHeader className="p-4">
           <DialogDescription className="leading-1 text-left text-zinc-800">
             {title[scope]}
@@ -43,7 +40,7 @@ export default function SignOutDialog({
             type="button"
             size="lg"
             variant="secondary"
-            className="flex-1 rounded-bl-xl"
+            className="flex-1 rounded-none rounded-bl-xl"
             onClick={() => signOutAsync(scope)}
           >
             Yes, log out
@@ -53,7 +50,7 @@ export default function SignOutDialog({
             <Button
               type="button"
               size="lg"
-              className="flex-1 rounded-br-xl"
+              className="flex-1 rounded-none rounded-br-xl"
               variant="secondary"
             >
               No

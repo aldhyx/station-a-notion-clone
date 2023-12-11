@@ -17,7 +17,13 @@ export default function UserPopover({ children, email, fullname, username }: Pro
     <Popover>
       <PopoverTrigger asChild>{children}</PopoverTrigger>
 
-      <PopoverContent asChild className="p-0" side="bottom" align="start" alignOffset={8}>
+      <PopoverContent
+        asChild
+        className="overflow-hidden rounded-xl p-0"
+        side="bottom"
+        align="start"
+        alignOffset={8}
+      >
         <div className="w-80">
           <section className="border-b border-zinc-200 p-3">
             <span className="mb-3 block text-xs text-zinc-500">{email}</span>
@@ -35,11 +41,11 @@ export default function UserPopover({ children, email, fullname, username }: Pro
             </div>
           </section>
 
-          <section className="w-full bg-zinc-100 p-1">
+          <section className="w-full bg-zinc-100">
             <SignOutDialog>
               <Button
                 variant="ghost"
-                className="h-8 w-full justify-start px-2 text-xs font-normal text-zinc-500"
+                className="h-9 w-full justify-start rounded-none rounded-b-sm px-2 text-xs font-normal text-zinc-500"
               >
                 <LogOutIcon className="mr-2 h-4 w-4" />
                 Log out
