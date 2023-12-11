@@ -1,4 +1,3 @@
-import SearchDialog from "@/components/dialogs/search-dialog"
 import { Button } from "@/components/ui/button"
 import {
   HomeIcon,
@@ -7,15 +6,22 @@ import {
   SettingsIcon,
   Trash2Icon,
 } from "lucide-react"
+import { useState } from "react"
 import { useSidebar } from "../_hooks/use-sidebar"
+import SearchDialog from "./search-dialog"
 
 export default function SidebarMenu() {
   const { createNewDocHandler, navigateHandler } = useSidebar()
+  const [openSearch, setOpenSearch] = useState(false)
 
   return (
     <div className="flex flex-col pb-3">
-      <SearchDialog>
+      <SearchDialog setOpen={setOpenSearch} open={openSearch}>
         <Button
+          onClick={e => {
+            e.stopPropagation()
+            setOpenSearch(true)
+          }}
           variant="ghost"
           className="h-7 justify-start px-3 font-normal text-zinc-600"
         >
