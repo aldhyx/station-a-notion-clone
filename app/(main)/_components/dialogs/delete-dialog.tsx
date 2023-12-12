@@ -1,8 +1,6 @@
 "use client"
 
-import { useTrashStore } from "@/store/use-trash-store"
-import { PropsWithChildren, useRef } from "react"
-import { Button } from "../ui/button"
+import { Button } from "@/components/ui/button"
 import {
   Dialog,
   DialogClose,
@@ -11,7 +9,9 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTrigger,
-} from "../ui/dialog"
+} from "@/components/ui/dialog"
+import { useTrashStore } from "@/store/use-trash-store"
+import { PropsWithChildren, useRef } from "react"
 
 export default function DeleteDialog({
   children,
@@ -29,7 +29,7 @@ export default function DeleteDialog({
       <DialogContent className="w-[90%] gap-0 rounded-xl p-0 md:max-w-sm" hideCloseButton>
         <DialogHeader className="p-4">
           <DialogDescription className="leading-1 text-left text-zinc-800">
-            Are you sure, do you want to delete this page permanently?
+            Are you sure, do you want to permanently delete this page?
           </DialogDescription>
         </DialogHeader>
         <DialogFooter className="w-full flex-row gap-0 border-t border-zinc-200">

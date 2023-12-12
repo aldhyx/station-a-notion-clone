@@ -1,0 +1,205 @@
+import { type Emoji } from "@/components/popover/emoji-picker-popover"
+import { Button } from "@/components/ui/button"
+import { Dialog, DialogClose, DialogContent, DialogTrigger } from "@/components/ui/dialog"
+import { Input } from "@/components/ui/input"
+import { ScrollArea } from "@/components/ui/scroll-area"
+import useDebounceCallback from "@/hook/use-debounce-callback"
+import { useLayoutStore } from "@/store/use-layout-store"
+import { useSearchStore } from "@/store/use-search-store"
+import { FileIcon, LoaderIcon, SearchIcon } from "lucide-react"
+import { useRouter } from "next/navigation"
+import React, { useRef, type PropsWithChildren } from "react"
+
+type Props = PropsWithChildren
+
+export default function SearchDialog({ children }: Props) {
+  const router = useRouter()
+  const closeButtonRef = useRef<HTMLButtonElement>(null)
+  const { triggerMinimize } = useLayoutStore()
+  const { delayedCallback } = useDebounceCallback(500)
+  const { getPagesAsync, loading, list, more, nextPageAsync, prevKeyword } =
+    useSearchStore()
+
+  const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) =>
+    delayedCallback(() => {
+      const value = e.target.value || null
+      if (value) getPagesAsync(value)
+    })
+
+  const onClickItemHandler = (uuid: string) => {
+    closeButtonRef.current?.click()
+    triggerMinimize("doc")
+    router.push(`/doc/${uuid}`)
+  }
+
+  const loadMoreHandler = () => {
+    if (loading) return
+    nextPageAsync()
+  }
+
+  const firstLoading = loading && !list
+  const hasData = !!list && !!list.length
+
+  return (
+    <Dialog>
+      <DialogTrigger asChild>{children}</DialogTrigger>
+      <DialogContent
+        hideCloseButton
+        className="top-[5%] flex w-[90%] translate-y-[0] flex-col gap-0 rounded-xl bg-background p-0 md:!max-w-xl"
+      >
+        <SearchDialog.Title />
+        <div className="px-3 pb-3">
+          <Input
+            type="test"
+            placeholder="Type to search page by title..."
+            className="rounded-xl bg-background text-sm placeholder:text-sm placeholder:text-zinc-500 focus-visible:ring-transparent"
+            onChange={onChangeHandler}
+          />
+        </div>
+
+        <SearchDialog.Loading isShow={loading && !list} />
+        <SearchDialog.EmptySearchResult
+          isShow={!loading && !hasData && !!prevKeyword}
+          keyword={prevKeyword}
+        />
+        <SearchDialog.SearchKeyword
+          keyword={prevKeyword}
+          isShow={hasData && !!prevKeyword}
+        />
+
+        {hasData && (
+          <ScrollArea className="w-full">
+            <div className="max-h-[340px] w-full">
+              {list.map(item => {
+                const emoji = item?.emoji ? (item.emoji as Emoji) : null
+
+                return (
+                  <div
+                    key={item.uuid}
+                    role="button"
+                    className="flex h-9 max-w-full items-center gap-x-2 border-b border-b-zinc-200 px-3 text-zinc-800 transition hover:bg-zinc-200"
+                    onClick={() => onClickItemHandler(item.uuid)}
+                  >
+                    {emoji?.native ? (
+                      <span
+                        role="img"
+                        aria-label={emoji?.name}
+                        className="block w-5 text-sm antialiased"
+                      >
+                        {emoji.native}
+                      </span>
+                    ) : (
+                      <FileIcon className="h-5 w-5 shrink-0" />
+                    )}
+
+                    <span className="truncate whitespace-nowrap pr-3 text-sm">
+                      {item.title}
+                    </span>
+                  </div>
+                )
+              })}
+
+              <SearchDialog.LoadMore
+                loading={loading}
+                onClickHandler={loadMoreHandler}
+                isShowLoadMoreButton={hasData && more}
+              />
+            </div>
+          </ScrollArea>
+        )}
+
+        <DialogClose asChild>
+          <Button className="hidden" ref={closeButtonRef}>
+            Close
+          </Button>
+        </DialogClose>
+      </DialogContent>
+    </Dialog>
+  )
+}
+
+SearchDialog.Title = function Title() {
+  return (
+    <div className="mb-1 flex items-center justify-start p-3">
+      <SearchIcon className="mr-2 h-4 w-4" />
+      <p className="text-base font-medium leading-none">Search</p>
+    </div>
+  )
+}
+
+SearchDialog.Loading = function Loading(props: { isShow: boolean }) {
+  if (props.isShow) {
+    return (
+      <div className="flex h-28 items-center justify-center text-zinc-500">
+        <LoaderIcon className="h-4 w-4 animate-spin" />
+      </div>
+    )
+  }
+  return null
+}
+
+SearchDialog.EmptySearchResult = function EmptySearch(props: {
+  isShow: boolean
+  keyword: string | null
+}) {
+  if (props.isShow) {
+    return (
+      <div className="flex h-28 items-center justify-center text-zinc-500">
+        <p className="text-sm">
+          No result found for{" "}
+          <span className="inline-block max-w-[100px] truncate align-middle font-medium italic text-zinc-800">
+            {props.keyword}
+          </span>
+        </p>
+      </div>
+    )
+  }
+  return null
+}
+
+SearchDialog.SearchKeyword = function SearchKeyword(props: {
+  keyword: string | null
+  isShow: boolean
+}) {
+  if (props.isShow) {
+    return (
+      <p className="px-3 py-2 text-xs text-zinc-500">
+        Showing search result for{" "}
+        <i className="font-medium text-zinc-800">{props.keyword}</i>
+      </p>
+    )
+  }
+  return null
+}
+
+SearchDialog.LoadMore = function LoadMore(props: {
+  isShowLoadMoreButton: boolean
+  loading: boolean
+  onClickHandler: (e: React.MouseEvent<HTMLButtonElement>) => void
+}) {
+  return (
+    <>
+      {props.isShowLoadMoreButton && (
+        <div className="grid place-items-center py-3">
+          <Button
+            type="button"
+            variant="secondary"
+            size="sm"
+            className="h-9 font-normal"
+            disabled={props.loading}
+            onClick={props.onClickHandler}
+          >
+            Load more
+            {props.loading && <LoaderIcon className="ml-2 h-4 w-4 animate-spin" />}
+          </Button>
+        </div>
+      )}
+
+      {!props.isShowLoadMoreButton && (
+        <p className="py-3 text-center align-middle text-xs text-zinc-500">
+          No more data
+        </p>
+      )}
+    </>
+  )
+}

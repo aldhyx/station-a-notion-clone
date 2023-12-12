@@ -1,6 +1,6 @@
 "use client"
 
-import MoreMenuPopover from "@/components/popover/more-menu-popover"
+import { Emoji } from "@/components/popover/emoji-picker-popover"
 import { Button } from "@/components/ui/button"
 import { Skeleton } from "@/components/ui/skeleton"
 import { cn } from "@/lib/utils"
@@ -8,6 +8,7 @@ import { useDocStore } from "@/store/use-doc-store"
 import {
   CheckIcon,
   ChevronsRightIcon,
+  FileIcon,
   LoaderIcon,
   MenuIcon,
   MoreHorizontalIcon,
@@ -16,6 +17,7 @@ import {
 } from "lucide-react"
 import { useParams, useSelectedLayoutSegment } from "next/navigation"
 import { useHeader } from "../_hooks/use-header"
+import MoreMenuPopover from "./popovers/more-menu-popover"
 
 const Header = function Header({
   minimize,
@@ -39,6 +41,7 @@ const Header = function Header({
   const showSuccessIndicator = saving.status === "success" && saving.uuid === doc?.uuid
   const showStartIndicator = saving.status === "start" && saving.uuid === doc?.uuid
 
+  const emoji = doc?.emoji ? (doc.emoji as Emoji) : null
   return (
     <header className="flex h-12 items-center justify-start border-b border-zinc-200 px-3">
       <Button
@@ -60,7 +63,19 @@ const Header = function Header({
           {showLoadingIndicator && <Header.Skeleton />}
 
           {!showLoadingIndicator && doc && (
-            <div className="flex items-center gap-x-4">
+            <div className="mr-2 flex items-center gap-x-2">
+              {emoji?.native ? (
+                <span
+                  role="img"
+                  aria-label={emoji?.name}
+                  className="block w-4 text-sm antialiased"
+                >
+                  {emoji.native}
+                </span>
+              ) : (
+                <FileIcon className="h-4 w-4 shrink-0" />
+              )}
+
               <span className="truncatepl-2 block max-w-[130px] text-sm">
                 {doc.title}
               </span>

@@ -1,6 +1,5 @@
 "use client"
 
-import MoveToTrashDialog from "@/components/dialogs/move-trash-dialog"
 import { Emoji } from "@/components/popover/emoji-picker-popover"
 import { Button } from "@/components/ui/button"
 import { Skeleton } from "@/components/ui/skeleton"
@@ -9,13 +8,14 @@ import {
   ChevronDownIcon,
   ChevronRightIcon,
   FileIcon,
-  PlusIcon,
+  PlusCircleIcon,
   TrashIcon,
 } from "lucide-react"
 import { useParams } from "next/navigation"
 import { useEffectOnce } from "usehooks-ts"
 import { useSidebarStore } from "../../../store/use-sidebar-store"
 import { useSidebar } from "../_hooks/use-sidebar"
+import MoveToTrashDialog from "./dialogs/move-trash-dialog"
 
 type Props = {
   uuid?: string
@@ -53,7 +53,7 @@ export default function SidebarPages({ uuid, level = 0 }: Props) {
                 navigateDocHandler(item.uuid)
               }}
               className={
-                "group flex w-full cursor-pointer items-center justify-between rounded-sm py-1 pr-1 text-zinc-600 transition hover:bg-zinc-200"
+                "group flex h-8 w-full cursor-pointer items-center justify-between rounded-sm pr-1 text-zinc-600 transition hover:bg-zinc-200"
               }
               style={{
                 paddingLeft:
@@ -67,7 +67,7 @@ export default function SidebarPages({ uuid, level = 0 }: Props) {
               <div className="flex items-center justify-start truncate">
                 <span
                   role="button"
-                  className="grid h-5 w-5 shrink-0  place-content-center rounded-sm hover:bg-zinc-400/30"
+                  className="grid h-6 w-6 shrink-0 place-content-center rounded-sm hover:bg-zinc-400/30"
                   onClick={e => docCollapseHandler(e, item.uuid)}
                 >
                   {collapsedMap.has(item.uuid) ? (
@@ -100,7 +100,7 @@ export default function SidebarPages({ uuid, level = 0 }: Props) {
               </div>
 
               <div
-                className="flex items-center pl-2 opacity-100 md:opacity-0 md:group-hover:opacity-100"
+                className="flex items-center gap-x-1 pl-2 opacity-100 md:opacity-0 md:group-hover:opacity-100"
                 onClick={e => {
                   e.stopPropagation()
                 }}
@@ -109,7 +109,7 @@ export default function SidebarPages({ uuid, level = 0 }: Props) {
                   <Button
                     size="icon"
                     variant="ghost"
-                    className="h-5 w-5 text-zinc-600 hover:bg-zinc-400/30"
+                    className="h-6 w-6 text-zinc-600 hover:bg-zinc-400/30"
                   >
                     <TrashIcon className="h-4 w-4" />
                   </Button>
@@ -118,10 +118,10 @@ export default function SidebarPages({ uuid, level = 0 }: Props) {
                 <Button
                   size="icon"
                   variant="ghost"
-                  className="h-5 w-5 text-zinc-600 hover:bg-zinc-400/30"
+                  className="h-6 w-6 text-zinc-600 hover:bg-zinc-400/30"
                   onClick={() => createNewDocHandler(item.uuid)}
                 >
-                  <PlusIcon className="h-4 w-4" />
+                  <PlusCircleIcon className="h-4 w-4" />
                 </Button>
               </div>
             </div>
@@ -140,13 +140,13 @@ type LevelProps = { level: number }
 
 SidebarPages.Title = function Title({ level }: LevelProps) {
   if (level > 0) return null
-  return <h2 className="mb-1 px-3 pt-3 text-xs text-zinc-500">Private</h2>
+  return <h2 className="mb-1 px-3 pt-3 text-xs text-zinc-500">Personal</h2>
 }
 
 SidebarPages.Skeleton = function Loading({ level }: LevelProps) {
   return (
     <div className={cn(level === 0 ? "pt-3" : "pt-1")}>
-      {level === 0 && <h2 className="mb-1 px-3 text-xs text-zinc-500">Private</h2>}
+      {level === 0 && <h2 className="mb-1 px-3 text-xs text-zinc-500">Personal</h2>}
       {Array(level === 0 ? 4 : 1)
         .fill(null)
         .map((_, i) => (

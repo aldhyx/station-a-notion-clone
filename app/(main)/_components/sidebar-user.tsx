@@ -1,10 +1,10 @@
 "use client"
 
-import UserPopover from "@/components/popover/user-popover"
 import { Button } from "@/components/ui/button"
 import { Skeleton } from "@/components/ui/skeleton"
 import { useUserStore } from "@/store/use-user-store"
 import { ChevronsUpDownIcon, UserCircle2 } from "lucide-react"
+import UserPopover from "./popovers/user-popover"
 
 export default function SidebarUser() {
   const { currentUser, fullname, username } = useUserStore()

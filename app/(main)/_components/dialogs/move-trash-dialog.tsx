@@ -1,9 +1,6 @@
 "use client"
 
-import { useDocStore } from "@/store/use-doc-store"
-import { useRouter } from "next/navigation"
-import { PropsWithChildren, useRef } from "react"
-import { Button } from "../ui/button"
+import { Button } from "@/components/ui/button"
 import {
   Dialog,
   DialogClose,
@@ -12,7 +9,10 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTrigger,
-} from "../ui/dialog"
+} from "@/components/ui/dialog"
+import { useDocStore } from "@/store/use-doc-store"
+import { useRouter } from "next/navigation"
+import { PropsWithChildren, useRef } from "react"
 
 type Props = PropsWithChildren & {
   uuid: string
@@ -20,11 +20,11 @@ type Props = PropsWithChildren & {
 
 export default function MoveToTrashDialog({ children, uuid }: Props) {
   const router = useRouter()
-  const ref = useRef<HTMLButtonElement>(null)
+  const closeButtonRef = useRef<HTMLButtonElement>(null)
   const { deleteDocAsync } = useDocStore()
 
   const deleteDocHandler = async () => {
-    ref.current?.click()
+    closeButtonRef.current?.click()
     const res = await deleteDocAsync(uuid)
     if (res.uuid) router.push(`/doc`)
   }
@@ -56,7 +56,7 @@ export default function MoveToTrashDialog({ children, uuid }: Props) {
               size="lg"
               className="flex-1 rounded-none rounded-br-xl"
               variant="secondary"
-              ref={ref}
+              ref={closeButtonRef}
             >
               No
             </Button>
