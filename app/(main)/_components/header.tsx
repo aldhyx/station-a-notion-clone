@@ -98,8 +98,6 @@ const Header = function Header({
 
           {!showLoadingIndicator && doc && (
             <div className="flex items-center justify-center">
-              <span className="hidden text-sm text-zinc-500 md:block">Edited 1d ago</span>
-
               <Button
                 variant="ghost"
                 size="sm"

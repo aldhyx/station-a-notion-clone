@@ -8,6 +8,7 @@ import MoveToTrashDialog from "../dialogs/move-trash-dialog"
 export default function MoreMenuPopover({ children }: PropsWithChildren) {
   const { doc } = useDocStore()
   const createdAt = doc ? new Date(doc.created_at).toLocaleString() : null
+  const updatedAt = doc ? new Date(doc.updated_at).toLocaleString() : null
 
   return (
     <Popover>
@@ -45,11 +46,10 @@ export default function MoreMenuPopover({ children }: PropsWithChildren) {
             </Button>
           </section>
 
-          {createdAt && (
-            <section className="border-t border-zinc-200 px-3 py-2">
-              <p className="text-xs text-zinc-500">Created at: {createdAt}</p>
-            </section>
-          )}
+          <section className="border-t border-zinc-200 px-3 py-3">
+            <p className="mb-2 text-xs text-zinc-500">Created at {createdAt}</p>
+            <p className="text-xs text-zinc-500">Last edited at {updatedAt}</p>
+          </section>
         </div>
       </PopoverContent>
     </Popover>
