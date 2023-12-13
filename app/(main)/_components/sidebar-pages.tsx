@@ -27,25 +27,33 @@ export default function SidebarPages({ uuid, level = 0 }: Props) {
   const { navigateDocHandler, createNewDocHandler, docCollapseHandler, collapsedMap } =
     useSidebar()
 
-  const { docList, getDocListsAsync } = useSidebarStore()
+  const { loading, sidebarList, getSidebarListAsync } = useSidebarStore()
 
   useEffectOnce(() => {
-    getDocListsAsync(uuid)
+    getSidebarListAsync(uuid)
   })
 
-  const items = docList?.[uuid ?? "root"]
-  if (!items) return <SidebarPages.Skeleton level={level} />
+  // first loading at root level
+  if (loading["root"] && !sidebarList && !uuid) {
+    return <SidebarPages.Skeleton level={level} />
+  }
+
+  const items = Array.from(sidebarList ?? []).filter(([key, item]) =>
+    uuid ? item.parent_uuid === uuid : !item.parent_uuid,
+  )
+
+  if (loading[uuid!] && !items.length) return <SidebarPages.Skeleton level={level} />
   if (!items.length) return <SidebarPages.Empty level={level} />
 
   return (
     <>
       <SidebarPages.Title level={level} />
 
-      {items.map(item => {
+      {items.map(([key, item]) => {
         const emoji = item?.emoji as Emoji | null
 
         return (
-          <section key={item.uuid}>
+          <section key={key}>
             <div
               role="button"
               onClick={e => {
@@ -146,11 +154,11 @@ SidebarPages.Title = function Title({ level }: LevelProps) {
 SidebarPages.Skeleton = function Loading({ level }: LevelProps) {
   return (
     <div className={cn(level === 0 ? "pt-3" : "pt-1")}>
-      {level === 0 && <h2 className="mb-1 px-3 text-xs text-zinc-500">Personal</h2>}
+      {level === 0 && <h2 className="mb-2 px-3 text-xs text-zinc-500">Personal</h2>}
       {Array(level === 0 ? 4 : 1)
         .fill(null)
         .map((_, i) => (
-          <Skeleton key={i + 1} className="mb-1 h-6 w-full bg-zinc-200" />
+          <Skeleton key={i + 1} className="mb-1 h-7 w-full bg-zinc-200" />
         ))}
     </div>
   )
