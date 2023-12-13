@@ -38,9 +38,15 @@ export default function SidebarPages({ uuid, level = 0 }: Props) {
     return <SidebarPages.Skeleton level={level} />
   }
 
-  const items = Array.from(sidebarList ?? []).filter(([key, item]) =>
-    uuid ? item.parent_uuid === uuid : !item.parent_uuid,
-  )
+  const items = sidebarList
+    ? Array.from(sidebarList ?? [])
+        .filter(([, item]) => (uuid ? item.parent_uuid === uuid : !item.parent_uuid))
+        .sort(([, a], [, b]) => {
+          const dateA = new Date(a.created_at).getTime()
+          const dateB = new Date(b.created_at).getTime()
+          return dateA - dateB
+        })
+    : []
 
   if (loading[uuid!] && !items.length) return <SidebarPages.Skeleton level={level} />
   if (!items.length) return <SidebarPages.Empty level={level} />

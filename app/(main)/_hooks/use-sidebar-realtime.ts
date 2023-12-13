@@ -5,7 +5,7 @@ import { useEffect } from "react"
 
 type Page = Pick<
   Database["public"]["Tables"]["pages"]["Row"],
-  "uuid" | "title" | "emoji" | "parent_uuid" | "is_deleted"
+  "uuid" | "title" | "emoji" | "parent_uuid" | "created_at" | "is_deleted"
 >
 
 export default function useSidebarRealtime() {
@@ -28,6 +28,7 @@ export default function useSidebarRealtime() {
                 emoji: doc.emoji,
                 parent_uuid: doc.parent_uuid,
                 is_deleted: doc.is_deleted,
+                created_at: doc.created_at,
               }
             : null
 

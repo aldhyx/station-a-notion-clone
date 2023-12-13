@@ -5,10 +5,7 @@ import { toastError } from "@/lib/toast"
 import { create } from "zustand"
 
 type Page = Database["public"]["Tables"]["pages"]["Row"]
-type List = Pick<
-  Page,
-  "title" | "emoji" | "created_at" | "updated_at" | "uuid" | "is_deleted"
->
+type List = Pick<Page, "title" | "emoji" | "created_at" | "updated_at" | "uuid">
 
 type SearchState = {
   list: List[] | null
@@ -48,11 +45,11 @@ export const useSearchStore = create<SearchState & SearchAction>()((set, get) =>
 
       const { data, error } = await client
         .from("pages")
-        .select("title, emoji, created_at, updated_at, uuid, is_deleted")
+        .select("title, emoji, created_at, updated_at, uuid")
         .or("is_deleted.is.null,is_deleted.is.false")
         .ilike("title", `%${get().prevKeyword}%`)
         .range(start, end)
-        .order("is_deleted", { nullsFirst: true })
+        .order("created_at", { ascending: false })
       if (error) throw new Error(error.message)
 
       const prevList = get().list
@@ -84,10 +81,11 @@ export const useSearchStore = create<SearchState & SearchAction>()((set, get) =>
     try {
       const { data, error } = await client
         .from("pages")
-        .select("title, emoji, created_at, updated_at, uuid, is_deleted")
+        .select("title, emoji, created_at, updated_at, uuid")
         .or("is_deleted.is.null,is_deleted.is.false")
         .ilike("title", `%${keyword}%`)
         .range(start, end)
+        .order("created_at", { ascending: true })
       if (error) throw new Error(error.message)
 
       set({

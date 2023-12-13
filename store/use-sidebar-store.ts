@@ -5,7 +5,7 @@ import { create } from "zustand"
 
 type Page = Pick<
   Database["public"]["Tables"]["pages"]["Row"],
-  "uuid" | "title" | "emoji" | "parent_uuid"
+  "uuid" | "title" | "emoji" | "parent_uuid" | "created_at"
 >
 type SidebarAction = {
   getSidebarListAsync: (uuid?: string) => void
@@ -41,7 +41,9 @@ export const useSidebarStore = create<SidebarState & SidebarAction>()((set, get)
     set({ loading: { ...loading, [uuid ?? "root"]: true } })
 
     try {
-      let query = client.from("pages").select("uuid, title, emoji, parent_uuid")
+      let query = client
+        .from("pages")
+        .select("uuid, title, emoji, parent_uuid, created_at")
 
       if (uuid) query = query.eq("parent_uuid", uuid)
       else query = query.is("parent_uuid", null)
@@ -87,10 +89,8 @@ export const useSidebarStore = create<SidebarState & SidebarAction>()((set, get)
     const isHaveOldData = oldData && oldData instanceof Map
     if (!isHaveOldData) return
 
-    const inMap = oldData.has(doc.uuid)
-
     // move to trash event
-    if (inMap && doc.is_deleted) {
+    if (oldData.has(doc.uuid) && doc.is_deleted) {
       oldData.delete(doc.uuid)
       const newData = new Map([...oldData])
       set({ sidebarList: newData })

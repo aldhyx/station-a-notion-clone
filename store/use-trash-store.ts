@@ -48,38 +48,26 @@ export const useTrashStore = create<TrashAction & TrashState>()((set, get) => ({
       const end = page * size - 1
       set({ loading: true })
 
-      const query = client
+      let query = client
         .from("pages")
         .select("title, emoji, created_at, updated_at, uuid, is_deleted")
+        .eq("is_deleted", true)
 
-      if (get().prevKeyword) {
-        const { data, error } = await query
-          .eq("is_deleted", true)
-          .ilike("title", `%${get().prevKeyword}%`)
-          .range(start, end)
+      if (get().prevKeyword) query = query.ilike("title", `%${get().prevKeyword}%`)
 
-        if (error) throw new Error(error.message)
-        const prevList = get().list
+      const { data, error } = await query
+        .range(start, end)
+        .order("created_at", { ascending: false })
 
-        set({
-          loading: false,
-          more: data.length === size,
-          list: prevList ? [...prevList, ...data] : [...data],
-          nextPage: page + 1,
-        })
-      } else {
-        const { data, error } = await query.eq("is_deleted", true).range(start, end)
+      if (error) throw new Error(error.message)
+      const prevList = get().list
 
-        if (error) throw new Error(error.message)
-        const prevList = get().list
-
-        set({
-          loading: false,
-          more: data.length === size,
-          list: prevList ? [...prevList, ...data] : [...data],
-          nextPage: page + 1,
-        })
-      }
+      set({
+        loading: false,
+        more: data.length === size,
+        list: prevList ? [...prevList, ...data] : [...data],
+        nextPage: page + 1,
+      })
     } catch (error) {
       set({ loading: false })
 
@@ -100,50 +88,37 @@ export const useTrashStore = create<TrashAction & TrashState>()((set, get) => ({
     set({ loading: true, list: null })
 
     try {
-      const query = client
+      let query = client
         .from("pages")
         .select("title, emoji, created_at, updated_at, uuid, is_deleted")
+        .eq("is_deleted", true)
 
-      if (keyword) {
-        const { data, error } = await query
-          .eq("is_deleted", true)
-          .ilike("title", `%${keyword}%`)
-          .range(start, end)
-        if (error) throw new Error(error.message)
+      if (keyword) query = query.ilike("title", `%${keyword}%`)
 
-        set({
-          loading: false,
-          list: [...data],
-          more: data.length === size,
-          prevKeyword: keyword.trim().toLowerCase(),
-          nextPage: page + 1,
-        })
-      } else {
-        const { data, error } = await query.eq("is_deleted", true).range(start, end)
-        if (error) throw new Error(error.message)
+      const { data, error } = await query
+        .range(start, end)
+        .order("created_at", { ascending: false })
+      if (error) throw new Error(error.message)
 
-        set({
-          loading: false,
-          list: [...data],
-          more: data.length === size,
-          prevKeyword: null,
-          nextPage: page + 1,
-        })
-      }
+      set({
+        loading: false,
+        list: [...data],
+        more: data.length === size,
+        prevKeyword: keyword ? keyword.trim().toLowerCase() : null,
+        nextPage: page + 1,
+      })
     } catch (error) {
       set({ loading: false })
-
       toastError({ message: getErrorMessage(error as Error) })
     }
   },
   async deletePagePermanent(uuid) {
     try {
-      const { data, error, status } = await client.from("pages").delete().eq("uuid", uuid)
+      const { data, error } = await client.from("pages").delete().eq("uuid", uuid)
       if (error) throw new Error(error.message)
 
       let list = get().list
-      list = list ? list?.filter(i => i.uuid !== uuid) : null
-      set({ list })
+      set({ list: list ? list?.filter(i => i.uuid !== uuid) : null })
       toastSuccess({ message: "Successfully delete page permanently." })
     } catch (error) {
       toastError({ message: getErrorMessage(error as Error) })
@@ -151,7 +126,7 @@ export const useTrashStore = create<TrashAction & TrashState>()((set, get) => ({
   },
   async restorePageAsync(uuid) {
     try {
-      const { data, error, status } = await client
+      const { data, error } = await client
         .from("pages")
         .update({ is_deleted: null, parent_uuid: null })
         .eq("uuid", uuid)
