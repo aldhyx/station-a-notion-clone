@@ -1,3 +1,4 @@
+import { editorTools } from "@/lib/editor-tools"
 import EditorJS, {
   type API,
   type BlockMutationEvent,
@@ -65,6 +66,7 @@ export class Editor extends React.PureComponent<Props> {
     this.editor = new EditorJS({
       holder: holderNode,
       onChange: (api, event) => this.onChange(api, event),
+      tools: editorTools,
       ...config,
     })
   }

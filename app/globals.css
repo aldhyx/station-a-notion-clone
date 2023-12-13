@@ -99,3 +99,25 @@ body {
 .ce-toolbar__content {
   @apply max-w-[unset];
 }
+
+h1.ce-header {
+  @apply pt-8 text-3xl font-bold;
+}
+h2.ce-header {
+  @apply pt-4 text-2xl font-bold;
+}
+h3.ce-header {
+  @apply pt-4 text-xl font-bold;
+}
+
+.cdx-alert {
+  @apply mt-1 !rounded-sm text-sm;
+}
+
+.ce-delimiter {
+  @apply p-0;
+}
+
+.toggle-block__selector {
+  @apply flex items-center justify-start;
+}
