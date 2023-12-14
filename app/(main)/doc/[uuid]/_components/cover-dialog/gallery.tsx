@@ -13,14 +13,14 @@ export default function Gallery() {
   const uuid = params.uuid as string
   const [applying, setApplying] = useState<string | null>(null)
 
-  const { doc, updateCoverAsync } = useDocStore()
+  const { doc, updateDocAsync } = useDocStore()
   const { gallery, loading, deleteImageAsync } = useGalleryStore()
 
   const updateCoverHandler = async (path: string | null) => {
     if (applying) return
     try {
       setApplying(path)
-      await updateCoverAsync({ uuid, path })
+      await updateDocAsync(uuid, { image_url: path ? path.split("/")[1] : null })
     } finally {
       setApplying(null)
     }

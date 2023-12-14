@@ -1,5 +1,6 @@
 import { Editor } from "@/components/editor"
 import useDebounceCallback from "@/hook/use-debounce-callback"
+import { type Json } from "@/lib/supabase/database.types"
 import { useDocStore } from "@/store/use-doc-store"
 import { OutputData } from "@editorjs/editorjs"
 import { useParams } from "next/navigation"
@@ -9,23 +10,19 @@ export default function EditorBlock() {
   const params = useParams()
   const uuid = params.uuid as string
 
-  const delayed = useDebounceCallback()
+  const { delayedCallback } = useDebounceCallback(1000)
   const { updateDocAsync, doc, loadingDoc } = useDocStore()
 
   const [data, setData] = useState<OutputData | undefined>()
 
-  const onSaveHandler = (output: OutputData) => {
-    // updateDocAsync({
-    //   uuid,
-    //   content: JSON.stringify(output),
-    // })
-
-    console.count("save")
-  }
+  const onSaveHandler = (output: unknown) =>
+    delayedCallback(() => {
+      updateDocAsync(uuid, { content: output as Json })
+    })
 
   if (loadingDoc || !doc) return
 
-  const init = doc?.content ? (JSON.parse(doc.content) as OutputData) : undefined
+  const init = doc?.content ? (doc.content as unknown as OutputData) : undefined
 
   return (
     <Editor
@@ -44,7 +41,7 @@ export default function EditorBlock() {
           onSaveHandler(output)
         }
       }}
-      placeholder={`Press '/' or click '+' to use commands...`}
+      placeholder={`Press 'tab' or click '+' to use commands...`}
       onReady={() => console.log("ready")}
     >
       <div id="editor" className="mx-auto max-w-3xl px-4 md:px-0" />

@@ -30,7 +30,7 @@ const Header = function Header({
 }) {
   const params = useParams()
   const segment = useSelectedLayoutSegment()
-  const { saving, loadingDoc, doc } = useDocStore()
+  const { saveStatus, loadingDoc, doc } = useDocStore()
 
   useHeader()
 
@@ -38,8 +38,6 @@ const Header = function Header({
   const showDocTitle = segment === "doc" && params.uuid
 
   const showLoadingIndicator = loadingDoc || !doc
-  const showSuccessIndicator = saving.status === "success" && saving.uuid === doc?.uuid
-  const showStartIndicator = saving.status === "start" && saving.uuid === doc?.uuid
 
   const emoji = doc?.emoji ? (doc.emoji as Emoji) : null
   return (
@@ -80,14 +78,14 @@ const Header = function Header({
                 {doc.title}
               </span>
 
-              {showStartIndicator && (
+              {saveStatus === "start" && (
                 <span className="flex items-center gap-x-1 text-xs text-zinc-500">
                   <LoaderIcon className="h-4 w-4 animate-spin" />
                   Saving...
                 </span>
               )}
 
-              {showSuccessIndicator && (
+              {saveStatus === "success" && (
                 <span className="flex items-center gap-x-1 text-xs text-zinc-500">
                   <CheckIcon className="h-4 w-4" />
                   Saved

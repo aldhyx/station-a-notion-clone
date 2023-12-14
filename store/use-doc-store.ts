@@ -1,4 +1,5 @@
 import { type Emoji } from "@/components/popover/emoji-picker-popover"
+import { getErrorMessage } from "@/helper/error.helper"
 import { client } from "@/lib/supabase/client"
 import { type Database } from "@/lib/supabase/database.types"
 import { toastError, toastLoading, toastSuccess } from "@/lib/toast"
@@ -11,48 +12,41 @@ type ErrorResponse = Promise<
 type Status = "start" | "success" | "failed" | null
 
 type DocState = {
-  saving: {
-    uuid?: string | null
-    status: Status
-  }
-  creatingDoc: boolean
+  saveStatus: Status
+  failedSaveData: Partial<
+    Pick<Page, "content" | "description" | "emoji" | "image_url" | "title">
+  >
   loadingDoc: boolean
   doc: Page | null
   signedUrl: string | null
 }
 
 type DocAction = {
-  setSavingDoc(opt: { uuid: string | null; status: Status }): void
+  setSaveStatus(status: Status): void
   createDocAsync(uuid?: string): ErrorResponse
   deleteDocAsync(uuid: string): ErrorResponse
   getDocAsync(uuid: string): ErrorResponse
-  updateEmojiAsync(opt: { uuid: string; emoji?: Emoji }): ErrorResponse
-  updateTitleAsync(opt: {
-    uuid: string
-    title?: string
-  }): Promise<{ title: string; error: null } | { error: string; title: null }>
-  updateCoverAsync(opt: { uuid: string; path?: string | null }): ErrorResponse
   getSignedUrlAsync(opt: { uuidUser: string; imgUrl: string | null }): Promise<void>
+  updateDocAsync(
+    uuid: string,
+    doc: Partial<Pick<Page, "content" | "description" | "emoji" | "image_url" | "title">>,
+  ): Promise<void>
 }
 
 const initialState: DocState = {
-  creatingDoc: false,
-  loadingDoc: false,
+  loadingDoc: true,
   doc: null,
+  saveStatus: null,
   signedUrl: null,
-  saving: {
-    status: null,
-    uuid: null,
-  },
+  failedSaveData: {},
 }
+
 export const useDocStore = create<DocState & DocAction>()((set, get) => ({
   ...initialState,
-  setSavingDoc(opt) {
-    set({ saving: { ...opt } })
+  setSaveStatus(status) {
+    set({ saveStatus: status })
   },
   async createDocAsync(uuid) {
-    set({ creatingDoc: true })
-
     const id = uuid ?? "create"
     toastLoading({ message: "Creating new page...", id })
 
@@ -63,25 +57,20 @@ export const useDocStore = create<DocState & DocAction>()((set, get) => ({
         .select("uuid")
         .single()
 
-      set({ creatingDoc: false })
+      if (error) throw new Error(error.message)
 
-      if (data) {
-        toastSuccess({ message: "Successfully created new page.", id })
-        return { uuid: data.uuid, error: null }
-      }
-
-      throw new Error(error.message)
+      toastSuccess({ message: "Successfully created new page.", id })
+      return { uuid: data.uuid, error: null }
     } catch (error) {
-      const message = "Failed to create new page."
-      toastError({ message, id })
-      return { error: message, uuid: null }
+      toastError({ message: "Failed to create new page.", id })
+      return { error: getErrorMessage(error as Error), uuid: null }
     }
   },
   async deleteDocAsync(uuid) {
     const id = uuid ?? "create"
 
     try {
-      const { error, data } = await client
+      const { error } = await client
         .from("pages")
         .update({ is_deleted: true, parent_uuid: null })
         .eq("uuid", uuid)
@@ -91,13 +80,12 @@ export const useDocStore = create<DocState & DocAction>()((set, get) => ({
       toastSuccess({ message: "Moved to trash successfully.", id })
       return { uuid, error: null }
     } catch (error) {
-      const message = "Move to trash failed."
-      toastError({ message, id })
-      return { uuid: null, error: message }
+      toastError({ message: "Move to trash failed.", id })
+      return { error: getErrorMessage(error as Error), uuid: null }
     }
   },
   async getDocAsync(uuid) {
-    set({ loadingDoc: true, doc: null })
+    set({ ...initialState })
 
     try {
       const { data, error } = await client
@@ -105,6 +93,7 @@ export const useDocStore = create<DocState & DocAction>()((set, get) => ({
         .select("*")
         .eq("uuid", uuid)
         .single()
+
       if (error) throw new Error(error.message)
 
       await get().getSignedUrlAsync({
@@ -115,104 +104,66 @@ export const useDocStore = create<DocState & DocAction>()((set, get) => ({
       set({ loadingDoc: false, doc: data })
       return { uuid: data.uuid, error: null }
     } catch (error) {
-      const message = "Failed to load page. Broken link!"
-      toastError({ message })
-      return { uuid: null, error: message }
-    }
-  },
-  async updateEmojiAsync(opt) {
-    set({
-      saving: { status: "start", uuid: opt.uuid },
-    })
-
-    try {
-      const { data, error } = await client
-        .from("pages")
-        .update({ emoji: opt.emoji ?? null })
-        .eq("uuid", opt.uuid)
-        .select("*")
-        .single()
-      if (error) throw new Error(error.message)
-
-      set({
-        saving: { status: "success", uuid: opt.uuid },
-        doc: data,
-      })
-      return { uuid: opt.uuid, error: null }
-    } catch (error) {
-      const message = "Failed to change emoji"
-      toastError({ message })
-      return { error: message, uuid: null }
-    }
-  },
-  async updateTitleAsync(opt) {
-    set({
-      saving: { status: "start", uuid: opt.uuid },
-    })
-
-    try {
-      const { data, error } = await client
-        .from("pages")
-        .update({ title: opt.title || "untitled" })
-        .eq("uuid", opt.uuid)
-        .select("*")
-        .single()
-      if (error) throw new Error(error.message)
-
-      set({
-        saving: { status: "success", uuid: opt.uuid },
-        doc: data,
-      })
-
-      return { title: data.title!, error: null }
-    } catch (error) {
-      const message = "Failed to change title"
-      toastError({ message })
-      return { error: message, title: null }
-    }
-  },
-  async updateCoverAsync(opt) {
-    set({
-      saving: { status: "start", uuid: opt.uuid },
-    })
-
-    try {
-      const image_url = opt.path ? opt.path.split("/")[1] : null
-
-      const { data, error } = await client
-        .from("pages")
-        .update({ image_url })
-        .eq("uuid", opt.uuid)
-        .select("*")
-        .single()
-
-      if (error) throw new Error(error.message)
-
-      await get().getSignedUrlAsync({
-        uuidUser: data.user_id,
-        imgUrl: data.image_url,
-      })
-
-      set({
-        saving: { status: "success", uuid: opt.uuid },
-        doc: data,
-      })
-      return { uuid: opt.uuid, error: null }
-    } catch (error) {
-      const message = "Failed to change cover image!"
-      toastError({ message })
-      return { error: message, uuid: null }
+      toastError({ message: "Failed to load page. Broken link." })
+      return { error: getErrorMessage(error as Error), uuid: null }
     }
   },
   async getSignedUrlAsync({ uuidUser, imgUrl }) {
-    if (!imgUrl) {
-      set({ signedUrl: null })
-      return
+    if (!imgUrl) set({ signedUrl: null })
+    else {
+      const { data } = await client.storage
+        .from("covers")
+        .createSignedUrl(`${uuidUser}/${imgUrl}`, 60)
+      set({ signedUrl: data?.signedUrl ?? null })
     }
+  },
+  async updateDocAsync(uuid, doc) {
+    try {
+      set({
+        saveStatus: "start",
+        // optimistic update
+        doc: {
+          ...get().doc,
+          ...(doc as Page),
+        },
+      })
 
-    const { data, error } = await client.storage
-      .from("covers")
-      .createSignedUrl(`${uuidUser}/${imgUrl}`, 60)
-    set({ signedUrl: data?.signedUrl ?? null })
+      const { data, error } = await client
+        .from("pages")
+        .update({
+          ...get().failedSaveData,
+          ...doc,
+        })
+        .eq("uuid", uuid)
+        .select("*")
+        .single()
+
+      if (error) throw new Error(error.message)
+
+      if (
+        Object.keys(doc).includes("image_url") ||
+        Object.keys(get().failedSaveData).includes("image_url")
+      ) {
+        get().getSignedUrlAsync({
+          uuidUser: data.user_id,
+          imgUrl: data.image_url,
+        })
+      }
+
+      set({
+        loadingDoc: false,
+        // update optimistic data
+        doc: data,
+        saveStatus: "success",
+        failedSaveData: {},
+      })
+    } catch (error) {
+      set({
+        saveStatus: "failed",
+        failedSaveData: { ...get().failedSaveData, ...doc },
+      })
+
+      toastError({ message: "Failed to save changes." })
+    }
   },
 }))

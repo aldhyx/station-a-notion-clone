@@ -8,27 +8,27 @@ export default function TitleBlock() {
   const params = useParams()
   const uuid = params.uuid as string
 
-  const { delayedCallback } = useDebounceCallback(1000)
-  const { loadingDoc, doc, updateTitleAsync } = useDocStore()
+  const { delayedCallback } = useDebounceCallback(500)
+  const { loadingDoc, doc, updateDocAsync } = useDocStore()
   const loading = loadingDoc || !doc
 
-  const titleChangeHandler = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    const title = e.target.value ? e.target.value.trim() : undefined
-
+  const titleChangeHandler = (e: React.ChangeEvent<HTMLInputElement>): void =>
     delayedCallback(() => {
-      updateTitleAsync({ title, uuid }).then(res => {
-        if (res && res.title) e.target.value = res.title
-      })
+      const title = e.target.value ? e.target.value.trim() : undefined
+      updateDocAsync(uuid, { title: title ?? "untitled" })
     })
-  }
 
   if (loading) return <TitleBlock.Skeleton />
 
+  const title = doc.title
+  const placeholder = title && title.toLocaleLowerCase() === "untitled" ? "untitled" : ""
+
   return (
-    <div className="mx-auto max-w-3xl px-4 md:px-0">
+    <div className="mx-auto mb-3 max-w-3xl px-4 md:px-0">
       <Input
         type="text"
-        defaultValue={doc?.title ?? ""}
+        defaultValue={title ? title : ""}
+        placeholder={placeholder}
         className="h-auto border-none bg-background p-0 text-2xl font-bold md:text-3xl"
         onChange={titleChangeHandler}
       />

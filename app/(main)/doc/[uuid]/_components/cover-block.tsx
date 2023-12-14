@@ -11,7 +11,7 @@ export default function CoverBlock() {
   const params = useParams()
   const uuid = params.uuid as string
 
-  const { doc, loadingDoc, signedUrl, updateEmojiAsync } = useDocStore()
+  const { doc, loadingDoc, signedUrl, updateDocAsync } = useDocStore()
 
   const emoji = doc?.emoji ? (doc.emoji as Emoji) : null
   const loading = loadingDoc || !doc
@@ -55,7 +55,7 @@ export default function CoverBlock() {
           {emoji?.native && (
             <div className="absolute bottom-[-24px] left-5 rounded-full md:bottom-[-30px] md:left-0">
               <EmojiPickerPopover
-                onEmojiSelect={(emoji, event) => updateEmojiAsync({ emoji, uuid })}
+                onEmojiSelect={(emoji, event) => updateDocAsync(uuid, { emoji })}
               >
                 <span
                   role="button"

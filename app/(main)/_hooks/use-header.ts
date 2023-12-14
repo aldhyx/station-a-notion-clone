@@ -4,16 +4,16 @@ import { useUpdateEffect } from "usehooks-ts"
 
 export const useHeader = () => {
   const savingRef = useRef<NodeJS.Timeout | null>(null)
-  const { saving, setSavingDoc } = useDocStore()
+  const { saveStatus, setSaveStatus } = useDocStore()
 
   useUpdateEffect(() => {
-    if (saving.uuid) {
+    if (saveStatus === "success") {
       if (!savingRef.current) {
-        const id = setTimeout(() => setSavingDoc({ status: null, uuid: null }), 1000)
+        const id = setTimeout(() => setSaveStatus(null), 250)
         savingRef.current = id
       } else {
         clearTimeout(savingRef.current)
-        const newId = setTimeout(() => setSavingDoc({ status: null, uuid: null }), 1000)
+        const newId = setTimeout(() => setSaveStatus(null), 250)
         savingRef.current = newId
       }
     }
@@ -21,5 +21,5 @@ export const useHeader = () => {
     return () => {
       if (savingRef.current) clearTimeout(savingRef.current)
     }
-  }, [saving])
+  }, [saveStatus])
 }

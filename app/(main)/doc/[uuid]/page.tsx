@@ -7,6 +7,7 @@ import { useParams } from "next/navigation"
 import { useEffectOnce } from "usehooks-ts"
 import ActionBlock from "./_components/action-block"
 import CoverBlock from "./_components/cover-block"
+import FailedBlock from "./_components/failed-block"
 import TitleBlock from "./_components/title-block"
 
 const EditorBlock = dynamic(() => import("./_components/editor-block"), {
@@ -24,6 +25,7 @@ export default function DocDetailPage() {
 
   return (
     <ScrollArea className="h-[calc(100vh-48px)]">
+      <FailedBlock />
       <CoverBlock />
       <ActionBlock />
       <TitleBlock />

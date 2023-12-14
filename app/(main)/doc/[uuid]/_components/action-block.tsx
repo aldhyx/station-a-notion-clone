@@ -9,9 +9,9 @@ import CoverDialog from "./cover-dialog/dialog"
 export default function ActionBlock() {
   const params = useParams()
   const uuid = params.uuid as string
-  const { loadingDoc, doc, updateEmojiAsync, updateCoverAsync, signedUrl } = useDocStore()
-  const loading = loadingDoc || !doc
+  const { loadingDoc, doc, updateDocAsync, signedUrl } = useDocStore()
 
+  const loading = loadingDoc || !doc
   if (loading) return null
 
   const emoji = doc?.emoji ? (doc.emoji as Emoji) : null
@@ -26,7 +26,7 @@ export default function ActionBlock() {
       )}
     >
       {!emoji?.native ? (
-        <EmojiPickerPopover onEmojiSelect={emoji => updateEmojiAsync({ uuid, emoji })}>
+        <EmojiPickerPopover onEmojiSelect={emoji => updateDocAsync(uuid, { emoji })}>
           <Button
             variant="secondary"
             size="sm"
@@ -41,7 +41,7 @@ export default function ActionBlock() {
           variant="secondary"
           size="sm"
           className="h-auto p-[6px] text-xs font-normal text-zinc-500"
-          onClick={() => updateEmojiAsync({ uuid })}
+          onClick={() => updateDocAsync(uuid, { emoji: null })}
         >
           <SmileIcon className="mr-2 h-4 w-4" />
           Remove icon
@@ -69,7 +69,7 @@ export default function ActionBlock() {
           "hidden h-auto p-[6px] text-xs font-normal text-zinc-500",
           signedUrl && "flex",
         )}
-        onClick={() => updateCoverAsync({ uuid })}
+        onClick={() => updateDocAsync(uuid, { image_url: null })}
       >
         <ImageMinusIcon className="mr-2 h-4 w-4" />
         Remove cover
