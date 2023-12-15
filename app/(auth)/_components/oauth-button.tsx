@@ -6,12 +6,14 @@ import { toastError } from "@/lib/toast"
 import Image from "next/image"
 
 export function GoogleButton() {
+  const redirectTo = `${process.env.NEXT_PUBLIC_APP_URL}/api/v1/oauth/callback`
+
   const googleHandler = async () => {
     try {
       const { error } = await client.auth.signInWithOAuth({
         provider: "google",
         options: {
-          redirectTo: `${window.origin}/api/v1/oauth/callback`,
+          redirectTo,
         },
       })
 
