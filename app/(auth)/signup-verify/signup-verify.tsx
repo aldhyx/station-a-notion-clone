@@ -5,9 +5,12 @@ import { Form, FormControl, FormField, FormItem, FormMessage } from "@/component
 import { Input } from "@/components/ui/input"
 import { cn } from "@/lib/utils"
 import { LoaderIcon, MailCheckIcon } from "lucide-react"
+import { useSearchParams } from "next/navigation"
 import useSignUpVerify from "./_hooks/use-signup-verify"
 
 export default function SignUpVerifyPage() {
+  const params = useSearchParams()
+  const email = params.get("mailto")
   const {
     errors,
     form,
@@ -17,7 +20,6 @@ export default function SignUpVerifyPage() {
     showCountdown,
     submitHandler,
     count,
-    email,
   } = useSignUpVerify()
 
   return (

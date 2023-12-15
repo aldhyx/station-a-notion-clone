@@ -3,10 +3,11 @@ import { client } from "@/lib/supabase/client"
 import { create } from "zustand"
 
 type AuthStore = {
-  email: string | null
-  setEmail(email: string | null): void
   resetPasswordAsync(email: string): Promise<{ error: string } | void>
-  resetPasswordVerifyAsync(token: string): Promise<{ error: string } | void>
+  resetPasswordVerifyAsync(
+    token: string,
+    email: string,
+  ): Promise<{ error: string } | void>
   loginAsync(opt: {
     email: string
     password: string
@@ -20,10 +21,6 @@ type AuthStore = {
 }
 
 export const useAuthStore = create<AuthStore>()((set, get) => ({
-  email: null,
-  setEmail(email) {
-    set({ email })
-  },
   async resetPasswordAsync(email) {
     try {
       const { error, data } = await client.auth.resetPasswordForEmail(email)
@@ -33,10 +30,10 @@ export const useAuthStore = create<AuthStore>()((set, get) => ({
       return { error: getErrorMessage(error as Error) }
     }
   },
-  async resetPasswordVerifyAsync(token) {
+  async resetPasswordVerifyAsync(token, email) {
     try {
       const { data, error } = await client.auth.verifyOtp({
-        email: get().email as string,
+        email,
         token,
         type: "recovery",
       })

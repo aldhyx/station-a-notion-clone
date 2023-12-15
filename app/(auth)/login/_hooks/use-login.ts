@@ -5,7 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useAuthStore } from "@/store/use-auth-store"
 
 export const useLogin = () => {
-  const { setEmail, loginAsync } = useAuthStore()
+  const { loginAsync } = useAuthStore()
   const router = useRouter()
 
   const form = useForm<LoginSchema>({
@@ -17,8 +17,7 @@ export const useLogin = () => {
     const res = await loginAsync(props)
 
     if (res?.isNeedConfirmEmail) {
-      setEmail(props.email)
-      router.push(`/signup-verify`)
+      router.push(`/signup-verify?mailto=${props.email}`)
     } else if (res?.error) {
       form.setError("root.apiError", { message: res.error })
     } else {

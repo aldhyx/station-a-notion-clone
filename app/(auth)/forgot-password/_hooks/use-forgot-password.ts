@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form"
 import { type ForgotPasswordSchema, forgotPasswordSchema } from "../_schema"
 
 export default function useForgotPassword() {
-  const { setEmail, resetPasswordAsync } = useAuthStore()
+  const { resetPasswordAsync } = useAuthStore()
   const router = useRouter()
   const form = useForm<ForgotPasswordSchema>({
     resolver: zodResolver(forgotPasswordSchema),
@@ -16,8 +16,7 @@ export default function useForgotPassword() {
 
     if (res?.error) form.setError("root.apiError", { message: res.error })
     else {
-      setEmail(email)
-      router.replace("/forgot-password-verify")
+      router.replace(`/forgot-password-verify?mailto=${email}`)
     }
   })
 

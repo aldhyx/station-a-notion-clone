@@ -10,3 +10,11 @@ export const forgotPasswordVerifySchema = z.object({
 })
 
 export type ForgotPasswordVerifySchema = z.infer<typeof forgotPasswordVerifySchema>
+
+export const emailSchema = z
+  .string({
+    required_error: "Invalid email address",
+  })
+  .email({ message: "Invalid email address" })
+  .toLowerCase()
+  .trim()

@@ -1,4 +1,4 @@
-import { useRouter } from "next/navigation"
+import { useRouter, useSearchParams } from "next/navigation"
 import { useCountdown } from "usehooks-ts"
 import { type SignUpVerifySchema, signUpVerifySchema } from "../_schema"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -6,7 +6,9 @@ import { useForm } from "react-hook-form"
 import { useAuthStore } from "@/store/use-auth-store"
 
 export default function useSignUpVerify() {
-  const { email, signUpVerifyAsync, resendOtpAsync } = useAuthStore()
+  const params = useSearchParams()
+  const email = params.get("mailto")
+  const { signUpVerifyAsync, resendOtpAsync } = useAuthStore()
   const router = useRouter()
 
   const [count, { startCountdown }] = useCountdown({

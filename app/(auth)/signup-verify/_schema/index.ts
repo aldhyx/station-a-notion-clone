@@ -10,3 +10,11 @@ export const signUpVerifySchema = z.object({
 })
 
 export type SignUpVerifySchema = z.infer<typeof signUpVerifySchema>
+
+export const emailSchema = z
+  .string({
+    required_error: "Invalid email address",
+  })
+  .email({ message: "Invalid email address" })
+  .toLowerCase()
+  .trim()

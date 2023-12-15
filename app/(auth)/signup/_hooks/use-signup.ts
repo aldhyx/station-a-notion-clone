@@ -5,7 +5,7 @@ import { signUpSchema, type SignUpSchema } from "../_schema"
 import { useAuthStore } from "@/store/use-auth-store"
 
 export const useSignUp = () => {
-  const { setEmail, signUpAsync } = useAuthStore()
+  const { signUpAsync } = useAuthStore()
   const router = useRouter()
 
   const form = useForm<SignUpSchema>({
@@ -18,8 +18,7 @@ export const useSignUp = () => {
 
     if (res?.error) form.setError("root.apiError", { message: res.error })
     else {
-      setEmail(props.email)
-      router.push(`/signup-verify`)
+      router.push(`/signup-verify?mailto=${props.email}`)
     }
   })
 
