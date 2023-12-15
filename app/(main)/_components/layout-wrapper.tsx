@@ -46,7 +46,7 @@ export default function LayoutWrapper({
       <aside
         ref={sidebarRef}
         className={cn(
-          "group/sidebar relative z-[50] flex min-h-full w-60 flex-col overflow-y-auto bg-zinc-100 p-1",
+          "group/sidebar relative z-[50] flex min-h-full w-60 flex-col overflow-y-auto bg-zinc-50 p-1",
           animating && "transition-all duration-200 ease-in-out",
           minimize && "p-0",
           isMobile && "w-0 p-0",
@@ -59,7 +59,7 @@ export default function LayoutWrapper({
         <Button
           size="icon"
           className={cn(
-            "absolute right-3 top-3 h-7 w-7 text-zinc-600 transition",
+            "absolute right-3 top-3 h-7 w-7 text-zinc-500 transition",
             isMobile ? "opacity-100" : "opacity-0 group-hover/sidebar:opacity-100",
           )}
           variant="ghost"
@@ -75,7 +75,7 @@ export default function LayoutWrapper({
           onClick={minimizeHandler}
         />
         {/* Resize line when hover on cursor area*/}
-        <div className="absolute right-0 top-0 z-[49] min-h-full w-1 opacity-100 shadow-[rgba(0,0,0,0.028)_-1px_0px_0px_0px_inset] peer-hover:shadow-[rgba(0,0,0,0.1)_-2px_0px_0px_0px_inset]" />
+        <div className="absolute right-0 top-0 z-[49] min-h-full w-1 opacity-100 transition peer-hover:bg-zinc-200" />
       </aside>
 
       <div

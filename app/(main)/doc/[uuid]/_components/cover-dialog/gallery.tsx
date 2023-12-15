@@ -30,7 +30,7 @@ export default function Gallery() {
   if (!gallery?.length) return <Gallery.Empty />
 
   return (
-    <div className="relative grid grid-cols-3 gap-2">
+    <div className="relative grid grid-cols-3 gap-3">
       {gallery.map(d => {
         const isApplying = d.path === applying
         const isSelected = d.path?.split("/")[1] === doc?.image_url
@@ -39,14 +39,16 @@ export default function Gallery() {
           <div
             role="button"
             key={d.path}
-            className="group relative h-auto"
+            className="group relative h-auto overflow-hidden rounded-lg"
             onClick={() => updateCoverHandler(d.path)}
           >
             <div className="absolute grid h-full w-full place-content-center bg-zinc-800/50">
               {isApplying && (
                 <LoaderIcon className=" h-6 w-6 animate-spin text-zinc-50" />
               )}
-              {isSelected && <CheckIcon className=" h-6 w-6 text-zinc-50" />}
+              {!isApplying && isSelected && (
+                <CheckIcon className=" h-6 w-6 text-zinc-50" />
+              )}
             </div>
 
             {!isApplying && (
@@ -70,7 +72,7 @@ export default function Gallery() {
 
             <Image
               src={d.signedUrl}
-              className="h-[102px] w-full cursor-pointer rounded-sm object-cover object-center hover:opacity-80"
+              className="h-[102px] w-full cursor-pointer rounded-md object-cover object-center hover:opacity-80"
               alt=""
               height={102}
               width={154}

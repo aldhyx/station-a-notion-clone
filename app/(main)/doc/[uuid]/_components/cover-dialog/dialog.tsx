@@ -20,9 +20,12 @@ export default function CoverDialog({ children }: Props) {
       }}
     >
       <DialogTrigger asChild>{children}</DialogTrigger>
-      <DialogContent className="top-[5%] max-w-sm translate-y-[0] gap-0 px-0 pb-6 pt-14 md:max-w-lg">
+      <DialogContent
+        className="top-[5%] flex w-[90%] translate-y-[0] flex-col gap-0 rounded-xl bg-background p-0 py-3 md:!max-w-xl"
+        hideCloseButton
+      >
         <Tabs value={tab} className="w-full">
-          <TabsList className="h-auto w-full justify-start gap-x-3 rounded-none border-b border-b-zinc-200 bg-background px-4 py-0">
+          <TabsList className="h-auto w-full justify-start gap-x-3 rounded-none border-b border-b-zinc-200 bg-background px-3 py-0">
             <TabsTrigger
               value="gallery"
               onClick={() => setTab("gallery")}
@@ -39,11 +42,11 @@ export default function CoverDialog({ children }: Props) {
             </TabsTrigger>
           </TabsList>
 
-          <TabsContent value="gallery" className="m-0 px-4 pt-4">
+          <TabsContent value="gallery" className="m-0 px-3 pt-3">
             <Gallery />
           </TabsContent>
 
-          <TabsContent value="upload" className="m-0 px-4 pt-4">
+          <TabsContent value="upload" className="m-0 px-3 pt-3">
             <Upload />
           </TabsContent>
         </Tabs>

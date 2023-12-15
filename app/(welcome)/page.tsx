@@ -19,14 +19,14 @@ export default function WelcomePage() {
       </nav>
 
       <main className="w-100 flex flex-col items-center justify-center">
-        <div className="max-w-4xl pt-24 text-center">
+        <div className="mb-16 max-w-4xl pt-24 text-center">
           <h1 className="mb-3 text-3xl font-bold md:mb-5 md:text-6xl">
             Your💡<span className="underline">ideas</span>, 📚{" "}
             <span className="underline">docs</span>, <br /> & 🎯{" "}
             <span className="underline">projects</span>. Together.
           </h1>
 
-          <p className="mb-3 font-medium md:text-2xl">
+          <p className="mb-3 font-medium text-zinc-700 md:text-2xl">
             Station is the connected workspace where <br /> better, faster work happens.
           </p>
 
@@ -35,8 +35,21 @@ export default function WelcomePage() {
           </Suspense>
         </div>
 
-        <div className="relative h-[300px] w-[300px] md:h-[600px] md:w-[800px]">
-          <Image src="/assets/heroes.png" alt="heroes" fill className="object-contain" />
+        <div className="relative mx-auto flex w-full max-w-3xl items-center justify-center overflow-hidden pl-5">
+          <Image
+            src="/assets/documents.png"
+            alt="heroes"
+            width={200}
+            height={200}
+            className="w-[200px] object-contain md:w-[400px] "
+          />
+          <Image
+            src="/assets/reading.png"
+            alt="heroes"
+            width={200}
+            height={200}
+            className="w-[200px] object-contain md:w-[400px] "
+          />
         </div>
       </main>
 
@@ -48,7 +61,7 @@ export default function WelcomePage() {
         <div>
           <div className="mb-2 flex justify-center gap-x-4">
             <Button
-              className="h-min p-0 text-xs font-semibold text-zinc-700 md:text-sm"
+              className="h-min p-0 text-xs font-medium text-zinc-600 md:text-sm"
               size="sm"
               variant="link"
             >
@@ -56,7 +69,7 @@ export default function WelcomePage() {
             </Button>
 
             <Button
-              className="h-min p-0 text-xs font-semibold text-zinc-700 md:text-sm"
+              className="h-min p-0 text-xs font-medium text-zinc-600 md:text-sm"
               size="sm"
               variant="link"
             >

@@ -6,8 +6,8 @@ export default function DocPage() {
     <div className="flex h-[calc(100vh-48px)] flex-col items-center justify-center">
       <Image
         alt=""
-        src="/assets/heroes.png"
-        width={600}
+        src="/assets/documents.png"
+        width={400}
         height={700}
         className="mb-5 object-contain grayscale"
       />

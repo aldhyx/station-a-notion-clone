@@ -41,7 +41,7 @@ const Header = function Header({
 
   const emoji = doc?.emoji ? (doc.emoji as Emoji) : null
   return (
-    <header className="flex h-12 items-center justify-start border-b border-zinc-200 px-3">
+    <header className="flex h-12 items-center justify-start  px-3">
       <Button
         size="icon"
         variant="ghost"

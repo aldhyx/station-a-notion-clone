@@ -42,6 +42,7 @@ export default function EmojiPickerPopover({ children, onEmojiSelect }: Props) {
           theme="light"
           skinTonePosition="none"
           previewPosition="none"
+          className="bg-red-500"
         />
       </PopoverContent>
     </Popover>

@@ -1,6 +1,7 @@
+import UserPopover from "@/app/(main)/_components/popovers/user-popover"
 import { Button } from "@/components/ui/button"
 import { createClient } from "@/lib/supabase/server"
-import { LoaderIcon } from "lucide-react"
+import { LoaderIcon, UserCircle } from "lucide-react"
 import { cookies } from "next/headers"
 import Link from "next/link"
 
@@ -10,6 +11,7 @@ export default async function NavAuth() {
   const {
     data: { user },
   } = await server.auth.getUser()
+  const { data } = await server.from("profiles").select(`username, fullname`).single()
 
   if (!user) {
     return (
@@ -27,9 +29,16 @@ export default async function NavAuth() {
 
   return (
     <div>
-      <Button className="md:flex" size="sm" asChild>
-        <Link href="/page">Dashboard</Link>
-      </Button>
+      <UserPopover
+        email={user.email!}
+        fullname={data?.fullname ?? null}
+        username={data?.username ?? null}
+      >
+        <Button variant="ghost" size="sm" className="max-w-[200px] items-center">
+          <UserCircle className="mr-2 h-4 w-4 shrink-0" />
+          <span className="truncate">{user.email}</span>
+        </Button>
+      </UserPopover>
     </div>
   )
 }

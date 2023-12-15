@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button"
 import { createClient } from "@/lib/supabase/server"
-import { LoaderIcon } from "lucide-react"
+import { ArrowRightIcon, LoaderIcon } from "lucide-react"
 import { cookies } from "next/headers"
 import Link from "next/link"
 
@@ -21,8 +21,11 @@ export default async function HeroesAuth() {
   }
 
   return (
-    <Button className="text-base" asChild>
-      <Link href="/doc">Dashboard</Link>
+    <Button className="text-base" asChild variant="default">
+      <Link href="/doc">
+        View dashboard
+        <ArrowRightIcon className="ml-2 h-4 w-4" />
+      </Link>
     </Button>
   )
 }

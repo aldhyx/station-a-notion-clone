@@ -8,7 +8,7 @@ export default function Upload() {
 
   return (
     <div
-      className="relative grid h-40 place-content-center rounded-sm border border-dashed"
+      className="relative grid h-40 place-content-center rounded-lg border border-dashed"
       {...getRootProps({})}
     >
       {uploading ? (
