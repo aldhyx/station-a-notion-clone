@@ -19,6 +19,7 @@ type DocState = {
   loadingDoc: boolean
   doc: Page | null
   signedUrl: string | null
+  creating: boolean
 }
 
 type DocAction = {
@@ -39,6 +40,7 @@ const initialState: DocState = {
   saveStatus: null,
   signedUrl: null,
   failedSaveData: {},
+  creating: false,
 }
 
 export const useDocStore = create<DocState & DocAction>()((set, get) => ({
@@ -47,6 +49,7 @@ export const useDocStore = create<DocState & DocAction>()((set, get) => ({
     set({ saveStatus: status })
   },
   async createDocAsync(uuid) {
+    set({ creating: true })
     const id = uuid ?? "create"
     toastLoading({ message: "Creating new page...", id })
 
@@ -64,6 +67,8 @@ export const useDocStore = create<DocState & DocAction>()((set, get) => ({
     } catch (error) {
       toastError({ message: "Failed to create new page.", id })
       return { error: getErrorMessage(error as Error), uuid: null }
+    } finally {
+      set({ creating: false })
     }
   },
   async deleteDocAsync(uuid) {

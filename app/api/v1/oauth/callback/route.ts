@@ -1,6 +1,6 @@
 import { createClient } from "@/lib/supabase/server"
 import { cookies } from "next/headers"
-import { NextRequest } from "next/server"
+import { NextRequest, NextResponse } from "next/server"
 export const dynamic = "force-dynamic"
 
 export async function GET(req: NextRequest) {
@@ -13,10 +13,10 @@ export async function GET(req: NextRequest) {
   try {
     const { data, error } = await server.auth.exchangeCodeForSession(code)
 
-    if (data) return Response.redirect(`${req.nextUrl.origin}/doc`)
+    if (data) return NextResponse.redirect(new URL("/doc", req.url))
 
     throw new Error(error?.message)
   } catch (error) {
-    return Response.redirect(`${req.nextUrl.origin}/login`)
+    return NextResponse.redirect(new URL("/login", req.url))
   }
 }

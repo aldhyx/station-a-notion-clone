@@ -1,6 +1,8 @@
 import { Button } from "@/components/ui/button"
+import { useDocStore } from "@/store/use-doc-store"
 import {
   HomeIcon,
+  LoaderIcon,
   PlusCircleIcon,
   SearchIcon,
   SettingsIcon,
@@ -11,6 +13,7 @@ import SearchDialog from "./dialogs/search-dialog"
 import TrashDialog from "./dialogs/trash-dialog"
 
 export default function SidebarMenu() {
+  const { creating } = useDocStore()
   const { createNewDocHandler, navigateHandler } = useSidebar()
 
   return (
@@ -60,8 +63,13 @@ export default function SidebarMenu() {
         variant="ghost"
         className="h-7 justify-start px-3 font-normal text-zinc-600"
         onClick={() => createNewDocHandler()}
+        disabled={creating}
       >
-        <PlusCircleIcon className="mr-3 h-4 w-4" />
+        {creating ? (
+          <LoaderIcon className="mr-2 h-4 w-4 animate-spin" />
+        ) : (
+          <PlusCircleIcon className="mr-3 h-4 w-4" />
+        )}
         New Page
       </Button>
     </div>

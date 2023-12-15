@@ -1,11 +1,4 @@
-"use client"
-
-import FullScreenLoading from "@/components/full-screen-loading"
-import dynamic from "next/dynamic"
-
-const LoginPage = dynamic(() => import("./login"), {
-  loading: () => <FullScreenLoading />,
-})
+import LoginPage from "./login"
 
 export default function LoginRootPage() {
   return <LoginPage />
