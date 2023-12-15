@@ -3,7 +3,6 @@
 import FullScreenLoading from "@/components/full-screen-loading"
 import { useAuthStore } from "@/store/use-auth-store"
 import dynamic from "next/dynamic"
-import { redirect } from "next/navigation"
 
 const SignUpVerifyPage = dynamic(() => import("./signup-verify"), {
   ssr: false,
@@ -12,7 +11,9 @@ const SignUpVerifyPage = dynamic(() => import("./signup-verify"), {
 
 export default function SignUpVerifyRootPage() {
   const { email } = useAuthStore()
-  if (!email) return redirect("/signup")
+  // debug
+  console.log(email)
+  // if (!email) return redirect("/signup")
 
   return <SignUpVerifyPage />
 }
