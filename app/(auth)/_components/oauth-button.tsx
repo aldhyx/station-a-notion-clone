@@ -1,3 +1,5 @@
+"use client"
+
 import { Button } from "@/components/ui/button"
 import { client } from "@/lib/supabase/client"
 import { toastError } from "@/lib/toast"
@@ -9,7 +11,7 @@ export function GoogleButton() {
       const { error } = await client.auth.signInWithOAuth({
         provider: "google",
         options: {
-          redirectTo: `${window.location.origin}/api/v1/oauth/callback`,
+          redirectTo: `${window.origin}/api/v1/oauth/callback`,
         },
       })
 
