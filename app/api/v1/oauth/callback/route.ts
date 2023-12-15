@@ -13,10 +13,11 @@ export async function GET(req: NextRequest) {
   try {
     const { data, error } = await server.auth.exchangeCodeForSession(code)
 
-    if (data) return NextResponse.redirect(new URL("/doc", req.url))
+    if (data)
+      return NextResponse.redirect(new URL("/doc", process.env.NEXT_PUBLIC_APP_URL))
 
     throw new Error(error?.message)
   } catch (error) {
-    return NextResponse.redirect(new URL("/login", req.url))
+    return NextResponse.redirect(new URL("/login", process.env.NEXT_PUBLIC_APP_URL))
   }
 }

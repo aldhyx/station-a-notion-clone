@@ -14,7 +14,7 @@ export async function middleware(request: NextRequest) {
       request.nextUrl.pathname.startsWith("/reset-password") ||
       request.nextUrl.pathname.startsWith("/setting"))
   ) {
-    return NextResponse.redirect(new URL("/login", request.url))
+    return NextResponse.redirect(new URL("/login", process.env.NEXT_PUBLIC_APP_URL))
   }
 
   if (
@@ -23,7 +23,7 @@ export async function middleware(request: NextRequest) {
       request.nextUrl.pathname.startsWith("/signup") ||
       request.nextUrl.pathname.startsWith("/forgot-password"))
   ) {
-    return NextResponse.redirect(new URL("/doc", request.url))
+    return NextResponse.redirect(new URL("/doc", process.env.NEXT_PUBLIC_APP_URL))
   }
 
   return response
