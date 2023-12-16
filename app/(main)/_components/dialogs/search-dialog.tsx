@@ -120,7 +120,7 @@ export default function SearchDialog({ children }: Props) {
 
 SearchDialog.Title = function Title() {
   return (
-    <div className="mb-1 flex items-center justify-start p-3">
+    <div className="mb-1 flex items-center justify-start p-3 dark:text-zinc-100">
       <SearchIcon className="mr-2 h-4 w-4" />
       <p className="text-base font-medium leading-none">Search</p>
     </div>

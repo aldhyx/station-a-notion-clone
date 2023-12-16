@@ -16,7 +16,7 @@ export default function SidebarUser() {
       <Button
         variant="ghost"
         size="lg"
-        className="flex w-full items-center justify-start px-3 font-normal"
+        className="flex w-full items-center justify-start px-3 font-normal dark:text-zinc-100"
       >
         <div className="relative mr-2 h-[20px] w-[20px]">
           <UserCircle2 className=" h-[20px] w-[20px]" />

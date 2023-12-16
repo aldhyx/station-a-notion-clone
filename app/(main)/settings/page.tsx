@@ -60,7 +60,9 @@ export default function SettingsPage() {
           variant="ghost"
         >
           <div className="flex w-full flex-col items-start">
-            <span className="mb-1 ">Appearance</span>
+            <span className="mb-1 ">
+              Appearance <b className="text-blue-800">(Beta)</b>
+            </span>
 
             <span className="block text-left text-xs font-normal text-zinc-500">
               Customize how Station looks on your devices

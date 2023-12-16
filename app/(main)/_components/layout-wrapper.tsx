@@ -46,7 +46,7 @@ export default function LayoutWrapper({
       <aside
         ref={sidebarRef}
         className={cn(
-          "group/sidebar relative z-[50] flex min-h-full w-60 flex-col overflow-y-auto bg-zinc-50 p-1",
+          "group/sidebar relative z-[50] flex min-h-full w-60 flex-col overflow-y-auto bg-zinc-50 p-1 dark:bg-zinc-800",
           animating && "transition-all duration-200 ease-in-out",
           minimize && "p-0",
           isMobile && "w-0 p-0",
@@ -59,7 +59,7 @@ export default function LayoutWrapper({
         <Button
           size="icon"
           className={cn(
-            "absolute right-3 top-3 h-7 w-7 text-zinc-500 transition",
+            "absolute right-3 top-3 h-7 w-7 text-zinc-500 transition dark:text-zinc-300",
             isMobile ? "opacity-100" : "opacity-0 group-hover/sidebar:opacity-100",
           )}
           variant="ghost"
@@ -75,13 +75,13 @@ export default function LayoutWrapper({
           onClick={minimizeHandler}
         />
         {/* Resize line when hover on cursor area*/}
-        <div className="absolute right-0 top-0 z-[49] min-h-full w-1 opacity-100 transition peer-hover:bg-zinc-200" />
+        <div className="absolute right-0 top-0 z-[49] min-h-full w-1 opacity-100 transition peer-hover:bg-zinc-200 dark:peer-hover:bg-zinc-600" />
       </aside>
 
       <div
         ref={topbarRef}
         className={cn(
-          "fixed left-60 right-0 top-0 w-[calc(100vw-240px)] bg-background",
+          "fixed left-60 right-0 top-0 w-[calc(100vw-240px)] bg-background dark:bg-zinc-900",
           animating && "transition-all duration-200 ease-in-out",
           isMobile && "left-0 w-full",
         )}
@@ -94,7 +94,9 @@ export default function LayoutWrapper({
       </div>
 
       <main
-        className={"mt-12 h-[calc(100vh-48px)] flex-1 overflow-y-auto bg-background"}
+        className={
+          "mt-12 h-[calc(100vh-48px)] flex-1 overflow-y-auto bg-background dark:bg-zinc-900"
+        }
         ref={mainRef}
       >
         {children}

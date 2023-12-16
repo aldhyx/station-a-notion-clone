@@ -71,10 +71,10 @@ const Header = function Header({
                   {emoji.native}
                 </span>
               ) : (
-                <FileIcon className="h-4 w-4 shrink-0" />
+                <FileIcon className="h-4 w-4 shrink-0 dark:text-zinc-100" />
               )}
 
-              <span className="truncatepl-2 block max-w-[130px] text-sm">
+              <span className="truncatepl-2 block max-w-[130px] text-sm dark:text-zinc-100 ">
                 {doc.title}
               </span>
 
@@ -124,7 +124,7 @@ const Header = function Header({
 
       {!showDocTitle && (
         <div className="flex w-full items-center justify-between ">
-          <p className="max-w-[130px] text-sm capitalize md:max-w-[240px]">
+          <p className="max-w-[130px] text-sm capitalize dark:text-zinc-100 md:max-w-[240px]">
             {headerTitle}
           </p>
         </div>

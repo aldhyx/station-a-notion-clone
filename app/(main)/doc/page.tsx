@@ -17,15 +17,18 @@ export default function DocPage() {
   }
 
   return (
-    <div className="flex h-[calc(100vh-48px)] flex-col items-center justify-center">
+    <div className="flex h-[calc(100vh-48px)] flex-col items-center justify-center dark:bg-zinc-900">
       <Image
         alt=""
         src="/assets/documents.png"
         width={400}
         height={500}
-        className="mb-5 w-[200px] object-contain grayscale md:w-[400px]"
+        className="inverse mb-8 w-[200px] object-contain filter dark:invert md:w-[400px]"
       />
-      <p className="mb-5">Create new page to start write your idea.</p>
+      <h2 className="mb-1 text-2xl dark:text-zinc-100">
+        Welcome to <strong className="underline">Station</strong>
+      </h2>
+      <p className="mb-8 dark:text-zinc-100">Create new page to start write your idea.</p>
       <Button onClick={() => createDocHandler()} disabled={creating}>
         {creating && <LoaderIcon className="mr-2 h-4 w-4 animate-spin" />}
         Create New Page
