@@ -121,3 +121,12 @@ h3.ce-header {
 .toggle-block__selector {
   @apply flex items-center justify-start;
 }
+
+/* emoji custom theme */
+
+em-emoji-picker {
+  --rgb-background: "inherit";
+  --font-size: 14px;
+  --font-family: inherit;
+  --border-radius: inherit;
+}

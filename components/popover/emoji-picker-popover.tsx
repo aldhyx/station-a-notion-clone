@@ -1,6 +1,7 @@
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import data from "@emoji-mart/data"
 import Picker from "@emoji-mart/react"
+import { useTheme } from "next-themes"
 import { PropsWithChildren } from "react"
 
 enum SKIN_TYPES {
@@ -28,22 +29,27 @@ type Props = PropsWithChildren & {
 }
 
 export default function EmojiPickerPopover({ children, onEmojiSelect }: Props) {
+  const { theme } = useTheme()
+
+  const th = theme === "dark" ? "dark" : "light"
+
   return (
     <Popover>
       <PopoverTrigger asChild>{children}</PopoverTrigger>
       <PopoverContent
-        className="w-auto border-none bg-transparent p-0 shadow-none outline-none"
+        className="w-auto border-none bg-transparent p-0 shadow-none outline-none "
         align="start"
       >
-        <Picker
-          data={data}
-          onEmojiSelect={onEmojiSelect}
-          searchPosition="none"
-          theme="light"
-          skinTonePosition="none"
-          previewPosition="none"
-          className="bg-red-500"
-        />
+        <div className="overflow-hidden rounded-xl bg-background dark:bg-zinc-800">
+          <Picker
+            data={data}
+            onEmojiSelect={onEmojiSelect}
+            searchPosition="none"
+            theme={th}
+            skinTonePosition="none"
+            previewPosition="none"
+          />
+        </div>
       </PopoverContent>
     </Popover>
   )
