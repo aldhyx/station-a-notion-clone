@@ -103,7 +103,7 @@ export default function SidebarPages({ uuid, level = 0 }: Props) {
 
                 <span
                   className={cn(
-                    "truncate text-sm text-zinc-600 antialiased dark:text-zinc-200",
+                    "truncate text-sm text-zinc-700 antialiased dark:text-zinc-200",
                     params?.uuid === item.uuid &&
                       "z font-semibold text-zinc-800 dark:text-zinc-100",
                   )}

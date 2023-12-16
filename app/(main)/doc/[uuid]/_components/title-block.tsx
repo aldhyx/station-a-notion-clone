@@ -29,7 +29,7 @@ export default function TitleBlock() {
         type="text"
         defaultValue={title ? title : ""}
         placeholder={placeholder}
-        className="h-auto border-none bg-background p-0 text-2xl font-bold md:text-3xl"
+        className="h-auto border-none bg-background p-0 text-2xl font-bold dark:bg-zinc-900 md:text-3xl"
         onChange={titleChangeHandler}
       />
     </div>

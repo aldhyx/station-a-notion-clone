@@ -35,24 +35,24 @@ export default function NewDocDialog({ children, uuid }: Props) {
               render={({ field }) => (
                 <FormItem className="space-y-0">
                   <FormControl>
-                    <div className="flex items-center px-3 pb-3">
+                    <div className="flex items-center gap-x-2 px-3 pb-3">
                       <Input
                         type="text"
                         placeholder="Type page title..."
-                        className="rounded-xl rounded-r-none border-r-0 bg-background text-sm placeholder:text-sm placeholder:text-zinc-500 focus-visible:ring-transparent"
+                        className="rounded-xl bg-background text-sm placeholder:text-sm placeholder:text-zinc-500 focus-visible:ring-transparent"
                         {...field}
                       />
 
                       <Button
                         size="sm"
-                        className="h-10 w-24 rounded-l-none rounded-r-xl"
+                        className="h-10 w-24 rounded-xl"
                         type="submit"
                         disabled={isDisableSubmit}
                       >
                         {isLoadingSubmit ? (
                           <LoaderIcon className="h-4 w-4 animate-spin" />
                         ) : (
-                          "Submit"
+                          "Create"
                         )}
                       </Button>
                     </div>
@@ -77,7 +77,7 @@ export default function NewDocDialog({ children, uuid }: Props) {
 
 NewDocDialog.Title = function Title() {
   return (
-    <div className="mb-1 flex items-center justify-start p-3">
+    <div className="mb-1 flex items-center justify-start p-3 dark:text-zinc-100">
       <PlusCircleIcon className="mr-2 h-4 w-4" />
       <p className="text-base font-medium leading-none">New page</p>
     </div>
