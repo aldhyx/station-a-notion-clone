@@ -11,7 +11,7 @@ export default function DocPage() {
   const router = useRouter()
 
   const createDocHandler = () => {
-    createDocAsync().then(({ uuid }) => {
+    createDocAsync({}).then(({ uuid }) => {
       if (uuid) router.push(`/doc/${uuid}`)
     })
   }

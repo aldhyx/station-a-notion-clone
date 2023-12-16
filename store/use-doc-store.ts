@@ -24,7 +24,7 @@ type DocState = {
 
 type DocAction = {
   setSaveStatus(status: Status): void
-  createDocAsync(uuid?: string): ErrorResponse
+  createDocAsync(opt: { uuid?: string; title?: string }): ErrorResponse
   deleteDocAsync(uuid: string): ErrorResponse
   getDocAsync(uuid: string): ErrorResponse
   getSignedUrlAsync(opt: { uuidUser: string; imgUrl: string | null }): Promise<void>
@@ -48,7 +48,7 @@ export const useDocStore = create<DocState & DocAction>()((set, get) => ({
   setSaveStatus(status) {
     set({ saveStatus: status })
   },
-  async createDocAsync(uuid) {
+  async createDocAsync({ uuid, title }) {
     set({ creating: true })
     const id = uuid ?? "create"
     toastLoading({ message: "Creating new page...", id })
@@ -56,7 +56,7 @@ export const useDocStore = create<DocState & DocAction>()((set, get) => ({
     try {
       const { data, error } = await client
         .from("pages")
-        .insert({ parent_uuid: uuid })
+        .insert({ parent_uuid: uuid, title: title ?? "untitled" })
         .select("uuid")
         .single()
 

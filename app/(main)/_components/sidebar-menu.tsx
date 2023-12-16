@@ -1,20 +1,18 @@
 import { Button } from "@/components/ui/button"
-import { useDocStore } from "@/store/use-doc-store"
 import {
   HomeIcon,
-  LoaderIcon,
   PlusCircleIcon,
   SearchIcon,
   SettingsIcon,
   Trash2Icon,
 } from "lucide-react"
 import { useSidebar } from "../_hooks/use-sidebar"
+import NewDocDialog from "./dialogs/new-doc-dialog"
 import SearchDialog from "./dialogs/search-dialog"
 import TrashDialog from "./dialogs/trash-dialog"
 
 export default function SidebarMenu() {
-  const { creating } = useDocStore()
-  const { createNewDocHandler, navigateHandler } = useSidebar()
+  const { navigateHandler } = useSidebar()
 
   return (
     <div className="flex flex-col pb-3">
@@ -59,19 +57,15 @@ export default function SidebarMenu() {
         Home
       </Button>
 
-      <Button
-        variant="ghost"
-        className="h-7 justify-start px-3 font-normal text-zinc-600"
-        onClick={() => createNewDocHandler()}
-        disabled={creating}
-      >
-        {creating ? (
-          <LoaderIcon className="mr-2 h-4 w-4 animate-spin" />
-        ) : (
+      <NewDocDialog>
+        <Button
+          variant="ghost"
+          className="h-7 justify-start px-3 font-normal text-zinc-600"
+        >
           <PlusCircleIcon className="mr-3 h-4 w-4" />
-        )}
-        New Page
-      </Button>
+          New Page
+        </Button>
+      </NewDocDialog>
     </div>
   )
 }

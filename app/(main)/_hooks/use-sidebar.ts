@@ -1,23 +1,12 @@
 import { useParams, useRouter } from "next/navigation"
 import { useLayoutStore } from "../../../store/use-layout-store"
 import { useMap } from "usehooks-ts"
-import { useDocStore } from "@/store/use-doc-store"
-import { useState } from "react"
 
 export const useSidebar = () => {
   const params = useParams()
   const router = useRouter()
-  const { createDocAsync } = useDocStore()
   const { triggerMinimize } = useLayoutStore()
   const [collapsedMap, collapseActions] = useMap<string, string>([])
-
-  const createNewDocHandler = async (uuid?: string) => {
-    const res = await createDocAsync(uuid)
-    if (res.uuid) {
-      triggerMinimize("doc")
-      router.push(`/doc/${res.uuid}`)
-    }
-  }
 
   const navigateHandler = (path: "settings" | "trash" | "doc") => {
     triggerMinimize(path)
@@ -37,7 +26,6 @@ export const useSidebar = () => {
   }
 
   return {
-    createNewDocHandler,
     navigateHandler,
     navigateDocHandler,
     docCollapseHandler,

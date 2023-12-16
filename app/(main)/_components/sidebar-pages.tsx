@@ -16,6 +16,7 @@ import { useEffectOnce } from "usehooks-ts"
 import { useSidebarStore } from "../../../store/use-sidebar-store"
 import { useSidebar } from "../_hooks/use-sidebar"
 import MoveToTrashDialog from "./dialogs/move-trash-dialog"
+import NewDocDialog from "./dialogs/new-doc-dialog"
 
 type Props = {
   uuid?: string
@@ -24,8 +25,7 @@ type Props = {
 
 export default function SidebarPages({ uuid, level = 0 }: Props) {
   const params = useParams()
-  const { navigateDocHandler, createNewDocHandler, docCollapseHandler, collapsedMap } =
-    useSidebar()
+  const { navigateDocHandler, docCollapseHandler, collapsedMap } = useSidebar()
 
   const { loading, sidebarList, getSidebarListAsync } = useSidebarStore()
 
@@ -127,14 +127,15 @@ export default function SidebarPages({ uuid, level = 0 }: Props) {
                   </Button>
                 </MoveToTrashDialog>
 
-                <Button
-                  size="icon"
-                  variant="ghost"
-                  className="h-6 w-6 text-zinc-500 hover:bg-zinc-400/30"
-                  onClick={() => createNewDocHandler(item.uuid)}
-                >
-                  <PlusCircleIcon className="h-4 w-4" />
-                </Button>
+                <NewDocDialog uuid={item.uuid}>
+                  <Button
+                    size="icon"
+                    variant="ghost"
+                    className="h-6 w-6 text-zinc-500 hover:bg-zinc-400/30"
+                  >
+                    <PlusCircleIcon className="h-4 w-4" />
+                  </Button>
+                </NewDocDialog>
               </div>
             </div>
 
