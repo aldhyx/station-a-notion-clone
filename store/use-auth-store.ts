@@ -1,5 +1,6 @@
 import { getErrorMessage } from "@/helper/error.helper"
 import { client } from "@/lib/supabase/client"
+import { type Provider } from "@supabase/supabase-js"
 import { create } from "zustand"
 
 type AuthStore = {
@@ -13,6 +14,7 @@ type AuthStore = {
     password: string
   }): Promise<{ error: string; isNeedConfirmEmail: boolean } | void>
   signUpAsync(opt: { email: string; password: string }): Promise<{ error: string } | void>
+  signUpWithOauth(opt: { provider: Provider }): Promise<{ error: string } | void>
   signUpVerifyAsync(opt: {
     email: string
     token: string
@@ -83,6 +85,22 @@ export const useAuthStore = create<AuthStore>()((set, get) => ({
         if (error.status === 429) throw new Error("")
         throw new Error(error.message)
       }
+    } catch (error) {
+      return { error: getErrorMessage(error as Error) }
+    }
+  },
+  async signUpWithOauth(opt) {
+    try {
+      const redirectTo = `${process.env.NEXT_PUBLIC_APP_URL}/api/v1/oauth/callback`
+
+      if (!redirectTo) return
+
+      const { data, error } = await client.auth.signInWithOAuth({
+        provider: opt.provider,
+        options: { redirectTo },
+      })
+
+      if (error) throw new Error(error.message)
     } catch (error) {
       return { error: getErrorMessage(error as Error) }
     }

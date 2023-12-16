@@ -1,30 +1,19 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
-import { client } from "@/lib/supabase/client"
-import { toastError } from "@/lib/toast"
+import { useAuthStore } from "@/store/use-auth-store"
 import Image from "next/image"
 
 export function GoogleButton() {
-  const redirectTo = `${process.env.NEXT_PUBLIC_APP_URL}/api/v1/oauth/callback`
-
-  const googleHandler = async () => {
-    try {
-      const { error } = await client.auth.signInWithOAuth({
-        provider: "google",
-        options: {
-          redirectTo,
-        },
-      })
-
-      if (error) throw new Error(error.message)
-    } catch (error) {
-      toastError({ message: "Failed to login or sign up with google." })
-    }
-  }
+  const { signUpWithOauth } = useAuthStore()
 
   return (
-    <Button className="mb-3 w-full" size="lg" variant="outline" onClick={googleHandler}>
+    <Button
+      className="mb-3 w-full"
+      size="lg"
+      variant="outline"
+      onClick={() => signUpWithOauth({ provider: "google" })}
+    >
       <Image
         src="/assets/google.svg"
         alt="google"
