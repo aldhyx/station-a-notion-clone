@@ -11,14 +11,17 @@ type Props = PropsWithChildren
 export default function CoverDialog({ children }: Props) {
   const [tab, setTab] = useState<"gallery" | "upload">("gallery")
   const { currentUser } = useUserStore()
-  const { getGalleryAsync } = useGalleryStore()
+
+  const { getGradientsAsync, getPicturesAsync } = useGalleryStore()
+  const openChangeHandler = (open: boolean) => {
+    if (open && currentUser?.id) {
+      getPicturesAsync(currentUser.id)
+      getGradientsAsync()
+    }
+  }
 
   return (
-    <Dialog
-      onOpenChange={open => {
-        if (open && currentUser?.id) getGalleryAsync(currentUser.id)
-      }}
-    >
+    <Dialog onOpenChange={openChangeHandler}>
       <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent
         className="top-[5%] flex w-[90%] translate-y-[0] flex-col gap-0 rounded-xl p-0 py-3 md:!max-w-xl"
