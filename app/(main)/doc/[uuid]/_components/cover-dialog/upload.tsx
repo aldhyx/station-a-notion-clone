@@ -8,7 +8,7 @@ export default function Upload() {
 
   return (
     <div
-      className="relative grid h-40 place-content-center rounded-lg border border-dashed"
+      className="relative grid h-40 place-content-center rounded-lg border border-dashed dark:border-zinc-600"
       {...getRootProps({})}
     >
       {uploading ? (
@@ -23,7 +23,7 @@ export default function Upload() {
             />
           )}
 
-          <p className="flex flex-col items-center text-zinc-800">
+          <p className="flex flex-col items-center text-zinc-800 dark:text-zinc-100">
             <LoaderIcon className="mb-1 h-6 w-6 animate-spin" />
             <span className="text-xs">Uploading image...</span>
           </p>
@@ -31,12 +31,14 @@ export default function Upload() {
       ) : (
         <>
           <Input {...getInputProps()} />
-          <ImageIcon className="mx-auto mb-3 h-8 w-8 text-zinc-500" />
-          <p className="mt-0 whitespace-nowrap text-center text-xs text-zinc-500">
+          <ImageIcon className="mx-auto mb-3 h-8 w-8 text-zinc-500 dark:text-zinc-300" />
+          <p className="mt-0 whitespace-nowrap text-center text-xs text-zinc-500 dark:text-zinc-300">
             <span className="mb-1 block">
               Drag & drop or click here to upload cover image.
             </span>
-            <span className="text-blue-800">*Image size limited to 1MB</span>
+            <span className="text-blue-800 dark:text-blue-500">
+              *Image size limited to 1MB
+            </span>
           </p>
         </>
       )}

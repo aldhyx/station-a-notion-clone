@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button"
 import { Skeleton } from "@/components/ui/skeleton"
+import { cn } from "@/lib/utils"
 import { useDocStore } from "@/store/use-doc-store"
 import { useGalleryStore } from "@/store/use-gallery-store"
 import { CheckIcon, ImageIcon, LoaderIcon, TrashIcon } from "lucide-react"
@@ -42,7 +43,13 @@ export default function Gallery() {
             className="group relative h-auto overflow-hidden rounded-lg"
             onClick={() => updateCoverHandler(d.path)}
           >
-            <div className="absolute grid h-full w-full place-content-center bg-zinc-800/50">
+            <div
+              className={cn(
+                "absolute grid h-full w-full place-content-center",
+                isApplying && "bg-zinc-800/50",
+                isSelected && "bg-zinc-800/50",
+              )}
+            >
               {isApplying && (
                 <LoaderIcon className=" h-6 w-6 animate-spin text-zinc-50" />
               )}
@@ -76,8 +83,6 @@ export default function Gallery() {
               alt=""
               height={102}
               width={154}
-              placeholder={"blur"}
-              blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJoAAABkCAYAAAB+Zyl+AAAAv0lEQVR42u3SMQkAAAgAMO1fUzCGpvAQtgzLqp6AYykaoiEaiIZoiAaiIRqIhmiIBqIhGoiGaIgGoiEaiIZoiAaiIRqIhmiIBqIhGqKBaIgGoiEaooFoiAaiIRqigWiIBqIhGqKBaIgGoiEaooFoiIZoIBqigWiIhmggGqKBaIiGaCAaooFoiIZoIBqigWiIhmggGqIhGoiGaCAaoiEaiIZoIBqiIRqIhmggGqIhGoiGaCAaoiEaiIZoiAai8d8Coa1wbByiGIIAAAAASUVORK5CYII="
             />
           </div>
         )
@@ -92,7 +97,10 @@ Gallery.Skeleton = function Loading() {
       {Array(5)
         .fill(null)
         .map((_, i) => (
-          <Skeleton key={i + 1} className="h-[102px] w-full bg-zinc-200" />
+          <Skeleton
+            key={i + 1}
+            className="h-[102px] w-full bg-zinc-200 dark:bg-zinc-600"
+          />
         ))}
     </div>
   )
@@ -101,8 +109,10 @@ Gallery.Skeleton = function Loading() {
 Gallery.Empty = function Empty() {
   return (
     <div className="flex h-40 flex-col items-center justify-center gap-y-3">
-      <ImageIcon className="mx-auto h-8 w-8 text-zinc-500" />
-      <p className="text-center text-xs text-zinc-500">Empty gallery.</p>
+      <ImageIcon className="mx-auto h-8 w-8 text-zinc-500 dark:text-zinc-300" />
+      <p className="text-center text-xs text-zinc-500 dark:text-zinc-300">
+        Empty gallery.
+      </p>
     </div>
   )
 }

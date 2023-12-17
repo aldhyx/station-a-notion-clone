@@ -44,7 +44,7 @@ export default function MoveToTrashDialog({ children, uuid }: Props) {
             type="button"
             size="lg"
             variant="secondary"
-            className="flex-1 rounded-none rounded-bl-xl text-red-500 dark:bg-zinc-800 dark:text-red-300"
+            className="flex-1 rounded-none rounded-bl-xl text-red-500 dark:text-red-400 "
             onClick={deleteDocHandler}
           >
             Yes, move to trash
@@ -54,7 +54,7 @@ export default function MoveToTrashDialog({ children, uuid }: Props) {
             <Button
               type="button"
               size="lg"
-              className="flex-1 rounded-none rounded-br-xl dark:bg-zinc-800"
+              className="flex-1 rounded-none rounded-br-xl "
               variant="secondary"
               ref={closeButtonRef}
             >

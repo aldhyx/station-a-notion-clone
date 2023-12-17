@@ -21,22 +21,22 @@ export default function CoverDialog({ children }: Props) {
     >
       <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent
-        className="top-[5%] flex w-[90%] translate-y-[0] flex-col gap-0 rounded-xl bg-background p-0 py-3 md:!max-w-xl"
+        className="top-[5%] flex w-[90%] translate-y-[0] flex-col gap-0 rounded-xl p-0 py-3 md:!max-w-xl"
         hideCloseButton
       >
         <Tabs value={tab} className="w-full">
-          <TabsList className="h-auto w-full justify-start gap-x-3 rounded-none border-b border-b-zinc-200 bg-background px-3 py-0">
+          <TabsList className="h-auto w-full justify-start gap-x-3 rounded-none border-b border-b-zinc-200 bg-background px-3 py-0 dark:border-b-zinc-700 dark:bg-zinc-800">
             <TabsTrigger
               value="gallery"
               onClick={() => setTab("gallery")}
-              className="rounded-none border-b-[2px] border-b-background px-0 data-[state=active]:border-b-zinc-800"
+              className="rounded-none border-b-[2px] border-b-background px-0 data-[state=active]:border-b-zinc-800 dark:bg-zinc-800 dark:data-[state=active]:border-b-zinc-300 dark:data-[state=active]:text-zinc-100"
             >
               Gallery
             </TabsTrigger>
             <TabsTrigger
               onClick={() => setTab("upload")}
               value="upload"
-              className="rounded-none border-b-[2px] border-b-background px-0 data-[state=active]:border-b-zinc-800"
+              className="rounded-none border-b-[2px] border-b-background px-0 data-[state=active]:border-b-zinc-800 dark:bg-zinc-800 dark:data-[state=active]:border-b-zinc-300 dark:data-[state=active]:text-zinc-100"
             >
               Upload
             </TabsTrigger>

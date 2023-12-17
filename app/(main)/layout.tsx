@@ -1,6 +1,7 @@
 import { PropsWithChildren } from "react"
 
 import FullScreenLoading from "@/components/full-screen-loading"
+import { ThemeProvider } from "@/components/providers/theme.provider"
 import { createClient } from "@/lib/supabase/server"
 import dynamic from "next/dynamic"
 import { cookies } from "next/headers"
@@ -20,5 +21,17 @@ export default async function MainLayout({ children }: PropsWithChildren) {
   } = await server.auth.getUser()
   if (!user) return redirect("/")
 
-  return <LayoutWrapper currentUser={user}>{children}</LayoutWrapper>
+  return (
+    <LayoutWrapper currentUser={user}>
+      <ThemeProvider
+        attribute="class"
+        defaultTheme="light"
+        enableSystem
+        disableTransitionOnChange
+        storageKey="station-theme"
+      >
+        {children}
+      </ThemeProvider>
+    </LayoutWrapper>
+  )
 }

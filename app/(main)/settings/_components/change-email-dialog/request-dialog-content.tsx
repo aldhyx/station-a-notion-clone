@@ -41,7 +41,7 @@ export default function RequestDialogContent({ nextSteps, setNewEmail }: Props) 
         resetFormHandler()
       }}
     >
-      <DialogHeader className="mb-8">
+      <DialogHeader className="mb-8 dark:text-zinc-100">
         <MailIcon className="mx-auto mb-2" />
         <p className="!text-center text-lg font-medium leading-none">Change Email</p>
       </DialogHeader>

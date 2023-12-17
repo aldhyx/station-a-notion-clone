@@ -11,7 +11,7 @@ const labelVariants = cva(
   {
     variants: {
       variant: {
-        default: "text-zinc-700 text-sm",
+        default: "text-zinc-800 text-sm dark:text-zinc-100",
       },
     },
     defaultVariants: {

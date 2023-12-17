@@ -15,7 +15,7 @@ export default function MoreMenuPopover({ children }: PropsWithChildren) {
       <PopoverTrigger asChild>{children}</PopoverTrigger>
       <PopoverContent className="overflow-hidden rounded-xl p-0" align="end">
         <div>
-          <section className="border-b border-zinc-200">
+          <section className="border-b border-b-zinc-200 dark:border-b-zinc-700">
             <Button
               variant="ghost"
               className="h-9 w-full justify-start rounded-none px-3 text-sm font-normal"
@@ -35,8 +35,12 @@ export default function MoreMenuPopover({ children }: PropsWithChildren) {
           </section>
 
           <section className="px-3 py-3">
-            <p className="mb-2 text-xs text-zinc-500">Created at {createdAt}</p>
-            <p className="text-xs text-zinc-500">Last edited at {updatedAt}</p>
+            <p className="mb-2 text-xs text-zinc-500 dark:text-zinc-300">
+              Created at {createdAt}
+            </p>
+            <p className="text-xs text-zinc-500 dark:text-zinc-300">
+              Last edited at {updatedAt}
+            </p>
           </section>
         </div>
       </PopoverContent>

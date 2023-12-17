@@ -66,7 +66,7 @@ export default function SidebarPages({ uuid, level = 0 }: Props) {
                 e.stopPropagation()
                 navigateDocHandler(item.uuid)
               }}
-              className="group flex h-8 w-full cursor-pointer items-center justify-between rounded-sm pr-1 transition hover:bg-zinc-200 dark:hover:bg-zinc-600"
+              className="group flex h-8 w-full cursor-pointer items-center justify-between rounded-sm pr-1 transition hover:bg-zinc-200 dark:hover:bg-zinc-700"
               style={{
                 paddingLeft:
                   level === 0

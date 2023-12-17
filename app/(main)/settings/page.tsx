@@ -23,7 +23,7 @@ export default function SettingsPage() {
       <ChangeProfileDialog>
         <Button
           size="lg"
-          className="flex h-auto w-full items-center justify-between px-0 hover:bg-background"
+          className="flex h-auto w-full items-center justify-between px-0 hover:bg-background dark:hover:bg-zinc-900"
           variant="ghost"
         >
           <div className="flex items-center">
@@ -40,7 +40,7 @@ export default function SettingsPage() {
             {fullname && username && (
               <div className="flex flex-col items-start ">
                 <span className="mb-0 capitalize">{fullname}</span>
-                <span className="block text-left text-xs font-normal text-zinc-500">
+                <span className="block text-left text-xs font-normal text-zinc-500 dark:text-zinc-300">
                   @{username}
                 </span>
               </div>
@@ -51,20 +51,21 @@ export default function SettingsPage() {
       </ChangeProfileDialog>
 
       <section>
-        <h2 className="mb-2 border-b border-zinc-200 pb-2 text-xs font-medium text-zinc-700">
+        <h2 className="mb-2 border-b border-zinc-200 pb-2 text-xs font-medium text-zinc-700 dark:text-zinc-400">
           My setting
         </h2>
         <Button
           size="lg"
-          className="flex h-16 w-full items-center px-0 hover:bg-background"
+          className="flex h-16 w-full items-center px-0 hover:bg-background dark:hover:bg-zinc-900"
           variant="ghost"
         >
           <div className="flex w-full flex-col items-start">
             <span className="mb-1 ">
-              Appearance <b className="text-blue-800">(Beta)</b>
+              Appearance{" "}
+              <b className="font-medium text-blue-800 dark:text-blue-500">(Beta)</b>
             </span>
 
-            <span className="block text-left text-xs font-normal text-zinc-500">
+            <span className="block text-left text-xs font-normal text-zinc-500 dark:text-zinc-300">
               Customize how Station looks on your devices
             </span>
           </div>
@@ -73,21 +74,21 @@ export default function SettingsPage() {
       </section>
 
       <section>
-        <h2 className="mb-2 border-b border-zinc-200 pb-2 text-xs font-medium text-zinc-700">
+        <h2 className="mb-2 border-b border-zinc-200 pb-2 text-xs font-medium text-zinc-700 dark:text-zinc-400">
           Accounts security
         </h2>
 
         <ChangeEmailDialog>
           <Button
             size="lg"
-            className="flex h-16 w-full flex-col items-start px-0 hover:bg-background"
+            className="flex h-16 w-full flex-col items-start px-0 hover:bg-background dark:hover:bg-zinc-900"
             variant="ghost"
           >
             <div className="mb-1 flex w-full justify-between align-baseline">
               <span>Email</span>
               <EditIcon className="h-4 w-4" />
             </div>
-            <span className="block text-left text-xs font-normal text-zinc-500">
+            <span className="block text-left text-xs font-normal text-zinc-500 dark:text-zinc-300">
               {currentUser?.email}
             </span>
           </Button>
@@ -96,14 +97,14 @@ export default function SettingsPage() {
         <ChangePasswordDialog>
           <Button
             size="lg"
-            className="flex h-16 w-full flex-col items-start px-0 hover:bg-background"
+            className="flex h-16 w-full flex-col items-start px-0 hover:bg-background dark:hover:bg-zinc-900"
             variant="ghost"
           >
             <div className="mb-1 flex w-full justify-between align-baseline">
               <span>Password</span>
               <EditIcon className="h-4 w-4" />
             </div>
-            <span className="block text-left text-xs font-normal text-zinc-500">
+            <span className="block text-left text-xs font-normal text-zinc-500 dark:text-zinc-300">
               Set a permanent password to login to your account.
             </span>
           </Button>
@@ -111,21 +112,21 @@ export default function SettingsPage() {
       </section>
 
       <section>
-        <h2 className="mb-2 border-b border-zinc-200 pb-2 text-xs font-medium text-zinc-700">
+        <h2 className="mb-2 border-b border-zinc-200 pb-2 text-xs font-medium text-zinc-700 dark:text-zinc-400">
           Support
         </h2>
 
         <SignOutDialog scope="others">
           <Button
             size="lg"
-            className="flex h-16 w-full flex-col items-start px-0 hover:bg-background"
+            className="flex h-16 w-full flex-col items-start px-0 hover:bg-background dark:hover:bg-zinc-900"
             variant="ghost"
           >
             <div className="mb-1 flex w-full justify-between align-baseline">
               <span>Log out from other devices</span>
               <ChevronRightIcon className="h-4 w-4" />
             </div>
-            <span className="block max-w-[80%] text-left text-xs font-normal text-zinc-500">
+            <span className="block max-w-[80%] text-left text-xs font-normal text-zinc-500 dark:text-zinc-300">
               Log out of all other active sessions on other devices besides this one
             </span>
           </Button>
@@ -133,14 +134,14 @@ export default function SettingsPage() {
 
         <Button
           size="lg"
-          className="flex h-16 w-full flex-col items-start px-0 hover:bg-background"
+          className="flex h-16 w-full flex-col items-start px-0 hover:bg-background dark:hover:bg-zinc-900"
           variant="ghost"
         >
           <div className="mb-1 flex w-full justify-between align-baseline">
             <span className="text-red-600">Delete my account</span>
             <ChevronRightIcon className="h-4 w-4" />
           </div>
-          <span className="block text-left text-xs font-normal text-zinc-500">
+          <span className="block text-left text-xs font-normal text-zinc-500 dark:text-zinc-300">
             Permanently delete the account
           </span>
         </Button>

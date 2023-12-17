@@ -37,7 +37,7 @@ export default function VerifyDialogContent({ nextSteps, newEmail, prevSteps }: 
         resetFormHandler()
       }}
     >
-      <DialogHeader className="mb-8">
+      <DialogHeader className="mb-8 dark:text-zinc-100">
         <MailIcon className="mx-auto mb-2" />
         <p className="mb-2 !text-center text-lg font-medium leading-none">Change Email</p>
         <p className="text-center text-sm">
@@ -85,8 +85,8 @@ export default function VerifyDialogContent({ nextSteps, newEmail, prevSteps }: 
       <hr className="my-8 w-full border-zinc-200" />
 
       <div className="w-full text-left text-sm">
-        <p className="mb-2 font-medium">Didn&apos;t receive email? </p>
-        <ol className="list-inside list-disc">
+        <p className="mb-2 font-medium dark:text-zinc-100">Didn&apos;t receive email? </p>
+        <ol className="list-inside list-disc dark:text-zinc-100">
           <li>Check your spam or junk folder.</li>
           <li>
             <Button

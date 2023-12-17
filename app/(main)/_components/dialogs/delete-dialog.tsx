@@ -37,7 +37,7 @@ export default function DeleteDialog({
             type="button"
             size="lg"
             variant="secondary"
-            className="flex-1 rounded-none rounded-bl-xl text-red-500 dark:bg-zinc-800 dark:text-red-300"
+            className="flex-1 rounded-none rounded-bl-xl text-red-500 dark:text-red-400"
             onClick={() => {
               deletePagePermanent(uuid)
               ref.current?.click()
@@ -50,7 +50,7 @@ export default function DeleteDialog({
             <Button
               type="button"
               size="lg"
-              className="flex-1 rounded-none rounded-br-xl dark:bg-zinc-800"
+              className="flex-1 rounded-none rounded-br-xl"
               variant="secondary"
               ref={ref}
             >

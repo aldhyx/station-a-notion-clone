@@ -17,7 +17,7 @@ export default function InputPasswordWrapper({
   return (
     <div
       className={cn(
-        "box-content flex h-10 items-center rounded-sm border border-zinc-200",
+        "box-content flex h-10 items-center rounded-sm border border-zinc-200 dark:border-zinc-600",
         error && "border-red-600",
       )}
     >
@@ -25,7 +25,7 @@ export default function InputPasswordWrapper({
 
       <div
         role="button"
-        className={`grid h-10 cursor-pointer items-center rounded-r-sm bg-zinc-100 px-3 peer-focus:bg-background`}
+        className={`grid h-10 cursor-pointer items-center rounded-r-sm bg-zinc-100 px-3 peer-focus:bg-background dark:bg-zinc-700 dark:text-zinc-100`}
         onClick={() => setShowPassword(prev => !prev)}
       >
         {!showPassword ? (

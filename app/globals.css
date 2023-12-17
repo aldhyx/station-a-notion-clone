@@ -130,3 +130,7 @@ em-emoji-picker {
   --font-family: inherit;
   --border-radius: inherit;
 }
+
+.ce-toolbar__plus {
+  @apply dark:bg-zinc-700 dark:text-zinc-100;
+}
