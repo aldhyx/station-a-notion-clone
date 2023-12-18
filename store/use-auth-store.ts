@@ -3,7 +3,7 @@ import { client } from "@/lib/supabase/client"
 import { type Provider } from "@supabase/supabase-js"
 import { create } from "zustand"
 
-type AuthStore = {
+type AuthAction = {
   resetPasswordAsync(email: string): Promise<{ error: string } | void>
   resetPasswordVerifyAsync(
     token: string,
@@ -22,7 +22,7 @@ type AuthStore = {
   resendOtpAsync(opt: { email: string }): Promise<{ error: string } | void>
 }
 
-export const useAuthStore = create<AuthStore>()((set, get) => ({
+export const useAuthStore = create<AuthAction>()(() => ({
   async resetPasswordAsync(email) {
     try {
       const { error, data } = await client.auth.resetPasswordForEmail(email)
@@ -93,7 +93,7 @@ export const useAuthStore = create<AuthStore>()((set, get) => ({
     try {
       const redirectTo = `${process.env.NEXT_PUBLIC_APP_URL}/api/v1/oauth/callback`
 
-      if (!redirectTo) return
+      if (!redirectTo) throw new Error("Undefined callback url!")
 
       const { data, error } = await client.auth.signInWithOAuth({
         provider: opt.provider,
@@ -107,10 +107,7 @@ export const useAuthStore = create<AuthStore>()((set, get) => ({
   },
   async signUpVerifyAsync(opt) {
     try {
-      const { data, error } = await client.auth.verifyOtp({
-        ...opt,
-        type: "email",
-      })
+      const { data, error } = await client.auth.verifyOtp({ ...opt, type: "email" })
       if (!error) return
 
       // rate limit error
@@ -123,6 +120,7 @@ export const useAuthStore = create<AuthStore>()((set, get) => ({
   async resendOtpAsync(opt) {
     try {
       const { error, data } = await client.auth.resend({ type: "signup", ...opt })
+
       if (error) {
         // rate limit error
         if (error.status === 429) throw new Error("")

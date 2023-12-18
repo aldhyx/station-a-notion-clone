@@ -17,9 +17,7 @@ export const useSignUp = () => {
     const res = await signUpAsync(props)
 
     if (res?.error) form.setError("root.apiError", { message: res.error })
-    else {
-      router.push(`/signup-verify?mailto=${props.email}`)
-    }
+    else router.push(`/signup-verify?mailto=${props.email}`)
   })
 
   const { email: formEmail, password: formPassword } = form.watch()

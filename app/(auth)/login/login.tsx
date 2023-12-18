@@ -15,7 +15,7 @@ import { Input } from "@/components/ui/input"
 import { LoaderIcon } from "lucide-react"
 import Link from "next/link"
 import Footer from "../_components/footer"
-import { FacebookButton, GoogleButton } from "../_components/oauth-button"
+import { GoogleButton } from "../_components/oauth-button"
 import { useLogin } from "./_hooks/use-login"
 
 export default function LoginPage() {
@@ -26,7 +26,6 @@ export default function LoginPage() {
       <h1 className="mb-8 text-3xl font-bold md:text-4xl">Log in</h1>
 
       <GoogleButton />
-      <FacebookButton />
 
       <hr className="my-8 w-full border-zinc-200" />
       <Form {...form}>

@@ -14,7 +14,7 @@ import { Input } from "@/components/ui/input"
 import { LoaderIcon } from "lucide-react"
 import Link from "next/link"
 import Footer from "../_components/footer"
-import { FacebookButton, GoogleButton } from "../_components/oauth-button"
+import { GoogleButton } from "../_components/oauth-button"
 import { useSignUp } from "./_hooks/use-signup"
 
 export default function SignUpPage() {
@@ -94,7 +94,6 @@ export default function SignUpPage() {
       <hr className="my-8 w-full border-zinc-200" />
 
       <GoogleButton />
-      <FacebookButton />
 
       <div className="mt-6 flex justify-center gap-x-1 text-sm">
         <p className="text-zinc-700">Have an account?</p>

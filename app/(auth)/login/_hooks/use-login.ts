@@ -16,13 +16,9 @@ export const useLogin = () => {
   const submitHandler = form.handleSubmit(async props => {
     const res = await loginAsync(props)
 
-    if (res?.isNeedConfirmEmail) {
-      router.push(`/signup-verify?mailto=${props.email}`)
-    } else if (res?.error) {
-      form.setError("root.apiError", { message: res.error })
-    } else {
-      router.replace("/doc")
-    }
+    if (res?.isNeedConfirmEmail) router.push(`/signup-verify?mailto=${props.email}`)
+    else if (res?.error) form.setError("root.apiError", { message: res.error })
+    else router.replace("/doc")
   })
 
   const { email: formEmail, password: formPassword } = form.watch()
