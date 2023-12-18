@@ -14,14 +14,14 @@ export default async function HeroesAuth() {
 
   if (!user) {
     return (
-      <Button className="text-base" asChild>
+      <Button className="text-base" size="lg" asChild>
         <Link href="/signup">Get Station Free</Link>
       </Button>
     )
   }
 
   return (
-    <Button className="text-base" asChild variant="default">
+    <Button className="text-base" size="lg" asChild>
       <Link href="/doc">
         View dashboard
         <ArrowRightIcon className="ml-2 h-4 w-4" />

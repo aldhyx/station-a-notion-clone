@@ -48,13 +48,7 @@ export default function ForgotPasswordVerifyPage() {
             )}
           />
 
-          <Button
-            size="lg"
-            className="w-full"
-            variant="outline-blue"
-            type="submit"
-            disabled={isDisableSubmit}
-          >
+          <Button size="lg" className="w-full" type="submit" disabled={isDisableSubmit}>
             {isLoadingSubmit && (
               <LoaderIcon className="animate mr-2 h-4 w-4 animate-spin" />
             )}

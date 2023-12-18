@@ -60,7 +60,7 @@ export default function SignUpPage() {
                     error={fieldState.error}
                     render={({ showPassword }) => (
                       <Input
-                        className="peer border-0 "
+                        className="peer border-0"
                         placeholder={showPassword ? "Enter your password..." : "********"}
                         type={showPassword ? "text" : "password"}
                         {...field}
@@ -74,13 +74,7 @@ export default function SignUpPage() {
             )}
           />
 
-          <Button
-            size="lg"
-            className="w-full"
-            variant="outline-blue"
-            type="submit"
-            disabled={isDisableSubmit}
-          >
+          <Button size="lg" className="w-full" type="submit" disabled={isDisableSubmit}>
             {isLoadingSubmit && (
               <LoaderIcon className="animate mr-2 h-4 w-4 animate-spin" />
             )}
