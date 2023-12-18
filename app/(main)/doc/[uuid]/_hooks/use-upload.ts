@@ -7,7 +7,7 @@ import { useUserStore } from "@/store/use-user-store"
 import { useImagePreview } from "@/hook/use-image-preview"
 
 export default function useUpload() {
-  const { uploadImageAsync, getGalleryAsync } = useGalleryStore()
+  const { uploadImageAsync, getPicturesAsync } = useGalleryStore()
   const { currentUser } = useUserStore()
 
   const [file, setFile] = useState<File | null>(null)
@@ -57,7 +57,7 @@ export default function useUpload() {
         file,
         uuidUser: currentUser.id,
       })
-      await getGalleryAsync(currentUser.id)
+      await getPicturesAsync(currentUser.id)
     } finally {
       setFile(null)
       setUploading(false)
