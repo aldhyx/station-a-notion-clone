@@ -16,9 +16,11 @@ import Link from "next/link"
 import Footer from "../_components/footer"
 import { GoogleButton } from "../_components/oauth-button"
 import { useSignUp } from "./_hooks/use-signup"
+import { useAuthStore } from "@/store/use-auth-store"
 
 export default function SignUpPage() {
   const { errors, form, isDisableSubmit, isLoadingSubmit, submitHandler } = useSignUp()
+  const { signUpWithOauth } = useAuthStore()
 
   return (
     <>
@@ -87,7 +89,7 @@ export default function SignUpPage() {
 
       <hr className="my-8 w-full border-zinc-200" />
 
-      <GoogleButton />
+      <GoogleButton clickHandler={() => signUpWithOauth({ provider: "google" })} />
 
       <div className="mt-6 flex justify-center gap-x-1 text-sm">
         <p className="text-zinc-700">Have an account?</p>

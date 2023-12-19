@@ -17,15 +17,17 @@ import Link from "next/link"
 import Footer from "../_components/footer"
 import { GoogleButton } from "../_components/oauth-button"
 import { useLogin } from "./_hooks/use-login"
+import { useAuthStore } from "@/store/use-auth-store"
 
 export default function LoginPage() {
   const { errors, form, isDisableSubmit, isLoadingSubmit, submitHandler } = useLogin()
+  const { signUpWithOauth } = useAuthStore()
 
   return (
     <>
       <h1 className="mb-8 text-3xl font-bold md:text-4xl">Log in</h1>
 
-      <GoogleButton />
+      <GoogleButton clickHandler={() => signUpWithOauth({ provider: "google" })} />
 
       <hr className="my-8 w-full border-zinc-200" />
       <Form {...form}>

@@ -1,19 +1,13 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
-import { useAuthStore } from "@/store/use-auth-store"
 import Image from "next/image"
 
-export function GoogleButton() {
-  const { signUpWithOauth } = useAuthStore()
+type Props = { clickHandler: () => void }
 
+export function GoogleButton({ clickHandler }: Props) {
   return (
-    <Button
-      className="mb-3 w-full"
-      size="lg"
-      variant="outline"
-      onClick={() => signUpWithOauth({ provider: "google" })}
-    >
+    <Button className="mb-3 w-full" size="lg" variant="outline" onClick={clickHandler}>
       <Image
         src="/assets/google.svg"
         alt="google"
@@ -26,14 +20,9 @@ export function GoogleButton() {
   )
 }
 
-export function FacebookButton() {
+export function FacebookButton({ clickHandler }: Props) {
   return (
-    <Button
-      className="w-full"
-      size="lg"
-      variant="outline"
-      onClick={() => alert("Not ready, please continue with others")}
-    >
+    <Button className="w-full" size="lg" variant="outline" onClick={clickHandler}>
       <Image
         src="/assets/facebook.svg"
         alt="facebook"
