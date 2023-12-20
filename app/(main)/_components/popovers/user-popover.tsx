@@ -15,7 +15,7 @@ type Props = PropsWithChildren & {
 
 export default function UserPopover({ children, email, fullname, username }: Props) {
   const pathname = usePathname()
-  console.log(pathname)
+
   return (
     <Popover>
       <PopoverTrigger asChild>{children}</PopoverTrigger>

@@ -34,7 +34,6 @@ describe("nav auth", () => {
     expect(screen.queryByRole("dialog")).not.toBeInTheDocument()
 
     await user.click(screen.getByRole("button", { name: props.email, expanded: false }))
-    screen.debug()
 
     expect(screen.getByRole("dialog")).toBeInTheDocument()
 
