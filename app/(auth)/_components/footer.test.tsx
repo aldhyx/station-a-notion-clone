@@ -1,10 +1,10 @@
 import React from "react"
 import { render, screen } from "@testing-library/react"
-import { expect, it } from "vitest"
 import Footer from "@/app/(auth)/_components/footer"
 
-it("renders correctly", () => {
+it("render without error", () => {
   render(<Footer />)
-  expect(screen.getByText(/privacy policy/i)).toBeInTheDocument()
-  expect(screen.getByText(/terms & condition/i)).toBeInTheDocument()
+
+  expect(screen.getByRole("link", { name: /privacy policy/i })).toBeInTheDocument()
+  expect(screen.getByRole("link", { name: /terms & conditions/i })).toBeInTheDocument()
 })

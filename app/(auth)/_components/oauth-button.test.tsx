@@ -1,18 +1,23 @@
-import { fireEvent, render, screen } from "@testing-library/react"
-import { afterAll, describe, expect, it, test, vi } from "vitest"
+import { render, screen } from "@testing-library/react"
 import { FacebookButton, GoogleButton } from "@/app/(auth)/_components/oauth-button"
+import userEvent from "@testing-library/user-event"
 
 describe("google oauth button", () => {
   const clickHandler = vi.fn().mockImplementation(() => {})
 
-  it("render correctly", () => {
+  it("render without error", () => {
     render(<GoogleButton clickHandler={clickHandler} />)
-    expect(screen.getByText(/^continue with google$/i))
+
+    expect(
+      screen.getByRole("button", { name: /^continue with google/i }),
+    ).toBeInTheDocument()
   })
 
-  test("call onClick prop when clicked", () => {
+  it("call click handler when clicked", async () => {
+    const user = userEvent.setup()
+
     render(<GoogleButton clickHandler={clickHandler} />)
-    fireEvent.click(screen.getByText(/^continue with google$/i))
+    await user.click(screen.getByRole("button", { name: /^continue with google/i }))
     expect(clickHandler).toHaveBeenCalledOnce()
   })
 })
@@ -20,14 +25,19 @@ describe("google oauth button", () => {
 describe("facebook oauth button", () => {
   const clickHandler = vi.fn().mockImplementation(() => {})
 
-  it("render correctly", () => {
+  it("render without error", () => {
     render(<FacebookButton clickHandler={clickHandler} />)
-    expect(screen.getByText(/^continue with facebook$/i))
+
+    expect(
+      screen.getByRole("button", { name: /^continue with facebook/i }),
+    ).toBeInTheDocument()
   })
 
-  test("call onClick prop when clicked", () => {
+  it("call click handler when clicked", async () => {
+    const user = userEvent.setup()
+
     render(<FacebookButton clickHandler={clickHandler} />)
-    fireEvent.click(screen.getByText(/^continue with facebook$/i))
+    await user.click(screen.getByRole("button", { name: /^continue with facebook/i }))
     expect(clickHandler).toHaveBeenCalledOnce()
   })
 })

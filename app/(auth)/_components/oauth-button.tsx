@@ -10,7 +10,7 @@ export function GoogleButton({ clickHandler }: Props) {
     <Button className="mb-3 w-full" size="lg" variant="outline" onClick={clickHandler}>
       <Image
         src="/assets/google.svg"
-        alt="google"
+        alt=""
         width={16}
         height={16}
         className="mr-2 object-contain"
@@ -25,7 +25,7 @@ export function FacebookButton({ clickHandler }: Props) {
     <Button className="w-full" size="lg" variant="outline" onClick={clickHandler}>
       <Image
         src="/assets/facebook.svg"
-        alt="facebook"
+        alt=""
         width={16}
         height={16}
         className="mr-2 object-contain"
