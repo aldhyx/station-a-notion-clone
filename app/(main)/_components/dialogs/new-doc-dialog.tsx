@@ -1,5 +1,11 @@
 import { Button } from "@/components/ui/button"
-import { Dialog, DialogClose, DialogContent, DialogTrigger } from "@/components/ui/dialog"
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogOverlayCustom,
+  DialogTrigger,
+} from "@/components/ui/dialog"
 import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { LoaderIcon, PlusCircleIcon, SmilePlusIcon } from "lucide-react"
@@ -24,7 +30,10 @@ export default function NewDocDialog({ children, uuid }: Props) {
   return (
     <Dialog onOpenChange={openDialogHandler}>
       <DialogTrigger asChild>{children}</DialogTrigger>
-      <DialogContent className="top-[5%] flex w-[90%] translate-y-[0] flex-col gap-0 rounded-xl bg-background p-0 md:!max-w-xl">
+      <DialogContent
+        overlay={<DialogOverlayCustom />}
+        className="top-[5%] flex w-[90%] translate-y-[0] flex-col gap-0 rounded-xl bg-background p-0 md:!max-w-xl"
+      >
         <NewDocDialog.Title />
 
         <Form {...form}>

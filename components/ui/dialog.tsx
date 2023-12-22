@@ -32,13 +32,19 @@ DialogOverlay.displayName = DialogPrimitive.Overlay.displayName
 interface DialogContentProps
   extends React.ComponentPropsWithoutRef<typeof DialogPrimitive.Content> {
   hideCloseButton?: boolean
+  overlay?: React.ReactNode
 }
 const DialogContent = React.forwardRef<
   React.ElementRef<typeof DialogPrimitive.Content>,
   DialogContentProps
->(({ className, children, hideCloseButton, ...props }, ref) => (
+>(({ className, children, hideCloseButton, overlay, ...props }, ref) => (
   <DialogPortal>
-    <DialogOverlay />
+    {/* 
+      BUG: can't scroll when use dialog with popover, 
+      so we need to add custom overlay element 
+    */}
+    {overlay && React.isValidElement(overlay) ? overlay : <DialogOverlay />}
+
     <DialogPrimitive.Content
       ref={ref}
       className={cn(
@@ -103,6 +109,10 @@ const DialogDescription = React.forwardRef<
 ))
 DialogDescription.displayName = DialogPrimitive.Description.displayName
 
+const DialogOverlayCustom = () => (
+  <div className="fixed inset-0 z-50 bg-foreground/70 backdrop-blur-sm data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 dark:bg-zinc-950/70" />
+)
+
 export {
   Dialog,
   DialogClose,
@@ -114,4 +124,5 @@ export {
   DialogPortal,
   DialogTitle,
   DialogTrigger,
+  DialogOverlayCustom,
 }
