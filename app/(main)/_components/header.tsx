@@ -17,7 +17,7 @@ import {
 } from "lucide-react"
 import { useParams, useSelectedLayoutSegment } from "next/navigation"
 import { useHeader } from "../_hooks/use-header"
-import MoreMenuPopover from "./popovers/more-menu-popover"
+import HeaderMoreMenuPopover from "./popovers/header-more-menu-popover"
 
 const Header = function Header({
   minimize,
@@ -112,11 +112,11 @@ const Header = function Header({
                 <StarIcon className="h-4 w-4" />
               </Button>
 
-              <MoreMenuPopover>
+              <HeaderMoreMenuPopover>
                 <Button variant="ghost" size="icon" className="h-7 w-7">
                   <MoreHorizontalIcon className="h-4 w-4" />
                 </Button>
-              </MoreMenuPopover>
+              </HeaderMoreMenuPopover>
             </div>
           )}
         </div>

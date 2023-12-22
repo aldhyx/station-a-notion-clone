@@ -23,7 +23,7 @@ export default function UserPopover({ children, fullname, username }: Props) {
 
       <PopoverContent
         asChild
-        className="overflow-hidden rounded-xl p-0"
+        className="overflow-hidden p-0"
         side="bottom"
         align={pathname === "/" ? "end" : "start"}
         alignOffset={pathname === "/" ? 0 : 8}
@@ -48,10 +48,10 @@ export default function UserPopover({ children, fullname, username }: Props) {
             </div>
           </section>
 
-          <section className="w-full">
+          <section className="w-full p-1">
             <Button
               variant="ghost"
-              className="h-9 w-full justify-start rounded-none px-3 text-xs font-normal text-zinc-600 dark:text-zinc-300"
+              className="h-8 w-full justify-start px-3 text-xs font-normal text-zinc-600 dark:text-zinc-300"
               onClick={() => navigateHandler("settings")}
             >
               <Settings2Icon className="mr-3 h-4 w-4" />
@@ -61,7 +61,7 @@ export default function UserPopover({ children, fullname, username }: Props) {
             <SignOutDialog>
               <Button
                 variant="ghost"
-                className="h-9 w-full justify-start rounded-none rounded-b-sm px-3 text-xs font-normal text-zinc-600 dark:text-zinc-300 "
+                className="h-8 w-full justify-start px-3 text-xs font-normal text-zinc-600 dark:text-zinc-300 "
               >
                 <LogOutIcon className="mr-3 h-4 w-4" />
                 Log out

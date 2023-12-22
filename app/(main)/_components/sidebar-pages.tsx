@@ -8,6 +8,7 @@ import {
   ChevronDownIcon,
   ChevronRightIcon,
   FileIcon,
+  MoreHorizontalIcon,
   PlusCircleIcon,
   TrashIcon,
 } from "lucide-react"
@@ -17,6 +18,7 @@ import { useSidebarStore } from "../../../store/use-sidebar-store"
 import { useSidebar } from "../_hooks/use-sidebar"
 import MoveToTrashDialog from "./dialogs/move-trash-dialog"
 import NewDocDialog from "./dialogs/new-doc-dialog"
+import SidebarMoreMenuPopover from "./popovers/sidebar-more-menu-popover"
 
 type Props = {
   uuid?: string
@@ -112,32 +114,20 @@ export default function SidebarPages({ uuid, level = 0 }: Props) {
                 </span>
               </div>
 
-              <div
-                className="flex items-center gap-x-1 pl-2 opacity-100 md:opacity-0 md:group-hover:opacity-100"
-                onClick={e => {
-                  e.stopPropagation()
-                }}
-              >
-                <MoveToTrashDialog uuid={item.uuid}>
-                  <Button
-                    size="icon"
-                    variant="ghost"
-                    className="h-6 w-6 text-zinc-500 hover:bg-zinc-400/30 dark:text-zinc-400 dark:hover:bg-zinc-400/30"
-                  >
-                    <TrashIcon className="h-4 w-4" />
-                  </Button>
-                </MoveToTrashDialog>
-
-                <NewDocDialog uuid={item.uuid}>
-                  <Button
-                    size="icon"
-                    variant="ghost"
-                    className="h-6 w-6 text-zinc-500 hover:bg-zinc-400/30 dark:text-zinc-400 dark:hover:bg-zinc-400/30"
-                  >
-                    <PlusCircleIcon className="h-4 w-4" />
-                  </Button>
-                </NewDocDialog>
-              </div>
+              <SidebarMoreMenuPopover uuid={item.uuid}>
+                <Button
+                  type="button"
+                  size="icon"
+                  variant="ghost"
+                  className="h-6 w-6 text-zinc-500 opacity-100 hover:bg-zinc-400/30 dark:text-zinc-400 dark:hover:bg-zinc-400/30 md:opacity-0 md:group-hover:opacity-100 md:[&[data-state=open]]:opacity-100"
+                  onClick={e => {
+                    e.stopPropagation()
+                    return
+                  }}
+                >
+                  <MoreHorizontalIcon className="h-4 w-4" />
+                </Button>
+              </SidebarMoreMenuPopover>
             </div>
 
             {collapsedMap.has(item.uuid) && (

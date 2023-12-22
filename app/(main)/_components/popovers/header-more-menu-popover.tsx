@@ -5,7 +5,7 @@ import { LockIcon, Trash2Icon } from "lucide-react"
 import { PropsWithChildren } from "react"
 import MoveToTrashDialog from "../dialogs/move-trash-dialog"
 
-export default function MoreMenuPopover({ children }: PropsWithChildren) {
+export default function HeaderMoreMenuPopover({ children }: PropsWithChildren) {
   const { doc } = useDocStore()
   const createdAt = doc ? new Date(doc.created_at).toLocaleString() : null
   const updatedAt = doc ? new Date(doc.updated_at).toLocaleString() : null
@@ -13,12 +13,12 @@ export default function MoreMenuPopover({ children }: PropsWithChildren) {
   return (
     <Popover>
       <PopoverTrigger asChild>{children}</PopoverTrigger>
-      <PopoverContent className="overflow-hidden rounded-xl p-0" align="end">
+      <PopoverContent className="max-w-[270px] overflow-hidden p-0 pt-1" align="end">
         <div>
-          <section className="border-b border-b-zinc-200 dark:border-b-zinc-700">
+          <section className="border-b border-b-zinc-200 px-1 pb-1 dark:border-b-zinc-700">
             <Button
               variant="ghost"
-              className="h-9 w-full justify-start rounded-none px-3 text-sm font-normal"
+              className="h-9 w-full justify-start px-3 text-sm font-normal"
             >
               <LockIcon className="mr-2 h-4 w-4" />
               Lock
@@ -26,7 +26,7 @@ export default function MoreMenuPopover({ children }: PropsWithChildren) {
             <MoveToTrashDialog uuid={doc?.uuid!}>
               <Button
                 variant="ghost"
-                className="h-9 w-full justify-start rounded-none px-3 text-sm font-normal"
+                className="h-9 w-full justify-start px-3 text-sm font-normal"
               >
                 <Trash2Icon className="mr-2 h-4 w-4" />
                 Move to trash
@@ -34,7 +34,7 @@ export default function MoreMenuPopover({ children }: PropsWithChildren) {
             </MoveToTrashDialog>
           </section>
 
-          <section className="px-3 py-3">
+          <section className="px-4 py-4">
             <p className="mb-2 text-xs text-zinc-500 dark:text-zinc-300">
               Created at {createdAt}
             </p>

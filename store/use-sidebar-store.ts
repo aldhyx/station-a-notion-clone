@@ -1,5 +1,8 @@
+import { Emoji } from "@/components/popover/emoji-picker-popover"
+import { getErrorMessage } from "@/helper/error.helper"
 import { client } from "@/lib/supabase/client"
 import { type Database } from "@/lib/supabase/database.types"
+import { toastError } from "@/lib/toast"
 import { REALTIME_POSTGRES_CHANGES_LISTEN_EVENT } from "@supabase/supabase-js"
 import { create } from "zustand"
 
@@ -16,6 +19,11 @@ type SidebarAction = {
   insertEventHandler(doc: Page & { is_deleted: boolean | null }): void
   deleteEventHandler(doc: Page & { is_deleted: boolean | null }): void
   updateEventHandler(doc: Page & { is_deleted: boolean | null }): void
+  renameDocHandler(opt: {
+    uuid: string
+    title: string
+    emoji: Emoji | null
+  }): Promise<{ uuid: string } | void>
 }
 
 type SidebarState = {
@@ -97,6 +105,35 @@ export const useSidebarStore = create<SidebarState & SidebarAction>()((set, get)
     } else {
       const newData = new Map([...oldData, [doc.uuid, doc]])
       set({ sidebarList: newData })
+    }
+  },
+  async renameDocHandler({ uuid, title, emoji }) {
+    try {
+      const list = get().sidebarList
+      if (!list) return
+
+      const prevDoc = { ...list.get(uuid) } as Page
+
+      // optimistic update
+      if (list.has(uuid)) {
+        list.set(uuid, { ...prevDoc, title, emoji })
+        set({ sidebarList: new Map(list) })
+      }
+
+      const { error } = await client
+        .from("pages")
+        .update({ title: title ?? null, emoji: emoji ?? null })
+        .eq("uuid", uuid)
+      if (error) {
+        list.set(uuid, { ...prevDoc })
+        set({ sidebarList: new Map(list) })
+
+        throw new Error(error.message)
+      }
+
+      return { uuid }
+    } catch (error) {
+      toastError({ message: getErrorMessage(error as Error) })
     }
   },
 }))

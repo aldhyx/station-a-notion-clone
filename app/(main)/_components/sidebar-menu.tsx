@@ -1,11 +1,5 @@
 import { Button } from "@/components/ui/button"
-import {
-  HomeIcon,
-  PlusCircleIcon,
-  SearchIcon,
-  SettingsIcon,
-  Trash2Icon,
-} from "lucide-react"
+import { HomeIcon, PlusCircleIcon, SearchIcon, Trash2Icon } from "lucide-react"
 import { useSidebar } from "../_hooks/use-sidebar"
 import NewDocDialog from "./dialogs/new-doc-dialog"
 import SearchDialog from "./dialogs/search-dialog"
