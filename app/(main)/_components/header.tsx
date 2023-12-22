@@ -74,7 +74,7 @@ const Header = function Header({
                 <FileIcon className="h-4 w-4 shrink-0 dark:text-zinc-100" />
               )}
 
-              <span className="truncatepl-2 block max-w-[130px] text-sm dark:text-zinc-100 ">
+              <span className="block max-w-[130px] truncate pl-1 text-sm dark:text-zinc-100 ">
                 {doc.title}
               </span>
 

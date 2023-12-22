@@ -107,7 +107,7 @@ export default function SidebarPages({ uuid, level = 0 }: Props) {
                   className={cn(
                     "truncate text-sm text-zinc-700 antialiased dark:text-zinc-200",
                     params?.uuid === item.uuid &&
-                      "z font-semibold text-zinc-800 dark:text-zinc-100",
+                      "font-semibold text-zinc-800 dark:text-zinc-100",
                   )}
                 >
                   {item.title}
@@ -119,7 +119,7 @@ export default function SidebarPages({ uuid, level = 0 }: Props) {
                   type="button"
                   size="icon"
                   variant="ghost"
-                  className="h-6 w-6 text-zinc-500 opacity-100 hover:bg-zinc-400/30 dark:text-zinc-400 dark:hover:bg-zinc-400/30 md:opacity-0 md:group-hover:opacity-100 md:[&[data-state=open]]:opacity-100"
+                  className="ml-3 h-6 w-6 shrink-0 text-zinc-500 opacity-100 hover:bg-zinc-400/30 dark:text-zinc-400 dark:hover:bg-zinc-400/30 md:opacity-0 md:group-hover:opacity-100 md:[&[data-state=open]]:opacity-100"
                   onClick={e => {
                     e.stopPropagation()
                     return

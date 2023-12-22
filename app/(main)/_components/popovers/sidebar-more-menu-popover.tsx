@@ -27,7 +27,7 @@ export default function SidebarMoreMenuPopover({
               <Button
                 size="icon"
                 variant="ghost"
-                className="h-9 w-full justify-start px-3 text-sm font-normal"
+                className="h-8 w-full items-center justify-start px-3 text-xs font-normal"
               >
                 <PlusCircleIcon className="mr-2 h-4 w-4" />
                 New page
@@ -37,7 +37,7 @@ export default function SidebarMoreMenuPopover({
             <RenameDialog uuid={uuid}>
               <Button
                 variant="ghost"
-                className="h-9 w-full justify-start px-3 text-sm font-normal"
+                className="h-8 w-full items-center justify-start px-3 text-xs font-normal"
               >
                 <FormInputIcon className="mr-2 h-4 w-4" />
                 Rename
@@ -46,7 +46,7 @@ export default function SidebarMoreMenuPopover({
 
             <Button
               variant="ghost"
-              className="h-9 w-full justify-start px-3 text-sm font-normal"
+              className="h-8 w-full items-center justify-start px-3 text-xs font-normal"
             >
               <StarIcon className="mr-2 h-4 w-4" />
               Add to favorite
@@ -55,7 +55,7 @@ export default function SidebarMoreMenuPopover({
             <MoveToTrashDialog uuid={uuid}>
               <Button
                 variant="ghost"
-                className="h-9 w-full justify-start px-3 text-sm font-normal"
+                className="h-8 w-full items-center justify-start px-3 text-xs font-normal"
               >
                 <Trash2Icon className="mr-2 h-4 w-4" />
                 Move to trash
