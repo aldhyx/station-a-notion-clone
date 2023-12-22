@@ -59,7 +59,7 @@ export default function LayoutWrapper({
         <Button
           size="icon"
           className={cn(
-            "absolute right-3 top-3 h-7 w-7 text-zinc-500 transition dark:text-zinc-300",
+            "absolute right-3 top-3 h-7 w-7 text-zinc-400 transition dark:text-zinc-300",
             isMobile ? "opacity-100" : "opacity-0 group-hover/sidebar:opacity-100",
           )}
           variant="ghost"

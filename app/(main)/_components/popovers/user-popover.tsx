@@ -3,17 +3,18 @@
 import SignOutDialog from "@/components/dialogs/sign-out-dialog"
 import { Button } from "@/components/ui/button"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
-import { LogOutIcon, UserCircle2 } from "lucide-react"
+import { LogOutIcon, Settings2Icon, SettingsIcon, UserCircle2 } from "lucide-react"
 import { usePathname } from "next/navigation"
 import { PropsWithChildren } from "react"
+import { useSidebar } from "../../_hooks/use-sidebar"
 
 type Props = PropsWithChildren & {
-  email: string | null
   fullname: string | null
   username: string | null
 }
 
-export default function UserPopover({ children, email, fullname, username }: Props) {
+export default function UserPopover({ children, fullname, username }: Props) {
+  const { navigateHandler } = useSidebar()
   const pathname = usePathname()
 
   return (
@@ -27,17 +28,16 @@ export default function UserPopover({ children, email, fullname, username }: Pro
         align={pathname === "/" ? "end" : "start"}
         alignOffset={pathname === "/" ? 0 : 8}
       >
-        <div className="w-80">
-          <section className="border-b border-b-zinc-200 p-3 dark:border-b-zinc-700">
-            <span className="mb-3 block text-xs text-zinc-600 dark:text-zinc-300">
-              {email}
-            </span>
-            <div className="flex gap-x-1 px-1">
-              <div className="relative mr-2 h-[36px] w-[36px]">
-                <UserCircle2 className=" h-[36px] w-[36px] dark:text-zinc-100" />
+        <div className="w-72">
+          <section className="border-b border-b-zinc-200 px-3 py-4 dark:border-b-zinc-700">
+            <div className="flex gap-x-1 pr-1">
+              <div className="relative mr-2 flex h-[40px] w-[40px] items-center justify-center rounded-full bg-zinc-800">
+                <span className="text-xl font-medium uppercase text-background">
+                  {username ? username[0] : "S"}
+                </span>
               </div>
 
-              {fullname && username && (
+              {(fullname || username) && (
                 <div className="flex flex-col">
                   <p className="text-sm capitalize dark:text-zinc-100">
                     {fullname}&apos;s Station
@@ -47,13 +47,23 @@ export default function UserPopover({ children, email, fullname, username }: Pro
               )}
             </div>
           </section>
-          <section className="w-full bg-zinc-100 dark:bg-zinc-700">
+
+          <section className="w-full">
+            <Button
+              variant="ghost"
+              className="h-9 w-full justify-start rounded-none px-3 text-xs font-normal text-zinc-600 dark:text-zinc-300"
+              onClick={() => navigateHandler("settings")}
+            >
+              <Settings2Icon className="mr-3 h-4 w-4" />
+              Settings
+            </Button>
+
             <SignOutDialog>
               <Button
                 variant="ghost"
                 className="h-9 w-full justify-start rounded-none rounded-b-sm px-3 text-xs font-normal text-zinc-600 dark:text-zinc-300 "
               >
-                <LogOutIcon className="mr-2 h-4 w-4" />
+                <LogOutIcon className="mr-3 h-4 w-4" />
                 Log out
               </Button>
             </SignOutDialog>

@@ -26,7 +26,7 @@ export default function NavAuth({ fullname, username, email }: Props) {
 
   return (
     <div>
-      <UserPopover email={email} fullname={fullname} username={username}>
+      <UserPopover fullname={fullname} username={username}>
         <Button variant="ghost" size="sm" className="max-w-[200px] items-center">
           <UserCircle className="mr-2 h-4 w-4 shrink-0" />
           <span className="truncate">{email}</span>

@@ -22,26 +22,17 @@ export default function SidebarMenu() {
             e.stopPropagation()
           }}
           variant="ghost"
-          className="h-7 justify-start px-3 font-normal text-zinc-600 dark:text-zinc-300"
+          className="h-8 justify-start px-3 font-normal text-zinc-600 dark:text-zinc-300"
         >
           <SearchIcon className="mr-3 h-4 w-4" />
           Search
         </Button>
       </SearchDialog>
 
-      <Button
-        variant="ghost"
-        className="h-7 justify-start px-3 font-normal text-zinc-600 dark:text-zinc-300"
-        onClick={() => navigateHandler("settings")}
-      >
-        <SettingsIcon className="mr-3 h-4 w-4" />
-        Settings
-      </Button>
-
       <TrashDialog>
         <Button
           variant="ghost"
-          className="h-7 justify-start px-3 font-normal text-zinc-600 dark:text-zinc-300"
+          className="h-8 justify-start px-3 font-normal text-zinc-600 dark:text-zinc-300"
         >
           <Trash2Icon className="mr-3 h-4 w-4" />
           Trash
@@ -50,7 +41,7 @@ export default function SidebarMenu() {
 
       <Button
         variant="ghost"
-        className="h-7 justify-start px-3 font-normal text-zinc-600 dark:text-zinc-300"
+        className="h-8 justify-start px-3 font-normal text-zinc-600 dark:text-zinc-300"
         onClick={() => navigateHandler("doc")}
       >
         <HomeIcon className="mr-3 h-4 w-4" />
@@ -60,7 +51,7 @@ export default function SidebarMenu() {
       <NewDocDialog>
         <Button
           variant="ghost"
-          className="h-7 justify-start px-3 font-normal text-zinc-600 dark:text-zinc-300"
+          className="h-8 justify-start px-3 font-normal text-zinc-600 dark:text-zinc-300"
         >
           <PlusCircleIcon className="mr-3 h-4 w-4" />
           New Page
