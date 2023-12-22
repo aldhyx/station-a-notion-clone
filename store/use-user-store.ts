@@ -119,7 +119,7 @@ export const useUserStore = create<UserState & UserAction>()((set, get) => ({
       }
 
       throw new Error(
-        error.message === "profiles_username_key"
+        error.message.includes("profiles_username_key")
           ? "Username is not available."
           : error.message,
       )
