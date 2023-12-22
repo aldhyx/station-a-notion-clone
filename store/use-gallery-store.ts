@@ -32,16 +32,17 @@ export const useGalleryStore = create<GalleryState & GalleryAction>()((set, get)
     set({ loadGradients: true })
     try {
       const { data, error } = await client.storage
-        .from("app_gradients")
-        .list("", { limit: 10 })
+        .from("app_assets")
+        .list("cover_gradients", { limit: 10 })
+
       if (error) throw new Error(error.message)
 
-      const paths = data.map(d => d.name)
+      const paths = data.map(d => "cover_gradients/" + d.name)
 
       if (paths.length === 0) set({ gradients: [], loadGradients: false })
       else {
         const { data, error } = await client.storage
-          .from("app_gradients")
+          .from("app_assets")
           .createSignedUrls(paths, 60)
 
         if (error) throw new Error(error.message)

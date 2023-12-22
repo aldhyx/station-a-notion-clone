@@ -114,19 +114,22 @@ export const useDocStore = create<DocState & DocAction>()((set, get) => ({
     }
   },
   async getSignedUrlAsync({ uuidUser, imgUrl }) {
-    if (!imgUrl) set({ signedUrl: null })
+    if (!imgUrl || !uuidUser) set({ signedUrl: null })
     else {
-      const [_, name] = imgUrl.split("/")
-      if (name) {
+      const [folder] = imgUrl.split("/")
+
+      if (folder === "cover_gradients") {
         const { data } = await client.storage
-          .from("covers")
-          .createSignedUrl(`${imgUrl}`, 60)
+          .from("app_assets")
+          .createSignedUrl(imgUrl, 60)
         set({ signedUrl: data?.signedUrl ?? null })
-      } else {
-        const { data } = await client.storage
-          .from("app_gradients")
-          .createSignedUrl(`${imgUrl}`, 60)
+        return
+      }
+
+      if (folder === uuidUser) {
+        const { data } = await client.storage.from("covers").createSignedUrl(imgUrl, 60)
         set({ signedUrl: data?.signedUrl ?? null })
+        return
       }
     }
   },

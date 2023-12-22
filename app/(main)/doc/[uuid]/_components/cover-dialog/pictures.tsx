@@ -21,7 +21,7 @@ export default function Pictures() {
   return (
     <section>
       <p className="mb-2 text-sm leading-none">Pictures</p>
-      <div className="relative grid grid-cols-3 gap-3">
+      <div className="relative grid grid-cols-4 gap-2">
         {pictures &&
           pictures.map(d => {
             const isSelected = d.path && doc?.image_url && d.path === doc.image_url
@@ -63,9 +63,9 @@ export default function Pictures() {
 
                 <Image
                   src={d.signedUrl}
-                  className="h-[102px] w-full cursor-pointer rounded-md object-cover object-center hover:opacity-80"
+                  className="h-[72px] w-full cursor-pointer rounded-md object-cover object-center hover:opacity-80"
                   alt=""
-                  height={102}
+                  height={72}
                   width={154}
                 />
               </div>
