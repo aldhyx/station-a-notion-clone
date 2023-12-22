@@ -5,6 +5,7 @@ import { type NewDocSchema, newDocSchema } from "../_schema"
 import { useDocStore } from "@/store/use-doc-store"
 import { useRef } from "react"
 import { useLayoutStore } from "@/store/use-layout-store"
+import { type Emoji } from "@/components/popover/emoji-picker-popover"
 
 export default function useNewDoc({ uuid }: { uuid?: string }) {
   const { triggerMinimize } = useLayoutStore()
@@ -15,17 +16,22 @@ export default function useNewDoc({ uuid }: { uuid?: string }) {
     resolver: zodResolver(newDocSchema),
     defaultValues: {
       title: "",
+      emoji: null,
     },
   })
 
-  const submitHandler = form.handleSubmit(async ({ title }) => {
-    const res = await createDocAsync({ title, uuid })
+  const submitHandler = form.handleSubmit(async ({ title, emoji }) => {
+    const res = await createDocAsync({ title, uuid, emoji: emoji as Emoji })
     if (res?.uuid) {
       triggerMinimize("doc")
       closeButtonRef.current?.click()
       router.push(`/doc/${res.uuid}`)
     }
   })
+
+  const openDialogHandler = (open: boolean) => {
+    if (open) form.reset()
+  }
 
   const { title: formTitle } = form.watch()
 
@@ -35,6 +41,7 @@ export default function useNewDoc({ uuid }: { uuid?: string }) {
     isLoadingSubmit: form.formState.isSubmitting,
     isDisableSubmit: form.formState.isSubmitting || !formTitle,
     submitHandler,
-    closeButtonRef: closeButtonRef,
+    closeButtonRef,
+    openDialogHandler,
   }
 }

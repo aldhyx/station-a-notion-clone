@@ -63,7 +63,6 @@ export default function TrashDialog({ children }: PropsWithChildren) {
       <DialogContent
         autoFocus={false}
         onOpenAutoFocus={e => e.preventDefault()}
-        hideCloseButton
         className="top-[5%] flex w-[90%] translate-y-[0] flex-col gap-0 overflow-hidden rounded-xl bg-background p-0  md:!max-w-xl"
       >
         <TrashDialog.Title />

@@ -37,16 +37,12 @@ export default function SearchDialog({ children }: Props) {
     nextPageAsync()
   }
 
-  const firstLoading = loading && !list
   const hasData = !!list && !!list.length
 
   return (
     <Dialog>
       <DialogTrigger asChild>{children}</DialogTrigger>
-      <DialogContent
-        hideCloseButton
-        className="top-[5%] flex w-[90%] translate-y-[0] flex-col gap-0 rounded-xl bg-background p-0 md:!max-w-xl"
-      >
+      <DialogContent className="top-[5%] flex w-[90%] translate-y-[0] flex-col gap-0 rounded-xl bg-background p-0 md:!max-w-xl">
         <SearchDialog.Title />
         <div className="px-3 pb-3">
           <Input
