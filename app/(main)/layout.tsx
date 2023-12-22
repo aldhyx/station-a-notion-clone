@@ -16,13 +16,18 @@ export default async function MainLayout({ children }: PropsWithChildren) {
   const cookiesStore = cookies()
   const server = createClient(cookiesStore)
 
-  const {
-    data: { user },
-  } = await server.auth.getUser()
-  if (!user) return redirect("/")
+  const { data } = await server.auth.getUser()
+  if (!data.user) return redirect("/login")
+
+  const { data: profile } = await server
+    .from("profiles")
+    .select("username, fullname")
+    .single()
+
+  if (!profile?.fullname || !profile?.username) return redirect("/complete-signup")
 
   return (
-    <LayoutWrapper currentUser={user}>
+    <LayoutWrapper currentUser={data.user}>
       <ThemeProvider
         attribute="class"
         defaultTheme="light"

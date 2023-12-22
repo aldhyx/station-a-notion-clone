@@ -31,7 +31,7 @@ export default function ResetPasswordPage() {
           Password has been changed successfully.
         </p>
         <div className="flex w-full flex-col gap-y-2">
-          <Button variant="default" onClick={() => router.replace("/pages")}>
+          <Button variant="default" onClick={() => router.replace("/doc")}>
             Go to dashboard
           </Button>
           <SignOutDialog>
@@ -44,8 +44,12 @@ export default function ResetPasswordPage() {
 
   return (
     <>
-      <LockKeyholeIcon className="mb-3 h-16 w-16" />
-      <h1 className="mb-8 text-3xl font-bold md:text-4xl">Create new password</h1>
+      <h1 className="mb-3 w-full text-left text-2xl font-bold md:text-3xl">
+        Create new password
+      </h1>
+      <p className="mb-8 w-full  text-left">
+        Please, fill this form down below to create new password for your account.
+      </p>
 
       <Form {...form}>
         <form
@@ -82,7 +86,7 @@ export default function ResetPasswordPage() {
             control={form.control}
             name="confirm_password"
             render={({ field, fieldState }) => (
-              <FormItem>
+              <FormItem className="mb-2">
                 <FormLabel>Confirm New Password</FormLabel>
                 <FormControl>
                   <InputPasswordWrapper
@@ -105,13 +109,13 @@ export default function ResetPasswordPage() {
             )}
           />
 
-          <ErrorBlock className="m-0 mt-5" message={errors.root?.apiError.message} />
+          <ErrorBlock className="m-0" message={errors.root?.apiError.message} />
 
           <Button size="lg" className="w-full" type="submit" disabled={isDisableSubmit}>
             {isLoadingSubmit && (
               <LoaderIcon className="animate mr-2 h-4 w-4 animate-spin" />
             )}
-            Change password
+            Submit
           </Button>
         </form>
       </Form>

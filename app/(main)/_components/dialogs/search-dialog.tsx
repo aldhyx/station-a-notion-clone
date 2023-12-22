@@ -46,7 +46,7 @@ export default function SearchDialog({ children }: Props) {
         <SearchDialog.Title />
         <div className="px-3 pb-3">
           <Input
-            type="test"
+            type="text"
             placeholder="Type to search page by title..."
             className="rounded-xl bg-background text-sm placeholder:text-sm placeholder:text-zinc-500 focus-visible:ring-transparent"
             onChange={onChangeHandler}
