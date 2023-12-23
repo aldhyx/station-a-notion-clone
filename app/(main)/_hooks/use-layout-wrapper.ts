@@ -4,9 +4,7 @@ import { useLayoutStore } from "../../../store/use-layout-store"
 
 export const useLayoutWrapper = () => {
   const {
-    animating,
     minimize,
-    setAnimating,
     setMinimize,
     maxSidebarWidth,
     minSidebarWidth,
@@ -47,32 +45,22 @@ export const useLayoutWrapper = () => {
     document.addEventListener("mouseup", mouseUpHandler)
   }
 
-  const maximizeHandler = () => {
-    if (sidebarRef.current && topbarRef.current && mainRef.current) {
-      setAnimating(true)
-
-      sidebarRef.current.style.width = isMobile ? "100vw" : `${minSidebarWidth}px`
-      topbarRef.current.style.width = `calc(100vw - ${minSidebarWidth}px)`
-      topbarRef.current.style.left = `${minSidebarWidth}px`
-      mainRef.current.style.width = `calc(100vw - ${minSidebarWidth}px)`
-
-      setMinimize(false)
-      setTimeout(() => setAnimating(false), 200)
+  const removeAllStyle = () => {
+    if (sidebarRef.current && topbarRef.current) {
+      sidebarRef.current.style.width = ""
+      topbarRef.current.style.left = ""
+      topbarRef.current.style.width = ""
     }
   }
 
+  const maximizeHandler = () => {
+    removeAllStyle()
+    setMinimize(false)
+  }
+
   const minimizeHandler = () => {
-    if (sidebarRef.current && topbarRef.current && mainRef.current) {
-      setAnimating(true)
-
-      sidebarRef.current.style.width = "0"
-      topbarRef.current.style.width = "100vw"
-      topbarRef.current.style.left = "0"
-      mainRef.current.style.width = "100vw"
-
-      setMinimize(true)
-      setTimeout(() => setAnimating(false), 200)
-    }
+    removeAllStyle()
+    setMinimize(true)
   }
 
   useEffect(() => {
@@ -84,7 +72,6 @@ export const useLayoutWrapper = () => {
   useEffect(() => {
     if (isMobile && minimizeTriggered) {
       minimizeHandler()
-      triggerMinimize()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isMobile, minimizeTriggered])
@@ -93,12 +80,12 @@ export const useLayoutWrapper = () => {
     sidebarRef,
     mainRef,
     topbarRef,
-    animating,
     minimize,
     isMobile,
 
     maximizeHandler,
     minimizeHandler,
     resizeHandler,
+    isResizingRef,
   }
 }

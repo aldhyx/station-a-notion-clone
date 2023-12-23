@@ -19,6 +19,7 @@ import NewDocDialog from "../dialogs/new-doc-dialog"
 import RenameDialog from "../dialogs/rename-dialog"
 import { type EmitActionStatus } from "@/types"
 import { useCopyToClipboard } from "usehooks-ts"
+import { useLayoutWrapper } from "../../_hooks/use-layout-wrapper"
 
 export default function SidebarMoreMenuPopover({
   children,
@@ -26,7 +27,8 @@ export default function SidebarMoreMenuPopover({
 }: PropsWithChildren & {
   uuid: string
 }) {
-  const [value, copy] = useCopyToClipboard()
+  const { isMobile } = useLayoutWrapper()
+  const [_, copy] = useCopyToClipboard()
   const ref = useRef<HTMLButtonElement | null>(null)
 
   const emitActionStatusHandler: EmitActionStatus = v => {
@@ -36,7 +38,10 @@ export default function SidebarMoreMenuPopover({
   return (
     <Popover>
       <PopoverTrigger asChild>{children}</PopoverTrigger>
-      <PopoverContent className="max-w-[200px] overflow-hidden p-0 pt-1" align="start">
+      <PopoverContent
+        className="max-w-[200px] overflow-hidden p-0 pt-1"
+        align={isMobile ? "end" : "start"}
+      >
         <div
           onClick={e => {
             e.stopPropagation()
