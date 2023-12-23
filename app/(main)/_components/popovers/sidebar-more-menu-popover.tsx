@@ -7,6 +7,7 @@ import {
 } from "@/components/ui/popover"
 import {
   AppWindowIcon,
+  CopyIcon,
   FormInputIcon,
   PlusCircleIcon,
   StarIcon,
@@ -17,6 +18,7 @@ import MoveToTrashDialog from "../dialogs/move-trash-dialog"
 import NewDocDialog from "../dialogs/new-doc-dialog"
 import RenameDialog from "../dialogs/rename-dialog"
 import { type EmitActionStatus } from "@/types"
+import { useCopyToClipboard } from "usehooks-ts"
 
 export default function SidebarMoreMenuPopover({
   children,
@@ -24,6 +26,7 @@ export default function SidebarMoreMenuPopover({
 }: PropsWithChildren & {
   uuid: string
 }) {
+  const [value, copy] = useCopyToClipboard()
   const ref = useRef<HTMLButtonElement | null>(null)
 
   const emitActionStatusHandler: EmitActionStatus = v => {
@@ -48,19 +51,40 @@ export default function SidebarMoreMenuPopover({
                 className="h-8 w-full items-center justify-start px-3 text-xs font-normal"
               >
                 <PlusCircleIcon className="mr-2 h-4 w-4" />
-                New page
+                Add new page
               </Button>
             </NewDocDialog>
 
-            <RenameDialog uuid={uuid} emitActionStatus={emitActionStatusHandler}>
+            <Button
+              variant="ghost"
+              className="h-8 w-full items-center justify-start px-3 text-xs font-normal"
+            >
+              <StarIcon className="mr-2 h-4 w-4" />
+              Add to favorite
+            </Button>
+
+            <Button
+              size="icon"
+              variant="ghost"
+              className="h-8 w-full items-center justify-start px-3 text-xs font-normal"
+              onClick={() => {
+                ref.current?.click()
+                copy(`${window.origin}/doc/${uuid}`)
+              }}
+            >
+              <CopyIcon className="mr-2 h-4 w-4" />
+              Copy link
+            </Button>
+
+            <MoveToTrashDialog uuid={uuid} emitActionStatus={emitActionStatusHandler}>
               <Button
                 variant="ghost"
                 className="h-8 w-full items-center justify-start px-3 text-xs font-normal"
               >
-                <FormInputIcon className="mr-2 h-4 w-4" />
-                Rename
+                <Trash2Icon className="mr-2 h-4 w-4" />
+                Move to trash
               </Button>
-            </RenameDialog>
+            </MoveToTrashDialog>
 
             <Button
               size="icon"
@@ -75,23 +99,15 @@ export default function SidebarMoreMenuPopover({
               Open in new tab
             </Button>
 
-            <Button
-              variant="ghost"
-              className="h-8 w-full items-center justify-start px-3 text-xs font-normal"
-            >
-              <StarIcon className="mr-2 h-4 w-4" />
-              Add to favorite
-            </Button>
-
-            <MoveToTrashDialog uuid={uuid} emitActionStatus={emitActionStatusHandler}>
+            <RenameDialog uuid={uuid} emitActionStatus={emitActionStatusHandler}>
               <Button
                 variant="ghost"
                 className="h-8 w-full items-center justify-start px-3 text-xs font-normal"
               >
-                <Trash2Icon className="mr-2 h-4 w-4" />
-                Move to trash
+                <FormInputIcon className="mr-2 h-4 w-4" />
+                Rename
               </Button>
-            </MoveToTrashDialog>
+            </RenameDialog>
           </section>
 
           <PopoverClose hidden>
