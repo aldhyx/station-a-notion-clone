@@ -18,7 +18,7 @@ export default function HeaderMoreMenuPopover({ children }: PropsWithChildren) {
           <section className="border-b border-b-zinc-200 px-1 pb-1 dark:border-b-zinc-700">
             <Button
               variant="ghost"
-              className="h-8 w-full items-center justify-start px-3 text-sm font-normal"
+              className="h-8 w-full items-center justify-start px-3 text-xs font-normal"
             >
               <LockIcon className="mr-2 h-4 w-4" />
               Lock
@@ -26,7 +26,7 @@ export default function HeaderMoreMenuPopover({ children }: PropsWithChildren) {
             <MoveToTrashDialog uuid={doc?.uuid!}>
               <Button
                 variant="ghost"
-                className="h-8 w-full items-center justify-start px-3 text-sm font-normal"
+                className="h-8 w-full items-center justify-start px-3 text-xs font-normal"
               >
                 <Trash2Icon className="mr-2 h-4 w-4" />
                 Move to trash

@@ -1,6 +1,12 @@
 import { Button } from "@/components/ui/button"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
-import { FormInputIcon, PlusCircleIcon, StarIcon, Trash2Icon } from "lucide-react"
+import {
+  AppWindowIcon,
+  FormInputIcon,
+  PlusCircleIcon,
+  StarIcon,
+  Trash2Icon,
+} from "lucide-react"
 import React, { PropsWithChildren } from "react"
 import MoveToTrashDialog from "../dialogs/move-trash-dialog"
 import NewDocDialog from "../dialogs/new-doc-dialog"
@@ -43,6 +49,18 @@ export default function SidebarMoreMenuPopover({
                 Rename
               </Button>
             </RenameDialog>
+
+            <Button
+              size="icon"
+              variant="ghost"
+              className="h-8 w-full items-center justify-start px-3 text-xs font-normal"
+              onClick={() => {
+                window.open(new URL(`/doc/${uuid}`, window.origin))
+              }}
+            >
+              <AppWindowIcon className="mr-2 h-4 w-4" />
+              Open in new tab
+            </Button>
 
             <Button
               variant="ghost"
