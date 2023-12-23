@@ -13,10 +13,10 @@ export const signUpSchema = z.object({
       required_error: "Invalid password",
     })
     .min(8, {
-      message: "Password must contain at least 8 character(s)",
+      message: "Must contain at least 8 character(s)",
     })
     .max(72, {
-      message: "Password must contain at most 72 character(s)",
+      message: "Must contain at most 72 character(s)",
     })
     .regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+/, {
       message:

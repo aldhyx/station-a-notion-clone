@@ -3,24 +3,24 @@ import { z } from "zod"
 export const profileSchema = z.object({
   fullname: z
     .string()
-    .min(6, {
-      message: "Name must contain at least 6 character(s)",
+    .min(4, {
+      message: "Must contain at least 4 character(s)",
     })
-    .max(72, {
-      message: "Name must contain at most 72 character(s)",
+    .max(65, {
+      message: "Must contain at most 65 character(s)",
     })
     .toLowerCase()
     .trim(),
   username: z
     .string()
     .min(4, {
-      message: "Username must contain at least 4 character(s)",
+      message: "Must contain at least 4 character(s)",
     })
-    .max(72, {
-      message: "Username must contain at most 72 character(s)",
+    .max(65, {
+      message: "Must contain at most 65 character(s)",
     })
     .regex(/^[a-z0-9]+$/, {
-      message: "Invalid confirm username",
+      message: "Invalid username, must contain only letter and or number",
     })
     .toLowerCase()
     .trim(),
