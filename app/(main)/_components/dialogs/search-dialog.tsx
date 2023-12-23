@@ -6,7 +6,7 @@ import { ScrollArea } from "@/components/ui/scroll-area"
 import useDebounceCallback from "@/hook/use-debounce-callback"
 import { useLayoutStore } from "@/store/use-layout-store"
 import { useSearchStore } from "@/store/use-search-store"
-import { FileIcon, LoaderIcon, SearchIcon } from "lucide-react"
+import { FileIcon, LoaderIcon, Redo2Icon, SearchIcon } from "lucide-react"
 import { useRouter } from "next/navigation"
 import React, { useRef, type PropsWithChildren } from "react"
 
@@ -71,9 +71,10 @@ export default function SearchDialog({ children }: Props) {
 
                 return (
                   <div
+                    title="Click to open"
                     key={item.uuid}
                     role="button"
-                    className="flex h-9 max-w-full items-center gap-x-2 border-b border-b-zinc-200 px-3 transition hover:bg-zinc-200 dark:border-b-zinc-700  dark:hover:bg-zinc-700"
+                    className="group flex h-9 max-w-full items-center gap-x-2 border-b border-b-zinc-200 px-3 transition hover:bg-zinc-200  dark:border-b-zinc-700 dark:hover:bg-zinc-700"
                     onClick={() => onClickItemHandler(item.uuid)}
                   >
                     {emoji?.native ? (
@@ -88,9 +89,13 @@ export default function SearchDialog({ children }: Props) {
                       <FileIcon className="h-5 w-5 shrink-0 text-zinc-500 dark:text-zinc-400" />
                     )}
 
-                    <span className="truncate whitespace-nowrap pr-3 text-sm text-zinc-800 dark:text-zinc-100">
+                    <span className="max-w-[260px] truncate whitespace-nowrap pr-3 text-sm text-zinc-800 dark:text-zinc-100 md:max-w-[460px]">
                       {item.title}
                     </span>
+
+                    <div className="ml-auto hidden group-hover:block">
+                      <Redo2Icon className="h-4 w-4 -rotate-180 text-zinc-500" />
+                    </div>
                   </div>
                 )
               })}

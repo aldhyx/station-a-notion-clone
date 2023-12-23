@@ -96,6 +96,7 @@ export default function TrashDialog({ children }: PropsWithChildren) {
 
                 return (
                   <div
+                    title="Click to open"
                     key={item.uuid}
                     role="button"
                     className="relative flex h-9 max-w-full items-center gap-x-2 border-b border-b-zinc-200 px-3  transition hover:bg-zinc-200 dark:border-b-zinc-700  dark:hover:bg-zinc-700"
@@ -113,7 +114,7 @@ export default function TrashDialog({ children }: PropsWithChildren) {
                       <FileIcon className="h-5 w-5 shrink-0 text-zinc-500 dark:text-zinc-400" />
                     )}
 
-                    <span className="truncate whitespace-nowrap pr-3 text-sm text-zinc-800 dark:text-zinc-100">
+                    <span className="max-w-[260px] truncate whitespace-nowrap pr-3 text-sm text-zinc-800 dark:text-zinc-100 md:max-w-[460px]">
                       {item.title}
                     </span>
 
@@ -124,6 +125,7 @@ export default function TrashDialog({ children }: PropsWithChildren) {
                       }}
                     >
                       <Button
+                        title="Click to restore"
                         className="h-6 w-6 text-zinc-500 hover:bg-zinc-400/30 dark:text-zinc-400 dark:hover:bg-zinc-400/30"
                         variant="ghost"
                         size="icon"
@@ -133,6 +135,7 @@ export default function TrashDialog({ children }: PropsWithChildren) {
                       </Button>
                       <DeleteDialog uuid={item.uuid}>
                         <Button
+                          title="Click to delete"
                           className="h-6 w-6 text-zinc-500 hover:bg-zinc-400/30 dark:text-zinc-400 dark:hover:bg-zinc-400/30"
                           variant="ghost"
                           size="icon"
