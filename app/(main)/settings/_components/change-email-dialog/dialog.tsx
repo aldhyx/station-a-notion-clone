@@ -1,15 +1,15 @@
 "use client"
 
-import { Dialog, DialogTrigger } from "@/components/ui/dialog"
-import { PropsWithChildren, useState } from "react"
+import { Dialog, DialogClose, DialogTrigger } from "@/components/ui/dialog"
+import { PropsWithChildren, useRef, useState } from "react"
 import RequestDialogContent from "./request-dialog-content"
-import SuccessDialogContent from "./success-dialog-content"
 import VerifyDialogContent from "./verify-dialog-content"
 
-type Steps = "request" | "verify" | "success"
+type Steps = "request" | "verify"
 export default function ChangeEmailDialog({ children }: PropsWithChildren) {
   const [steps, setSteps] = useState<Steps>("request")
   const [newEmail, setNewEmail] = useState("")
+  const closeButtonRef = useRef<HTMLButtonElement | null>(null)
 
   return (
     <Dialog
@@ -19,8 +19,6 @@ export default function ChangeEmailDialog({ children }: PropsWithChildren) {
       }}
     >
       <DialogTrigger asChild>{children}</DialogTrigger>
-
-      {steps == "success" && <SuccessDialogContent />}
 
       {steps === "request" && (
         <RequestDialogContent
@@ -32,10 +30,16 @@ export default function ChangeEmailDialog({ children }: PropsWithChildren) {
       {steps === "verify" && (
         <VerifyDialogContent
           prevSteps={() => setSteps("request")}
-          nextSteps={() => setSteps("success")}
+          nextSteps={() => closeButtonRef.current?.click()}
           newEmail={newEmail}
         />
       )}
+
+      <DialogClose hidden>
+        <button type="button" ref={closeButtonRef}>
+          close
+        </button>
+      </DialogClose>
     </Dialog>
   )
 }

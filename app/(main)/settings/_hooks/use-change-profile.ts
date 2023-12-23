@@ -2,10 +2,11 @@ import { useForm } from "react-hook-form"
 import { ProfileSchema, profileSchema } from "../_schema"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useUserStore } from "@/store/use-user-store"
+import { useRef } from "react"
 
 export const useChangeProfile = () => {
   const { updateProfileAsync, fullname, username } = useUserStore()
-
+  const closeButtonRef = useRef<HTMLButtonElement | null>(null)
   const form = useForm<ProfileSchema>({
     resolver: zodResolver(profileSchema),
     values: {
@@ -17,6 +18,7 @@ export const useChangeProfile = () => {
   const submitHandler = form.handleSubmit(async ({ fullname, username }) => {
     const res = await updateProfileAsync({ username, fullname })
     if (res?.error) form.setError("root.apiError", { message: res.error })
+    else closeButtonRef.current?.click()
   })
 
   const resetFormHandler = () => {
@@ -34,5 +36,6 @@ export const useChangeProfile = () => {
     resetFormHandler,
     submitHandler,
     form,
+    closeButtonRef,
   }
 }
