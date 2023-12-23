@@ -5,8 +5,8 @@ export const newDocSchema = z.object({
     .string({
       required_error: "Invalid title",
     })
-    .min(3, { message: "Page title must contain at least 3 character(s)" })
-    .max(192, { message: "Page title must contain at most 192 character(s)" })
+    .min(1, { message: "Must contain at least 1 character" })
+    .max(65, { message: "Must contain at more 65 character(s)" })
     .trim(),
   emoji: z
     .object({
@@ -27,8 +27,8 @@ export const renameDocSchema = z.object({
     .string({
       required_error: "Invalid title",
     })
-    .min(3, { message: "Page title must contain at least 3 character(s)" })
-    .max(192, { message: "Page title must contain at most 192 character(s)" })
+    .min(1, { message: "Must contain at least 1 character" })
+    .max(65, { message: "Must contain at more 65 character(s)" })
     .trim(),
   emoji: z
     .object({

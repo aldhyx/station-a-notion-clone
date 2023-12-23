@@ -62,7 +62,7 @@ export default function NewDocDialog({ children, uuid, emitActionStatus }: Props
               control={form.control}
               name="title"
               render={({ field }) => (
-                <FormItem className="w-full space-y-0">
+                <FormItem className="w-full">
                   <FormControl>
                     <Input
                       type="text"
