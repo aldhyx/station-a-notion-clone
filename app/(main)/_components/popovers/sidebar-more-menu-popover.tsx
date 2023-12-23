@@ -1,5 +1,10 @@
 import { Button } from "@/components/ui/button"
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
+import {
+  Popover,
+  PopoverClose,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover"
 import {
   AppWindowIcon,
   FormInputIcon,
@@ -7,10 +12,11 @@ import {
   StarIcon,
   Trash2Icon,
 } from "lucide-react"
-import React, { PropsWithChildren } from "react"
+import React, { PropsWithChildren, useRef } from "react"
 import MoveToTrashDialog from "../dialogs/move-trash-dialog"
 import NewDocDialog from "../dialogs/new-doc-dialog"
 import RenameDialog from "../dialogs/rename-dialog"
+import { type EmitActionStatus } from "@/types"
 
 export default function SidebarMoreMenuPopover({
   children,
@@ -18,6 +24,12 @@ export default function SidebarMoreMenuPopover({
 }: PropsWithChildren & {
   uuid: string
 }) {
+  const ref = useRef<HTMLButtonElement | null>(null)
+
+  const emitActionStatusHandler: EmitActionStatus = v => {
+    if (v === "success") ref.current?.click()
+  }
+
   return (
     <Popover>
       <PopoverTrigger asChild>{children}</PopoverTrigger>
@@ -29,7 +41,7 @@ export default function SidebarMoreMenuPopover({
           }}
         >
           <section className="border-b border-b-zinc-200 px-1 pb-1 dark:border-b-zinc-700">
-            <NewDocDialog uuid={uuid}>
+            <NewDocDialog uuid={uuid} emitActionStatus={emitActionStatusHandler}>
               <Button
                 size="icon"
                 variant="ghost"
@@ -40,7 +52,7 @@ export default function SidebarMoreMenuPopover({
               </Button>
             </NewDocDialog>
 
-            <RenameDialog uuid={uuid}>
+            <RenameDialog uuid={uuid} emitActionStatus={emitActionStatusHandler}>
               <Button
                 variant="ghost"
                 className="h-8 w-full items-center justify-start px-3 text-xs font-normal"
@@ -55,6 +67,7 @@ export default function SidebarMoreMenuPopover({
               variant="ghost"
               className="h-8 w-full items-center justify-start px-3 text-xs font-normal"
               onClick={() => {
+                ref.current?.click()
                 window.open(new URL(`/doc/${uuid}`, window.origin))
               }}
             >
@@ -70,7 +83,7 @@ export default function SidebarMoreMenuPopover({
               Add to favorite
             </Button>
 
-            <MoveToTrashDialog uuid={uuid}>
+            <MoveToTrashDialog uuid={uuid} emitActionStatus={emitActionStatusHandler}>
               <Button
                 variant="ghost"
                 className="h-8 w-full items-center justify-start px-3 text-xs font-normal"
@@ -80,6 +93,10 @@ export default function SidebarMoreMenuPopover({
               </Button>
             </MoveToTrashDialog>
           </section>
+
+          <PopoverClose hidden>
+            <button ref={ref}>close</button>
+          </PopoverClose>
         </div>
       </PopoverContent>
     </Popover>

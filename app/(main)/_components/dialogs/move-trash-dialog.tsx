@@ -11,20 +11,24 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog"
 import { useDocStore } from "@/store/use-doc-store"
+import { type EmitActionStatus } from "@/types"
 import { useRouter } from "next/navigation"
 import { PropsWithChildren, useRef } from "react"
 
 type Props = PropsWithChildren & {
   uuid: string
+  emitActionStatus?: EmitActionStatus
 }
 
-export default function MoveToTrashDialog({ children, uuid }: Props) {
+export default function MoveToTrashDialog({ children, uuid, emitActionStatus }: Props) {
   const router = useRouter()
   const closeButtonRef = useRef<HTMLButtonElement>(null)
   const { deleteDocAsync } = useDocStore()
 
   const deleteDocHandler = async () => {
     closeButtonRef.current?.click()
+    emitActionStatus?.("success")
+
     const res = await deleteDocAsync(uuid)
     if (res.uuid) router.push(`/doc`)
   }

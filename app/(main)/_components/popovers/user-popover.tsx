@@ -2,11 +2,16 @@
 
 import SignOutDialog from "@/components/dialogs/sign-out-dialog"
 import { Button } from "@/components/ui/button"
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
-import { LogOutIcon, Settings2Icon, SettingsIcon, UserCircle2 } from "lucide-react"
-import { usePathname } from "next/navigation"
-import { PropsWithChildren } from "react"
-import { useSidebar } from "../../_hooks/use-sidebar"
+import {
+  Popover,
+  PopoverClose,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover"
+import { LogOutIcon, Settings2Icon } from "lucide-react"
+import { usePathname, useRouter } from "next/navigation"
+import { PropsWithChildren, useRef } from "react"
+import { useLayoutStore } from "@/store/use-layout-store"
 
 type Props = PropsWithChildren & {
   fullname: string | null
@@ -14,8 +19,16 @@ type Props = PropsWithChildren & {
 }
 
 export default function UserPopover({ children, fullname, username }: Props) {
-  const { navigateHandler } = useSidebar()
+  const router = useRouter()
+  const { triggerMinimize } = useLayoutStore()
   const pathname = usePathname()
+  const ref = useRef<HTMLButtonElement | null>(null)
+
+  const navigateHandler = (path: "settings") => {
+    triggerMinimize(path)
+    ref.current?.click()
+    router.push(`/${path}`)
+  }
 
   return (
     <Popover>
@@ -68,6 +81,10 @@ export default function UserPopover({ children, fullname, username }: Props) {
               </Button>
             </SignOutDialog>
           </section>
+
+          <PopoverClose hidden>
+            <button ref={ref}>close</button>
+          </PopoverClose>
         </div>
       </PopoverContent>
     </Popover>

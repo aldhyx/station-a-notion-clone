@@ -13,12 +13,14 @@ import { type PropsWithChildren } from "react"
 import useRename from "../../_hooks/use-rename"
 import EmojiPickerPopover, { type Emoji } from "@/components/popover/emoji-picker-popover"
 import { useSidebarStore } from "@/store/use-sidebar-store"
+import { type EmitActionStatus } from "@/types"
 
 type Props = PropsWithChildren & {
   uuid: string
+  emitActionStatus?: EmitActionStatus
 }
 
-export default function RenameDialog({ children, uuid }: Props) {
+export default function RenameDialog({ children, uuid, emitActionStatus }: Props) {
   const { sidebarList } = useSidebarStore()
   const selected = sidebarList?.get(uuid)
   const {
@@ -32,6 +34,7 @@ export default function RenameDialog({ children, uuid }: Props) {
     uuid,
     title: selected?.title ?? null,
     emoji: (selected?.emoji as Emoji) ?? null,
+    emitActionStatus,
   })
 
   return (

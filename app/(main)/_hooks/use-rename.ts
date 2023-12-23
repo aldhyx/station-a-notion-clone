@@ -4,16 +4,16 @@ import { useRef } from "react"
 import { type RenameDocSchema, renameDocSchema } from "../_schema"
 import { useSidebarStore } from "@/store/use-sidebar-store"
 import { type Emoji } from "@/components/popover/emoji-picker-popover"
+import { EmitActionStatus } from "@/types"
 
-export default function useRename({
-  uuid,
-  title,
-  emoji,
-}: {
+type Props = {
   uuid: string
   title: string | null
   emoji: Emoji | null
-}) {
+  emitActionStatus?: EmitActionStatus
+}
+
+export default function useRename({ uuid, title, emoji, emitActionStatus }: Props) {
   const closeButtonRef = useRef<HTMLButtonElement>(null)
   const { renameDocHandler } = useSidebarStore()
   const form = useForm<RenameDocSchema>({
@@ -24,6 +24,7 @@ export default function useRename({
   const submitHandler = form.handleSubmit(({ title, emoji }) => {
     renameDocHandler({ uuid, title, emoji: emoji as Emoji })
     closeButtonRef.current?.click()
+    emitActionStatus?.("success")
   })
 
   const openDialogHandler = (open: boolean) => {

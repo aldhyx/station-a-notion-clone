@@ -6,8 +6,14 @@ import { useDocStore } from "@/store/use-doc-store"
 import { useRef } from "react"
 import { useLayoutStore } from "@/store/use-layout-store"
 import { type Emoji } from "@/components/popover/emoji-picker-popover"
+import { type EmitActionStatus } from "@/types"
 
-export default function useNewDoc({ uuid }: { uuid?: string }) {
+type Props = {
+  uuid?: string
+  emitActionStatus?: EmitActionStatus
+}
+
+export default function useNewDoc({ emitActionStatus, uuid }: Props) {
   const { triggerMinimize } = useLayoutStore()
   const closeButtonRef = useRef<HTMLButtonElement>(null)
   const { createDocAsync } = useDocStore()
@@ -21,8 +27,10 @@ export default function useNewDoc({ uuid }: { uuid?: string }) {
   })
 
   const submitHandler = form.handleSubmit(async ({ title, emoji }) => {
-    const res = await createDocAsync({ title, uuid, emoji: emoji as Emoji })
+    const res = await createDocAsync({ title, uuid: uuid, emoji: emoji as Emoji })
     if (res?.uuid) {
+      emitActionStatus?.("success")
+
       triggerMinimize("doc")
       closeButtonRef.current?.click()
       router.push(`/doc/${res.uuid}`)

@@ -12,12 +12,14 @@ import { LoaderIcon, PlusCircleIcon, SmilePlusIcon } from "lucide-react"
 import { type PropsWithChildren } from "react"
 import useNewDoc from "../../_hooks/use-new-doc"
 import EmojiPickerPopover from "@/components/popover/emoji-picker-popover"
+import { type EmitActionStatus } from "@/types"
 
 type Props = PropsWithChildren & {
   uuid?: string
+  emitActionStatus?: EmitActionStatus
 }
 
-export default function NewDocDialog({ children, uuid }: Props) {
+export default function NewDocDialog({ children, uuid, emitActionStatus }: Props) {
   const {
     closeButtonRef,
     form,
@@ -25,7 +27,7 @@ export default function NewDocDialog({ children, uuid }: Props) {
     isLoadingSubmit,
     submitHandler,
     openDialogHandler,
-  } = useNewDoc({ uuid })
+  } = useNewDoc({ uuid, emitActionStatus })
 
   return (
     <Dialog onOpenChange={openDialogHandler}>
