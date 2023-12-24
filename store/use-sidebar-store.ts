@@ -25,13 +25,16 @@ type SidebarAction = {
     emoji: Emoji | null
   }): Promise<void>
   deleteDocAsync(uuid: string): Promise<{ uuid: string } | void>
-  setSidebarCollapsedList(uuid: string, flag?: "new"): void
+  setSidebarCollapsedList(
+    v: { uuid: string; parent_uuid: string | null },
+    flag?: "new",
+  ): void
 }
 
 type SidebarState = {
   loading: Record<string, boolean>
   sidebarList: Map<string, Page> | null
-  sidebarCollapsedList: Map<string, string>
+  sidebarCollapsedList: Map<string, { uuid: string; parent_uuid: string | null }>
 }
 
 const initialState: SidebarState = {
@@ -171,17 +174,33 @@ export const useSidebarStore = create<SidebarState & SidebarAction>()((set, get)
       toastError({ message: "Move to trash failed." })
     }
   },
-  setSidebarCollapsedList(uuid, flag) {
-    const oldList = get().sidebarCollapsedList
+  setSidebarCollapsedList({ uuid, parent_uuid }, flag) {
+    const oldCollapsedList = get().sidebarCollapsedList
 
     if (flag === "new") {
-      const side = get().sidebarList
-      // todo loop over to find parent then set into new array, until null then apply to store
-    } else {
-      if (oldList.has(uuid)) oldList.delete(uuid)
-      else oldList.set(uuid, uuid)
+      const oldList = get().sidebarList
 
-      set({ sidebarCollapsedList: new Map([...oldList]) })
+      if (oldList && parent_uuid) {
+        const item = oldList.get(parent_uuid)
+
+        if (item) {
+          oldCollapsedList.set(item.uuid, {
+            uuid: item.uuid,
+            parent_uuid: item.parent_uuid,
+          })
+          set({ sidebarCollapsedList: new Map([...oldCollapsedList]) })
+
+          get().setSidebarCollapsedList(
+            { uuid: parent_uuid, parent_uuid: item.parent_uuid },
+            "new",
+          )
+        }
+      }
+    } else {
+      if (oldCollapsedList.has(uuid)) oldCollapsedList.delete(uuid)
+      else oldCollapsedList.set(uuid, { uuid, parent_uuid })
+
+      set({ sidebarCollapsedList: new Map([...oldCollapsedList]) })
     }
   },
 }))

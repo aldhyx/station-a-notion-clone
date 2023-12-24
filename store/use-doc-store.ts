@@ -6,9 +6,7 @@ import { toastError, toastLoading, toastSuccess } from "@/lib/toast"
 import { create } from "zustand"
 
 type Page = Database["public"]["Tables"]["pages"]["Row"]
-type ErrorResponse = Promise<
-  { uuid: string; error: null } | { error: string; uuid: null }
->
+
 type Status = "start" | "success" | "failed" | null
 
 type DocState = {
@@ -24,8 +22,12 @@ type DocState = {
 
 type DocAction = {
   setSaveStatus(status: Status): void
-  createDocAsync(opt: { uuid?: string; title?: string; emoji?: Emoji }): ErrorResponse
-  getDocAsync(uuid: string): ErrorResponse
+  createDocAsync(opt: {
+    uuid?: string
+    title?: string
+    emoji?: Emoji
+  }): Promise<{ uuid: string; parent_uuid: string | null } | void>
+  getDocAsync(uuid: string): Promise<{ uuid: string; parent_uuid: string | null } | void>
   getSignedUrlAsync(opt: { uuidUser: string; imgUrl: string | null }): Promise<void>
   updateDocAsync(
     uuid: string,
@@ -56,16 +58,15 @@ export const useDocStore = create<DocState & DocAction>()((set, get) => ({
       const { data, error } = await client
         .from("pages")
         .insert({ parent_uuid: uuid, title: title ?? "untitled", emoji: emoji ?? null })
-        .select("uuid")
+        .select("uuid, parent_uuid")
         .single()
 
       if (error) throw new Error(error.message)
 
       toastSuccess({ message: "Successfully created new page.", id })
-      return { uuid: data.uuid, error: null }
+      return { uuid: data.uuid, parent_uuid: data.parent_uuid, error: null }
     } catch (error) {
       toastError({ message: "Failed to create new page.", id })
-      return { error: getErrorMessage(error as Error), uuid: null }
     } finally {
       set({ creating: false })
     }
@@ -88,10 +89,9 @@ export const useDocStore = create<DocState & DocAction>()((set, get) => ({
       })
 
       set({ loadingDoc: false, doc: data })
-      return { uuid: data.uuid, error: null }
+      return { uuid: data.uuid, parent_uuid: data.parent_uuid }
     } catch (error) {
       toastError({ message: "Failed to load page. Broken link." })
-      return { error: getErrorMessage(error as Error), uuid: null }
     }
   },
   async getSignedUrlAsync({ uuidUser, imgUrl }) {
