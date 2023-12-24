@@ -1,10 +1,8 @@
 "use client"
 
-import { Emoji } from "@/components/popover/emoji-picker-popover"
 import { Button } from "@/components/ui/button"
 import { Skeleton } from "@/components/ui/skeleton"
 import { cn } from "@/lib/utils"
-import { useDocStore } from "@/store/use-doc-store"
 import {
   CheckIcon,
   ChevronsRightIcon,
@@ -15,7 +13,6 @@ import {
   Share2Icon,
   StarIcon,
 } from "lucide-react"
-import { useParams, useSelectedLayoutSegment } from "next/navigation"
 import { useHeader } from "../_hooks/use-header"
 import HeaderMoreMenuPopover from "./popovers/header-more-menu-popover"
 
@@ -28,18 +25,9 @@ const Header = function Header({
   isMobile: boolean
   maximizeHandler: () => void
 }) {
-  const params = useParams()
-  const segment = useSelectedLayoutSegment()
-  const { saveStatus, loadingDoc, doc } = useDocStore()
+  const { saveStatus, title, doc, showLoadingIndicator, emoji, isDetailDocPage } =
+    useHeader()
 
-  useHeader()
-
-  const headerTitle = segment === "doc" ? "Getting started" : segment
-  const showDocTitle = segment === "doc" && params.uuid
-
-  const showLoadingIndicator = loadingDoc || !doc
-
-  const emoji = doc?.emoji ? (doc.emoji as Emoji) : null
   return (
     <header className="flex h-12 items-center justify-start  px-3">
       <Button
@@ -56,7 +44,7 @@ const Header = function Header({
         <ChevronsRightIcon className="absolute h-6 w-6 opacity-0 transition-[opacity] duration-200 group-hover/collapse:opacity-100" />
       </Button>
 
-      {showDocTitle && (
+      {isDetailDocPage && (
         <div className="flex w-full items-center justify-between">
           {showLoadingIndicator && <Header.Skeleton />}
 
@@ -75,7 +63,7 @@ const Header = function Header({
               )}
 
               <span className="block max-w-[130px] truncate pl-1 text-sm dark:text-zinc-100 ">
-                {doc.title}
+                {title}
               </span>
 
               {saveStatus === "start" && (
@@ -122,10 +110,10 @@ const Header = function Header({
         </div>
       )}
 
-      {!showDocTitle && (
+      {!isDetailDocPage && (
         <div className="flex w-full items-center justify-between ">
           <p className="max-w-[130px] text-sm capitalize dark:text-zinc-100 md:max-w-[240px]">
-            {headerTitle}
+            {title}
           </p>
         </div>
       )}
