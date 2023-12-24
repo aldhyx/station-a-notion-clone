@@ -19,8 +19,8 @@ export const profileSchema = z.object({
     .max(65, {
       message: "Must contain at most 65 character(s)",
     })
-    .regex(/^[a-z0-9]+$/, {
-      message: "Invalid username, must contain only letter and or number",
+    .regex(/^[a-z0-9._]+$/, {
+      message: "Must contain only lowercase letter and or number",
     })
     .toLowerCase()
     .trim(),
