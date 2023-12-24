@@ -9,16 +9,12 @@ import {
   ChevronRightIcon,
   FileIcon,
   MoreHorizontalIcon,
-  PlusCircleIcon,
-  TrashIcon,
 } from "lucide-react"
-import { useParams } from "next/navigation"
+import { useParams, useRouter } from "next/navigation"
 import { useEffectOnce } from "usehooks-ts"
 import { useSidebarStore } from "../../../store/use-sidebar-store"
-import { useSidebar } from "../_hooks/use-sidebar"
-import MoveToTrashDialog from "./dialogs/move-trash-dialog"
-import NewDocDialog from "./dialogs/new-doc-dialog"
 import SidebarMoreMenuPopover from "./popovers/sidebar-more-menu-popover"
+import { useLayoutStore } from "@/store/use-layout-store"
 
 type Props = {
   uuid?: string
@@ -27,9 +23,15 @@ type Props = {
 
 export default function SidebarPages({ uuid, level = 0 }: Props) {
   const params = useParams()
-  const { navigateDocHandler, docCollapseHandler, collapsedMap } = useSidebar()
-
-  const { loading, sidebarList, getSidebarListAsync } = useSidebarStore()
+  const router = useRouter()
+  const { triggerMinimize } = useLayoutStore()
+  const {
+    loading,
+    sidebarList,
+    getSidebarListAsync,
+    sidebarCollapsedList: collapsedMap,
+    setSidebarCollapsedList,
+  } = useSidebarStore()
 
   useEffectOnce(() => {
     getSidebarListAsync(uuid)
@@ -38,6 +40,17 @@ export default function SidebarPages({ uuid, level = 0 }: Props) {
   // first loading at root level
   if (loading["root"] && !sidebarList && !uuid) {
     return <SidebarPages.Skeleton level={level} />
+  }
+
+  const navigateDocHandler = (uuid: string) => {
+    triggerMinimize("doc")
+    if (params.uuid && params.uuid === uuid) return
+    router.push(`/doc/${uuid}`)
+  }
+
+  const toggleCollapseHandler = (e: React.MouseEvent<HTMLSpanElement>, uuid: string) => {
+    e.stopPropagation()
+    setSidebarCollapsedList(uuid)
   }
 
   const items = sidebarList
@@ -82,7 +95,7 @@ export default function SidebarPages({ uuid, level = 0 }: Props) {
                 <span
                   role="button"
                   className="grid h-6 w-6 shrink-0 place-content-center rounded-sm text-zinc-500 hover:bg-zinc-400/30 dark:text-zinc-400"
-                  onClick={e => docCollapseHandler(e, item.uuid)}
+                  onClick={e => toggleCollapseHandler(e, item.uuid)}
                 >
                   {collapsedMap.has(item.uuid) ? (
                     <ChevronDownIcon className="h-4 w-4" />

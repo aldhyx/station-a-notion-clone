@@ -1,12 +1,19 @@
 import { Button } from "@/components/ui/button"
 import { HomeIcon, PlusCircleIcon, SearchIcon, Trash2Icon } from "lucide-react"
-import { useSidebar } from "../_hooks/use-sidebar"
 import NewDocDialog from "./dialogs/new-doc-dialog"
 import SearchDialog from "./dialogs/search-dialog"
 import TrashDialog from "./dialogs/trash-dialog"
+import { useRouter } from "next/navigation"
+import { useLayoutStore } from "@/store/use-layout-store"
 
 export default function SidebarMenu() {
-  const { navigateHandler } = useSidebar()
+  const { triggerMinimize } = useLayoutStore()
+  const router = useRouter()
+
+  const navigateHandler = (path: "doc") => {
+    triggerMinimize(path)
+    router.push(`/${path}`)
+  }
 
   return (
     <div className="flex flex-col pb-3">

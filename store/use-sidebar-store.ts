@@ -24,16 +24,19 @@ type SidebarAction = {
     title: string
     emoji: Emoji | null
   }): Promise<{ uuid: string } | void>
+  setSidebarCollapsedList(uuid: string): void
 }
 
 type SidebarState = {
   loading: Record<string, boolean>
   sidebarList: Map<string, Page> | null
+  sidebarCollapsedList: Map<string, string>
 }
 
 const initialState: SidebarState = {
   loading: { root: true },
   sidebarList: null,
+  sidebarCollapsedList: new Map(),
 }
 
 export const useSidebarStore = create<SidebarState & SidebarAction>()((set, get) => ({
@@ -135,5 +138,13 @@ export const useSidebarStore = create<SidebarState & SidebarAction>()((set, get)
     } catch (error) {
       toastError({ message: getErrorMessage(error as Error) })
     }
+  },
+  setSidebarCollapsedList(uuid) {
+    const old = get().sidebarCollapsedList
+
+    if (old.has(uuid)) old.delete(uuid)
+    else old.set(uuid, uuid)
+
+    set({ sidebarCollapsedList: new Map([...old]) })
   },
 }))
