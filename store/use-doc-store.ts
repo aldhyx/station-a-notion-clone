@@ -25,7 +25,6 @@ type DocState = {
 type DocAction = {
   setSaveStatus(status: Status): void
   createDocAsync(opt: { uuid?: string; title?: string; emoji?: Emoji }): ErrorResponse
-  deleteDocAsync(uuid: string): ErrorResponse
   getDocAsync(uuid: string): ErrorResponse
   getSignedUrlAsync(opt: { uuidUser: string; imgUrl: string | null }): Promise<void>
   updateDocAsync(
@@ -69,24 +68,6 @@ export const useDocStore = create<DocState & DocAction>()((set, get) => ({
       return { error: getErrorMessage(error as Error), uuid: null }
     } finally {
       set({ creating: false })
-    }
-  },
-  async deleteDocAsync(uuid) {
-    const id = uuid ?? "create"
-
-    try {
-      const { error } = await client
-        .from("pages")
-        .update({ is_deleted: true, parent_uuid: null })
-        .eq("uuid", uuid)
-
-      if (error) throw new Error(error.message)
-
-      toastSuccess({ message: "Moved to trash successfully.", id })
-      return { uuid, error: null }
-    } catch (error) {
-      toastError({ message: "Move to trash failed.", id })
-      return { error: getErrorMessage(error as Error), uuid: null }
     }
   },
   async getDocAsync(uuid) {

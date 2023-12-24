@@ -2,7 +2,7 @@ import { Emoji } from "@/components/popover/emoji-picker-popover"
 import { getErrorMessage } from "@/helper/error.helper"
 import { client } from "@/lib/supabase/client"
 import { type Database } from "@/lib/supabase/database.types"
-import { toastError } from "@/lib/toast"
+import { toastError, toastSuccess } from "@/lib/toast"
 import { REALTIME_POSTGRES_CHANGES_LISTEN_EVENT } from "@supabase/supabase-js"
 import { create } from "zustand"
 
@@ -23,8 +23,9 @@ type SidebarAction = {
     uuid: string
     title: string
     emoji: Emoji | null
-  }): Promise<{ uuid: string } | void>
-  setSidebarCollapsedList(uuid: string): void
+  }): Promise<void>
+  deleteDocAsync(uuid: string): Promise<{ uuid: string } | void>
+  setSidebarCollapsedList(uuid: string, flag?: "new"): void
 }
 
 type SidebarState = {
@@ -65,86 +66,122 @@ export const useSidebarStore = create<SidebarState & SidebarAction>()((set, get)
 
       if (error) throw new Error(error.message)
 
-      const oldData = get().sidebarList
-      const newData = new Map(data.map(item => [item.uuid, item]))
-      const mergedData = new Map(
-        oldData && oldData instanceof Map ? [...oldData, ...newData] : [...newData],
+      const oldList = get().sidebarList
+      const newList = new Map(data.map(item => [item.uuid, item]))
+      const mergedList = new Map(
+        oldList && oldList instanceof Map ? [...oldList, ...newList] : [...newList],
       )
 
       set({
-        sidebarList: mergedData,
+        sidebarList: mergedList,
         loading: { ...loading, [uuid ?? "root"]: false },
       })
     } catch (error) {}
   },
   insertEventHandler(doc) {
-    const oldData = get().sidebarList
-    const isHaveOldData = oldData && oldData instanceof Map
-    const newData = new Map(
-      isHaveOldData ? [...oldData, [doc.uuid, doc]] : [[doc.uuid, doc]],
+    const oldList = get().sidebarList
+    const newList = new Map(
+      oldList ? [...oldList, [doc.uuid, { ...doc }]] : [[doc.uuid, { ...doc }]],
     )
 
-    set({ sidebarList: newData })
+    set({ sidebarList: newList })
   },
   deleteEventHandler(doc) {
-    const oldData = get().sidebarList
-    const isHaveOldData = oldData && oldData instanceof Map
-    if (!isHaveOldData) return
+    const oldList = get().sidebarList
+    if (!oldList) return
 
-    oldData.delete(doc.uuid)
-    const newData = new Map([...oldData])
-    set({ sidebarList: newData })
+    oldList.delete(doc.uuid)
+    const newList = new Map([...oldList])
+    set({ sidebarList: newList })
   },
   updateEventHandler(doc) {
-    const oldData = get().sidebarList
-    const isHaveOldData = oldData && oldData instanceof Map
-    if (!isHaveOldData) return
+    const oldList = get().sidebarList
+    if (!oldList) return
 
-    // move to trash event
-    if (oldData.has(doc.uuid) && doc.is_deleted) {
-      oldData.delete(doc.uuid)
-      const newData = new Map([...oldData])
-      set({ sidebarList: newData })
-    } else {
-      const newData = new Map([...oldData, [doc.uuid, doc]])
-      set({ sidebarList: newData })
+    if (oldList.has(doc.uuid)) {
+      // move to trash event
+      if (doc.is_deleted) {
+        oldList.delete(doc.uuid)
+        const newList = new Map([...oldList])
+        set({ sidebarList: newList })
+      } else {
+        const newList = new Map([...oldList, [doc.uuid, { ...doc }]])
+        set({ sidebarList: newList })
+      }
     }
   },
   async renameDocHandler({ uuid, title, emoji }) {
+    const oldList = get().sidebarList
+    if (!oldList) return
+
+    const item = oldList.get(uuid) ?? (null as Page | null)
+
+    // optimistic update
+    if (item) {
+      oldList.set(uuid, { ...item, title, emoji })
+      set({ sidebarList: new Map(oldList) })
+    }
+
     try {
-      const list = get().sidebarList
-      if (!list) return
-
-      const prevDoc = { ...list.get(uuid) } as Page
-
-      // optimistic update
-      if (list.has(uuid)) {
-        list.set(uuid, { ...prevDoc, title, emoji })
-        set({ sidebarList: new Map(list) })
-      }
-
       const { error } = await client
         .from("pages")
         .update({ title: title ?? null, emoji: emoji ?? null })
         .eq("uuid", uuid)
-      if (error) {
-        list.set(uuid, { ...prevDoc })
-        set({ sidebarList: new Map(list) })
 
-        throw new Error(error.message)
+      if (error) throw new Error(error.message)
+    } catch (error) {
+      // restore if error
+      if (item) {
+        oldList.set(uuid, { ...item })
+        set({ sidebarList: new Map(oldList) })
       }
 
-      return { uuid }
-    } catch (error) {
       toastError({ message: getErrorMessage(error as Error) })
     }
   },
-  setSidebarCollapsedList(uuid) {
-    const old = get().sidebarCollapsedList
+  async deleteDocAsync(uuid) {
+    const oldList = get().sidebarList
+    if (!oldList) return
 
-    if (old.has(uuid)) old.delete(uuid)
-    else old.set(uuid, uuid)
+    const item = oldList.get(uuid) ?? (null as Page | null)
 
-    set({ sidebarCollapsedList: new Map([...old]) })
+    // optimistic update
+    if (item) {
+      oldList.delete(uuid)
+      set({ sidebarList: new Map(oldList) })
+    }
+
+    try {
+      const { error } = await client
+        .from("pages")
+        .update({ is_deleted: true, parent_uuid: null })
+        .eq("uuid", uuid)
+
+      if (error) throw new Error(error.message)
+
+      toastSuccess({ message: "Moved to trash successfully." })
+      return { uuid }
+    } catch (error) {
+      // restore if error
+      if (item) {
+        oldList.set(uuid, { ...item })
+        set({ sidebarList: new Map(oldList) })
+      }
+
+      toastError({ message: "Move to trash failed." })
+    }
+  },
+  setSidebarCollapsedList(uuid, flag) {
+    const oldList = get().sidebarCollapsedList
+
+    if (flag === "new") {
+      const side = get().sidebarList
+      // todo loop over to find parent then set into new array, until null then apply to store
+    } else {
+      if (oldList.has(uuid)) oldList.delete(uuid)
+      else oldList.set(uuid, uuid)
+
+      set({ sidebarCollapsedList: new Map([...oldList]) })
+    }
   },
 }))
