@@ -18,8 +18,7 @@ import MoveToTrashDialog from "../dialogs/move-trash-dialog"
 import NewDocDialog from "../dialogs/new-doc-dialog"
 import RenameDialog from "../dialogs/rename-dialog"
 import { type EmitActionStatus } from "@/types"
-import { useCopyToClipboard } from "usehooks-ts"
-import { useLayoutWrapper } from "../../_hooks/use-layout-wrapper"
+import { useCopyToClipboard, useMediaQuery } from "usehooks-ts"
 
 export default function SidebarMoreMenuPopover({
   children,
@@ -27,7 +26,7 @@ export default function SidebarMoreMenuPopover({
 }: PropsWithChildren & {
   uuid: string
 }) {
-  const { isMobile } = useLayoutWrapper()
+  const isMobile = useMediaQuery("(max-width: 468px)")
   const [_, copy] = useCopyToClipboard()
   const ref = useRef<HTMLButtonElement | null>(null)
 

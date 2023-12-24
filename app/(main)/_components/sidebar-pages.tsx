@@ -48,14 +48,6 @@ export default function SidebarPages({ uuid, level = 0 }: Props) {
     router.push(`/doc/${uuid}`)
   }
 
-  const toggleCollapseHandler = (
-    e: React.MouseEvent<HTMLSpanElement>,
-    v: { uuid: string; parent_uuid: string | null },
-  ) => {
-    e.stopPropagation()
-    setSidebarCollapsedList({ ...v })
-  }
-
   const items = sidebarList
     ? Array.from(sidebarList ?? [])
         .filter(([, item]) => (uuid ? item.parent_uuid === uuid : !item.parent_uuid))
@@ -77,7 +69,13 @@ export default function SidebarPages({ uuid, level = 0 }: Props) {
         const emoji = item?.emoji as Emoji | null
 
         return (
-          <section key={key}>
+          <section
+            key={key}
+            onClick={e => {
+              e.stopPropagation()
+              return
+            }}
+          >
             <div
               role="button"
               onClick={e => {
@@ -98,12 +96,13 @@ export default function SidebarPages({ uuid, level = 0 }: Props) {
                 <span
                   role="button"
                   className="grid h-6 w-6 shrink-0 place-content-center rounded-sm text-zinc-500 hover:bg-zinc-400/30 dark:text-zinc-400"
-                  onClick={e =>
-                    toggleCollapseHandler(e, {
+                  onClick={e => {
+                    e.stopPropagation()
+                    setSidebarCollapsedList({
                       uuid: item.uuid,
                       parent_uuid: item.parent_uuid,
                     })
-                  }
+                  }}
                 >
                   {collapsedMap.has(item.uuid) ? (
                     <ChevronDownIcon className="h-4 w-4" />

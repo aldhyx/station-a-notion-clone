@@ -64,14 +64,15 @@ export const useLayoutWrapper = () => {
   }
 
   useEffect(() => {
-    if (isMobile) minimizeHandler()
-    else if (minimize) maximizeHandler()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    if (isMobile && !minimize) minimizeHandler()
+
+    if (!isMobile && minimize) maximizeHandler()
   }, [isMobile])
 
   useEffect(() => {
     if (isMobile && minimizeTriggered) {
       minimizeHandler()
+      triggerMinimize()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isMobile, minimizeTriggered])
