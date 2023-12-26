@@ -16,6 +16,7 @@ type SidebarAction = {
     eventType: `${REALTIME_POSTGRES_CHANGES_LISTEN_EVENT}`
     doc: (Page & { is_deleted: boolean | null }) | null
   }): void
+  isChildDocExist(uuid: string): boolean
   insertEventHandler(doc: Page & { is_deleted: boolean | null }): void
   deleteEventHandler(doc: Page & { is_deleted: boolean | null }): void
   updateEventHandler(doc: Page & { is_deleted: boolean | null }): void
@@ -51,7 +52,15 @@ export const useSidebarStore = create<SidebarState & SidebarAction>()((set, get)
     if (eventType === "DELETE") return get().deleteEventHandler(doc)
     if (eventType === "UPDATE") return get().updateEventHandler(doc)
   },
+  isChildDocExist(uuid) {
+    const oldList = get().sidebarList
+    return oldList
+      ? [...oldList.values()].some(({ parent_uuid }) => parent_uuid === uuid)
+      : false
+  },
   async getSidebarListAsync(uuid) {
+    if (uuid && get().isChildDocExist(uuid)) return
+
     const loading = get().loading
     set({ loading: { ...loading, [uuid ?? "root"]: true } })
 
