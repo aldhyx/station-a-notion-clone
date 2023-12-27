@@ -20,7 +20,12 @@ export const useLayoutWrapper = () => {
   const isMobile = useMediaQuery("(max-width: 468px)")
 
   const mouseMoveHandler = (e: MouseEvent) => {
-    if (sidebarRef.current && topbarRef.current && isResizingRef.current) {
+    if (
+      sidebarRef.current &&
+      topbarRef.current &&
+      mainRef.current &&
+      isResizingRef.current
+    ) {
       let newWidth = e.clientX
 
       if (newWidth <= minSidebarWidth) newWidth = minSidebarWidth
@@ -29,6 +34,7 @@ export const useLayoutWrapper = () => {
       sidebarRef.current.style.setProperty("width", `${newWidth}px`)
       topbarRef.current.style.left = `${newWidth}px`
       topbarRef.current.style.width = `calc(100vw - ${newWidth}px)`
+      mainRef.current.style.width = `calc(100vw - ${newWidth}px)`
     }
   }
 
@@ -46,10 +52,11 @@ export const useLayoutWrapper = () => {
   }
 
   const removeAllStyle = () => {
-    if (sidebarRef.current && topbarRef.current) {
+    if (sidebarRef.current && topbarRef.current && mainRef.current) {
       sidebarRef.current.style.width = ""
       topbarRef.current.style.left = ""
       topbarRef.current.style.width = ""
+      mainRef.current.style.width = ""
     }
   }
 
