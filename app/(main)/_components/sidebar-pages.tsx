@@ -15,6 +15,7 @@ import { useEffectOnce } from "usehooks-ts"
 import { useSidebarStore } from "../../../store/use-sidebar-store"
 import SidebarMoreMenuPopover from "./popovers/sidebar-more-menu-popover"
 import { useLayoutStore } from "@/store/use-layout-store"
+import { getSidebarTreeData } from "@/helper/data.helper"
 
 type Props = {
   uuid?: string
@@ -48,15 +49,7 @@ export default function SidebarPages({ uuid, level = 0 }: Props) {
     router.push(`/doc/${uuid}`)
   }
 
-  const items = sidebarList
-    ? Array.from(sidebarList ?? [])
-        .filter(([, item]) => (uuid ? item.parent_uuid === uuid : !item.parent_uuid))
-        .sort(([, a], [, b]) => {
-          const dateA = new Date(a.created_at).getTime()
-          const dateB = new Date(b.created_at).getTime()
-          return dateA - dateB
-        })
-    : []
+  const items = getSidebarTreeData(sidebarList, uuid)
 
   if (loading[uuid!] && !items.length) return <SidebarPages.Skeleton level={level} />
   if (!items.length) return <SidebarPages.Empty level={level} />
