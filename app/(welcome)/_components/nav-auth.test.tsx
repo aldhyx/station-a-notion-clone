@@ -3,6 +3,19 @@ import NavAuth from "./nav-auth"
 import userEvent from "@testing-library/user-event"
 
 describe("nav auth", () => {
+  beforeAll(() => {
+    vi.mock("next/navigation", () => {
+      const actual = vi.importActual("next/navigation")
+      return {
+        ...actual,
+        useRouter: vi.fn(() => ({
+          push: vi.fn(),
+        })),
+        usePathname: vi.fn(),
+      }
+    })
+  })
+
   it("render without error", () => {
     const props = { email: null, fullname: null, username: null }
     render(<NavAuth {...props} />)
