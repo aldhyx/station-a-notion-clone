@@ -22,7 +22,7 @@ type Props = {
   level?: number
 }
 
-export default function SidebarPages({ uuid, level = 0 }: Props) {
+export default function SidebarTree({ uuid, level = 0 }: Props) {
   const params = useParams()
   const router = useRouter()
   const { triggerMinimize } = useLayoutStore()
@@ -40,7 +40,7 @@ export default function SidebarPages({ uuid, level = 0 }: Props) {
 
   // first loading at root level
   if (loading["root"] && !sidebarList && !uuid) {
-    return <SidebarPages.Skeleton level={level} />
+    return <SidebarTree.Skeleton level={level} />
   }
 
   const navigateDocHandler = (uuid: string) => {
@@ -51,12 +51,12 @@ export default function SidebarPages({ uuid, level = 0 }: Props) {
 
   const items = getSidebarTreeData(sidebarList, uuid)
 
-  if (loading[uuid!] && !items.length) return <SidebarPages.Skeleton level={level} />
-  if (!items.length) return <SidebarPages.Empty level={level} />
+  if (loading[uuid!] && !items.length) return <SidebarTree.Skeleton level={level} />
+  if (!items.length) return <SidebarTree.Empty level={level} />
 
   return (
     <>
-      <SidebarPages.Title level={level} />
+      <SidebarTree.Title level={level} />
 
       {items.map(([key, item]) => {
         const emoji = item?.emoji as Emoji | null
@@ -144,7 +144,7 @@ export default function SidebarPages({ uuid, level = 0 }: Props) {
             </div>
 
             {collapsedMap.has(item.uuid) && (
-              <SidebarPages uuid={item.uuid} level={level + 1} />
+              <SidebarTree uuid={item.uuid} level={level + 1} />
             )}
           </section>
         )
@@ -155,14 +155,14 @@ export default function SidebarPages({ uuid, level = 0 }: Props) {
 
 type LevelProps = { level: number }
 
-SidebarPages.Title = function Title({ level }: LevelProps) {
+SidebarTree.Title = function Title({ level }: LevelProps) {
   if (level > 0) return null
   return (
     <h2 className="mb-1 px-3 pt-3 text-xs text-zinc-600 dark:text-zinc-400">Personal</h2>
   )
 }
 
-SidebarPages.Skeleton = function Loading({ level }: LevelProps) {
+SidebarTree.Skeleton = function Loading({ level }: LevelProps) {
   return (
     <div className={cn(level === 0 ? "pt-3" : "pt-1")}>
       {level === 0 && <h2 className="mb-2 px-3 text-xs text-zinc-500">Personal</h2>}
@@ -178,7 +178,7 @@ SidebarPages.Skeleton = function Loading({ level }: LevelProps) {
   )
 }
 
-SidebarPages.Empty = function Empty({ level }: LevelProps) {
+SidebarTree.Empty = function Empty({ level }: LevelProps) {
   const paddingLeft =
     level === 0 ? "13px" : level === 1 ? `${level * 30}px` : `${level * 22}px`
 

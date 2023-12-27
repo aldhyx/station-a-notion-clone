@@ -11,7 +11,7 @@ import { useLayoutWrapper } from "../_hooks/use-layout-wrapper"
 import useSidebarRealtime from "../_hooks/use-sidebar-realtime"
 import Header from "./header"
 import SidebarMenu from "./sidebar-menu"
-import SidebarPages from "./sidebar-pages"
+import SidebarTree from "./sidebar-tree"
 import SidebarUser from "./sidebar-user"
 
 export default function LayoutWrapper({
@@ -55,7 +55,7 @@ export default function LayoutWrapper({
       >
         <SidebarUser />
         <SidebarMenu />
-        <SidebarPages />
+        <SidebarTree />
 
         <Button
           size="icon"
