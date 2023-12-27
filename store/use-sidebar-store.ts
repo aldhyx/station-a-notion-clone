@@ -110,16 +110,20 @@ export const useSidebarStore = create<SidebarState & SidebarAction>()((set, get)
     const oldList = get().sidebarList
     if (!oldList) return
 
-    if (oldList.has(doc.uuid)) {
-      // move to trash event
-      if (doc.is_deleted) {
-        oldList.delete(doc.uuid)
-        const newList = new Map([...oldList])
-        set({ sidebarList: newList })
-      } else {
-        const newList = new Map([...oldList, [doc.uuid, { ...doc }]])
-        set({ sidebarList: newList })
-      }
+    // restore from trash
+    if (!oldList.has(doc.uuid) && !doc.is_deleted) {
+      get().insertEventHandler(doc)
+    }
+
+    // move to trash
+    if (oldList.has(doc.uuid) && doc.is_deleted) {
+      get().deleteEventHandler(doc)
+    }
+
+    // normal update
+    if (oldList.has(doc.uuid) && !doc.is_deleted) {
+      const newList = new Map([...oldList, [doc.uuid, { ...doc }]])
+      set({ sidebarList: newList })
     }
   },
   async renameDocHandler({ uuid, title, emoji }) {
