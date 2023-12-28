@@ -7,8 +7,18 @@ import MoveToTrashDialog from "../dialogs/move-trash-dialog"
 
 export default function HeaderMoreMenuPopover({ children }: PropsWithChildren) {
   const { doc } = useDocStore()
-  const createdAt = doc ? new Date(doc.created_at).toLocaleString() : null
-  const updatedAt = doc ? new Date(doc.updated_at).toLocaleString() : null
+  const createdAt = doc
+    ? new Intl.DateTimeFormat("en-US", {
+        dateStyle: "medium",
+        timeStyle: "short",
+      }).format(new Date(doc.created_at))
+    : null
+  const updatedAt = doc
+    ? new Intl.DateTimeFormat("en-US", {
+        dateStyle: "medium",
+        timeStyle: "short",
+      }).format(new Date(doc.updated_at))
+    : null
 
   return (
     <Popover>
