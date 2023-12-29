@@ -17,8 +17,7 @@ type Props = {
 export default function useNewDoc({ emitActionStatus, uuid }: Props) {
   const { triggerMinimize } = useLayoutStore()
   const closeButtonRef = useRef<HTMLButtonElement>(null)
-  const { createDocAsync } = useDocStore()
-  const { sidebarTreeCollapseHandler } = useSidebarStore()
+  const { sidebarTreeCollapseHandler, createDocAsync } = useSidebarStore()
   const router = useRouter()
   const form = useForm<NewDocSchema>({
     resolver: zodResolver(newDocSchema),

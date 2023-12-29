@@ -17,16 +17,10 @@ type DocState = {
   loadingDoc: boolean
   doc: Page | null
   signedUrl: string | null
-  creating: boolean
 }
 
 type DocAction = {
   setSaveStatus(status: Status): void
-  createDocAsync(opt: {
-    uuid?: string
-    title?: string
-    emoji?: Emoji
-  }): Promise<{ uuid: string; parent_uuid: string | null } | void>
   getDocAsync(uuid: string): Promise<{ uuid: string; parent_uuid: string | null } | void>
   getSignedUrlAsync(opt: { uuidUser: string; imgUrl: string | null }): Promise<void>
   updateDocAsync(
@@ -41,35 +35,12 @@ const initialState: DocState = {
   saveStatus: null,
   signedUrl: null,
   failedSaveData: {},
-  creating: false,
 }
 
 export const useDocStore = create<DocState & DocAction>()((set, get) => ({
   ...initialState,
   setSaveStatus(status) {
     set({ saveStatus: status })
-  },
-  async createDocAsync({ uuid, title, emoji }) {
-    set({ creating: true })
-    const id = uuid ?? "create"
-    toastLoading({ message: "Creating new page...", id })
-
-    try {
-      const { data, error } = await client
-        .from("pages")
-        .insert({ parent_uuid: uuid, title: title ?? "untitled", emoji: emoji ?? null })
-        .select("uuid, parent_uuid")
-        .single()
-
-      if (error) throw new Error(error.message)
-
-      toastSuccess({ message: "Successfully created new page.", id })
-      return { uuid: data.uuid, parent_uuid: data.parent_uuid, error: null }
-    } catch (error) {
-      toastError({ message: "Failed to create new page.", id })
-    } finally {
-      set({ creating: false })
-    }
   },
   async getDocAsync(uuid) {
     set({ ...initialState })

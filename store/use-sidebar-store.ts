@@ -1,7 +1,7 @@
 import { Emoji } from "@/components/popover/emoji-picker-popover"
 import { client } from "@/lib/supabase/client"
 import { type Database } from "@/lib/supabase/database.types"
-import { toastError } from "@/lib/toast"
+import { toastError, toastLoading, toastSuccess } from "@/lib/toast"
 import { REALTIME_POSTGRES_CHANGES_LISTEN_EVENT } from "@supabase/supabase-js"
 import { create } from "zustand"
 
@@ -25,6 +25,11 @@ type SidebarAction = {
   getSidebarTreeAsync: (uuid?: string) => void
   renameDocAsync(opt: { uuid: string; title: string; emoji: Emoji | null }): Promise<void>
   deleteDocAsync(uuid: string): Promise<{ uuid: string } | void>
+  createDocAsync(opt: {
+    uuid?: string
+    title?: string
+    emoji?: Emoji
+  }): Promise<{ uuid: string; parent_uuid: string | null } | void>
 }
 
 type SidebarState = {
@@ -177,6 +182,26 @@ export const useSidebarStore = create<SidebarState & SidebarAction>()((set, get)
       }
 
       toastError({ message: "Move to trash failed." })
+    }
+  },
+
+  async createDocAsync({ uuid, title, emoji }) {
+    const id = uuid ?? "create"
+    toastLoading({ message: "Creating new page...", id })
+
+    try {
+      const { data, error } = await client
+        .from("pages")
+        .insert({ parent_uuid: uuid, title: title ?? "untitled", emoji: emoji ?? null })
+        .select("uuid, parent_uuid")
+        .single()
+
+      if (error) throw new Error(error.message)
+
+      toastSuccess({ message: "Successfully created new page.", id })
+      return { uuid: data.uuid, parent_uuid: data.parent_uuid, error: null }
+    } catch (error) {
+      toastError({ message: "Failed to create new page.", id })
     }
   },
   sidebarTreeCollapseHandler({ uuid, parent_uuid }, flag) {
