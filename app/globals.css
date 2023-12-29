@@ -129,6 +129,7 @@ em-emoji-picker {
   --font-size: 14px;
   --font-family: inherit;
   --border-radius: inherit;
+  --shadow: none;
 }
 
 .ce-toolbar__plus {
