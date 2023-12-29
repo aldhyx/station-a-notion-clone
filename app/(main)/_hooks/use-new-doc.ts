@@ -18,7 +18,7 @@ export default function useNewDoc({ emitActionStatus, uuid }: Props) {
   const { triggerMinimize } = useLayoutStore()
   const closeButtonRef = useRef<HTMLButtonElement>(null)
   const { createDocAsync } = useDocStore()
-  const { setSidebarCollapsedList } = useSidebarStore()
+  const { sidebarTreeCollapseHandler } = useSidebarStore()
   const router = useRouter()
   const form = useForm<NewDocSchema>({
     resolver: zodResolver(newDocSchema),
@@ -31,7 +31,7 @@ export default function useNewDoc({ emitActionStatus, uuid }: Props) {
   const submitHandler = form.handleSubmit(async ({ title, emoji }) => {
     const res = await createDocAsync({ title, uuid: uuid, emoji: emoji as Emoji })
     if (res?.uuid) {
-      setSidebarCollapsedList({ uuid: res.uuid, parent_uuid: res.parent_uuid }, "new")
+      sidebarTreeCollapseHandler({ uuid: res.uuid, parent_uuid: res.parent_uuid }, "new")
       emitActionStatus?.("success")
 
       triggerMinimize("doc")

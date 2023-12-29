@@ -1,8 +1,7 @@
 import { Emoji } from "@/components/popover/emoji-picker-popover"
-import { getErrorMessage } from "@/helper/error.helper"
 import { client } from "@/lib/supabase/client"
 import { type Database } from "@/lib/supabase/database.types"
-import { toastError, toastSuccess } from "@/lib/toast"
+import { toastError } from "@/lib/toast"
 import { REALTIME_POSTGRES_CHANGES_LISTEN_EVENT } from "@supabase/supabase-js"
 import { create } from "zustand"
 
@@ -11,55 +10,51 @@ type Page = Pick<
   "uuid" | "title" | "emoji" | "parent_uuid" | "created_at"
 >
 type SidebarAction = {
-  getSidebarListAsync: (uuid?: string) => void
-  setSidebarList(opt: {
-    eventType: `${REALTIME_POSTGRES_CHANGES_LISTEN_EVENT}`
-    doc: (Page & { is_deleted: boolean | null }) | null
-  }): void
-  isChildDocExist(uuid: string): boolean
-  insertEventHandler(doc: Page & { is_deleted: boolean | null }): void
-  deleteEventHandler(doc: Page & { is_deleted: boolean | null }): void
-  updateEventHandler(doc: Page & { is_deleted: boolean | null }): void
-  renameDocHandler(opt: {
-    uuid: string
-    title: string
-    emoji: Emoji | null
-  }): Promise<void>
-  deleteDocAsync(uuid: string): Promise<{ uuid: string } | void>
-  setSidebarCollapsedList(
+  childExistInSidebarTree(uuid: string): boolean
+  sidebarTreeCollapseHandler(
     v: { uuid: string; parent_uuid: string | null },
     flag?: "new",
   ): void
+  sidebarTreeRealtimeHandler(opt: {
+    eventType: `${REALTIME_POSTGRES_CHANGES_LISTEN_EVENT}`
+    doc: (Page & { is_deleted: boolean | null }) | null
+  }): void
+  _insertIntoSidebarTree(doc: Page & { is_deleted: boolean | null }): void
+  _deleteFromSidebarTree(doc: Page & { is_deleted: boolean | null }): void
+  _updateSidebarTree(doc: Page & { is_deleted: boolean | null }): void
+  getSidebarTreeAsync: (uuid?: string) => void
+  renameDocAsync(opt: { uuid: string; title: string; emoji: Emoji | null }): Promise<void>
+  deleteDocAsync(uuid: string): Promise<{ uuid: string } | void>
 }
 
 type SidebarState = {
   loading: Record<string, boolean>
-  sidebarList: Map<string, Page> | null
-  sidebarCollapsedList: Map<string, { uuid: string; parent_uuid: string | null }>
+  sidebarTree: Map<string, Page> | null
+  sidebarTreeCollapsed: Map<string, { uuid: string; parent_uuid: string | null }>
 }
 
 const initialState: SidebarState = {
   loading: { root: true },
-  sidebarList: null,
-  sidebarCollapsedList: new Map(),
+  sidebarTree: null,
+  sidebarTreeCollapsed: new Map(),
 }
 
 export const useSidebarStore = create<SidebarState & SidebarAction>()((set, get) => ({
   ...initialState,
-  setSidebarList({ eventType, doc }) {
-    if (!doc) return
-    if (eventType === "INSERT") return get().insertEventHandler(doc)
-    if (eventType === "DELETE") return get().deleteEventHandler(doc)
-    if (eventType === "UPDATE") return get().updateEventHandler(doc)
-  },
-  isChildDocExist(uuid) {
-    const oldList = get().sidebarList
-    return oldList
-      ? [...oldList.values()].some(({ parent_uuid }) => parent_uuid === uuid)
+  childExistInSidebarTree(uuid) {
+    const oldTree = get().sidebarTree
+    return oldTree
+      ? [...oldTree.values()].some(({ parent_uuid }) => parent_uuid === uuid)
       : false
   },
-  async getSidebarListAsync(uuid) {
-    if (uuid && get().isChildDocExist(uuid)) return
+  sidebarTreeRealtimeHandler({ eventType, doc }) {
+    if (!doc) return
+    if (eventType === "INSERT") return get()._insertIntoSidebarTree(doc)
+    if (eventType === "DELETE") return get()._deleteFromSidebarTree(doc)
+    if (eventType === "UPDATE") return get()._updateSidebarTree(doc)
+  },
+  async getSidebarTreeAsync(uuid) {
+    if (uuid && get().childExistInSidebarTree(uuid)) return
 
     const loading = get().loading
     set({ loading: { ...loading, [uuid ?? "root"]: true } })
@@ -78,64 +73,62 @@ export const useSidebarStore = create<SidebarState & SidebarAction>()((set, get)
 
       if (error) throw new Error(error.message)
 
-      const oldList = get().sidebarList
-      const newList = new Map(data.map(item => [item.uuid, item]))
-      const mergedList = new Map(
-        oldList && oldList instanceof Map ? [...oldList, ...newList] : [...newList],
-      )
+      const oldTree = get().sidebarTree
+      const newTree = new Map(data.map(item => [item.uuid, item]))
+      const mergedTree = new Map(oldTree ? [...oldTree, ...newTree] : [...newTree])
 
       set({
-        sidebarList: mergedList,
+        sidebarTree: mergedTree,
         loading: { ...loading, [uuid ?? "root"]: false },
       })
-    } catch (error) {}
+    } catch (error) {
+      toastError({ message: "Failed to load sidebar tree." })
+    }
   },
-  insertEventHandler(doc) {
-    const oldList = get().sidebarList
-    const newList = new Map(
-      oldList ? [...oldList, [doc.uuid, { ...doc }]] : [[doc.uuid, { ...doc }]],
+  _insertIntoSidebarTree(doc) {
+    const oldTree = get().sidebarTree
+    const mergedTree = new Map(
+      oldTree ? [...oldTree, [doc.uuid, { ...doc }]] : [[doc.uuid, { ...doc }]],
     )
 
-    set({ sidebarList: newList })
+    set({ sidebarTree: mergedTree })
   },
-  deleteEventHandler(doc) {
-    const oldList = get().sidebarList
-    if (!oldList) return
+  _deleteFromSidebarTree(doc) {
+    const oldTree = get().sidebarTree
+    if (!oldTree) return
 
-    oldList.delete(doc.uuid)
-    const newList = new Map([...oldList])
-    set({ sidebarList: newList })
+    oldTree.delete(doc.uuid)
+    set({ sidebarTree: new Map([...oldTree]) })
   },
-  updateEventHandler(doc) {
-    const oldList = get().sidebarList
-    if (!oldList) return
+  _updateSidebarTree(doc) {
+    const oldTree = get().sidebarTree
+    if (!oldTree) return
 
     // restore from trash
-    if (!oldList.has(doc.uuid) && !doc.is_deleted) {
-      get().insertEventHandler(doc)
+    if (!oldTree.has(doc.uuid) && !doc.is_deleted) {
+      get()._insertIntoSidebarTree(doc)
     }
 
     // move to trash
-    if (oldList.has(doc.uuid) && doc.is_deleted) {
-      get().deleteEventHandler(doc)
+    if (oldTree.has(doc.uuid) && doc.is_deleted) {
+      get()._deleteFromSidebarTree(doc)
     }
 
     // normal update
-    if (oldList.has(doc.uuid) && !doc.is_deleted) {
-      const newList = new Map([...oldList, [doc.uuid, { ...doc }]])
-      set({ sidebarList: newList })
+    if (oldTree.has(doc.uuid) && !doc.is_deleted) {
+      const mergedTree = new Map([...oldTree, [doc.uuid, { ...doc }]])
+      set({ sidebarTree: mergedTree })
     }
   },
-  async renameDocHandler({ uuid, title, emoji }) {
-    const oldList = get().sidebarList
-    if (!oldList) return
+  async renameDocAsync({ uuid, title, emoji }) {
+    const oldTree = get().sidebarTree
+    if (!oldTree) return
 
-    const item = oldList.get(uuid) ?? (null as Page | null)
-
-    // optimistic update
+    const item = oldTree.has(uuid) ? oldTree.get(uuid) : null
     if (item) {
-      oldList.set(uuid, { ...item, title, emoji })
-      set({ sidebarList: new Map(oldList) })
+      // optimistic sidebar tree update
+      oldTree.set(uuid, { ...item, title, emoji })
+      set({ sidebarTree: new Map(oldTree) })
     }
 
     try {
@@ -146,25 +139,25 @@ export const useSidebarStore = create<SidebarState & SidebarAction>()((set, get)
 
       if (error) throw new Error(error.message)
     } catch (error) {
-      // restore if error
       if (item) {
-        oldList.set(uuid, { ...item })
-        set({ sidebarList: new Map(oldList) })
+        // restore if error
+        oldTree.set(uuid, { ...item })
+        set({ sidebarTree: new Map(oldTree) })
       }
 
-      toastError({ message: getErrorMessage(error as Error) })
+      toastError({ message: "Failed to rename selected doc." })
     }
   },
   async deleteDocAsync(uuid) {
-    const oldList = get().sidebarList
-    if (!oldList) return
+    const oldTree = get().sidebarTree
+    if (!oldTree) return
 
-    const item = oldList.get(uuid) ?? (null as Page | null)
+    const item = oldTree.has(uuid) ? oldTree.get(uuid) : null
 
-    // optimistic update
     if (item) {
-      oldList.delete(uuid)
-      set({ sidebarList: new Map(oldList) })
+      // optimistic update
+      oldTree.delete(uuid)
+      set({ sidebarTree: new Map(oldTree) })
     }
 
     try {
@@ -175,35 +168,34 @@ export const useSidebarStore = create<SidebarState & SidebarAction>()((set, get)
 
       if (error) throw new Error(error.message)
 
-      toastSuccess({ message: "Moved to trash successfully." })
       return { uuid }
     } catch (error) {
-      // restore if error
       if (item) {
-        oldList.set(uuid, { ...item })
-        set({ sidebarList: new Map(oldList) })
+        // restore if error
+        oldTree.set(uuid, { ...item })
+        set({ sidebarTree: new Map(oldTree) })
       }
 
       toastError({ message: "Move to trash failed." })
     }
   },
-  setSidebarCollapsedList({ uuid, parent_uuid }, flag) {
-    const oldCollapsedList = get().sidebarCollapsedList
+  sidebarTreeCollapseHandler({ uuid, parent_uuid }, flag) {
+    const oldCollapsedList = get().sidebarTreeCollapsed
 
     if (flag === "new") {
-      const oldList = get().sidebarList
+      const oldTree = get().sidebarTree
 
-      if (oldList && parent_uuid) {
-        const item = oldList.get(parent_uuid)
+      if (oldTree && parent_uuid) {
+        const item = oldTree.get(parent_uuid)
 
         if (item) {
           oldCollapsedList.set(item.uuid, {
             uuid: item.uuid,
             parent_uuid: item.parent_uuid,
           })
-          set({ sidebarCollapsedList: new Map([...oldCollapsedList]) })
+          set({ sidebarTreeCollapsed: new Map([...oldCollapsedList]) })
 
-          get().setSidebarCollapsedList(
+          get().sidebarTreeCollapseHandler(
             { uuid: parent_uuid, parent_uuid: item.parent_uuid },
             "new",
           )
@@ -213,7 +205,7 @@ export const useSidebarStore = create<SidebarState & SidebarAction>()((set, get)
       if (oldCollapsedList.has(uuid)) oldCollapsedList.delete(uuid)
       else oldCollapsedList.set(uuid, { uuid, parent_uuid })
 
-      set({ sidebarCollapsedList: new Map([...oldCollapsedList]) })
+      set({ sidebarTreeCollapsed: new Map([...oldCollapsedList]) })
     }
   },
 }))

@@ -15,14 +15,14 @@ type Props = {
 
 export default function useRename({ uuid, title, emoji, emitActionStatus }: Props) {
   const closeButtonRef = useRef<HTMLButtonElement>(null)
-  const { renameDocHandler } = useSidebarStore()
+  const { renameDocAsync } = useSidebarStore()
   const form = useForm<RenameDocSchema>({
     resolver: zodResolver(renameDocSchema),
     values: { title: title ?? "", emoji: emoji ?? null },
   })
 
   const submitHandler = form.handleSubmit(({ title, emoji }) => {
-    renameDocHandler({ uuid, title, emoji: emoji as Emoji })
+    renameDocAsync({ uuid, title, emoji: emoji as Emoji })
     closeButtonRef.current?.click()
     emitActionStatus?.("success")
   })

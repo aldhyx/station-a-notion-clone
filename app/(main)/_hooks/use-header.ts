@@ -10,12 +10,12 @@ export const useHeader = () => {
   const { saveStatus, setSaveStatus, loadingDoc, doc } = useDocStore()
 
   const params = useParams()
-  const { sidebarList } = useSidebarStore()
+  const { sidebarTree } = useSidebarStore()
   const segment = useSelectedLayoutSegment()
 
   const selectedPage =
-    sidebarList && params.uuid && typeof params.uuid === "string"
-      ? sidebarList.get(params.uuid)
+    sidebarTree && params.uuid && typeof params.uuid === "string"
+      ? sidebarTree.get(params.uuid)
       : null
 
   const emoji = selectedPage?.emoji ? (selectedPage.emoji as Emoji) : null

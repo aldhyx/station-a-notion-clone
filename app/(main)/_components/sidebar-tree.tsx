@@ -28,18 +28,18 @@ export default function SidebarTree({ uuid, level = 0 }: Props) {
   const { triggerMinimize } = useLayoutStore()
   const {
     loading,
-    sidebarList,
-    getSidebarListAsync,
-    sidebarCollapsedList: collapsedMap,
-    setSidebarCollapsedList,
+    sidebarTree,
+    getSidebarTreeAsync,
+    sidebarTreeCollapsed: collapsedMap,
+    sidebarTreeCollapseHandler,
   } = useSidebarStore()
 
   useEffectOnce(() => {
-    getSidebarListAsync(uuid)
+    getSidebarTreeAsync(uuid)
   })
 
   // first loading at root level
-  if (loading["root"] && !sidebarList && !uuid) {
+  if (loading["root"] && !sidebarTree && !uuid) {
     return <SidebarTree.Skeleton level={level} />
   }
 
@@ -49,7 +49,7 @@ export default function SidebarTree({ uuid, level = 0 }: Props) {
     router.push(`/doc/${uuid}`)
   }
 
-  const items = getSidebarTreeData(sidebarList, uuid)
+  const items = getSidebarTreeData(sidebarTree, uuid)
 
   if (loading[uuid!] && !items.length) return <SidebarTree.Skeleton level={level} />
   if (!items.length) return <SidebarTree.Empty level={level} />
@@ -91,7 +91,7 @@ export default function SidebarTree({ uuid, level = 0 }: Props) {
                   className="grid h-6 w-6 shrink-0 place-content-center rounded-sm text-zinc-500 hover:bg-zinc-400/30 dark:text-zinc-400"
                   onClick={e => {
                     e.stopPropagation()
-                    setSidebarCollapsedList({
+                    sidebarTreeCollapseHandler({
                       uuid: item.uuid,
                       parent_uuid: item.parent_uuid,
                     })

@@ -9,7 +9,7 @@ type Page = Pick<
 >
 
 export default function useSidebarRealtime() {
-  const { setSidebarList } = useSidebarStore()
+  const { sidebarTreeRealtimeHandler } = useSidebarStore()
 
   useEffect(() => {
     const subscribe = client
@@ -32,7 +32,7 @@ export default function useSidebarRealtime() {
               }
             : null
 
-          setSidebarList({ eventType, doc: newDoc })
+          sidebarTreeRealtimeHandler({ eventType, doc: newDoc })
           // console.log("Change received!", payload)
         },
       )

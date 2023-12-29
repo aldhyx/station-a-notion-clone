@@ -21,8 +21,8 @@ type Props = PropsWithChildren & {
 }
 
 export default function RenameDialog({ children, uuid, emitActionStatus }: Props) {
-  const { sidebarList } = useSidebarStore()
-  const selected = sidebarList?.get(uuid)
+  const { sidebarTree } = useSidebarStore()
+  const selected = sidebarTree?.get(uuid)
   const {
     closeButtonRef,
     form,
