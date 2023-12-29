@@ -7,6 +7,7 @@ import { useParams } from "next/navigation"
 import { useEffectOnce } from "usehooks-ts"
 import Action from "./_components/action"
 import Cover from "./_components/cover"
+import RetrySave from "./_components/retry-save"
 
 export default function DocDetailPage() {
   const params = useParams()
@@ -20,6 +21,7 @@ export default function DocDetailPage() {
   console.log({ doc, loadingDoc, failedSaveData })
   return (
     <ScrollArea className="h-[calc(100vh-48px)]">
+      <RetrySave />
       <Cover />
       <Action />
     </ScrollArea>
