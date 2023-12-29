@@ -1,5 +1,6 @@
 import { client } from "@/lib/supabase/client"
 import { Database } from "@/lib/supabase/database.types"
+import { useDocStore } from "@/store/use-doc-store"
 import { useSidebarStore } from "@/store/use-sidebar-store"
 import { useEffect } from "react"
 
@@ -8,8 +9,10 @@ type Page = Pick<
   "uuid" | "title" | "emoji" | "parent_uuid" | "created_at" | "is_deleted"
 >
 
-export default function useSidebarRealtime() {
+// only mounting once
+export default function useDocRealtime() {
   const { sidebarTreeRealtimeHandler } = useSidebarStore()
+  const { docRealtimeHandler } = useDocStore()
 
   useEffect(() => {
     const subscribe = client
@@ -21,19 +24,11 @@ export default function useSidebarRealtime() {
           const { eventType } = payload
           const doc = payload.new as Page | null
 
-          const newDoc: Page | null = doc
-            ? {
-                uuid: doc.uuid,
-                title: doc.title,
-                emoji: doc.emoji,
-                parent_uuid: doc.parent_uuid,
-                is_deleted: doc.is_deleted,
-                created_at: doc.created_at,
-              }
-            : null
-
-          sidebarTreeRealtimeHandler({ eventType, doc: newDoc })
-          // console.log("Change received!", payload)
+          if (doc) {
+            // todo: handler type conflig
+            docRealtimeHandler({ eventType, doc })
+            sidebarTreeRealtimeHandler({ eventType, doc })
+          }
         },
       )
       .subscribe()
@@ -42,5 +37,5 @@ export default function useSidebarRealtime() {
     }
   }, [])
 
-  return {}
+  return null
 }
