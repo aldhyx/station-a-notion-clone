@@ -17,7 +17,7 @@ type SidebarAction = {
   ): void
   sidebarTreeRealtimeHandler(opt: {
     eventType: `${REALTIME_POSTGRES_CHANGES_LISTEN_EVENT}`
-    doc: (Page & { is_deleted: boolean | null }) | null
+    doc: Page & { is_deleted: boolean | null }
   }): void
   _insertIntoSidebarTree(doc: Page & { is_deleted: boolean | null }): void
   _deleteFromSidebarTree(doc: Page & { is_deleted: boolean | null }): void
@@ -53,7 +53,6 @@ export const useSidebarStore = create<SidebarState & SidebarAction>()((set, get)
       : false
   },
   sidebarTreeRealtimeHandler({ eventType, doc }) {
-    if (!doc) return
     if (eventType === "INSERT") return get()._insertIntoSidebarTree(doc)
     if (eventType === "DELETE") return get()._deleteFromSidebarTree(doc)
     if (eventType === "UPDATE") return get()._updateSidebarTree(doc)
