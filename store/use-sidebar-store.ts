@@ -1,8 +1,9 @@
 import { Emoji } from "@/components/popover/emoji-picker-popover"
 import { client } from "@/lib/supabase/client"
 import { type Database } from "@/lib/supabase/database.types"
-import { toastError, toastLoading, toastSuccess } from "@/lib/toast"
+import { toastError, toastLoading } from "@/lib/toast"
 import { REALTIME_POSTGRES_CHANGES_LISTEN_EVENT } from "@supabase/supabase-js"
+import { toast } from "sonner"
 import { create } from "zustand"
 
 type Page = Pick<
@@ -86,7 +87,10 @@ export const useSidebarStore = create<SidebarState & SidebarAction>()((set, get)
         loading: { ...loading, [uuid ?? "root"]: false },
       })
     } catch (error) {
-      toastError({ description: "Failed to load sidebar tree." })
+      toastError({
+        description:
+          "Failed to load sidebar tree. Please check your internet connection & try again.",
+      })
     }
   },
   _insertIntoSidebarTree(doc) {
@@ -149,7 +153,10 @@ export const useSidebarStore = create<SidebarState & SidebarAction>()((set, get)
         set({ sidebarTree: new Map(oldTree) })
       }
 
-      toastError({ description: "Failed to rename selected doc." })
+      toastError({
+        description:
+          "Failed to rename selected doc. Please check your internet connection & try again.",
+      })
     }
   },
   async deleteDocAsync(uuid) {
@@ -180,13 +187,16 @@ export const useSidebarStore = create<SidebarState & SidebarAction>()((set, get)
         set({ sidebarTree: new Map(oldTree) })
       }
 
-      toastError({ description: "Move to trash failed." })
+      toastError({
+        description:
+          "Move to trash failed. Please check your internet connection & try again.",
+      })
     }
   },
 
   async createDocAsync({ uuid, title, emoji }) {
     const id = uuid ?? "create"
-    toastLoading({ description: "Creating new page...", id })
+    const tid = toastLoading({ description: "Creating new page...", id })
 
     try {
       const { data, error } = await client
@@ -197,10 +207,14 @@ export const useSidebarStore = create<SidebarState & SidebarAction>()((set, get)
 
       if (error) throw new Error(error.message)
 
-      toastSuccess({ description: "Successfully created new page.", id })
+      toast.dismiss(tid)
       return { uuid: data.uuid, parent_uuid: data.parent_uuid, error: null }
     } catch (error) {
-      toastError({ description: "Failed to create new page.", id })
+      toastError({
+        description:
+          "Failed to create new page. Please check your internet connection & try again.",
+        id,
+      })
     }
   },
   sidebarTreeCollapseHandler({ uuid, parent_uuid }, flag) {

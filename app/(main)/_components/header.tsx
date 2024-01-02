@@ -70,19 +70,17 @@ const Header = function Header({
               {saveStatus === "start" && (
                 <p className="flex gap-x-1 align-bottom text-xs text-zinc-600">
                   <LoaderIcon className="inline-block animate-spin" size={14} />
-                  <span className="inline-block">Saving...</span>
                 </p>
               )}
 
               {saveStatus === "success" && (
-                <p className="flex gap-x-1 align-bottom text-xs text-green-600">
+                <p className="flex gap-x-1 align-bottom text-xs text-green-700">
                   <CheckCircle2Icon className="inline-block" size={14} />
-                  <span className="inline-block">Save succeed</span>
                 </p>
               )}
 
               {saveStatus === "failed" && (
-                <p className="flex gap-x-1 align-bottom text-xs text-red-600">
+                <p className="flex gap-x-1 align-bottom text-xs text-red-700">
                   <XCircleIcon className="inline-block" size={14} />
                   <span className="inline-block">Save failed</span>
                 </p>
