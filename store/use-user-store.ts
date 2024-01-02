@@ -89,7 +89,7 @@ export const useUserStore = create<UserState & UserAction>()((set, get) => ({
         username: data?.length ? data[0]?.username : null,
       })
     } catch (error) {
-      toastError({ description: '"Failed to get user profile!"' })
+      toastError({ description: "Failed to get user profile!" })
     }
   },
   async getCurrentUserAsync() {

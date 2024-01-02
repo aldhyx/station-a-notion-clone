@@ -71,7 +71,9 @@ export const useDocStore = create<DocState & DocAction>()((set, get) => ({
       set({ loadingDoc: false, doc: data })
       return { uuid: data.uuid, parent_uuid: data.parent_uuid }
     } catch (error) {
-      toastError({ description: "Something went wrong. Failed to load page." })
+      toastError({
+        description: "Something went wrong. Broken link or poor internet connection.",
+      })
     }
   },
 
@@ -108,7 +110,11 @@ export const useDocStore = create<DocState & DocAction>()((set, get) => ({
         saveStatus: "failed",
         failedSaveData: { ...get().failedSaveData, ...doc },
       })
-      toastError({ description: "Failed to save changes.", title: "Save failed" })
+      toastError({
+        title: "Save failed",
+        description:
+          "Something went wrong. Please check your internet connection & try again.",
+      })
     }
   },
 }))

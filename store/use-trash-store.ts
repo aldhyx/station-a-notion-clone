@@ -1,7 +1,7 @@
 import { getErrorMessage } from "@/helper/error.helper"
 import { client } from "@/lib/supabase/client"
 import { type Database } from "@/lib/supabase/database.types"
-import { toastError, toastSuccess } from "@/lib/toast"
+import { toastError } from "@/lib/toast"
 import { create } from "zustand"
 
 type Page = Database["public"]["Tables"]["pages"]["Row"]
@@ -119,7 +119,6 @@ export const useTrashStore = create<TrashAction & TrashState>()((set, get) => ({
 
       let list = get().list
       set({ list: list ? list?.filter(i => i.uuid !== uuid) : null })
-      toastSuccess({ description: "Successfully delete page permanently." })
     } catch (error) {
       toastError({ description: getErrorMessage(error as Error) })
     }
@@ -132,7 +131,6 @@ export const useTrashStore = create<TrashAction & TrashState>()((set, get) => ({
         .eq("uuid", uuid)
 
       if (error) throw new Error(error.message)
-      toastSuccess({ description: "Successfully restore page." })
     } catch (error) {
       toastError({ description: getErrorMessage(error as Error) })
     }
