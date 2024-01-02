@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button"
 import { Skeleton } from "@/components/ui/skeleton"
 import { cn } from "@/lib/utils"
 import {
-  CheckIcon,
+  CheckCircle2Icon,
   ChevronsRightIcon,
   FileIcon,
   LoaderIcon,
@@ -12,6 +12,7 @@ import {
   MoreHorizontalIcon,
   Share2Icon,
   StarIcon,
+  XCircleIcon,
 } from "lucide-react"
 import { useHeader } from "../_hooks/use-header"
 import HeaderMoreMenuPopover from "./popovers/header-more-menu-popover"
@@ -62,22 +63,29 @@ const Header = function Header({
                 <FileIcon className="h-4 w-4 shrink-0 dark:text-zinc-100" />
               )}
 
-              <span className="block max-w-[130px] truncate pl-1 text-sm dark:text-zinc-100 ">
+              <p className="block max-w-[130px] truncate pl-1 text-sm dark:text-zinc-100 ">
                 {title}
-              </span>
+              </p>
 
               {saveStatus === "start" && (
-                <span className="flex items-center gap-x-1 text-xs text-zinc-500">
-                  <LoaderIcon className="h-4 w-4 animate-spin" />
-                  Saving...
-                </span>
+                <p className="flex gap-x-1 align-bottom text-xs text-green-700">
+                  <LoaderIcon className="inline-block animate-spin" size={14} />
+                  <span className="inline-block">Saving...</span>
+                </p>
               )}
 
               {saveStatus === "success" && (
-                <span className="flex items-center gap-x-1 text-xs text-zinc-500">
-                  <CheckIcon className="h-4 w-4" />
-                  Saved
-                </span>
+                <p className="flex gap-x-1 align-bottom text-xs text-green-700">
+                  <CheckCircle2Icon className="inline-block" size={14} />
+                  <span className="inline-block">Save succeed</span>
+                </p>
+              )}
+
+              {saveStatus === "failed" && (
+                <p className="flex gap-x-1 align-bottom text-xs text-red-700">
+                  <XCircleIcon className="inline-block" size={14} />
+                  <span className="inline-block">Save failed</span>
+                </p>
               )}
             </div>
           )}

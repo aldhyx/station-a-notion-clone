@@ -24,11 +24,11 @@ export const useHeader = () => {
   useUpdateEffect(() => {
     if (saveStatus === "success") {
       if (!savingRef.current) {
-        const id = setTimeout(() => setSaveStatus(null), 250)
+        const id = setTimeout(() => setSaveStatus(null), 1000)
         savingRef.current = id
       } else {
         clearTimeout(savingRef.current)
-        const newId = setTimeout(() => setSaveStatus(null), 250)
+        const newId = setTimeout(() => setSaveStatus(null), 1000)
         savingRef.current = newId
       }
     }
