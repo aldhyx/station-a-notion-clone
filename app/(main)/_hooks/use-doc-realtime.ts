@@ -4,10 +4,7 @@ import { useDocStore } from "@/store/use-doc-store"
 import { useSidebarStore } from "@/store/use-sidebar-store"
 import { useEffect } from "react"
 
-type Page = Pick<
-  Database["public"]["Tables"]["pages"]["Row"],
-  "uuid" | "title" | "emoji" | "parent_uuid" | "created_at" | "is_deleted"
->
+type Page = Database["public"]["Tables"]["pages"]["Row"]
 
 // only mounting once
 export default function useDocRealtime() {
@@ -22,12 +19,21 @@ export default function useDocRealtime() {
         { event: "*", schema: "public", table: "pages" },
         payload => {
           const { eventType } = payload
-          const doc = payload.new as Page | null
+          const doc = payload.new as Page
 
           if (doc) {
-            // todo: handler type conflig
             docRealtimeHandler({ eventType, doc })
-            sidebarTreeRealtimeHandler({ eventType, doc })
+            sidebarTreeRealtimeHandler({
+              eventType,
+              doc: {
+                uuid: doc.uuid,
+                title: doc.title,
+                emoji: doc.emoji,
+                parent_uuid: doc.parent_uuid,
+                is_deleted: doc.is_deleted,
+                created_at: doc.created_at,
+              },
+            })
           }
         },
       )
