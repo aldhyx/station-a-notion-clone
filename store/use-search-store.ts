@@ -62,7 +62,7 @@ export const useSearchStore = create<SearchState & SearchAction>()((set, get) =>
     } catch (error) {
       set({ loading: false })
 
-      toastError({ message: getErrorMessage(error as Error) })
+      toastError({ description: getErrorMessage(error as Error) })
     }
   },
   async getPagesAsync(keyword) {
@@ -98,7 +98,7 @@ export const useSearchStore = create<SearchState & SearchAction>()((set, get) =>
     } catch (error) {
       set({ loading: false })
 
-      toastError({ message: getErrorMessage(error as Error) })
+      toastError({ description: getErrorMessage(error as Error) })
     }
   },
 }))

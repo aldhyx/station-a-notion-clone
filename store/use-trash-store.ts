@@ -71,7 +71,7 @@ export const useTrashStore = create<TrashAction & TrashState>()((set, get) => ({
     } catch (error) {
       set({ loading: false })
 
-      toastError({ message: getErrorMessage(error as Error) })
+      toastError({ description: getErrorMessage(error as Error) })
     }
   },
   async getTrashAsync(keyword) {
@@ -109,7 +109,7 @@ export const useTrashStore = create<TrashAction & TrashState>()((set, get) => ({
       })
     } catch (error) {
       set({ loading: false })
-      toastError({ message: getErrorMessage(error as Error) })
+      toastError({ description: getErrorMessage(error as Error) })
     }
   },
   async deletePagePermanent(uuid) {
@@ -119,9 +119,9 @@ export const useTrashStore = create<TrashAction & TrashState>()((set, get) => ({
 
       let list = get().list
       set({ list: list ? list?.filter(i => i.uuid !== uuid) : null })
-      toastSuccess({ message: "Successfully delete page permanently." })
+      toastSuccess({ description: "Successfully delete page permanently." })
     } catch (error) {
-      toastError({ message: getErrorMessage(error as Error) })
+      toastError({ description: getErrorMessage(error as Error) })
     }
   },
   async restorePageAsync(uuid) {
@@ -132,9 +132,9 @@ export const useTrashStore = create<TrashAction & TrashState>()((set, get) => ({
         .eq("uuid", uuid)
 
       if (error) throw new Error(error.message)
-      toastSuccess({ message: "Successfully restore page." })
+      toastSuccess({ description: "Successfully restore page." })
     } catch (error) {
-      toastError({ message: getErrorMessage(error as Error) })
+      toastError({ description: getErrorMessage(error as Error) })
     }
   },
 }))

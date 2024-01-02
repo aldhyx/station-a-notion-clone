@@ -86,7 +86,7 @@ export const useSidebarStore = create<SidebarState & SidebarAction>()((set, get)
         loading: { ...loading, [uuid ?? "root"]: false },
       })
     } catch (error) {
-      toastError({ message: "Failed to load sidebar tree." })
+      toastError({ description: "Failed to load sidebar tree." })
     }
   },
   _insertIntoSidebarTree(doc) {
@@ -149,7 +149,7 @@ export const useSidebarStore = create<SidebarState & SidebarAction>()((set, get)
         set({ sidebarTree: new Map(oldTree) })
       }
 
-      toastError({ message: "Failed to rename selected doc." })
+      toastError({ description: "Failed to rename selected doc." })
     }
   },
   async deleteDocAsync(uuid) {
@@ -180,13 +180,13 @@ export const useSidebarStore = create<SidebarState & SidebarAction>()((set, get)
         set({ sidebarTree: new Map(oldTree) })
       }
 
-      toastError({ message: "Move to trash failed." })
+      toastError({ description: "Move to trash failed." })
     }
   },
 
   async createDocAsync({ uuid, title, emoji }) {
     const id = uuid ?? "create"
-    toastLoading({ message: "Creating new page...", id })
+    toastLoading({ description: "Creating new page...", id })
 
     try {
       const { data, error } = await client
@@ -197,10 +197,10 @@ export const useSidebarStore = create<SidebarState & SidebarAction>()((set, get)
 
       if (error) throw new Error(error.message)
 
-      toastSuccess({ message: "Successfully created new page.", id })
+      toastSuccess({ description: "Successfully created new page.", id })
       return { uuid: data.uuid, parent_uuid: data.parent_uuid, error: null }
     } catch (error) {
-      toastError({ message: "Failed to create new page.", id })
+      toastError({ description: "Failed to create new page.", id })
     }
   },
   sidebarTreeCollapseHandler({ uuid, parent_uuid }, flag) {
