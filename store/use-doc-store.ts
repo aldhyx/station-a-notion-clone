@@ -1,8 +1,6 @@
-import { type Emoji } from "@/components/popover/emoji-picker-popover"
-import { getErrorMessage } from "@/helper/error.helper"
 import { client } from "@/lib/supabase/client"
 import { type Database } from "@/lib/supabase/database.types"
-import { toastError, toastLoading, toastSuccess } from "@/lib/toast"
+import { toastError } from "@/lib/toast"
 import { REALTIME_POSTGRES_CHANGES_LISTEN_EVENT } from "@supabase/supabase-js"
 import { create } from "zustand"
 
@@ -73,7 +71,7 @@ export const useDocStore = create<DocState & DocAction>()((set, get) => ({
       set({ loadingDoc: false, doc: data })
       return { uuid: data.uuid, parent_uuid: data.parent_uuid }
     } catch (error) {
-      toastError({ message: "Something went wrong. Failed to load page." })
+      toastError({ description: "Something went wrong. Failed to load page." })
     }
   },
 
@@ -110,8 +108,7 @@ export const useDocStore = create<DocState & DocAction>()((set, get) => ({
         saveStatus: "failed",
         failedSaveData: { ...get().failedSaveData, ...doc },
       })
-
-      toastError({ message: "Failed to save changes." })
+      toastError({ description: "Failed to save changes.", title: "Save failed" })
     }
   },
 }))
