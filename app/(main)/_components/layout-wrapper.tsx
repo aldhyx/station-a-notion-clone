@@ -8,7 +8,7 @@ import { ChevronsLeftIcon } from "lucide-react"
 import { type PropsWithChildren } from "react"
 import { useEffectOnce } from "usehooks-ts"
 import { useLayoutWrapper } from "../_hooks/use-layout-wrapper"
-import useSidebarRealtime from "../_hooks/use-sidebar-realtime"
+import useDocRealtime from "../_hooks/use-doc-realtime"
 import Header from "./header"
 import SidebarMenu from "./sidebar-menu"
 import SidebarTree from "./sidebar-tree"
@@ -38,7 +38,7 @@ export default function LayoutWrapper({
     getCurrentProfileUserAsync()
   })
 
-  useSidebarRealtime()
+  useDocRealtime()
 
   return (
     <div className="relative flex min-h-screen select-none text-zinc-800">

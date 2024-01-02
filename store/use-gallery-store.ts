@@ -78,15 +78,15 @@ export const useGalleryStore = create<GalleryState & GalleryAction>()((set, get)
         .upload(`/${uuidUser}/${Date.now()}.${ext}`, file)
 
       if (error) throw new Error(error.message)
-      toastSuccess({ message: "Successfully add image to gallery." })
+      toastSuccess({ description: "Successfully add image to gallery." })
     } catch (error) {
-      toastError({ message: "Failed to upload image!" })
+      toastError({ description: "Failed to upload image!" })
     }
   },
   async deleteImageAsync({ path }) {
     if (!path) return
     const id = toast(path)
-    toastLoading({ message: "Deleting delete image from gallery.", id })
+    toastLoading({ description: "Deleting delete image from gallery.", id })
 
     try {
       const { data, error } = await client.storage.from("covers").remove([path])
@@ -96,9 +96,9 @@ export const useGalleryStore = create<GalleryState & GalleryAction>()((set, get)
       pictures = pictures.filter(item => item.path && item.path !== path)
 
       set({ pictures })
-      toastSuccess({ message: "Successfully delete image from gallery.", id })
+      toastSuccess({ description: "Successfully delete image from gallery.", id })
     } catch (error) {
-      toastError({ message: "Failed to delete image from gallery!", id })
+      toastError({ description: "Failed to delete image from gallery!", id })
     }
   },
 }))

@@ -33,7 +33,7 @@ export default function useUpload() {
       return null
     },
     onError(err) {
-      if (err.message) toastError({ message: err.message })
+      if (err.message) toastError({ description: err.message })
     },
     onDropAccepted(files, event) {
       uploadImageHandler(files[0])

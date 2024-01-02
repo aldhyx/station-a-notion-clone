@@ -1,15 +1,15 @@
 import { client } from "@/lib/supabase/client"
 import { Database } from "@/lib/supabase/database.types"
+import { useDocStore } from "@/store/use-doc-store"
 import { useSidebarStore } from "@/store/use-sidebar-store"
 import { useEffect } from "react"
 
-type Page = Pick<
-  Database["public"]["Tables"]["pages"]["Row"],
-  "uuid" | "title" | "emoji" | "parent_uuid" | "created_at" | "is_deleted"
->
+type Page = Database["public"]["Tables"]["pages"]["Row"]
 
-export default function useSidebarRealtime() {
+// only mounting once
+export default function useDocRealtime() {
   const { sidebarTreeRealtimeHandler } = useSidebarStore()
+  const { docRealtimeHandler } = useDocStore()
 
   useEffect(() => {
     const subscribe = client
@@ -19,21 +19,22 @@ export default function useSidebarRealtime() {
         { event: "*", schema: "public", table: "pages" },
         payload => {
           const { eventType } = payload
-          const doc = payload.new as Page | null
+          const doc = payload.new as Page
 
-          const newDoc: Page | null = doc
-            ? {
+          if (doc) {
+            docRealtimeHandler({ eventType, doc })
+            sidebarTreeRealtimeHandler({
+              eventType,
+              doc: {
                 uuid: doc.uuid,
                 title: doc.title,
                 emoji: doc.emoji,
                 parent_uuid: doc.parent_uuid,
                 is_deleted: doc.is_deleted,
                 created_at: doc.created_at,
-              }
-            : null
-
-          sidebarTreeRealtimeHandler({ eventType, doc: newDoc })
-          // console.log("Change received!", payload)
+              },
+            })
+          }
         },
       )
       .subscribe()
@@ -42,5 +43,5 @@ export default function useSidebarRealtime() {
     }
   }, [])
 
-  return {}
+  return null
 }

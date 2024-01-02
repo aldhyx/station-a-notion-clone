@@ -47,7 +47,7 @@ export const useUserStore = create<UserState & UserAction>()((set, get) => ({
 
       if (error) throw new Error(error.message)
 
-      toastSuccess({ message: "Password has been changed successfully." })
+      toastSuccess({ description: "Password has been changed successfully." })
     } catch (error) {
       return { error: getErrorMessage(error as Error) }
     }
@@ -67,15 +67,15 @@ export const useUserStore = create<UserState & UserAction>()((set, get) => ({
     }
 
     const id = toast("signOut")
-    toastLoading({ message: "Logging out...", id })
+    toastLoading({ description: "Logging out...", id })
 
     try {
       const { error } = await client.auth.signOut({ scope })
       if (error) throw new Error(error.message)
-      toastSuccess({ message: message.success[scope], id })
+      toastSuccess({ description: message.success[scope], id })
       window.location.reload()
     } catch (error) {
-      toastError({ message: message.error[scope], id })
+      toastError({ description: message.error[scope], id })
       return { error: message.error[scope] }
     }
   },
@@ -89,8 +89,7 @@ export const useUserStore = create<UserState & UserAction>()((set, get) => ({
         username: data?.length ? data[0]?.username : null,
       })
     } catch (error) {
-      const message = "Failed to get user profile!"
-      toastError({ message })
+      toastError({ description: '"Failed to get user profile!"' })
     }
   },
   async getCurrentUserAsync() {
@@ -100,7 +99,7 @@ export const useUserStore = create<UserState & UserAction>()((set, get) => ({
       set({ currentUser: data.user })
     } catch (error) {
       const message = "Something went wrong. Please reload or try login again."
-      toastError({ message })
+      toastError({ description: message })
       return { error: message }
     }
   },
@@ -114,7 +113,7 @@ export const useUserStore = create<UserState & UserAction>()((set, get) => ({
 
       if (!error) {
         set({ username: data.username, fullname: data.fullname })
-        toastSuccess({ message: "Profile has been changed successfully." })
+        toastSuccess({ description: "Profile has been changed successfully." })
         return
       }
 
@@ -148,7 +147,7 @@ export const useUserStore = create<UserState & UserAction>()((set, get) => ({
       currentUser = currentUser ? { ...currentUser, email: opt.email } : null
       set({ currentUser })
 
-      toastSuccess({ message: "Email has been changed successfully." })
+      toastSuccess({ description: "Email has been changed successfully." })
     } catch (error) {
       return { error: getErrorMessage(error as Error) }
     }
