@@ -69,11 +69,11 @@ export default function HeaderMoreMenuPopover({ children }: PropsWithChildren) {
           <section className="p-3">
             <p className="mb-2 flex flex-col text-zinc-500 dark:text-zinc-300">
               <span className="text-[10px]">Created at</span>
-              <span className="text-xs">{createdAt}</span>
+              <span className="text-[10px]">{createdAt}</span>
             </p>
             <p className="flex flex-col text-zinc-500 dark:text-zinc-300">
               <span className="text-[10px]">Last edited at</span>
-              <span className="text-xs">{updatedAt}</span>
+              <span className="text-[10px]">{updatedAt}</span>
             </p>
           </section>
 
