@@ -24,6 +24,7 @@ export default function Cover() {
       className={cn(
         "group/cover peer/cover relative mx-auto mb-4",
         emoji && !bgColor && "mb-32 mt-20",
+        emoji && bgColor && "mb-14",
       )}
     >
       {/* if loading */}
