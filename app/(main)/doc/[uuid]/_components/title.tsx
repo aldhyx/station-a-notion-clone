@@ -15,21 +15,22 @@ export default function Title() {
 
   const changeHandler = (e: React.ChangeEvent<HTMLTextAreaElement>) =>
     delayedCallback(() => {
-      const value = e.target.value ? e.target.value.trim() : "Untitled"
+      const value = e.target.value || "Untitled"
       updateDocAsync(uuid, { title: value })
     })
+
+  const title = doc?.title || "untitled"
+  const defaultValue = title.toLowerCase() === "untitled" ? "" : title
 
   useEffect(() => {
     if (!textRef.current) return
 
     const prevTitle = textRef.current.value
-    if (prevTitle !== doc?.title) {
-      textRef.current.value = doc?.title ?? "Untitled"
+    if (prevTitle !== title && title.toLowerCase() !== "untitled") {
+      textRef.current.value = title
+      // todo: resize textarea by max content
     }
-  }, [doc])
-
-  const title = doc?.title ?? "untitled"
-  const defaultValue = title.toLowerCase() === "untitled" ? "" : title
+  }, [title])
 
   if (loadingDoc) return <Title.Skeleton />
 
