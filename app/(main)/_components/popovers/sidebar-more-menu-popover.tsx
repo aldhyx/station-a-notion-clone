@@ -23,8 +23,12 @@ import { useCopyToClipboard, useMediaQuery } from "usehooks-ts"
 export default function SidebarMoreMenuPopover({
   children,
   uuid,
+  created_at,
+  updated_at,
 }: PropsWithChildren & {
   uuid: string
+  created_at: string
+  updated_at: string
 }) {
   const isMobile = useMediaQuery("(max-width: 468px)")
   const [_, copy] = useCopyToClipboard()
@@ -33,6 +37,19 @@ export default function SidebarMoreMenuPopover({
   const emitActionStatusHandler: EmitActionStatus = v => {
     if (v === "success") ref.current?.click()
   }
+
+  const createdAt = created_at
+    ? new Intl.DateTimeFormat("en-US", {
+        dateStyle: "medium",
+        timeStyle: "short",
+      }).format(new Date(created_at))
+    : null
+  const updatedAt = updated_at
+    ? new Intl.DateTimeFormat("en-US", {
+        dateStyle: "medium",
+        timeStyle: "short",
+      }).format(new Date(updated_at))
+    : null
 
   return (
     <Popover>
@@ -112,6 +129,17 @@ export default function SidebarMoreMenuPopover({
                 Rename
               </Button>
             </RenameDialog>
+          </section>
+
+          <section className="p-3 ">
+            <p className="mb-2 flex flex-col text-zinc-500 dark:text-zinc-300">
+              <span className="text-[10px]">Created at</span>
+              <span className="text-xs">{createdAt}</span>
+            </p>
+            <p className="flex flex-col text-zinc-500 dark:text-zinc-300">
+              <span className="text-[10px]">Last edited at</span>
+              <span className="text-xs">{updatedAt}</span>
+            </p>
           </section>
 
           <PopoverClose hidden>

@@ -1,12 +1,21 @@
 import { Button } from "@/components/ui/button"
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
+import {
+  Popover,
+  PopoverClose,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover"
 import { useDocStore } from "@/store/use-doc-store"
-import { LockIcon, Trash2Icon } from "lucide-react"
-import { PropsWithChildren } from "react"
+import { CopyIcon, LockIcon, Trash2Icon } from "lucide-react"
+import { PropsWithChildren, useRef } from "react"
 import MoveToTrashDialog from "../dialogs/move-trash-dialog"
+import { useCopyToClipboard } from "usehooks-ts"
 
 export default function HeaderMoreMenuPopover({ children }: PropsWithChildren) {
+  const [_, copy] = useCopyToClipboard()
+  const ref = useRef<HTMLButtonElement | null>(null)
   const { doc } = useDocStore()
+
   const createdAt = doc
     ? new Intl.DateTimeFormat("en-US", {
         dateStyle: "medium",
@@ -27,6 +36,19 @@ export default function HeaderMoreMenuPopover({ children }: PropsWithChildren) {
         <div>
           <section className="border-b border-b-zinc-200 px-1 pb-1 dark:border-b-zinc-700">
             <Button
+              size="icon"
+              variant="ghost"
+              className="h-8 w-full items-center justify-start px-3 text-xs font-normal"
+              onClick={() => {
+                ref.current?.click()
+                copy(`${window.origin}/doc/${doc?.uuid}`)
+              }}
+            >
+              <CopyIcon className="mr-2 h-4 w-4" />
+              Copy link
+            </Button>
+
+            <Button
               variant="ghost"
               className="h-8 w-full items-center justify-start px-3 text-xs font-normal"
             >
@@ -44,16 +66,20 @@ export default function HeaderMoreMenuPopover({ children }: PropsWithChildren) {
             </MoveToTrashDialog>
           </section>
 
-          <section className="px-4 py-4">
-            <p className="mb-2 flex flex-col text-xs text-zinc-500 dark:text-zinc-300">
-              <span>Created at</span>
-              <span>{createdAt}</span>
+          <section className="p-3">
+            <p className="mb-2 flex flex-col text-zinc-500 dark:text-zinc-300">
+              <span className="text-[10px]">Created at</span>
+              <span className="text-xs">{createdAt}</span>
             </p>
-            <p className="flex flex-col text-xs text-zinc-500 dark:text-zinc-300">
-              <span>Last edited at</span>
-              <span>{updatedAt}</span>
+            <p className="flex flex-col text-zinc-500 dark:text-zinc-300">
+              <span className="text-[10px]">Last edited at</span>
+              <span className="text-xs">{updatedAt}</span>
             </p>
           </section>
+
+          <PopoverClose hidden>
+            <button ref={ref}>close</button>
+          </PopoverClose>
         </div>
       </PopoverContent>
     </Popover>
