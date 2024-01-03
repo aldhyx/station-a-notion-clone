@@ -15,7 +15,7 @@ const Toaster = ({ ...props }: ToasterProps) => {
       toastOptions={{
         classNames: {
           toast:
-            "group toast group-[.toaster]:bg-background group-[.toaster]:text-zinc-800 group-[.toaster]:border group-[.toaster]:shadow-sm group-[.toaster]:border-zinc-200 group-[.toaster]:rounded-md group-[.toaster]:p-3 select-none cursor-pointer",
+            "group toast group-[.toaster]:bg-background group-[.toaster]:border group-[.toaster]:shadow-sm group-[.toaster]:border-zinc-200 group-[.toaster]:rounded-md group-[.toaster]:p-3 select-none cursor-pointer",
           description: "group-[.toast]:text-zinc-600 group-[.toast]:text-xs",
           title: "group-[.toast]:text-sm",
           error: "group-[.toaster]:text-red-700",

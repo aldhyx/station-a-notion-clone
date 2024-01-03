@@ -18,8 +18,10 @@ export default function SidebarUser() {
         size="lg"
         className="flex h-[50px] w-full items-center justify-start px-3 font-normal dark:text-zinc-100 md:h-11"
       >
-        <div className="relative mr-2 h-[20px] w-[20px]">
-          <UserCircle2Icon className=" h-[20px] w-[20px]" />
+        <div className="relative mr-2 flex h-[25px] w-[25px] items-center justify-center rounded-full bg-zinc-800">
+          <span className="text-sm font-medium uppercase text-background">
+            {username ? username[0] : "-"}
+          </span>
         </div>
 
         <p className="mr-1 max-w-[250px] truncate md:max-w-[120px]">
