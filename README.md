@@ -11,8 +11,6 @@
 - [Shadcn/ui](https://ui.shadcn.com/)
 - [Zustand](https://github.com/pmndrs/zustand)
 - [Zod](https://github.com/colinhacks/zod)
-- [Usehooks-ts](https://github.com/juliencrn/usehooks-ts)
-- [Sonner](https://github.com/emilkowalski/sonner)
 - [Emoji Mart](https://github.com/missive/emoji-mart)
 - etc, at the package.json file
 
@@ -28,9 +26,7 @@
 - Search & trash ✅
 - Expandable sidebar ✅
 - Realtime sidebar ✅
-- Drag n drop sidebar ⏳
-- Image gallery with upload image support ✅
-- Block editor ⏳
+- Block editor ✅
 - Realtime editor ⏳
 - Publishable ⏳
 
