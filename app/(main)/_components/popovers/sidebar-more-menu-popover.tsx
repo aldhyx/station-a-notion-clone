@@ -69,7 +69,7 @@ export default function SidebarMoreMenuPopover({
               <Button
                 size="icon"
                 variant="ghost"
-                className="h-8 w-full items-center justify-start px-3 text-xs font-normal"
+                className="h-8 w-full items-center justify-start px-2 text-xs font-normal"
               >
                 <PlusCircleIcon className="mr-2 h-4 w-4" />
                 Add new page
@@ -78,7 +78,7 @@ export default function SidebarMoreMenuPopover({
 
             <Button
               variant="ghost"
-              className="h-8 w-full items-center justify-start px-3 text-xs font-normal"
+              className="h-8 w-full items-center justify-start px-2 text-xs font-normal"
             >
               <StarIcon className="mr-2 h-4 w-4" />
               Add to favorite
@@ -87,7 +87,7 @@ export default function SidebarMoreMenuPopover({
             <Button
               size="icon"
               variant="ghost"
-              className="h-8 w-full items-center justify-start px-3 text-xs font-normal"
+              className="h-8 w-full items-center justify-start px-2 text-xs font-normal"
               onClick={() => {
                 ref.current?.click()
                 copy(`${window.origin}/doc/${uuid}`)
@@ -100,7 +100,7 @@ export default function SidebarMoreMenuPopover({
             <MoveToTrashDialog uuid={uuid} emitActionStatus={emitActionStatusHandler}>
               <Button
                 variant="ghost"
-                className="h-8 w-full items-center justify-start px-3 text-xs font-normal"
+                className="h-8 w-full items-center justify-start px-2 text-xs font-normal"
               >
                 <Trash2Icon className="mr-2 h-4 w-4" />
                 Move to trash
@@ -110,7 +110,7 @@ export default function SidebarMoreMenuPopover({
             <Button
               size="icon"
               variant="ghost"
-              className="h-8 w-full items-center justify-start px-3 text-xs font-normal"
+              className="h-8 w-full items-center justify-start px-2 text-xs font-normal"
               onClick={() => {
                 ref.current?.click()
                 window.open(new URL(`/doc/${uuid}`, window.origin))
@@ -123,7 +123,7 @@ export default function SidebarMoreMenuPopover({
             <RenameDialog uuid={uuid} emitActionStatus={emitActionStatusHandler}>
               <Button
                 variant="ghost"
-                className="h-8 w-full items-center justify-start px-3 text-xs font-normal"
+                className="h-8 w-full items-center justify-start px-2 text-xs font-normal"
               >
                 <FormInputIcon className="mr-2 h-4 w-4" />
                 Rename

@@ -20,7 +20,7 @@ describe("nav auth", () => {
     const props = { email: null, fullname: null, username: null }
     render(<NavAuth {...props} />)
 
-    expect(screen.getByRole("link", { name: /^get station free/i })).toBeInTheDocument()
+    expect(screen.getByRole("link", { name: /^sign up/i })).toBeInTheDocument()
     expect(screen.getByRole("link", { name: /^log in/i })).toBeInTheDocument()
   })
 
@@ -32,9 +32,7 @@ describe("nav auth", () => {
       screen.getByRole("button", { name: props.email, expanded: false }),
     ).toBeInTheDocument()
 
-    expect(
-      screen.queryByRole("link", { name: /^get station free/i }),
-    ).not.toBeInTheDocument()
+    expect(screen.queryByRole("link", { name: /^sign up/i })).not.toBeInTheDocument()
     expect(screen.queryByRole("link", { name: /^log in/i })).not.toBeInTheDocument()
   })
 

@@ -48,8 +48,9 @@ export default function EmojiPickerPopover({
         align="start"
       >
         <div className="overflow-hidden rounded-xl border border-zinc-200 bg-background shadow-md">
-          {onClickRemove && (
-            <div className="flex w-full justify-end p-2">
+          <div className="flex w-full items-center justify-between p-2">
+            <p className="pl-1 text-sm font-medium">Emoji</p>
+            {onClickRemove && (
               <Button
                 size="sm"
                 className="h-auto p-1 text-xs font-normal"
@@ -59,8 +60,8 @@ export default function EmojiPickerPopover({
                 <Trash2Icon className="mr-2 h-4 w-4" />
                 Remove
               </Button>
-            </div>
-          )}
+            )}
+          </div>
 
           <Picker
             data={data}
