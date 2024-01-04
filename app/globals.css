@@ -95,11 +95,66 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+/* emojimart */
+em-emoji-picker {
+  --rgb-background: "inherit";
+  --font-size: 14px;
+  --font-family: inherit;
+  --border-radius: inherit;
+  --shadow: none;
+}
+
+/* TODO: move it to another css file */
+/* editorjs */
 .ce-block__content,
 .ce-toolbar__content {
   @apply max-w-[unset];
 }
 
+/* container css */
+.ce-popover.ce-popover--opened {
+  @apply rounded-md border-zinc-200 p-1 shadow-sm;
+}
+
+/* item css */
+.ce-popover-item:not(.ce-popover-item--confirmation) {
+  @apply p-1 hover:!bg-zinc-200;
+}
+
+.ce-popover-item__title {
+  @apply text-sm font-medium;
+}
+
+.ce-popover-item__icon {
+  @apply rounded-md border-zinc-100;
+}
+
+.ce-paragraph[data-placeholder]:empty::before {
+  @apply !text-zinc-500;
+}
+
+/* searchbox css */
+.cdx-search-field.ce-popover__search {
+  @apply rounded-md border border-zinc-200 bg-zinc-100;
+}
+
+.ce-popover__nothing-found-message.ce-popover__nothing-found-message--displayed {
+  @apply py-2 text-center text-xs font-normal;
+}
+
+/* Toolbar */
+.ce-inline-toolbar {
+  @apply rounded-md border-zinc-200 shadow-sm;
+}
+.ce-inline-toolbar__toggler-and-button-wrapper {
+  @apply px-0;
+}
+.ce-inline-tool {
+  @apply w-8 hover:!bg-zinc-200;
+}
+
+/* 
 h1.ce-header {
   @apply pt-8 text-3xl font-bold;
 }
@@ -120,18 +175,4 @@ h3.ce-header {
 
 .toggle-block__selector {
   @apply flex items-center justify-start;
-}
-
-/* emoji custom theme */
-
-em-emoji-picker {
-  --rgb-background: "inherit";
-  --font-size: 14px;
-  --font-family: inherit;
-  --border-radius: inherit;
-  --shadow: none;
-}
-
-.ce-toolbar__plus {
-  @apply dark:bg-zinc-700 dark:text-zinc-100;
-}
+} */
