@@ -136,7 +136,7 @@ em-emoji-picker {
 
 /* searchbox css */
 .cdx-search-field.ce-popover__search {
-  @apply rounded-md border border-zinc-200 bg-zinc-100;
+  @apply rounded-md border border-zinc-200 bg-zinc-50;
 }
 
 .ce-popover__nothing-found-message.ce-popover__nothing-found-message--displayed {
@@ -144,16 +144,25 @@ em-emoji-picker {
 }
 
 /* Toolbar */
+
 .ce-inline-toolbar {
   @apply rounded-md border-zinc-200 shadow-sm;
 }
+
+.ce-toolbar__plus,
+.ce-toolbar__settings-btn {
+  @apply h-8 w-8 rounded-md border border-zinc-200 shadow-sm hover:!bg-zinc-200;
+}
+
 .ce-inline-toolbar__toggler-and-button-wrapper {
   @apply px-0;
 }
+
 .ce-inline-tool {
   @apply w-8 hover:!bg-zinc-200;
 }
 
+/* Tooltip */
 /* 
 h1.ce-header {
   @apply pt-8 text-3xl font-bold;

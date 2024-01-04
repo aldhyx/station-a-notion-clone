@@ -42,7 +42,7 @@ export default function NavAuth({ fullname, username, email }: Props) {
         </Button>
       </UserPopover>
 
-      <Button asChild variant="outline" size="sm">
+      <Button asChild variant="ghost" size="sm">
         <a
           target="_blank"
           rel="noreferrer"

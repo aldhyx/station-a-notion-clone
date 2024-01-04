@@ -90,7 +90,7 @@ export default function ChangeProfileDialog({ children }: PropsWithChildren) {
               {isLoadingSubmit && (
                 <LoaderIcon className="animate mr-2 h-4 w-4 animate-spin" />
               )}
-              Change profile
+              Submit
             </Button>
             <DialogClose hidden>
               <button type="button" ref={closeButtonRef}>

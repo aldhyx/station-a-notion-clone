@@ -25,7 +25,7 @@ export default function InputPasswordWrapper({
 
       <div
         role="button"
-        className={`grid h-10 cursor-pointer items-center rounded-r-sm bg-zinc-100 px-3 peer-focus:bg-background dark:bg-zinc-700 dark:text-zinc-100`}
+        className={`grid h-10 cursor-pointer items-center rounded-r-sm bg-zinc-50 px-3 peer-focus:bg-background dark:bg-zinc-700 dark:text-zinc-100`}
         onClick={() => setShowPassword(prev => !prev)}
       >
         {!showPassword ? (

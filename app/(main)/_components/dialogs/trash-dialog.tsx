@@ -70,7 +70,7 @@ export default function TrashDialog({ children }: PropsWithChildren) {
           <Input
             type="test"
             placeholder="Type to search page in trash..."
-            className="rounded-xl bg-background text-sm placeholder:text-sm placeholder:text-zinc-500 focus-visible:ring-transparent"
+            className="rounded-xl bg-zinc-50 text-sm placeholder:text-sm placeholder:text-zinc-500 focus-visible:ring-transparent"
             onChange={onChangeHandler}
             autoFocus={false}
           />

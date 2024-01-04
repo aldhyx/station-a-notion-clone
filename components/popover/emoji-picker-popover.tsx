@@ -57,8 +57,7 @@ export default function EmojiPickerPopover({
                 variant="secondary"
                 onClick={onClickRemove}
               >
-                <Trash2Icon className="mr-2 h-4 w-4" />
-                Remove
+                <Trash2Icon className="h-4 w-4" />
               </Button>
             )}
           </div>

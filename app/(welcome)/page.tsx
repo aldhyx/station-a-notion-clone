@@ -40,9 +40,19 @@ export default async function WelcomePage() {
       <main className="w-100 flex flex-col items-center justify-center">
         <div className="mb-16 max-w-4xl pt-24 text-center">
           <h1 className="mb-3 text-3xl font-bold md:mb-5 md:text-6xl">
-            Your💡<span className="underline">ideas</span>, 📚{" "}
-            <span className="underline">docs</span>, <br /> & 🎯{" "}
-            <span className="underline">projects</span>. Together.
+            Your💡
+            <span className="bg-gradient-to-r from-amber-500 via-orange-600 to-yellow-500 bg-clip-text text-transparent underline">
+              ideas
+            </span>
+            , 📚{" "}
+            <span className="bg-gradient-to-r from-blue-500 via-indigo-600 to-blue-500 bg-clip-text text-transparent underline ">
+              docs
+            </span>
+            , <br /> & 🎯{" "}
+            <span className="bg-gradient-to-r from-rose-500 via-orange-600 to-red-500 bg-clip-text text-transparent underline ">
+              projects
+            </span>
+            . Together.
           </h1>
 
           <p className="mb-3 font-medium text-zinc-700 md:text-2xl">

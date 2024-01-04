@@ -77,7 +77,7 @@ export default function VerifyDialogContent({ nextSteps, newEmail, prevSteps }: 
             {isLoadingSubmit && (
               <LoaderIcon className="animate mr-2 h-4 w-4 animate-spin" />
             )}
-            Change Email
+            Submit
           </Button>
         </form>
       </Form>

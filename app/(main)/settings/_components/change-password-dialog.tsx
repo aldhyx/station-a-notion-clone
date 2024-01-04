@@ -115,7 +115,7 @@ export default function ChangePasswordDialog({ children }: PropsWithChildren) {
               {isLoadingSubmit && (
                 <LoaderIcon className="animate mr-2 h-4 w-4 animate-spin" />
               )}
-              Change password
+              Submit
             </Button>
 
             <DialogClose hidden>
