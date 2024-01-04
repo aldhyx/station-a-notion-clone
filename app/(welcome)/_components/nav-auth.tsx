@@ -1,6 +1,6 @@
 import UserPopover from "@/app/(main)/_components/popovers/user-popover"
 import { Button } from "@/components/ui/button"
-import { UserCircle } from "lucide-react"
+import { GithubIcon, UserCircle } from "lucide-react"
 import Link from "next/link"
 
 type Props = {
@@ -12,26 +12,45 @@ type Props = {
 export default function NavAuth({ fullname, username, email }: Props) {
   if (!email) {
     return (
-      <div className="flex gap-x-2">
+      <div className="flex gap-x-1">
         <Button variant="ghost" size="sm" asChild>
-          <Link href="/login">Log In</Link>
+          <Link href="/login">Log in</Link>
         </Button>
 
-        <Button className="hidden md:flex" size="sm" asChild>
-          <Link href="/signup">Get Station Free</Link>
+        <Button size="sm" asChild>
+          <Link href="/signup">Sign up</Link>
+        </Button>
+
+        <Button asChild variant="ghost" size="sm">
+          <a
+            target="_blank"
+            rel="noreferrer"
+            href="https://github.com/fsaythanry/station-a-notion-clone"
+          >
+            <GithubIcon size={16} />
+          </a>
         </Button>
       </div>
     )
   }
 
   return (
-    <div>
+    <div className="flex gap-x-1">
       <UserPopover fullname={fullname} username={username}>
         <Button variant="ghost" size="sm" className="max-w-[200px] items-center">
-          <UserCircle className="mr-2 h-4 w-4 shrink-0" />
           <span className="truncate">{email}</span>
         </Button>
       </UserPopover>
+
+      <Button asChild variant="outline" size="sm">
+        <a
+          target="_blank"
+          rel="noreferrer"
+          href="https://github.com/fsaythanry/station-a-notion-clone"
+        >
+          <GithubIcon size={16} />
+        </a>
+      </Button>
     </div>
   )
 }

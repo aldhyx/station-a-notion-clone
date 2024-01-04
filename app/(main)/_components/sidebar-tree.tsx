@@ -77,12 +77,7 @@ export default function SidebarTree({ uuid, level = 0 }: Props) {
               }}
               className="group flex h-8 w-full cursor-pointer items-center justify-between rounded-sm pr-1 transition hover:bg-zinc-200 dark:hover:bg-zinc-700"
               style={{
-                paddingLeft:
-                  level === 0
-                    ? "4px"
-                    : level === 1
-                    ? `${level * 20}px`
-                    : `${level * 20}px`,
+                paddingLeft: level === 0 ? "4px" : `${level * 20}px`,
               }}
             >
               <div className="flex items-center justify-start truncate">
@@ -170,6 +165,7 @@ SidebarTree.Skeleton = function Loading({ level }: LevelProps) {
   return (
     <div className={cn(level === 0 ? "pt-3" : "pt-1")}>
       {level === 0 && <h2 className="mb-2 px-3 text-xs text-zinc-500">Personal</h2>}
+
       {Array(level === 0 ? 4 : 1)
         .fill(null)
         .map((_, i) => (
@@ -183,6 +179,8 @@ SidebarTree.Skeleton = function Loading({ level }: LevelProps) {
 }
 
 SidebarTree.Empty = function Empty({ level }: LevelProps) {
+  if (level === 0) return null
+
   const paddingLeft =
     level === 0 ? "13px" : level === 1 ? `${level * 30}px` : `${level * 22}px`
 

@@ -38,7 +38,7 @@ export default function HeaderMoreMenuPopover({ children }: PropsWithChildren) {
             <Button
               size="icon"
               variant="ghost"
-              className="h-8 w-full items-center justify-start px-3 text-xs font-normal"
+              className="h-8 w-full items-center justify-start px-2 text-xs font-normal"
               onClick={() => {
                 ref.current?.click()
                 copy(`${window.origin}/doc/${doc?.uuid}`)
@@ -50,7 +50,7 @@ export default function HeaderMoreMenuPopover({ children }: PropsWithChildren) {
 
             <Button
               variant="ghost"
-              className="h-8 w-full items-center justify-start px-3 text-xs font-normal"
+              className="h-8 w-full items-center justify-start px-2 text-xs font-normal"
             >
               <LockIcon className="mr-2 h-4 w-4" />
               Lock
@@ -58,7 +58,7 @@ export default function HeaderMoreMenuPopover({ children }: PropsWithChildren) {
             <MoveToTrashDialog uuid={doc?.uuid!}>
               <Button
                 variant="ghost"
-                className="h-8 w-full items-center justify-start px-3 text-xs font-normal"
+                className="h-8 w-full items-center justify-start px-2 text-xs font-normal"
               >
                 <Trash2Icon className="mr-2 h-4 w-4" />
                 Move to trash

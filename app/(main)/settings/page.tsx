@@ -4,8 +4,7 @@ import SignOutDialog from "@/components/dialogs/sign-out-dialog"
 import ModeToggle from "@/components/mode-toogle"
 import { Button } from "@/components/ui/button"
 import { useUserStore } from "@/store/use-user-store"
-import { ChevronRightIcon, EditIcon, UserCircle2 } from "lucide-react"
-import Image from "next/image"
+import { ChevronRightIcon, EditIcon } from "lucide-react"
 import { useEffectOnce } from "usehooks-ts"
 import ChangeEmailDialog from "./_components/change-email-dialog/dialog"
 import ChangePasswordDialog from "./_components/change-password-dialog"
@@ -27,14 +26,10 @@ export default function SettingsPage() {
           variant="ghost"
         >
           <div className="flex items-center">
-            <div className="relative mr-3 h-[60px] w-[60px]">
-              <Image
-                src="/assets/profile.jpg"
-                alt="user profile"
-                fill
-                className="hidden rounded-full object-cover"
-              />
-              <UserCircle2 className=" h-[60px] w-[60px]" />
+            <div className="relative mr-3 flex h-[50px] w-[50px] items-center justify-center rounded-full bg-zinc-800">
+              <span className="text-2xl font-medium uppercase text-background">
+                {fullname ? fullname[0] : "S"}
+              </span>
             </div>
 
             {fullname && username && (
