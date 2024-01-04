@@ -7,6 +7,7 @@ import { useEffectOnce } from "usehooks-ts"
 import Action from "./_components/action"
 import Cover from "./_components/cover"
 import Title from "./_components/title"
+import Editor from "./_components/editor"
 
 export default function DocDetailPage() {
   const params = useParams()
@@ -22,6 +23,7 @@ export default function DocDetailPage() {
       <Cover />
       <Action />
       <Title />
+      <Editor />
     </ScrollArea>
   )
 }
