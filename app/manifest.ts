@@ -2,12 +2,12 @@ import { MetadataRoute } from "next"
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "Station App",
-    short_name: "Station",
-    description: "Realtime, free & open source Note taking app",
+    name: "Station note",
+    short_name: "Station note",
+    description: "Station note app is realtime, free & open source note taking app",
     start_url: "/",
     display: "standalone",
-    background_color: "#ffffff",
+    background_color: "#27272a",
     theme_color: "#ffffff",
     icons: [
       {

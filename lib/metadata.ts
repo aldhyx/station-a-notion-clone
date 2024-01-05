@@ -8,7 +8,8 @@ export const constructMetadata = (
     noIndex?: boolean
   } & Metadata,
 ): Metadata => ({
-  title: opt?.title || "Station app - Note taking app",
+  title: opt?.title || "Station note",
   description:
-    opt?.description || "Station app is  realtime, free & open source note taking app",
+    opt?.description ||
+    "Station note app is realtime, free & open source note taking app",
 })
