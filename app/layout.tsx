@@ -1,17 +1,14 @@
-import type { Metadata } from "next"
 import { Inter } from "next/font/google"
 import { Toaster } from "@/components/ui/sonner"
 import "./globals.css"
+import { constructMetadata } from "@/lib/metadata"
 
 const inter = Inter({
   subsets: ["latin"],
   display: "swap",
 })
 
-export const metadata: Metadata = {
-  title: "Station App",
-  description: "",
-}
+export const metadata = constructMetadata()
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
