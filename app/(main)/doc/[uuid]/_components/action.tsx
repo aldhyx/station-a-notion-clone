@@ -6,7 +6,7 @@ import React from "react"
 import ColorGradientDialog from "./color-gradient-dialog"
 import { useDocStore } from "@/store/use-doc-store"
 import { useParams } from "next/navigation"
-import { COLOR_AND_GRADIENT } from "./color-gradient"
+import { COLOR_AND_GRADIENT } from "@/constants/color-gradient"
 
 export default function Action() {
   const params = useParams()

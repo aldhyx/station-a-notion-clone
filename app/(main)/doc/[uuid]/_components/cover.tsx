@@ -1,7 +1,7 @@
 import React from "react"
 import { cn } from "@/lib/utils"
 import { Skeleton } from "@/components/ui/skeleton"
-import { COLOR_AND_GRADIENT } from "./color-gradient"
+import { COLOR_AND_GRADIENT } from "@/constants/color-gradient"
 import ColorGradientDialog from "./color-gradient-dialog"
 import { Button } from "@/components/ui/button"
 import { ImagePlusIcon, Trash2Icon } from "lucide-react"

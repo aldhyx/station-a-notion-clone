@@ -1,7 +1,7 @@
 import { Dialog, DialogClose, DialogContent, DialogTrigger } from "@/components/ui/dialog"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { useRef, type PropsWithChildren } from "react"
-import { COLOR_AND_GRADIENT } from "./color-gradient"
+import { COLOR_AND_GRADIENT } from "@/constants/color-gradient"
 import { CheckIcon, LoaderIcon } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { useDocStore } from "@/store/use-doc-store"
