@@ -10,6 +10,7 @@ import { CopyIcon, LockIcon, Trash2Icon } from "lucide-react"
 import { PropsWithChildren, useRef } from "react"
 import MoveToTrashDialog from "../dialogs/move-trash-dialog"
 import { useCopyToClipboard } from "usehooks-ts"
+import { timeAgo } from "@/lib/date"
 
 export default function HeaderMoreMenuPopover({ children }: PropsWithChildren) {
   const [_, copy] = useCopyToClipboard()
@@ -17,16 +18,11 @@ export default function HeaderMoreMenuPopover({ children }: PropsWithChildren) {
   const { doc } = useDocStore()
 
   const createdAt = doc
-    ? new Intl.DateTimeFormat("en-US", {
-        dateStyle: "medium",
-        timeStyle: "short",
-      }).format(new Date(doc.created_at))
+    ? timeAgo(doc.created_at as unknown as Date, { withAgo: true })
     : null
+
   const updatedAt = doc
-    ? new Intl.DateTimeFormat("en-US", {
-        dateStyle: "medium",
-        timeStyle: "short",
-      }).format(new Date(doc.updated_at))
+    ? timeAgo(doc.updated_at as unknown as Date, { withAgo: true })
     : null
 
   return (
@@ -68,12 +64,10 @@ export default function HeaderMoreMenuPopover({ children }: PropsWithChildren) {
 
           <section className="p-3">
             <p className="mb-2 flex flex-col text-zinc-500 dark:text-zinc-300">
-              <span className="text-[10px]">Created at</span>
-              <span className="text-[10px]">{createdAt}</span>
+              <span className="text-[10px]">Created {createdAt}</span>
             </p>
             <p className="flex flex-col text-zinc-500 dark:text-zinc-300">
-              <span className="text-[10px]">Last edited at</span>
-              <span className="text-[10px]">{updatedAt}</span>
+              <span className="text-[10px]">Last updated {updatedAt}</span>
             </p>
           </section>
 

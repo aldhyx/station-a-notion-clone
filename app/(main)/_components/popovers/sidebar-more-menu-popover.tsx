@@ -19,6 +19,7 @@ import NewDocDialog from "../dialogs/new-doc-dialog"
 import RenameDialog from "../dialogs/rename-dialog"
 import { type EmitActionStatus } from "@/types"
 import { useCopyToClipboard, useMediaQuery } from "usehooks-ts"
+import { timeAgo } from "@/lib/date"
 
 export default function SidebarMoreMenuPopover({
   children,
@@ -39,16 +40,11 @@ export default function SidebarMoreMenuPopover({
   }
 
   const createdAt = created_at
-    ? new Intl.DateTimeFormat("en-US", {
-        dateStyle: "medium",
-        timeStyle: "short",
-      }).format(new Date(created_at))
+    ? timeAgo(created_at as unknown as Date, { withAgo: true })
     : null
+
   const updatedAt = updated_at
-    ? new Intl.DateTimeFormat("en-US", {
-        dateStyle: "medium",
-        timeStyle: "short",
-      }).format(new Date(updated_at))
+    ? timeAgo(updated_at as unknown as Date, { withAgo: true })
     : null
 
   return (
@@ -133,12 +129,10 @@ export default function SidebarMoreMenuPopover({
 
           <section className="p-3 ">
             <p className="mb-2 flex flex-col text-zinc-500 dark:text-zinc-300">
-              <span className="text-[10px]">Created at</span>
-              <span className="text-[10px]">{createdAt}</span>
+              <span className="text-[10px]">Created {createdAt}</span>
             </p>
             <p className="flex flex-col text-zinc-500 dark:text-zinc-300">
-              <span className="text-[10px]">Last edited at</span>
-              <span className="text-[10px]">{updatedAt}</span>
+              <span className="text-[10px]">Last updated {updatedAt}</span>
             </p>
           </section>
 
