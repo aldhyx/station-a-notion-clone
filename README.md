@@ -1,5 +1,6 @@
 ## 🚀 Live demo:
 
+For testing purpose only.
 [station-proto.netlify.app](https://station-proto.netlify.app)
 
 ## 📦 Tech Stack
@@ -32,15 +33,21 @@
 
 ## Installation
 
-To clone and run this application locally, you'll need Git & Node.js installed on your computer.
+To clone and run this application locally, you'll need Git, Docker & Node.js installed on your computer.
 
-### Setup supabase
+### Run supabase locally
 
-> \*I'm still working on this
+Start supabase container on your local machine, to get your anon key and url for local development purpose
 
-Please reference to the [Supabase docs](https://supabase.com/docs) for more instruction
+```bash
+pnpm dlx supabase start
+# or
+npx supabase start
+```
 
-### Setup project locally
+Please reference to the [Supabase cli doc](https://supabase.com/docs/guides/cli) for more instruction
+
+### Run project locally
 
 1. Clone the project
 
