@@ -9,14 +9,14 @@ type Props = {
 export default function HeroesAuth({ email }: Props) {
   if (!email) {
     return (
-      <Button className="text-base" size="lg" asChild>
+      <Button size="lg" asChild>
         <Link href="/signup">Get Station Free</Link>
       </Button>
     )
   }
 
   return (
-    <Button className="text-base" size="lg" asChild>
+    <Button size="lg" asChild>
       <Link href="/doc">
         View dashboard
         <ArrowRightIcon className="ml-2 h-4 w-4" />

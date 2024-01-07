@@ -13,7 +13,7 @@ export const metadata = constructMetadata()
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className={`${inter.className} bg-background text-zinc-800`}>
+      <body className={`${inter.className} bg-background text-primary`}>
         {children}
         <Toaster />
       </body>

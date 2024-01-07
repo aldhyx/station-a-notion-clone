@@ -28,12 +28,15 @@ export default function Cover() {
       )}
     >
       {/* if loading */}
-      {loadingDoc && <Skeleton className="h-40 w-full rounded-none bg-zinc-200" />}
+      {loadingDoc && <Skeleton className="h-40 w-full rounded-none bg-primary/5" />}
 
       {!loadingDoc && (
         <>
           {bgColor && (
-            <div className="h-40 w-full" style={{ background: bgColor.background }} />
+            <div
+              className="h-40 w-full brightness-75"
+              style={{ background: bgColor.background }}
+            />
           )}
 
           <div
@@ -50,7 +53,7 @@ export default function Cover() {
                 >
                   <span
                     role="button"
-                    className="block rounded-sm py-2 text-5xl hover:bg-zinc-200/50 md:text-6xl"
+                    className="block rounded-md py-2 text-5xl hover:bg-primary/10 md:text-6xl"
                   >
                     {emoji.native}
                   </span>

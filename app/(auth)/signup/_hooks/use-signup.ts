@@ -20,13 +20,10 @@ export const useSignUp = () => {
     else router.push(`/signup-verify?mailto=${props.email}`)
   })
 
-  const { email: formEmail, password: formPassword } = form.watch()
-
   return {
     form,
     errors: form.formState.errors,
     isLoadingSubmit: form.formState.isSubmitting,
-    isDisableSubmit: form.formState.isSubmitting || !formEmail || !formPassword,
     submitHandler,
   }
 }

@@ -43,7 +43,6 @@ export default function useSignUpVerify() {
     form,
     errors: form.formState.errors,
     isLoadingSubmit: form.formState.isSubmitting,
-    isDisableSubmit: !form.formState.isValid || form.formState.isSubmitting,
     submitHandler,
     resendHandler,
     showCountdown,

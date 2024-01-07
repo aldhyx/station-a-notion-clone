@@ -21,7 +21,7 @@ export default function DeleteImageDialog({
       <DialogTrigger asChild>{children}</DialogTrigger>
 
       <DialogContent
-        className="max-w-sm overflow-hidden rounded-sm bg-background p-0"
+        className="max-w-sm overflow-hidden rounded-md bg-background p-0"
         hideCloseButton
       >
         <DialogHeader className="p-4">

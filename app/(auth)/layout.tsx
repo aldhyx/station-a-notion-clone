@@ -3,8 +3,8 @@ import React from "react"
 
 export default function AuthLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="text-zinc-800">
-      <header className="flex w-full items-center justify-start bg-background p-5">
+    <div className="bg-background text-primary">
+      <header className="flex w-full items-center justify-start p-5">
         <Logo />
       </header>
 

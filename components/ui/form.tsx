@@ -1,6 +1,6 @@
+import * as React from "react"
 import * as LabelPrimitive from "@radix-ui/react-label"
 import { Slot } from "@radix-ui/react-slot"
-import * as React from "react"
 import {
   Controller,
   ControllerProps,
@@ -10,8 +10,8 @@ import {
   useFormContext,
 } from "react-hook-form"
 
-import { Label } from "@/components/ui/label"
 import { cn } from "@/lib/utils"
+import { Label } from "@/components/ui/label"
 
 const Form = FormProvider
 
@@ -87,7 +87,7 @@ const FormLabel = React.forwardRef<
   React.ElementRef<typeof LabelPrimitive.Root>,
   React.ComponentPropsWithoutRef<typeof LabelPrimitive.Root>
 >(({ className, ...props }, ref) => {
-  const { error, formItemId } = useFormField()
+  const { formItemId } = useFormField()
 
   return <Label ref={ref} className={cn(className)} htmlFor={formItemId} {...props} />
 })
@@ -107,7 +107,7 @@ const FormControl = React.forwardRef<
         !error ? `${formDescriptionId}` : `${formDescriptionId} ${formMessageId}`
       }
       aria-invalid={!!error}
-      className={cn(error && "border-red-600 dark:border-red-400", props.className)}
+      className={cn(error && "border-destructive", props.className)}
       {...props}
     />
   )
@@ -146,7 +146,7 @@ const FormMessage = React.forwardRef<
     <p
       ref={ref}
       id={formMessageId}
-      className={cn("text-xs font-normal text-red-600 dark:text-red-400", className)}
+      className={cn("text-xs font-normal text-destructive", className)}
       {...props}
     >
       {body}
@@ -156,12 +156,12 @@ const FormMessage = React.forwardRef<
 FormMessage.displayName = "FormMessage"
 
 export {
+  useFormField,
   Form,
-  FormControl,
-  FormDescription,
-  FormField,
   FormItem,
   FormLabel,
+  FormControl,
+  FormDescription,
   FormMessage,
-  useFormField,
+  FormField,
 }

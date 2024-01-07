@@ -38,7 +38,7 @@ export default function Title() {
     <div className="relative mx-auto mb-3 max-w-3xl px-4 md:px-0">
       <TextareaAutosize
         ref={textRef}
-        className="w-full text-3xl font-bold focus-visible:outline-none"
+        className="w-full resize-none bg-background text-3xl font-bold selection:bg-muted-foreground/30 focus-visible:outline-none"
         placeholder="Untitled"
         defaultValue={defaultValue}
         onChange={changeHandler}
@@ -50,7 +50,7 @@ export default function Title() {
 Title.Skeleton = function Loading() {
   return (
     <div className="mx-auto max-w-3xl px-4 md:px-1">
-      <Skeleton className="mt-4 h-10 w-72 rounded-sm bg-zinc-200" />
+      <Skeleton className="mt-4 h-10 w-72 rounded-md bg-primary/5" />
     </div>
   )
 }

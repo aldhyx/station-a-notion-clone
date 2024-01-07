@@ -12,15 +12,15 @@ export default function SidebarUser() {
   return (
     <UserPopover fullname={fullname} username={username}>
       {!fullname ? (
-        <Skeleton className="mb-1 h-10 w-full bg-zinc-200" />
+        <Skeleton className="mb-1 h-10 w-full bg-primary/5" />
       ) : (
         <Button
           variant="ghost"
           size="lg"
-          className="flex h-[50px] w-full items-center justify-start px-3 font-normal dark:text-zinc-100 md:h-11"
+          className="flex h-[50px] w-full items-center justify-start px-3 font-normal hover:bg-primary/5 md:h-11"
         >
-          <div className="relative mr-2 flex h-[25px] w-[25px] items-center justify-center rounded-full bg-zinc-800">
-            <span className="text-sm font-medium uppercase text-background">
+          <div className="relative mr-2 flex h-[25px] w-[25px] items-center justify-center rounded-full bg-secondary-foreground">
+            <span className="text-sm font-medium uppercase text-secondary">
               {fullname ? fullname[0] : "S"}
             </span>
           </div>
@@ -28,7 +28,8 @@ export default function SidebarUser() {
           <p className="mr-1 max-w-[250px] truncate capitalize md:max-w-[120px]">
             {fullname}
           </p>
-          <ChevronsUpDownIcon className="h-3 w-3 text-zinc-500" />
+
+          <ChevronsUpDownIcon className="h-3 w-3 text-muted-foreground" />
         </Button>
       )}
     </UserPopover>

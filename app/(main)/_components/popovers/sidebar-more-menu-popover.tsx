@@ -60,7 +60,7 @@ export default function SidebarMoreMenuPopover({
             return
           }}
         >
-          <section className="border-b border-b-zinc-200 px-1 pb-1 dark:border-b-zinc-700">
+          <section className="border-b px-1 pb-1 ">
             <NewDocDialog uuid={uuid} emitActionStatus={emitActionStatusHandler}>
               <Button
                 size="icon"
@@ -128,10 +128,10 @@ export default function SidebarMoreMenuPopover({
           </section>
 
           <section className="p-3 ">
-            <p className="mb-2 flex flex-col text-zinc-500 dark:text-zinc-300">
+            <p className="mb-2 flex flex-col text-muted-foreground">
               <span className="text-[10px]">Created {createdAt}</span>
             </p>
-            <p className="flex flex-col text-zinc-500 dark:text-zinc-300">
+            <p className="flex flex-col text-muted-foreground">
               <span className="text-[10px]">Last updated {updatedAt}</span>
             </p>
           </section>

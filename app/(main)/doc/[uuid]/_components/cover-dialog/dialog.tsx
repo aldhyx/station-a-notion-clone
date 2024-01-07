@@ -28,18 +28,18 @@ export default function CoverDialog({ children }: Props) {
         hideCloseButton
       >
         <Tabs value={tab} className="w-full">
-          <TabsList className="h-auto w-full justify-start gap-x-3 rounded-none border-b border-b-zinc-200 bg-background px-3 py-0 dark:border-b-zinc-700 dark:bg-zinc-800">
+          <TabsList className="h-auto w-full justify-start gap-x-3 rounded-none border-b bg-background px-3 py-0  ">
             <TabsTrigger
               value="gallery"
               onClick={() => setTab("gallery")}
-              className="rounded-none border-b-[2px] border-b-background px-0 data-[state=active]:border-b-zinc-800 dark:bg-zinc-800 dark:data-[state=active]:border-b-zinc-300 dark:data-[state=active]:text-zinc-100"
+              className="rounded-none border-b-[2px] px-0 data-[state=active]:border-b-primary"
             >
               Gallery
             </TabsTrigger>
             <TabsTrigger
               onClick={() => setTab("upload")}
               value="upload"
-              className="rounded-none border-b-[2px] border-b-background px-0 data-[state=active]:border-b-zinc-800 dark:bg-zinc-800 dark:data-[state=active]:border-b-zinc-300 dark:data-[state=active]:text-zinc-100"
+              className="rounded-none border-b-[2px] px-0 data-[state=active]:border-b-primary"
             >
               Upload
             </TabsTrigger>

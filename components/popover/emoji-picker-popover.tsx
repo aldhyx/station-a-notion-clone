@@ -43,11 +43,8 @@ export default function EmojiPickerPopover({
   return (
     <Popover>
       <PopoverTrigger asChild>{children}</PopoverTrigger>
-      <PopoverContent
-        className="w-auto border-none bg-transparent p-0 shadow-none outline-none "
-        align="start"
-      >
-        <div className="overflow-hidden rounded-xl border border-zinc-200 bg-background shadow-md">
+      <PopoverContent className="w-auto p-0 outline-none" align="start">
+        <div>
           <div className="flex w-full items-center justify-between p-2">
             <p className="pl-1 text-sm font-medium">Emoji</p>
             {onClickRemove && (

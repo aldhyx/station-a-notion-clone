@@ -4,6 +4,7 @@ import { cn } from "@/lib/utils"
 import { EyeIcon, EyeOffIcon } from "lucide-react"
 import React, { useState } from "react"
 import { type FieldError } from "react-hook-form"
+import { Button } from "./ui/button"
 
 export default function InputPasswordWrapper({
   error,
@@ -17,15 +18,16 @@ export default function InputPasswordWrapper({
   return (
     <div
       className={cn(
-        "box-content flex h-10 items-center rounded-sm border border-zinc-200 dark:border-zinc-600",
+        "box-content flex h-10 items-center rounded-md border border-zinc-200 ",
         error && "border-red-600",
       )}
     >
       {render({ showPassword })}
 
-      <div
-        role="button"
-        className={`grid h-10 cursor-pointer items-center rounded-r-sm bg-zinc-50 px-3 peer-focus:bg-background dark:bg-zinc-700 dark:text-zinc-100`}
+      <Button
+        type="button"
+        variant="ghost"
+        className={`grid h-10 cursor-pointer items-center rounded-l-none bg-zinc-50 px-3 text-zinc-800 transition-none peer-focus:bg-background `}
         onClick={() => setShowPassword(prev => !prev)}
       >
         {!showPassword ? (
@@ -33,7 +35,7 @@ export default function InputPasswordWrapper({
         ) : (
           <EyeOffIcon className="h-4 w-4" />
         )}
-      </div>
+      </Button>
     </div>
   )
 }

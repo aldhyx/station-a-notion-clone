@@ -30,7 +30,7 @@ export default function HeaderMoreMenuPopover({ children }: PropsWithChildren) {
       <PopoverTrigger asChild>{children}</PopoverTrigger>
       <PopoverContent className="max-w-[200px] overflow-hidden p-0 pt-1" align="end">
         <div>
-          <section className="border-b border-b-zinc-200 px-1 pb-1 dark:border-b-zinc-700">
+          <section className="border-b px-1 pb-1">
             <Button
               size="icon"
               variant="ghost"
@@ -63,10 +63,10 @@ export default function HeaderMoreMenuPopover({ children }: PropsWithChildren) {
           </section>
 
           <section className="p-3">
-            <p className="mb-2 flex flex-col text-zinc-500 dark:text-zinc-300">
+            <p className="mb-2 flex flex-col text-muted-foreground">
               <span className="text-[10px]">Created {createdAt}</span>
             </p>
-            <p className="flex flex-col text-zinc-500 dark:text-zinc-300">
+            <p className="flex flex-col text-muted-foreground">
               <span className="text-[10px]">Last updated {updatedAt}</span>
             </p>
           </section>

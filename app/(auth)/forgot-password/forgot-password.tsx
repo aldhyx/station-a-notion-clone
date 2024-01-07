@@ -8,8 +8,7 @@ import Link from "next/link"
 import useForgotPassword from "./_hooks/use-forgot-password"
 
 export default function ForgotPasswordPage() {
-  const { errors, form, isDisableSubmit, isLoadingSubmit, submitHandler } =
-    useForgotPassword()
+  const { errors, form, isLoadingSubmit, submitHandler } = useForgotPassword()
 
   return (
     <>
@@ -44,7 +43,7 @@ export default function ForgotPasswordPage() {
             )}
           />
 
-          <Button size="lg" className="w-full" type="submit" disabled={isDisableSubmit}>
+          <Button size="lg" className="w-full" type="submit" disabled={isLoadingSubmit}>
             {isLoadingSubmit && (
               <LoaderIcon className="animate mr-2 h-4 w-4 animate-spin" />
             )}
@@ -53,10 +52,10 @@ export default function ForgotPasswordPage() {
 
           <ErrorBlock message={errors.root?.apiError.message} />
 
-          <hr className="my-8 w-full border-zinc-200" />
+          <hr className="my-8 w-full" />
 
-          <div className="mt-0 flex justify-center gap-x-1 text-sm">
-            <p className="text-zinc-700">Don&apos;t have an account?</p>
+          <div className="flex justify-center gap-x-1 text-sm">
+            <p>Don&apos;t have an account?</p>
 
             <Button variant="link-blue" className="h-auto p-0 font-normal" asChild>
               <Link href="/signup">Sign up here</Link>

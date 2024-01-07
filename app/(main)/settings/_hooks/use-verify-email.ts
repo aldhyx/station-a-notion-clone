@@ -27,13 +27,11 @@ export const useVerifyEmail = ({
     else nextSteps()
   })
 
-  const { code: formCode } = form.watch()
 
   return {
     form,
     resetFormHandler,
     isLoadingSubmit: form.formState.isSubmitting,
-    isDisableSubmit: form.formState.isSubmitting || !formCode,
     errors: form.formState.errors,
     submitHandler,
     isSubmitting: form.formState.isSubmitting,

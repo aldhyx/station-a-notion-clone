@@ -13,18 +13,11 @@ type Props = {
 }
 
 export default function VerifyDialogContent({ nextSteps, newEmail, prevSteps }: Props) {
-  const {
-    errors,
-    form,
-    isDisableSubmit,
-    isLoadingSubmit,
-    resetFormHandler,
-    submitHandler,
-    isSubmitting,
-  } = useVerifyEmail({
-    newEmail,
-    nextSteps,
-  })
+  const { errors, form, isLoadingSubmit, resetFormHandler, submitHandler, isSubmitting } =
+    useVerifyEmail({
+      newEmail,
+      nextSteps,
+    })
 
   return (
     <DialogContent
@@ -37,13 +30,9 @@ export default function VerifyDialogContent({ nextSteps, newEmail, prevSteps }: 
         resetFormHandler()
       }}
     >
-      <DialogHeader className="mb-8 dark:text-zinc-100">
+      <DialogHeader className="mb-8">
         <MailIcon className="mx-auto mb-2" />
         <p className="mb-2 !text-center text-lg font-medium leading-none">Change Email</p>
-        <p className="text-center text-sm">
-          To change your email, we&apos;ve sent the verification code to{" "}
-          <strong>{newEmail}</strong>.
-        </p>
       </DialogHeader>
 
       <Form {...form}>
@@ -52,6 +41,10 @@ export default function VerifyDialogContent({ nextSteps, newEmail, prevSteps }: 
           className="flex w-full flex-col gap-y-3"
           autoComplete="off"
         >
+          <p className="text-left text-sm">
+            To change your email, we&apos;ve sent the verification code to{" "}
+            <strong>{newEmail}</strong>.
+          </p>
           <FormField
             control={form.control}
             name="code"
@@ -61,32 +54,29 @@ export default function VerifyDialogContent({ nextSteps, newEmail, prevSteps }: 
                   <Input
                     placeholder="Enter the verification code..."
                     type="text"
-                    inputSize="lg"
                     {...field}
                   />
                 </FormControl>
-
                 <FormMessage />
               </FormItem>
             )}
           />
-
-          <ErrorBlock className="m-0 mt-5" message={errors.root?.apiError.message} />
-
-          <Button size="lg" className="w-full" type="submit" disabled={isDisableSubmit}>
+          <Button size="lg" className="w-full" type="submit" disabled={isLoadingSubmit}>
             {isLoadingSubmit && (
               <LoaderIcon className="animate mr-2 h-4 w-4 animate-spin" />
             )}
             Submit
           </Button>
+
+          <ErrorBlock message={errors.root?.apiError.message} />
         </form>
       </Form>
 
-      <hr className="my-8 w-full border-zinc-200" />
+      <hr className="my-6 w-full" />
 
       <div className="w-full text-left text-sm">
-        <p className="mb-2 font-medium dark:text-zinc-100">Didn&apos;t receive email? </p>
-        <ol className="list-inside list-disc dark:text-zinc-100">
+        <p className="mb-2 font-medium ">Didn&apos;t receive email? </p>
+        <ol className="list-inside list-disc ">
           <li>Check your spam or junk folder.</li>
           <li>
             <Button

@@ -8,8 +8,7 @@ import { useSearchParams } from "next/navigation"
 import useForgotPasswordVerify from "./_hooks/use-forgot-password-verify"
 
 export default function ForgotPasswordVerifyPage() {
-  const { errors, form, isDisableSubmit, isLoadingSubmit, submitHandler } =
-    useForgotPasswordVerify()
+  const { errors, form, isLoadingSubmit, submitHandler } = useForgotPasswordVerify()
 
   const params = useSearchParams()
   const email = params.get("mailto")
@@ -38,7 +37,6 @@ export default function ForgotPasswordVerifyPage() {
                   <Input
                     placeholder="Enter the verification code..."
                     type="text"
-                    inputSize="lg"
                     {...field}
                   />
                 </FormControl>
@@ -48,7 +46,7 @@ export default function ForgotPasswordVerifyPage() {
             )}
           />
 
-          <Button size="lg" className="w-full" type="submit" disabled={isDisableSubmit}>
+          <Button size="lg" className="w-full" type="submit" disabled={isLoadingSubmit}>
             {isLoadingSubmit && (
               <LoaderIcon className="animate mr-2 h-4 w-4 animate-spin" />
             )}
@@ -59,7 +57,7 @@ export default function ForgotPasswordVerifyPage() {
         </form>
       </Form>
 
-      <hr className="my-8 w-full border-zinc-200" />
+      <hr className="my-8 w-full" />
 
       <div className="w-full text-left text-sm">
         <p className="mb-2 font-medium">Didn&apos;t receive email? </p>

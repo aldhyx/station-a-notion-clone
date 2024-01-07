@@ -42,20 +42,18 @@ export default function UserPopover({ children, fullname, username }: Props) {
         alignOffset={pathname === "/" ? 0 : 8}
       >
         <div className="w-72">
-          <section className="border-b border-b-zinc-200 p-3 dark:border-b-zinc-700">
+          <section className="border-b p-3 ">
             <div className="flex gap-x-1 pr-1">
-              <div className="relative mr-2 flex h-[40px] w-[40px] items-center justify-center rounded-full bg-zinc-800">
-                <span className="text-xl font-medium uppercase text-background">
+              <div className="relative mr-2 flex h-[40px] w-[40px] items-center justify-center rounded-full bg-secondary-foreground">
+                <span className="text-xl font-medium uppercase text-secondary">
                   {fullname ? fullname[0] : "-"}
                 </span>
               </div>
 
               {(fullname || username) && (
                 <div className="flex flex-col">
-                  <p className="text-sm capitalize dark:text-zinc-100">
-                    {fullname}&apos;s Station
-                  </p>
-                  <p className="text-xs text-zinc-600 dark:text-zinc-300">@{username}</p>
+                  <p className="text-sm capitalize ">{fullname}&apos;s Station</p>
+                  <p className="text-xs text-muted-foreground">@{username}</p>
                 </div>
               )}
             </div>
@@ -64,7 +62,7 @@ export default function UserPopover({ children, fullname, username }: Props) {
           <section className="w-full p-1">
             <Button
               variant="ghost"
-              className="h-8 w-full justify-start px-2 text-xs font-normal text-zinc-600 dark:text-zinc-300"
+              className="h-8 w-full justify-start px-2 text-xs font-normal"
               onClick={() => navigateHandler("settings")}
             >
               <Settings2Icon className="mr-3 h-4 w-4" />
@@ -74,7 +72,7 @@ export default function UserPopover({ children, fullname, username }: Props) {
             <SignOutDialog>
               <Button
                 variant="ghost"
-                className="h-8 w-full justify-start px-2 text-xs font-normal text-zinc-600 dark:text-zinc-300 "
+                className="h-8 w-full justify-start px-2 text-xs font-normal"
               >
                 <LogOutIcon className="mr-3 h-4 w-4" />
                 Log out

@@ -55,8 +55,8 @@ export default function RenameDialog({ children, uuid, emitActionStatus }: Props
             <EmojiPickerPopover onEmojiSelect={emoji => form.setValue("emoji", emoji)}>
               <Button
                 variant="outline"
-                size="sm"
-                className="h-10 w-10 shrink-0 rounded-xl p-0 text-zinc-500"
+                size="lg"
+                className="h-11 w-11 shrink-0 rounded-xl p-0"
               >
                 {form.getValues("emoji.native") ? (
                   <span className="text-xl">{form.getValues("emoji.native")}</span>
@@ -75,7 +75,7 @@ export default function RenameDialog({ children, uuid, emitActionStatus }: Props
                     <Input
                       type="text"
                       placeholder="Enter page title..."
-                      className="rounded-xl bg-background text-sm placeholder:text-sm placeholder:text-zinc-500 focus-visible:ring-transparent"
+                      className="rounded-xl"
                       {...field}
                     />
                   </FormControl>
@@ -86,12 +86,16 @@ export default function RenameDialog({ children, uuid, emitActionStatus }: Props
             />
 
             <Button
-              size="sm"
-              className="h-10 w-24 rounded-xl"
+              size="lg"
+              className="w-24 rounded-xl"
               type="submit"
               disabled={isDisableSubmit}
             >
-              {isLoadingSubmit ? <LoaderIcon className="h-4 w-4 animate-spin" /> : "Save"}
+              {isLoadingSubmit ? (
+                <LoaderIcon className="h-4 w-4 animate-spin" />
+              ) : (
+                "Submit"
+              )}
             </Button>
           </form>
         </Form>
@@ -108,7 +112,7 @@ export default function RenameDialog({ children, uuid, emitActionStatus }: Props
 
 RenameDialog.Title = function Title() {
   return (
-    <div className="mb-1 flex items-center justify-start p-3 dark:text-zinc-100">
+    <div className="mb-1 flex items-center justify-start p-3">
       <PlusCircleIcon className="mr-2 h-4 w-4" />
       <p className="text-base font-medium leading-none">Rename page</p>
     </div>

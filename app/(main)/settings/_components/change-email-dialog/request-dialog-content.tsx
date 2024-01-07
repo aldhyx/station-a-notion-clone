@@ -20,28 +20,18 @@ type Props = {
 }
 
 export default function RequestDialogContent({ nextSteps, setNewEmail }: Props) {
-  const {
-    errors,
-    form,
-    isDisableSubmit,
-    isLoadingSubmit,
-    isSubmitting,
-    resetFormHandler,
-    submitHandler,
-  } = useRequestEmailChange({ nextSteps, setNewEmail })
+  const { errors, form, isLoadingSubmit, isSubmitting, resetFormHandler, submitHandler } =
+    useRequestEmailChange({ nextSteps, setNewEmail })
 
   return (
     <DialogContent
       className="top-[5%] w-[90%] translate-y-[0] gap-0 rounded-xl px-3 pb-6 pt-14 md:max-w-sm"
-      onInteractOutside={e => {
-        return e.preventDefault()
-      }}
       onCloseAutoFocus={e => {
         if (isSubmitting) return e.preventDefault()
         resetFormHandler()
       }}
     >
-      <DialogHeader className="mb-8 dark:text-zinc-100">
+      <DialogHeader className="mb-8">
         <MailIcon className="mx-auto mb-2" />
         <p className="!text-center text-lg font-medium leading-none">Change Email</p>
       </DialogHeader>
@@ -67,14 +57,14 @@ export default function RequestDialogContent({ nextSteps, setNewEmail }: Props) 
             )}
           />
 
-          <ErrorBlock className="m-0 mt-5" message={errors.root?.apiError.message} />
-
-          <Button size="lg" className="w-full" type="submit" disabled={isDisableSubmit}>
+          <Button size="lg" className="w-full" type="submit" disabled={isLoadingSubmit}>
             {isLoadingSubmit && (
               <LoaderIcon className="animate mr-2 h-4 w-4 animate-spin" />
             )}
             Continue to change email
           </Button>
+
+          <ErrorBlock message={errors.root?.apiError.message} />
         </form>
       </Form>
     </DialogContent>

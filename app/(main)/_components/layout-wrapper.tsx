@@ -41,13 +41,13 @@ export default function LayoutWrapper({
   useDocRealtime()
 
   return (
-    <div className="relative flex min-h-screen select-none text-zinc-800">
+    <div className="relative flex min-h-screen select-none text-primary">
       <aside
         data-state={minimize ? "closed" : "open"}
         ref={sidebarRef}
         className={cn(
-          "group/sidebar fixed z-50 min-h-full w-60 overflow-y-auto bg-zinc-50 p-1 dark:bg-zinc-800",
-          "border-r border-r-zinc-200 data-[state=closed]:-translate-x-96",
+          "group/sidebar fixed z-50 min-h-full w-60 overflow-y-auto bg-stone-100 p-1 dark:bg-stone-900",
+          "border-r data-[state=closed]:-translate-x-96",
           "duration-300",
           isMobile && "data-[state=open]:w-[80%]",
         )}
@@ -59,7 +59,7 @@ export default function LayoutWrapper({
         <Button
           size="icon"
           className={cn(
-            "absolute right-3 top-3 h-7 w-7 text-zinc-400 transition dark:text-zinc-300",
+            "absolute right-3 top-3 h-7 w-7 text-muted-foreground transition",
             isMobile ? "opacity-100" : "opacity-0 group-hover/sidebar:opacity-100",
           )}
           variant="ghost"
@@ -79,14 +79,14 @@ export default function LayoutWrapper({
         />
 
         {/* Resize line when hover on cursor area*/}
-        <div className="absolute right-0 top-0 z-[49] min-h-full w-1 opacity-100 transition peer-hover:bg-zinc-200 dark:peer-hover:bg-zinc-600" />
+        <div className="absolute right-0 top-0 z-[49] min-h-full w-1 opacity-100 transition peer-hover:bg-primary/5" />
       </aside>
 
       {/* mobile overlay backdrop */}
       <div
         data-state={minimize ? "closed" : "open"}
         className={cn(
-          "fixed inset-0 right-0 top-0 z-20 bg-foreground/70 backdrop-blur-sm !duration-300 dark:bg-zinc-950/70",
+          "fixed inset-0 right-0 top-0 z-20 bg-stone-900/30 backdrop-blur-sm !duration-300",
           "data-[state=open]:animate-in data-[state=open]:fade-in-0",
           "data-[state=closed]:hidden data-[state=closed]:animate-out data-[state=closed]:fade-out-0",
           !isMobile && "hidden",
@@ -98,8 +98,8 @@ export default function LayoutWrapper({
         data-state={minimize ? "closed" : "open"}
         ref={topbarRef}
         className={cn(
-          "fixed left-60 right-0 top-0 w-[calc(100vw-240px)] bg-background dark:bg-zinc-900",
-          "z-10 border-b border-b-zinc-200 data-[state=closed]:left-0 data-[state=closed]:w-full",
+          "fixed left-60 right-0 top-0 w-[calc(100vw-240px)] bg-background",
+          "z-10 border-b data-[state=closed]:left-0 data-[state=closed]:w-full",
           "duration-300",
           isMobile && "!left-0 !w-full",
         )}
@@ -114,7 +114,7 @@ export default function LayoutWrapper({
       <main
         data-state={minimize ? "closed" : "open"}
         className={cn(
-          "ml-auto mt-12 h-[calc(100vh-48px)] w-[calc(100vw-240px)] overflow-y-auto bg-background dark:bg-zinc-900",
+          "ml-auto mt-12 h-[calc(100vh-48px)] w-[calc(100vw-240px)] overflow-y-auto bg-background",
           "data-[state=closed]:w-full",
           "duration-300",
           isMobile && "!w-full",

@@ -21,13 +21,11 @@ export const useLogin = () => {
     else router.replace("/doc")
   })
 
-  const { email: formEmail, password: formPassword } = form.watch()
 
   return {
     form,
     errors: form.formState.errors,
     isLoadingSubmit: form.formState.isSubmitting,
-    isDisableSubmit: form.formState.isSubmitting || !formEmail || !formPassword,
     submitHandler,
   }
 }
