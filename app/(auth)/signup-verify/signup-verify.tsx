@@ -14,7 +14,6 @@ export default function SignUpVerifyPage() {
   const {
     errors,
     form,
-    isDisableSubmit,
     isLoadingSubmit,
     resendHandler,
     showCountdown,
@@ -48,7 +47,6 @@ export default function SignUpVerifyPage() {
                   <Input
                     placeholder="Enter the verification code..."
                     type="text"
-                    inputSize="lg"
                     {...field}
                   />
                 </FormControl>
@@ -58,7 +56,7 @@ export default function SignUpVerifyPage() {
             )}
           />
 
-          <Button size="lg" className="w-full" type="submit" disabled={isDisableSubmit}>
+          <Button size="lg" className="w-full" type="submit" disabled={isLoadingSubmit}>
             {isLoadingSubmit && (
               <LoaderIcon className="animate mr-2 h-4 w-4 animate-spin" />
             )}
@@ -69,7 +67,7 @@ export default function SignUpVerifyPage() {
         </form>
       </Form>
 
-      <hr className="my-8 w-full border-zinc-200" />
+      <hr className="my-8 w-full " />
 
       <div className="w-full text-left text-sm">
         <p className="mb-2 font-medium">Didn&apos;t receive email ?</p>

@@ -22,11 +22,9 @@ export const useCompleteProfile = () => {
     else router.replace("/doc")
   })
 
-  const { fullname: formFullname, username: formUsername } = form.watch()
 
   return {
     errors: form.formState.errors,
-    isDisableSubmit: form.formState.isSubmitting || !formFullname || !formUsername,
     isLoadingSubmit: form.formState.isSubmitting,
     isSubmitSuccessful: form.formState.isSubmitSuccessful,
     submitHandler,

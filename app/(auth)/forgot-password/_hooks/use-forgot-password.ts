@@ -18,13 +18,11 @@ export default function useForgotPassword() {
     else router.replace(`/forgot-password-verify?mailto=${email}`)
   })
 
-  const { email: formEmail } = form.watch()
 
   return {
     form,
     errors: form.formState.errors,
     isLoadingSubmit: form.formState.isSubmitting,
-    isDisableSubmit: form.formState.isSubmitting || !formEmail,
     submitHandler,
   }
 }

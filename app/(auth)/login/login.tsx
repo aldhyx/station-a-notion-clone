@@ -20,7 +20,7 @@ import { useLogin } from "./_hooks/use-login"
 import { useAuthStore } from "@/store/use-auth-store"
 
 export default function LoginPage() {
-  const { errors, form, isDisableSubmit, isLoadingSubmit, submitHandler } = useLogin()
+  const { errors, form, isLoadingSubmit, submitHandler } = useLogin()
   const { signUpWithOauth } = useAuthStore()
 
   return (
@@ -29,7 +29,8 @@ export default function LoginPage() {
 
       <GoogleButton clickHandler={() => signUpWithOauth({ provider: "google" })} />
 
-      <hr className="my-8 w-full border-zinc-200" />
+      <hr className="my-8 w-full" />
+
       <Form {...form}>
         <form
           onSubmit={submitHandler}
@@ -62,17 +63,7 @@ export default function LoginPage() {
               <FormItem>
                 <FormLabel>Password</FormLabel>
                 <FormControl>
-                  <InputPasswordWrapper
-                    error={fieldState.error}
-                    render={({ showPassword }) => (
-                      <Input
-                        className="peer border-0 "
-                        placeholder={showPassword ? "Enter your password..." : "********"}
-                        type={showPassword ? "text" : "password"}
-                        {...field}
-                      />
-                    )}
-                  />
+                  <Input placeholder={"********"} type={"password"} {...field} />
                 </FormControl>
 
                 <FormMessage />
@@ -80,21 +71,21 @@ export default function LoginPage() {
             )}
           />
 
-          <Button size="lg" className="w-full" type="submit" disabled={isDisableSubmit}>
+          <Button size="lg" className="w-full" type="submit" disabled={isLoadingSubmit}>
             {isLoadingSubmit && (
               <LoaderIcon className="animate mr-2 h-4 w-4 animate-spin" />
             )}
-            Continue with Email & Password
+            Continue
           </Button>
 
           <ErrorBlock message={errors.root?.apiError.message} />
 
-          <Button variant="link-blue" className="my-3 h-auto p-0 font-normal" asChild>
+          <Button variant="link-blue" className="mt-5 h-auto p-0 font-normal" asChild>
             <Link href="/forgot-password">Forgot password?</Link>
           </Button>
 
-          <div className="mt-0 flex justify-center gap-x-1 text-sm">
-            <p className="text-zinc-700">Don&apos;t have an account?</p>
+          <div className="flex justify-center gap-x-1 text-sm">
+            <p>Don&apos;t have an account?</p>
 
             <Button variant="link-blue" className="h-auto p-0 font-normal" asChild>
               <Link href="/signup">Sign up here</Link>

@@ -16,8 +16,7 @@ import React from "react"
 import { useCompleteProfile } from "./_hooks/use-complete-profile"
 
 export default function CompleteSignUpPage() {
-  const { errors, form, isDisableSubmit, isLoadingSubmit, submitHandler } =
-    useCompleteProfile()
+  const { errors, form, isLoadingSubmit, submitHandler } = useCompleteProfile()
 
   return (
     <>
@@ -67,7 +66,7 @@ export default function CompleteSignUpPage() {
 
           <ErrorBlock className="m-0" message={errors.root?.apiError.message} />
 
-          <Button size="lg" className="w-full" type="submit" disabled={isDisableSubmit}>
+          <Button size="lg" className="w-full" type="submit" disabled={isLoadingSubmit}>
             {isLoadingSubmit && (
               <LoaderIcon className="animate mr-2 h-4 w-4 animate-spin" />
             )}

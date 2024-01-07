@@ -7,14 +7,14 @@ export const resetPasswordSchema = z
         required_error: "Invalid password",
       })
       .min(8, {
-        message: "Must contain at least 8 character(s)",
+        message: "Must contain at least 8 character(s), one lowercase letter, one uppercase letter, and one digit (0-9).",
       })
       .max(72, {
         message: "Must contain at most 72 character(s)",
       })
       .regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+/, {
         message:
-          "Password must contain at least one lowercase letter, one uppercase letter, and one digit (0-9).",
+          "Must contain at least 8 character(s), one lowercase letter, one uppercase letter, and one digit (0-9).",
       })
       .trim(),
     confirm_password: z
