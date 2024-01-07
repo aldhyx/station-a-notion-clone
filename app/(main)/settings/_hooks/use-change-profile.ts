@@ -26,13 +26,10 @@ export const useChangeProfile = () => {
     form.clearErrors(["fullname", "username"])
   }
 
-  const { fullname: formFullname, username: formUsername } = form.watch()
 
   return {
     errors: form.formState.errors,
-    isDisableSubmit: form.formState.isSubmitting || !formFullname || !formUsername,
     isLoadingSubmit: form.formState.isSubmitting,
-    isSubmitSuccessful: form.formState.isSubmitSuccessful,
     resetFormHandler,
     submitHandler,
     form,

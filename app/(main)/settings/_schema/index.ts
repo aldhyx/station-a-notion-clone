@@ -35,14 +35,14 @@ export const resetPasswordSchema = z
         required_error: "Invalid password",
       })
       .min(8, {
-        message: "Must contain at least 8 character(s)",
+        message: "Must contain at least 8 character(s), one lowercase letter, one uppercase letter, and one digit (0-9).",
       })
       .max(72, {
         message: "Must contain at most 72 character(s)",
       })
       .regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+/, {
         message:
-          "Password must contain at least one lowercase letter, one uppercase letter, and one digit (0-9).",
+          "Must contain at least 8 character(s), one lowercase letter, one uppercase letter, and one digit (0-9).",
       })
       .trim(),
     confirm_password: z
@@ -75,7 +75,7 @@ export type ResetPasswordSchema = z.infer<typeof resetPasswordSchema>
 
 export const otpSchema = z.object({
   code: z
-    .string({ required_error: "Invalid verification code" })
+    .string()
     .min(4, {
       message: "Invalid verification code",
     })
@@ -85,9 +85,8 @@ export type OTPSchema = z.infer<typeof otpSchema>
 
 export const requestEmailSchema = z.object({
   email: z
-    .string({
-      required_error: "Invalid email address",
-    })
+    .string()
+    .min(1, {message: 'Required'})
     .email({ message: "Invalid email address" })
     .toLowerCase()
     .trim(),

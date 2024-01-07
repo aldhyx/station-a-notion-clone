@@ -19,8 +19,6 @@ export const useResetPassword = () => {
     else closeButtonRef.current?.click()
   })
 
-  const { password: formPassword, confirm_password: formConfirmPassword } = form.watch()
-
   const resetFormHandler = () => {
     form.reset()
     form.clearErrors(["confirm_password", "password"])
@@ -30,10 +28,8 @@ export const useResetPassword = () => {
     form,
     errors: form.formState.errors,
     isLoadingSubmit: form.formState.isSubmitting,
-    isDisableSubmit: form.formState.isSubmitting || !formConfirmPassword || !formPassword,
     submitHandler,
     resetFormHandler,
-    isSubmitSuccessful: form.formState.isSubmitSuccessful,
     closeButtonRef,
   }
 }

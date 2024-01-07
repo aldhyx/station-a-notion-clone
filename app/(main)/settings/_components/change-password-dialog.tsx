@@ -27,7 +27,6 @@ export default function ChangePasswordDialog({ children }: PropsWithChildren) {
   const {
     errors,
     form,
-    isDisableSubmit,
     isLoadingSubmit,
     resetFormHandler,
     submitHandler,
@@ -38,13 +37,8 @@ export default function ChangePasswordDialog({ children }: PropsWithChildren) {
     <Dialog onOpenChange={resetFormHandler}>
       <DialogTrigger asChild>{children}</DialogTrigger>
 
-      <DialogContent
-        className="top-[5%] w-[90%] translate-y-[0] gap-0 rounded-xl px-3 pb-6 pt-14 md:max-w-sm"
-        onInteractOutside={e => {
-          return e.preventDefault()
-        }}
-      >
-        <DialogHeader className="mb-8 dark:text-zinc-100">
+      <DialogContent className="top-[5%] w-[90%] translate-y-[0] gap-0 rounded-xl px-3 pb-6 pt-14 md:max-w-sm">
+        <DialogHeader className="mb-8 ">
           <LockKeyholeIcon className="mx-auto mb-2" />
           <p className="!text-center text-lg font-medium leading-none">Change Password</p>
         </DialogHeader>
@@ -62,19 +56,7 @@ export default function ChangePasswordDialog({ children }: PropsWithChildren) {
                 <FormItem>
                   <FormLabel>New password</FormLabel>
                   <FormControl>
-                    <InputPasswordWrapper
-                      error={fieldState.error}
-                      render={({ showPassword }) => (
-                        <Input
-                          className="peer border-0 "
-                          placeholder={
-                            showPassword ? "Enter new password..." : "********"
-                          }
-                          type={showPassword ? "text" : "password"}
-                          {...field}
-                        />
-                      )}
-                    />
+                    <Input placeholder={"********"} type={"password"} {...field} />
                   </FormControl>
 
                   <FormMessage />
@@ -89,19 +71,7 @@ export default function ChangePasswordDialog({ children }: PropsWithChildren) {
                 <FormItem>
                   <FormLabel>Confirm new password</FormLabel>
                   <FormControl>
-                    <InputPasswordWrapper
-                      error={fieldState.error}
-                      render={({ showPassword }) => (
-                        <Input
-                          className="peer border-0 "
-                          placeholder={
-                            showPassword ? "Enter new confirm password..." : "********"
-                          }
-                          type={showPassword ? "text" : "password"}
-                          {...field}
-                        />
-                      )}
-                    />
+                    <Input placeholder={"********"} type={"password"} {...field} />
                   </FormControl>
 
                   <FormMessage />
@@ -109,14 +79,14 @@ export default function ChangePasswordDialog({ children }: PropsWithChildren) {
               )}
             />
 
-            <ErrorBlock className="m-0 mt-5" message={errors.root?.apiError.message} />
-
-            <Button size="lg" className="w-full" type="submit" disabled={isDisableSubmit}>
+            <Button size="lg" className="w-full" type="submit" disabled={isLoadingSubmit}>
               {isLoadingSubmit && (
                 <LoaderIcon className="animate mr-2 h-4 w-4 animate-spin" />
               )}
               Submit
             </Button>
+
+            <ErrorBlock message={errors.root?.apiError.message} />
 
             <DialogClose hidden>
               <button type="button" ref={closeButtonRef}>

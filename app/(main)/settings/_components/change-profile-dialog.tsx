@@ -26,7 +26,6 @@ export default function ChangeProfileDialog({ children }: PropsWithChildren) {
   const {
     form,
     errors,
-    isDisableSubmit,
     isLoadingSubmit,
     resetFormHandler,
     submitHandler,
@@ -37,13 +36,8 @@ export default function ChangeProfileDialog({ children }: PropsWithChildren) {
     <Dialog onOpenChange={resetFormHandler}>
       <DialogTrigger asChild>{children}</DialogTrigger>
 
-      <DialogContent
-        className="top-[5%] w-[90%] translate-y-[0] gap-0 rounded-xl px-3 pb-6 pt-14 md:max-w-sm"
-        onInteractOutside={e => {
-          return e.preventDefault()
-        }}
-      >
-        <DialogHeader className="mb-8 dark:text-zinc-100">
+      <DialogContent className="top-[5%] w-[90%] translate-y-[0] gap-0 rounded-xl px-3 pb-6 pt-14 md:max-w-sm">
+        <DialogHeader className="mb-8 ">
           <FormInput className="mx-auto mb-2" />
           <p className="!text-center text-lg font-medium leading-none ">Change Profile</p>
         </DialogHeader>
@@ -84,14 +78,15 @@ export default function ChangeProfileDialog({ children }: PropsWithChildren) {
               )}
             />
 
-            <ErrorBlock className="m-0 mt-5" message={errors.root?.apiError.message} />
-
-            <Button size="lg" className="w-full" type="submit" disabled={isDisableSubmit}>
+            <Button size="lg" className="w-full" type="submit" disabled={isLoadingSubmit}>
               {isLoadingSubmit && (
                 <LoaderIcon className="animate mr-2 h-4 w-4 animate-spin" />
               )}
               Submit
             </Button>
+
+            <ErrorBlock message={errors.root?.apiError.message} />
+
             <DialogClose hidden>
               <button type="button" ref={closeButtonRef}>
                 close

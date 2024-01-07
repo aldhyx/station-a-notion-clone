@@ -31,14 +31,11 @@ export default function useRequestEmailChange({
     }
   })
 
-  const { email: formEmail } = form.watch()
-
   return {
     form,
     errors: form.formState.errors,
     resetFormHandler,
     isLoadingSubmit: form.formState.isSubmitting,
-    isDisableSubmit: form.formState.isSubmitting || !formEmail,
     isSubmitting: form.formState.isSubmitting,
     submitHandler,
   }
