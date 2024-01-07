@@ -10,7 +10,9 @@ export default function ErrorBlock({
   if (!message || typeof message !== "string") return null
 
   return (
-    <p className={cn("flex items-start text-xs leading-none text-red-600", className)}>
+    <p
+      className={cn("flex items-start text-xs leading-none text-destructive", className)}
+    >
       {message}
     </p>
   )

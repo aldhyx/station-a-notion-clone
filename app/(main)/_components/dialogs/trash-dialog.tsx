@@ -70,7 +70,7 @@ export default function TrashDialog({ children }: PropsWithChildren) {
           <Input
             type="test"
             placeholder="Type to search page in trash..."
-            className="rounded-xl bg-zinc-50 text-sm placeholder:text-sm placeholder:text-zinc-500 focus-visible:ring-transparent"
+            className="rounded-xl"
             onChange={onChangeHandler}
             autoFocus={false}
           />
@@ -99,7 +99,7 @@ export default function TrashDialog({ children }: PropsWithChildren) {
                     title="Click to open"
                     key={item.uuid}
                     role="button"
-                    className="relative flex h-9 max-w-full items-center gap-x-2 border-b border-b-zinc-200 px-3  transition hover:bg-zinc-200 dark:border-b-zinc-700  dark:hover:bg-zinc-700"
+                    className="relative flex h-9 max-w-full items-center gap-x-2 border-b px-3 transition hover:bg-primary/5"
                     onClick={() => onClickItemHandler(item.uuid)}
                   >
                     {emoji?.native ? (
@@ -111,10 +111,10 @@ export default function TrashDialog({ children }: PropsWithChildren) {
                         {emoji.native}
                       </span>
                     ) : (
-                      <FileIcon className="h-5 w-5 shrink-0 text-zinc-500 dark:text-zinc-400" />
+                      <FileIcon size={16} className="shrink-0 text-muted-foreground" />
                     )}
 
-                    <span className="max-w-[260px] truncate whitespace-nowrap pr-3 text-sm text-zinc-800 dark:text-zinc-100 md:max-w-[460px]">
+                    <span className="max-w-[260px] truncate whitespace-nowrap pr-3 text-sm text-primary md:max-w-[460px]">
                       {item.title}
                     </span>
 
@@ -126,21 +126,21 @@ export default function TrashDialog({ children }: PropsWithChildren) {
                     >
                       <Button
                         title="Click to restore"
-                        className="h-6 w-6 text-zinc-500 hover:bg-zinc-400/30 dark:text-zinc-400 dark:hover:bg-zinc-400/30"
+                        className="h-6 w-6 text-muted-foreground hover:bg-primary/10"
                         variant="ghost"
                         size="icon"
                         onClick={() => restorePageHandler(item.uuid)}
                       >
-                        <Undo2Icon className="h-4 w-4" />
+                        <Undo2Icon size={16} />
                       </Button>
                       <DeleteDialog uuid={item.uuid}>
                         <Button
                           title="Click to delete"
-                          className="h-6 w-6 text-zinc-500 hover:bg-zinc-400/30 dark:text-zinc-400 dark:hover:bg-zinc-400/30"
+                          className="h-6 w-6 text-muted-foreground hover:bg-primary/10"
                           variant="ghost"
                           size="icon"
                         >
-                          <Trash2Icon className="h-4 w-4" />
+                          <Trash2Icon size={16} />
                         </Button>
                       </DeleteDialog>
                     </div>
@@ -173,9 +173,9 @@ TrashDialog.SearchKeyword = function SearchKeyword(props: {
 }) {
   if (props.isShow) {
     return (
-      <p className="px-3 py-2 text-xs text-zinc-500 dark:text-zinc-300">
+      <p className="px-3 py-2 text-xs text-muted-foreground">
         Showing search result for{" "}
-        <i className="font-medium text-zinc-800 dark:text-zinc-100">{props.keyword}</i>
+        <i className="font-medium text-primary">{props.keyword}</i>
       </p>
     )
   }
@@ -185,7 +185,7 @@ TrashDialog.SearchKeyword = function SearchKeyword(props: {
 TrashDialog.Loading = function Loading(props: { isShow: boolean }) {
   if (props.isShow) {
     return (
-      <div className="flex h-28 items-center justify-center text-zinc-500 dark:text-zinc-300">
+      <div className="flex h-28 items-center justify-center text-muted-foreground">
         <LoaderIcon className="h-4 w-4 animate-spin" />
       </div>
     )
@@ -195,7 +195,7 @@ TrashDialog.Loading = function Loading(props: { isShow: boolean }) {
 
 TrashDialog.Title = function Title() {
   return (
-    <div className="mb-1 flex items-center justify-start p-3 dark:text-zinc-100">
+    <div className="mb-1 flex items-center justify-start p-3 ">
       <Trash2Icon className="mr-2 h-4 w-4" />
       <p className="text-base font-medium leading-none">Trash</p>
     </div>
@@ -205,7 +205,7 @@ TrashDialog.Title = function Title() {
 TrashDialog.Empty = function Empty(props: { isShow: boolean }) {
   if (props.isShow) {
     return (
-      <div className="flex h-28 items-center justify-center text-zinc-500 dark:text-zinc-300">
+      <div className="flex h-28 items-center justify-center text-muted-foreground">
         <p className="text-sm">Empty trash</p>
       </div>
     )
@@ -219,10 +219,10 @@ TrashDialog.EmptySearchResult = function EmptySearch(props: {
 }) {
   if (props.isShow) {
     return (
-      <div className="flex h-28 items-center justify-center text-zinc-500 dark:text-zinc-300">
+      <div className="flex h-28 items-center justify-center text-muted-foreground">
         <p className="text-sm">
           No result found for{" "}
-          <span className="inline-block max-w-[100px] truncate align-middle font-medium italic text-zinc-800 dark:text-zinc-100">
+          <span className="inline-block max-w-[100px] truncate align-middle font-medium italic text-primary ">
             {props.keyword}
           </span>
         </p>
@@ -256,7 +256,7 @@ TrashDialog.LoadMore = function LoadMore(props: {
       )}
 
       {!props.isShowLoadMoreButton && (
-        <p className="py-3 text-center align-middle text-xs text-zinc-500 dark:text-zinc-300">
+        <p className="py-3 text-center align-middle text-xs text-muted-foreground">
           No more data
         </p>
       )}

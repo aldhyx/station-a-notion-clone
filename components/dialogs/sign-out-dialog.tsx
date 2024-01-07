@@ -31,27 +31,27 @@ export default function SignOutDialog({
 
       <DialogContent className="w-[90%] gap-0 rounded-xl p-0 md:max-w-sm" hideCloseButton>
         <DialogHeader className="p-4">
-          <DialogDescription className="leading-1 text-left text-zinc-800 dark:text-zinc-100">
+          <DialogDescription className="leading-1 text-left text-primary">
             {title[scope]}
           </DialogDescription>
         </DialogHeader>
-        <DialogFooter className="w-full flex-row gap-0 border-t border-t-zinc-200 dark:border-t-zinc-600">
+        <DialogFooter className="w-full flex-row gap-0 border-t">
           <Button
             type="button"
             size="lg"
-            variant="secondary"
-            className="flex-1 rounded-none rounded-bl-xl text-red-500 dark:text-red-400 "
+            variant="ghost"
+            className="flex-1 rounded-none rounded-bl-xl text-destructive hover:text-destructive"
             onClick={() => signOutAsync(scope)}
           >
-            Yes, log out
+            Yes
           </Button>
-          <div className="!m-0 box-border h-full w-[1px] border-r border-r-zinc-200 p-0 dark:border-r-zinc-600" />
+          <div className="!m-0 box-border h-full w-[1px] border-r p-0" />
           <DialogClose asChild className="!m-0">
             <Button
               type="button"
               size="lg"
               className="flex-1 rounded-none rounded-br-xl "
-              variant="secondary"
+              variant="ghost"
             >
               No
             </Button>

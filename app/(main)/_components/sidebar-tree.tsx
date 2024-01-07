@@ -75,7 +75,7 @@ export default function SidebarTree({ uuid, level = 0 }: Props) {
                 e.stopPropagation()
                 navigateDocHandler(item.uuid)
               }}
-              className="group flex h-8 w-full cursor-pointer items-center justify-between rounded-sm pr-1 transition hover:bg-zinc-200 dark:hover:bg-zinc-700"
+              className="group flex h-8 w-full cursor-pointer items-center justify-between rounded-md pr-1 transition hover:bg-primary/5"
               style={{
                 paddingLeft: level === 0 ? "4px" : `${level * 20}px`,
               }}
@@ -83,7 +83,7 @@ export default function SidebarTree({ uuid, level = 0 }: Props) {
               <div className="flex items-center justify-start truncate">
                 <span
                   role="button"
-                  className="grid h-6 w-6 shrink-0 place-content-center rounded-sm text-zinc-500 hover:bg-zinc-400/30 dark:text-zinc-400"
+                  className="grid h-6 w-6 shrink-0 place-content-center rounded-md text-muted-foreground hover:bg-primary/10"
                   onClick={e => {
                     e.stopPropagation()
                     sidebarTreeCollapseHandler({
@@ -108,14 +108,13 @@ export default function SidebarTree({ uuid, level = 0 }: Props) {
                     {emoji.native}
                   </span>
                 ) : (
-                  <FileIcon className="mr-2 h-4 w-4 shrink-0 text-zinc-500 dark:text-zinc-400" />
+                  <FileIcon className="mr-2 h-4 w-4 shrink-0 text-muted-foreground" />
                 )}
 
                 <span
                   className={cn(
-                    "truncate text-sm text-zinc-700 antialiased dark:text-zinc-200",
-                    params?.uuid === item.uuid &&
-                      "font-semibold text-zinc-800 dark:text-zinc-100",
+                    "truncate text-sm text-primary/70 antialiased",
+                    params?.uuid === item.uuid && "font-semibold text-primary",
                   )}
                 >
                   {item.title}
@@ -131,7 +130,7 @@ export default function SidebarTree({ uuid, level = 0 }: Props) {
                   type="button"
                   size="icon"
                   variant="ghost"
-                  className="ml-3 h-6 w-6 shrink-0 text-zinc-500 opacity-100 hover:bg-zinc-400/30 dark:text-zinc-400 dark:hover:bg-zinc-400/30 md:opacity-0 md:group-hover:opacity-100 md:[&[data-state=open]]:opacity-100"
+                  className="ml-3 h-6 w-6 shrink-0 text-muted-foreground opacity-100 hover:bg-primary/10 md:opacity-0 md:group-hover:opacity-100 md:[&[data-state=open]]:opacity-100"
                   onClick={e => {
                     e.stopPropagation()
                     return
@@ -156,23 +155,20 @@ type LevelProps = { level: number }
 
 SidebarTree.Title = function Title({ level }: LevelProps) {
   if (level > 0) return null
-  return (
-    <h2 className="mb-1 px-3 pt-3 text-xs text-zinc-600 dark:text-zinc-400">Personal</h2>
-  )
+  return <h2 className="mb-1 px-3 pt-3 text-xs text-muted-foreground">Personal</h2>
 }
 
 SidebarTree.Skeleton = function Loading({ level }: LevelProps) {
   return (
     <div className={cn(level === 0 ? "pt-3" : "pt-1")}>
-      {level === 0 && <h2 className="mb-2 px-3 text-xs text-zinc-500">Personal</h2>}
+      {level === 0 && (
+        <h2 className="mb-2 px-3 text-xs text-muted-foreground">Personal</h2>
+      )}
 
       {Array(level === 0 ? 4 : 1)
         .fill(null)
         .map((_, i) => (
-          <Skeleton
-            key={i + 1}
-            className="mb-1 h-7 w-full bg-zinc-200 dark:bg-zinc-600"
-          />
+          <Skeleton key={i + 1} className="mb-1 h-7 w-full bg-primary/5" />
         ))}
     </div>
   )
@@ -185,10 +181,7 @@ SidebarTree.Empty = function Empty({ level }: LevelProps) {
     level === 0 ? "13px" : level === 1 ? `${level * 30}px` : `${level * 22}px`
 
   return (
-    <div
-      className={"py-1 text-xs text-zinc-500 dark:text-zinc-400"}
-      style={{ paddingLeft }}
-    >
+    <div className={"py-1 text-xs text-muted-foreground"} style={{ paddingLeft }}>
       No page inside
     </div>
   )

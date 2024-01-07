@@ -30,14 +30,13 @@ const Header = function Header({
     useHeader()
 
   return (
-    <header className="flex h-12 items-center justify-start  px-3">
+    <header className="flex h-12 items-center justify-start px-3">
       <Button
         size="icon"
         variant="ghost"
         className={cn(
           "group/collapse relative mr-3 hidden h-7 w-7",
-          minimize && "flex",
-          isMobile && "flex",
+          (minimize || isMobile) && "flex",
         )}
         onClick={maximizeHandler}
       >
@@ -60,27 +59,25 @@ const Header = function Header({
                   {emoji.native}
                 </span>
               ) : (
-                <FileIcon className="h-4 w-4 shrink-0 dark:text-zinc-100" />
+                <FileIcon className="h-4 w-4 shrink-0" />
               )}
 
-              <p className="block max-w-[130px] truncate pl-1 text-sm dark:text-zinc-100 ">
-                {title}
-              </p>
+              <p className="block max-w-[130px] truncate pl-1 text-sm">{title}</p>
 
               {saveStatus === "start" && (
-                <p className="flex gap-x-1 align-bottom text-xs text-zinc-600">
+                <p className="flex gap-x-1 align-bottom text-xs text-muted-foreground">
                   <LoaderIcon className="inline-block animate-spin" size={14} />
                 </p>
               )}
 
               {saveStatus === "success" && (
-                <p className="flex gap-x-1 align-bottom text-xs text-green-700">
+                <p className="flex gap-x-1 align-bottom text-xs text-green-600">
                   <CheckCircle2Icon className="inline-block" size={14} />
                 </p>
               )}
 
               {saveStatus === "failed" && (
-                <p className="flex gap-x-1 align-bottom text-xs text-red-700">
+                <p className="flex gap-x-1 align-bottom text-xs text-destructive">
                   <XCircleIcon className="inline-block" size={14} />
                   <span className="inline-block">Save failed</span>
                 </p>
@@ -118,9 +115,7 @@ const Header = function Header({
 
       {!isDetailDocPage && (
         <div className="flex w-full items-center justify-between ">
-          <p className="max-w-[130px] text-sm capitalize dark:text-zinc-100 md:max-w-[240px]">
-            {title}
-          </p>
+          <p className="max-w-[130px] text-sm capitalize md:max-w-[240px]">{title}</p>
         </div>
       )}
     </header>
@@ -130,12 +125,12 @@ const Header = function Header({
 Header.Skeleton = function HeaderSkeleton() {
   return (
     <>
-      <Skeleton className="h-4 w-[130px] bg-zinc-200" />
+      <Skeleton className="h-4 w-[130px] bg-primary/5" />
       <div className="flex items-center justify-center gap-x-3">
-        <Skeleton className="hidden h-4 w-[100px] bg-zinc-200 md:block" />
-        <Skeleton className="h-5 w-5 bg-zinc-200 md:w-10" />
-        <Skeleton className="h-5 w-5 bg-zinc-200" />
-        <Skeleton className="h-5 w-5 bg-zinc-200" />
+        <Skeleton className="hidden h-4 w-[100px] bg-primary/5 md:block" />
+        <Skeleton className="h-5 w-5 bg-primary/5 md:w-10" />
+        <Skeleton className="h-5 w-5 bg-primary/5" />
+        <Skeleton className="h-5 w-5 bg-primary/5" />
       </div>
     </>
   )

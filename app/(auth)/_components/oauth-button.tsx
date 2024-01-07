@@ -7,7 +7,7 @@ type Props = { clickHandler: () => void }
 
 export function GoogleButton({ clickHandler }: Props) {
   return (
-    <Button className="mb-3 w-full" size="lg" variant="outline" onClick={clickHandler}>
+    <Button className="w-full" size="lg" variant="outline" onClick={clickHandler}>
       <Image
         src="/assets/google.svg"
         alt=""

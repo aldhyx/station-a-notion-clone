@@ -30,19 +30,15 @@ export default function Pictures() {
               <div
                 role="button"
                 key={d.path}
-                className="group relative h-auto overflow-hidden rounded-lg"
+                className="group relative h-auto overflow-hidden rounded-md"
                 onClick={() => updateDocAsync(uuid, { image_url: d.path })}
               >
                 <div
                   className={cn(
                     "absolute grid h-full w-full place-content-center",
-                    // isApplying && "bg-zinc-800/50",
                     isSelected && "bg-zinc-800/50",
                   )}
                 >
-                  {/* {isApplying && (
-                  <LoaderIcon className=" h-6 w-6 animate-spin text-zinc-50" />
-                )} */}
                   {isSelected && <CheckIcon className=" h-6 w-6 text-zinc-50" />}
                 </div>
 
@@ -84,10 +80,7 @@ Pictures.Skeleton = function Loading() {
         {Array(2)
           .fill(null)
           .map((_, i) => (
-            <Skeleton
-              key={i + 1}
-              className="h-[74px] w-full bg-zinc-200 dark:bg-zinc-600"
-            />
+            <Skeleton key={i + 1} className="h-[74px] w-full bg-zinc-200 " />
           ))}
       </div>
     </section>

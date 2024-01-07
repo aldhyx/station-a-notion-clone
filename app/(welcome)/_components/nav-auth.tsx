@@ -1,6 +1,6 @@
 import UserPopover from "@/app/(main)/_components/popovers/user-popover"
 import { Button } from "@/components/ui/button"
-import { GithubIcon, UserCircle } from "lucide-react"
+import { GithubIcon } from "lucide-react"
 import Link from "next/link"
 
 type Props = {

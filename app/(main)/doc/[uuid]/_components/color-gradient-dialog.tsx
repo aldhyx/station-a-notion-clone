@@ -19,10 +19,10 @@ export default function ColorGradientDialog({ children }: Props) {
       <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent className="top-[5%] flex w-[90%] translate-y-[0] flex-col gap-0 rounded-xl p-0 py-3 md:!max-w-xl">
         <Tabs defaultValue="color_gradient" className="w-full">
-          <TabsList className="h-auto w-full justify-start gap-x-3 rounded-none border-b border-b-zinc-200 bg-background px-3 py-0 dark:border-b-zinc-700 dark:bg-zinc-800">
+          <TabsList className="h-auto w-full justify-start gap-x-3 rounded-none border-b bg-background px-3 py-0  ">
             <TabsTrigger
               value="color_gradient"
-              className="rounded-none border-b-[2px] border-b-background px-0 data-[state=active]:border-b-zinc-800 dark:bg-zinc-800 dark:data-[state=active]:border-b-zinc-300 dark:data-[state=active]:text-zinc-100"
+              className="rounded-none border-b-[2px] px-0 data-[state=active]:border-b-primary"
             >
               Color & Gradient
             </TabsTrigger>
@@ -35,7 +35,7 @@ export default function ColorGradientDialog({ children }: Props) {
                   <div
                     role="button"
                     key={d.name}
-                    className="group relative h-[72px] overflow-clip rounded-lg transition hover:opacity-70"
+                    className="group relative h-[72px] overflow-clip rounded-md transition hover:opacity-70"
                     style={{
                       background: d.background,
                     }}
@@ -49,7 +49,7 @@ export default function ColorGradientDialog({ children }: Props) {
                         className={cn("absolute grid h-full w-full place-content-center")}
                       >
                         {doc.image_url === d.name && (
-                          <CheckIcon className="h-8 w-8 text-zinc-50" />
+                          <CheckIcon className="h-8 w-8 text-secondary" />
                         )}
                       </div>
                     )}

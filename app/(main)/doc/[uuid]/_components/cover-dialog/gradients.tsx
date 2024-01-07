@@ -26,19 +26,15 @@ export default function Gradients() {
               <div
                 role="button"
                 key={d.path}
-                className="group relative h-[72px] overflow-hidden rounded-lg"
+                className="group relative h-[72px] overflow-hidden rounded-md"
                 onClick={() => updateDocAsync(uuid, { image_url: d.path })}
               >
                 <div
                   className={cn(
                     "absolute grid h-full w-full place-content-center",
-                    // isApplying && "bg-zinc-800/50",
                     isSelected && "bg-zinc-800/50",
                   )}
                 >
-                  {/* {isApplying && (
-                  <LoaderIcon className=" h-6 w-6 animate-spin text-zinc-50" />
-                )} */}
                   {isSelected && <CheckIcon className=" h-6 w-6 text-zinc-50" />}
                 </div>
 
@@ -65,10 +61,7 @@ Gradients.Skeleton = function Loading() {
         {Array(4)
           .fill(null)
           .map((_, i) => (
-            <Skeleton
-              key={i + 1}
-              className="h-[74px] w-full bg-zinc-200 dark:bg-zinc-600"
-            />
+            <Skeleton key={i + 1} className="h-[74px] w-full bg-zinc-200 " />
           ))}
       </div>
     </section>
