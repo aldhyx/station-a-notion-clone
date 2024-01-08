@@ -68,6 +68,7 @@ export default function NewDocDialog({ children, uuid, emitActionStatus }: Props
                       type="text"
                       placeholder="Enter page title..."
                       className="rounded-xl"
+                      autoFocus
                       {...field}
                     />
                   </FormControl>
@@ -79,7 +80,7 @@ export default function NewDocDialog({ children, uuid, emitActionStatus }: Props
 
             <Button
               size="lg"
-              className="w-24 rounded-xl"
+              className="w-20 rounded-xl"
               type="submit"
               disabled={isDisableSubmit}
             >
