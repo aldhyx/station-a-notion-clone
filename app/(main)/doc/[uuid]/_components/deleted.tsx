@@ -12,15 +12,15 @@ export default function Deleted() {
   if (!doc?.is_deleted) return null
 
   return (
-    <div className="flex w-full items-center justify-center gap-x-2 bg-destructive p-1">
+    <div className="flex w-full items-center justify-start gap-x-2 bg-destructive px-4 py-2 md:justify-center">
       <p className="hidden text-sm text-destructive-foreground md:block">
         This page is in the trash.
       </p>
       <div>
         <Button
           size="sm"
-          className="mr-2 h-7 gap-x-2 text-xs"
-          variant="outline"
+          className="mr-2 h-7 gap-x-2 px-2 text-xs"
+          variant="secondary"
           onClick={() => restorePageAsync(doc.uuid)}
         >
           <Undo2Icon size={16} />
@@ -28,7 +28,7 @@ export default function Deleted() {
         </Button>
 
         <DeleteDialog uuid={doc.uuid}>
-          <Button size="sm" className="h-7 gap-x-2 text-xs" variant="outline">
+          <Button size="sm" className="h-7 gap-x-2 px-2 text-xs" variant="secondary">
             <Trash2Icon size={16} />
             Delete permanently
           </Button>
