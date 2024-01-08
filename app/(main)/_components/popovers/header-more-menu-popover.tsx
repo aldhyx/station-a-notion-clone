@@ -51,15 +51,18 @@ export default function HeaderMoreMenuPopover({ children }: PropsWithChildren) {
               <LockIcon className="mr-2 h-4 w-4" />
               Lock
             </Button>
-            <MoveToTrashDialog uuid={doc?.uuid!}>
-              <Button
-                variant="ghost"
-                className="h-8 w-full items-center justify-start px-2 text-xs font-normal"
-              >
-                <Trash2Icon className="mr-2 h-4 w-4" />
-                Move to trash
-              </Button>
-            </MoveToTrashDialog>
+
+            {doc && !doc.is_deleted && (
+              <MoveToTrashDialog uuid={doc?.uuid!}>
+                <Button
+                  variant="ghost"
+                  className="h-8 w-full items-center justify-start px-2 text-xs font-normal"
+                >
+                  <Trash2Icon className="mr-2 h-4 w-4" />
+                  Move to trash
+                </Button>
+              </MoveToTrashDialog>
+            )}
           </section>
 
           <section className="p-3">

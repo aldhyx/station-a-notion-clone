@@ -8,6 +8,7 @@ import Action from "./_components/action"
 import Cover from "./_components/cover"
 import Title from "./_components/title"
 import Editor from "./_components/editor"
+import Deleted from "./_components/deleted"
 
 export default function DocDetailPage() {
   const params = useParams()
@@ -20,6 +21,7 @@ export default function DocDetailPage() {
 
   return (
     <ScrollArea className="h-[calc(100vh-48px)]">
+      <Deleted />
       <Cover />
       <Action />
       <Title />
