@@ -1,4 +1,5 @@
-import { editorTools } from "@/lib/editor-tools"
+import "./editor.css"
+
 import EditorJS, {
   type API,
   type BlockMutationEvent,
@@ -6,6 +7,7 @@ import EditorJS, {
   type OutputData,
 } from "@editorjs/editorjs"
 import React, { createRef, type PropsWithChildren } from "react"
+import { tools } from "../tools"
 
 type Props = PropsWithChildren &
   Omit<EditorConfig, "onChange" | "initialBlock" | "holderId"> & {
@@ -13,7 +15,7 @@ type Props = PropsWithChildren &
     onSaveHandler?(output?: OutputData): void
   }
 
-export class Editor extends React.PureComponent<Props> {
+export class EditorCore extends React.PureComponent<Props> {
   private editor: EditorJS | null = null
   private node = createRef<HTMLDivElement>()
 
@@ -66,7 +68,7 @@ export class Editor extends React.PureComponent<Props> {
     this.editor = new EditorJS({
       holder: holderNode,
       onChange: (api, event) => this.onChange(api, event),
-      tools: editorTools,
+      tools: tools,
       ...config,
     })
   }
