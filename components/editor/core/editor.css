@@ -1,0 +1,101 @@
+/* Editorjs custom */
+.ce-block__content,
+.ce-toolbar__content {
+  @apply max-w-[unset];
+}
+
+/* Editor blocktool item */
+.ce-popover-item {
+  @apply rounded-md bg-background p-1 text-primary hover:!bg-secondary;
+}
+.ce-popover-item__icon {
+  @apply mr-2 rounded-md border border-input bg-background text-primary shadow-none;
+}
+/* this is custom icon from lucide icon */
+.ce-popover-item__icon svg.lc {
+  @apply h-4 w-4;
+}
+.ce-popover-item__title {
+  @apply text-sm font-normal;
+}
+.ce-popover-item.ce-popover-item--confirmation {
+  @apply bg-destructive hover:!bg-destructive/90;
+}
+
+/* Editor trigger button */
+.ce-toolbar__plus,
+.ce-toolbar__settings-btn {
+  @apply h-8 w-8 rounded-md border border-input bg-background text-primary shadow-sm hover:!bg-primary/10 dark:bg-stone-800;
+}
+
+/* Editor block popover */
+.ce-popover {
+  @apply rounded-md border border-input bg-background p-1 shadow-sm;
+}
+
+.ce-popover__nothing-found-message {
+  @apply py-2 text-center text-xs font-normal;
+}
+
+/* Editor block */
+.ce-paragraph,
+.ce-heading {
+  @apply selection:bg-muted-foreground/30;
+}
+.ce-block--selected .ce-block__content {
+  @apply bg-muted-foreground/30;
+}
+
+/* Editor block popover search */
+.cdx-search-field {
+  @apply rounded-md border border-input bg-transparent text-primary;
+}
+
+.cdx-search-field__input {
+  @apply font-normal placeholder:text-sm placeholder:font-normal placeholder:text-muted-foreground;
+}
+
+.cdx-search-field__icon {
+  @apply mr-2;
+}
+
+.cdx-search-field__icon svg {
+  @apply text-muted-foreground;
+}
+
+/* Editor inline toolbar*/
+.ce-inline-toolbar {
+  @apply border !border-input bg-background text-primary shadow-sm dark:bg-stone-800;
+}
+.ce-inline-tool {
+  @apply w-6 py-1 hover:!bg-primary/10;
+}
+.ce-inline-toolbar__dropdown {
+  @apply hover:!bg-primary/10;
+}
+.ce-inline-toolbar__dropdown-content svg.lc {
+  @apply h-4 w-4;
+}
+
+/* Editor convertion tool*/
+.ce-conversion-toolbar {
+  @apply rounded-md border border-input bg-background shadow-sm;
+}
+
+.ce-conversion-toolbar__label {
+  @apply capitalize text-muted-foreground;
+}
+.ce-conversion-tool {
+  @apply p-1 text-sm font-normal text-primary;
+}
+.ce-conversion-tool__icon {
+  @apply mr-2 rounded-md border border-input bg-background text-primary shadow-none;
+}
+/* this is custom icon from lucide icon */
+.ce-conversion-tool__icon svg.lc {
+  @apply h-4 w-4;
+}
+
+.ce-conversion-tool.ce-conversion-tool--focused {
+  @apply !bg-secondary;
+}

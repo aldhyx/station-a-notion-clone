@@ -1,7 +1,7 @@
 import useDebounceCallback from "@/hook/use-debounce-callback"
 import { useDocStore } from "@/store/use-doc-store"
 import { useParams } from "next/navigation"
-import { Editor as EditorJS } from "@/components/editor"
+import { EditorCore } from "@/components/editor/core/editor"
 import { type OutputData } from "@editorjs/editorjs"
 import { useState } from "react"
 import { Json } from "@/lib/supabase/database.types"
@@ -18,7 +18,6 @@ export default function Editor() {
     delayedCallback(() => {
       updateDocAsync(uuid, { content: output as Json })
     })
-
   if (loadingDoc) return null
 
   const init = doc?.content ? (doc.content as unknown as OutputData) : undefined
@@ -26,16 +25,19 @@ export default function Editor() {
   // TODO: make it realtime event
   return (
     <div className="relative mx-auto max-w-3xl px-4 md:px-0">
-      <EditorJS
+      <EditorCore
+        onSaveHandler={data => {
+          updateHandler(data)
+          console.log(data, "saved")
+        }}
         onChangeHandler={async (api, event) => {
-          if (event && !Array.isArray(event)) {
-            const isEmpty = event.detail.target.isEmpty
-            const isAdded = event.type === "block-added"
-            if (isAdded && isEmpty) return
-
-            const output = await api.saver.save()
-            updateHandler(output)
-          }
+          // if (event && !Array.isArray(event)) {
+          //   const isEmpty = event.detail.target.isEmpty
+          //   const isAdded = event.type === "block-added"
+          //   if (isAdded && isEmpty) return
+          //   const output = await api.saver.save()
+          //   updateHandler(output)
+          // }
         }}
         data={init}
         placeholder="Press tab or click + button to insert commands..."
