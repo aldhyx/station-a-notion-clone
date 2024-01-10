@@ -34,7 +34,7 @@ export default function Cover() {
         <>
           {bgColor && (
             <div
-              className="h-40 w-full brightness-75"
+              className="h-40 w-full dark:brightness-90"
               style={{ background: bgColor.background }}
             />
           )}
