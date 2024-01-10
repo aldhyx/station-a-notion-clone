@@ -5,24 +5,9 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
-  '@editorjs/delimiter':
-    specifier: ^1.4.0
-    version: 1.4.0
   '@editorjs/editorjs':
     specifier: ^2.28.2
     version: 2.28.2
-  '@editorjs/header':
-    specifier: ^2.8.1
-    version: 2.8.1
-  '@editorjs/list':
-    specifier: ^1.9.0
-    version: 1.9.0
-  '@editorjs/marker':
-    specifier: ^1.4.0
-    version: 1.4.0
-  '@editorjs/underline':
-    specifier: ^1.1.0
-    version: 1.1.0
   '@emoji-mart/data':
     specifier: ^1.1.2
     version: 1.1.2
@@ -74,15 +59,6 @@ dependencies:
   clsx:
     specifier: ^2.0.0
     version: 2.0.0
-  editorjs-alert:
-    specifier: ^1.1.3
-    version: 1.1.3
-  editorjs-text-color-plugin:
-    specifier: ^2.0.4
-    version: 2.0.4
-  editorjs-toggle-block:
-    specifier: ^0.3.14
-    version: 0.3.14
   emoji-mart:
     specifier: ^5.5.2
     version: 5.5.2
@@ -433,18 +409,6 @@ packages:
     resolution: {integrity: sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==}
     dev: true
 
-  /@codexteam/icons@0.0.4:
-    resolution: {integrity: sha512-V8N/TY2TGyas4wLrPIFq7bcow68b3gu8DfDt1+rrHPtXxcexadKauRJL6eQgfG7Z0LCrN4boLRawR4S9gjIh/Q==}
-    dev: false
-
-  /@codexteam/icons@0.0.5:
-    resolution: {integrity: sha512-s6H2KXhLz2rgbMZSkRm8dsMJvyUNZsEjxobBEg9ztdrb1B2H3pEzY6iTwI4XUPJWJ3c3qRKwV4TrO3J5jUdoQA==}
-    dev: false
-
-  /@codexteam/icons@0.0.6:
-    resolution: {integrity: sha512-L7Q5PET8PjKcBT5wp7VR+FCjwCi5PUp7rd/XjsgQ0CI5FJz0DphyHGRILMuDUdCW2MQT9NHbVr4QP31vwAkS/A==}
-    dev: false
-
   /@commitlint/cli@18.4.3(typescript@5.2.2):
     resolution: {integrity: sha512-zop98yfB3A6NveYAZ3P1Mb6bIXuCeWgnUfVNkH4yhIMQpQfzFwseadazOuSn0OOfTt0lWuFauehpm9GcqM5lww==}
     engines: {node: '>=v18'}
@@ -609,38 +573,8 @@ packages:
       chalk: 4.1.2
     dev: true
 
-  /@editorjs/delimiter@1.4.0:
-    resolution: {integrity: sha512-i1Wm3UQsVisM7Fh9focJ1a4kX2l7IxO3zrEd+GmYoPVaNwxb/63GLNbGfCCGZBuvUyzeUDnc8cdhD1QQGwUZIg==}
-    dependencies:
-      '@codexteam/icons': 0.0.5
-    dev: false
-
   /@editorjs/editorjs@2.28.2:
     resolution: {integrity: sha512-g6V0Nd3W9IIWMpvxDNTssQ6e4kxBp1Y0W4GIf8cXRlmcBp3TUjrgCYJQmNy3l2a6ZzhyBAoVSe8krJEq4g7PQw==}
-    dev: false
-
-  /@editorjs/header@2.8.1:
-    resolution: {integrity: sha512-y0HVXRP7m2W617CWo3fsb5HhXmSLaRpb9GzFx0Vkp/HEm9Dz5YO1s8tC7R8JD3MskwoYh7V0hRFQt39io/r6hA==}
-    dependencies:
-      '@codexteam/icons': 0.0.5
-    dev: false
-
-  /@editorjs/list@1.9.0:
-    resolution: {integrity: sha512-BQEvZW4vi0O0dBvGNljiKxiE89vMSHoM2Tu2OzKUndoj7pY9AxqpgCh1qvwIVsJAlG4Lbt/vBFQilnoStMmI6A==}
-    dependencies:
-      '@codexteam/icons': 0.0.4
-    dev: false
-
-  /@editorjs/marker@1.4.0:
-    resolution: {integrity: sha512-5ipEXfL44jTTRzgNp/p/YjMO7jT08S5z4V8qA3FFJTfdhKgQyM3mvP1zpdYKw47ZZpVWMCncvk5Nto3BxihEtg==}
-    dependencies:
-      '@codexteam/icons': 0.0.5
-    dev: false
-
-  /@editorjs/underline@1.1.0:
-    resolution: {integrity: sha512-vQj2ROW1KreD31QHlhaPikmDJGWYzRBusN4Zyfwl9nIIQCByt4S8fZQpsrRvH4sct5mkirsHllNT00rJlqHK7Q==}
-    dependencies:
-      '@codexteam/icons': 0.0.6
     dev: false
 
   /@emoji-mart/data@1.1.2:
@@ -3031,20 +2965,6 @@ packages:
     dependencies:
       is-obj: 2.0.0
     dev: true
-
-  /editorjs-alert@1.1.3:
-    resolution: {integrity: sha512-5z4Vsvu6hlJnSr0tI0Qj9wF/s0L6MNFX5C4SNKbv5CDyMxc6vCzH2bZkJk9QQ/wKQiRCXPrAlw93OlCylKQBNA==}
-    dev: false
-
-  /editorjs-text-color-plugin@2.0.4:
-    resolution: {integrity: sha512-QpibTkOxs3ndlKNOLT8ZlC4ktc3/eKIajiLO0Jm/hh9AJug/CrM1/rAvHy+ldfUKavbWeI+YZvgjad0YTyoyGw==}
-    dev: false
-
-  /editorjs-toggle-block@0.3.14:
-    resolution: {integrity: sha512-TtpKv+bWr0vyLJ/4EdcXbvFeJul/Mx1fq/pycvxZxHxoUzVtK6EVAW6No1EwIc6cI40w9ZPnGUvltg8nkr6LOA==}
-    dependencies:
-      uuid: 9.0.1
-    dev: false
 
   /electron-to-chromium@1.4.577:
     resolution: {integrity: sha512-/5xHPH6f00SxhHw6052r+5S1xO7gHNc89hV7tqlvnStvKbSrDqc/u6AlwPvVWWNj+s4/KL6T6y8ih+nOY0qYNA==}
@@ -6335,11 +6255,6 @@ packages:
 
   /util-deprecate@1.0.2:
     resolution: {integrity: sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==}
-
-  /uuid@9.0.1:
-    resolution: {integrity: sha512-b+1eJOlsR9K8HJpow9Ok3fiWOWSIcIzXodvv0rQjVoOVNpWMpxf1wZNpt4y9h10odCNrqnYp1OBzRktckBe3sA==}
-    hasBin: true
-    dev: false
 
   /v8-to-istanbul@9.2.0:
     resolution: {integrity: sha512-/EH/sDgxU2eGxajKdwLCDmQ4FWq+kpi3uCmBGpw1xJtnAxEjlD8j8PEiGWpCIMIs3ciNAgH0d3TTJiUkYzyZjA==}
