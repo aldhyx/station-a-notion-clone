@@ -11,7 +11,7 @@ export default function Editor() {
   const uuid = params.uuid as string
 
   const { delayedCallback } = useDebounceCallback(1000)
-  const { updateDocAsync, doc, loadingDoc } = useDocStore()
+  const { updateDocAsync, doc, loadingDoc, isLocked } = useDocStore()
   const [data, setData] = useState<OutputData | undefined>()
 
   const updateHandler = (output: unknown) =>
@@ -41,6 +41,7 @@ export default function Editor() {
         }}
         data={init}
         placeholder="Press tab or click + button to insert commands..."
+        readOnly={isLocked}
       />
     </div>
   )

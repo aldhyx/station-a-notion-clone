@@ -11,7 +11,7 @@ import { COLOR_AND_GRADIENT } from "@/constants/color-gradient"
 export default function Action() {
   const params = useParams()
   const uuid = params.uuid as string
-  const { loadingDoc, doc, updateDocAsync } = useDocStore()
+  const { loadingDoc, doc, updateDocAsync, isLocked } = useDocStore()
   if (loadingDoc || (doc?.emoji && doc.image_url)) return null
 
   const bgColor = doc?.image_url
@@ -26,6 +26,7 @@ export default function Action() {
             variant="secondary"
             size="sm"
             className="h-auto p-[6px] text-xs font-normal"
+            disabled={isLocked}
           >
             <SmilePlusIcon className="mr-2 h-4 w-4" />
             Add icon
@@ -43,6 +44,7 @@ export default function Action() {
               const random = Math.floor(Math.random() * COLOR_AND_GRADIENT.length)
               updateDocAsync(uuid, { image_url: COLOR_AND_GRADIENT[random].name })
             }}
+            disabled={isLocked}
           >
             <ImagePlusIcon className="mr-2 h-4 w-4" />
             Add cover

@@ -6,19 +6,24 @@ import {
   CheckCircle2Icon,
   FileIcon,
   LoaderIcon,
+  LockIcon,
   MoreHorizontalIcon,
   Share2Icon,
   StarIcon,
+  UnlockIcon,
   XCircleIcon,
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import HeaderMoreMenuPopover from "./popover/header-more-menu-popover"
+import { Switch } from "@/components/ui/switch"
+import { useDocStore } from "@/store/use-doc-store"
 
 export default function DocDetailHeader() {
   const path = usePathname()
   const params = useParams()
   const segment = useSelectedLayoutSegment()
   const { saveStatus, title, doc, showLoadingIndicator, emoji } = useHeader()
+  const { toggleLock, isLocked } = useDocStore()
 
   if (segment === "doc" && path.startsWith("/doc") && params.uuid) {
     return (
@@ -59,6 +64,12 @@ export default function DocDetailHeader() {
                 <span className="inline-block">Save failed</span>
               </p>
             )}
+
+            {isLocked && (
+              <p className="flex items-center justify-center gap-x-2 text-sm">
+                <LockIcon className="h-4 w-4" />
+              </p>
+            )}
           </div>
         )}
 
@@ -67,7 +78,7 @@ export default function DocDetailHeader() {
             <Button
               variant="ghost"
               size="sm"
-              className="ml-2 hidden h-7 text-sm font-normal md:block"
+              className="hidden h-7 text-sm font-normal md:block"
             >
               Share
             </Button>
