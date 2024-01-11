@@ -112,3 +112,7 @@ mark.cdx-marker {
 code.inline-code {
   @apply bg-destructive/10 font-mono text-red-500;
 }
+
+.ce-stub {
+  @apply rounded-md border-none bg-secondary p-3  text-muted-foreground shadow-none;
+}

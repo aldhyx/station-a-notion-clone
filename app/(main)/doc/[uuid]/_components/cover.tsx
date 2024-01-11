@@ -62,7 +62,7 @@ export default function Cover() {
               </div>
             )}
 
-            {bgColor && (
+            {bgColor && !isLocked && (
               <div className="absolute bottom-4 right-4 flex gap-x-2">
                 <ColorGradientDialog>
                   <Button
