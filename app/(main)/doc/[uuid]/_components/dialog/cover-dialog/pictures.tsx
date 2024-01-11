@@ -6,7 +6,7 @@ import { useGalleryStore } from "@/store/use-gallery-store"
 import { CheckIcon, ImageOffIcon, TrashIcon } from "lucide-react"
 import Image from "next/image"
 import { useParams } from "next/navigation"
-import DeleteImageDialog from "../delete-image-dialog/delete-image-dialog"
+import DeleteImageDialog from "../delete-image-dialog"
 
 export default function Pictures() {
   const params = useParams()

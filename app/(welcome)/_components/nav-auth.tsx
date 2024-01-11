@@ -1,4 +1,4 @@
-import UserPopover from "@/app/(main)/_components/popovers/user-popover"
+import UserPopover from "@/app/(main)/_components/popover/user-popover"
 import { Button } from "@/components/ui/button"
 import { GithubIcon } from "lucide-react"
 import Link from "next/link"

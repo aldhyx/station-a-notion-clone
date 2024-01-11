@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button"
 import { Skeleton } from "@/components/ui/skeleton"
 import { useUserStore } from "@/store/use-user-store"
 import { ChevronsUpDownIcon } from "lucide-react"
-import UserPopover from "./popovers/user-popover"
+import UserPopover from "./popover/user-popover"
 
 export default function SidebarUser() {
   const { fullname, username } = useUserStore()

@@ -1,7 +1,7 @@
 import { PropsWithChildren } from "react"
 
 import FullScreenLoading from "@/components/full-screen-loading"
-import { ThemeProvider } from "@/components/providers/theme.provider"
+import { ThemeProvider } from "@/components/provider/theme.provider"
 import { createClient } from "@/lib/supabase/server"
 import dynamic from "next/dynamic"
 import { cookies } from "next/headers"

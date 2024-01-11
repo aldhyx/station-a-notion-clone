@@ -14,9 +14,9 @@ import {
   Trash2Icon,
 } from "lucide-react"
 import React, { PropsWithChildren, useRef } from "react"
-import MoveToTrashDialog from "../dialogs/move-trash-dialog"
-import NewDocDialog from "../dialogs/new-doc-dialog"
-import RenameDialog from "../dialogs/rename-dialog"
+import MoveToTrashDialog from "@/components/dialog/move-trash-dialog"
+import NewDocDialog from "../dialog/new-doc-dialog"
+import RenameDialog from "../dialog/rename-dialog"
 import { type EmitActionStatus } from "@/types"
 import { useCopyToClipboard, useMediaQuery } from "usehooks-ts"
 import { timeAgo } from "@/lib/date"

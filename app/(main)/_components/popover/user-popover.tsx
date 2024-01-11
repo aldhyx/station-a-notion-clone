@@ -1,6 +1,6 @@
 "use client"
 
-import SignOutDialog from "@/components/dialogs/sign-out-dialog"
+import SignOutDialog from "@/components/dialog/sign-out-dialog"
 import { Button } from "@/components/ui/button"
 import {
   Popover,
