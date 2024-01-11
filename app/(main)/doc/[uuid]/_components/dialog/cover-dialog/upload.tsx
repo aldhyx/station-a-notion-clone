@@ -1,7 +1,7 @@
 import { Input } from "@/components/ui/input"
 import { ImageIcon, LoaderIcon } from "lucide-react"
 import Image from "next/image"
-import useUpload from "../../_hooks/use-upload"
+import useUpload from "../../../_hooks/use-upload"
 
 export default function Upload() {
   const { getInputProps, getRootProps, preview, uploading } = useUpload()
