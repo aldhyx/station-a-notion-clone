@@ -104,11 +104,7 @@ export default function LayoutWrapper({
           isMobile && "!left-0 !w-full",
         )}
       >
-        <Header
-          minimize={minimize}
-          isMobile={isMobile}
-          maximizeHandler={maximizeHandler}
-        />
+        <Header maximizeHandler={maximizeHandler} />
       </div>
 
       <main

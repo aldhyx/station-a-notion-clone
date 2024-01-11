@@ -48,6 +48,5 @@ export const useHeader = () => {
       ? "Getting started"
       : segment,
     saveStatus,
-    isDetailDocPage: params.uuid,
   }
 }
