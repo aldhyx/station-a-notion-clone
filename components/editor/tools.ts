@@ -12,7 +12,7 @@ export const tools: Record<string, ToolConstructable | ToolSettings> = {
     class: Heading,
     inlineToolbar: ["italic"],
   },
-  list: {
+  nestedList: {
     class: NestedList,
     inlineToolbar: true,
     config: {
