@@ -6,7 +6,11 @@
 
 /* Editor blocktool item */
 .ce-popover-item {
-  @apply rounded-md bg-background p-1 text-primary hover:!bg-secondary;
+  @apply rounded-md bg-background p-1 text-primary hover:!bg-muted-foreground/10;
+}
+.ce-popover-item--active,
+.ce-inline-tool--active {
+  @apply bg-muted-foreground/20 text-primary;
 }
 .ce-popover-item__icon {
   @apply mr-2 rounded-md border border-input bg-background text-primary shadow-none;
@@ -16,7 +20,7 @@
   @apply h-4 w-4;
 }
 .ce-popover-item__title {
-  @apply text-sm font-normal;
+  @apply text-sm font-medium;
 }
 .ce-popover-item.ce-popover-item--confirmation {
   @apply bg-destructive hover:!bg-destructive/90;
@@ -25,7 +29,7 @@
 /* Editor trigger button */
 .ce-toolbar__plus,
 .ce-toolbar__settings-btn {
-  @apply h-8 w-8 rounded-md border border-input bg-background text-primary shadow-sm hover:!bg-primary/10 dark:bg-stone-800;
+  @apply h-8 w-8 rounded-md border border-input bg-background text-primary shadow-sm hover:!bg-muted-foreground/10 dark:bg-stone-800;
 }
 
 /* Editor block popover */
@@ -40,7 +44,7 @@
 /* Editor block */
 .ce-paragraph,
 .ce-heading {
-  @apply selection:bg-muted-foreground/30;
+  @apply selection:bg-muted-foreground/20;
 }
 .ce-block--selected .ce-block__content {
   @apply bg-muted-foreground/30;
@@ -68,10 +72,10 @@
   @apply border !border-input bg-background text-primary shadow-sm dark:bg-stone-800;
 }
 .ce-inline-tool {
-  @apply w-6 py-1 hover:!bg-primary/10;
+  @apply w-6 py-1 hover:!bg-muted-foreground/10;
 }
 .ce-inline-toolbar__dropdown {
-  @apply hover:!bg-primary/10;
+  @apply hover:!bg-muted-foreground/10;
 }
 .ce-inline-toolbar__dropdown-content svg.lc {
   @apply h-4 w-4;
@@ -86,7 +90,7 @@
   @apply capitalize text-muted-foreground;
 }
 .ce-conversion-tool {
-  @apply p-1 text-sm font-normal text-primary;
+  @apply p-1 text-sm font-medium text-primary;
 }
 .ce-conversion-tool__icon {
   @apply mr-2 rounded-md border border-input bg-background text-primary shadow-none;
@@ -97,5 +101,5 @@
 }
 
 .ce-conversion-tool.ce-conversion-tool--focused {
-  @apply !bg-secondary;
+  @apply !bg-muted-foreground/20;
 }
