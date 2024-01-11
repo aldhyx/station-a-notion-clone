@@ -110,9 +110,12 @@ mark.cdx-marker {
 }
 /* Inline code tool*/
 code.inline-code {
-  @apply bg-destructive/10 font-mono text-red-500;
+  @apply bg-destructive/10 font-mono font-normal text-red-500;
+}
+code.inline-code b {
+  @apply !font-normal;
 }
 
 .ce-stub {
-  @apply rounded-md border-none bg-secondary p-3  text-muted-foreground shadow-none;
+  @apply rounded-md border-none bg-secondary p-3 text-muted-foreground shadow-none;
 }
