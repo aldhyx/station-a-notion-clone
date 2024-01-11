@@ -46,8 +46,8 @@ export default function LayoutWrapper({
         data-state={minimize ? "closed" : "open"}
         ref={sidebarRef}
         className={cn(
-          "group/sidebar fixed z-50 min-h-full w-60 overflow-y-auto bg-stone-100 p-1 dark:bg-stone-900",
-          "border-r data-[state=closed]:-translate-x-96",
+          "group/sidebar fixed z-50 min-h-full w-60 overflow-y-auto bg-stone-50 p-1 dark:bg-stone-900",
+          "border-r border-r-secondary data-[state=closed]:-translate-x-96",
           "duration-300",
           isMobile && "data-[state=open]:w-[80%]",
         )}
@@ -99,7 +99,7 @@ export default function LayoutWrapper({
         ref={topbarRef}
         className={cn(
           "fixed left-60 right-0 top-0 w-[calc(100vw-240px)] bg-background",
-          "z-10 border-b data-[state=closed]:left-0 data-[state=closed]:w-full",
+          "z-10 border-b border-b-secondary data-[state=closed]:left-0 data-[state=closed]:w-full",
           "duration-300",
           isMobile && "!left-0 !w-full",
         )}

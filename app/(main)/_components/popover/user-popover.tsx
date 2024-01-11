@@ -42,7 +42,7 @@ export default function UserPopover({ children, fullname, username }: Props) {
         alignOffset={pathname === "/" ? 0 : 8}
       >
         <div className="w-72">
-          <section className="border-b p-3 ">
+          <section className="border-b border-b-secondary p-3 ">
             <div className="flex gap-x-1 pr-1">
               <div className="relative mr-2 flex h-[40px] w-[40px] items-center justify-center rounded-full bg-secondary-foreground">
                 <span className="text-xl font-medium uppercase text-secondary">

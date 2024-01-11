@@ -31,7 +31,7 @@ export default function HeaderMoreMenuPopover({ children }: PropsWithChildren) {
       <PopoverTrigger asChild>{children}</PopoverTrigger>
       <PopoverContent className="max-w-[200px] overflow-hidden p-0 pt-1" align="end">
         <div>
-          <section className="border-b px-1 pb-1">
+          <section className="border-b border-b-secondary px-1 pb-1">
             <Button
               size="icon"
               variant="ghost"
@@ -58,7 +58,7 @@ export default function HeaderMoreMenuPopover({ children }: PropsWithChildren) {
             )}
           </section>
 
-          <section className="border-b px-1 py-1">
+          <section className="border-b border-b-secondary px-1 py-1">
             <div className="w-full ">
               <label
                 className="flex h-8 w-full cursor-pointer items-center justify-between px-2 text-xs font-normal"

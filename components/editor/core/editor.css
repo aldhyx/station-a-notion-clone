@@ -6,14 +6,14 @@
 
 /* Editor blocktool item */
 .ce-popover-item {
-  @apply rounded-md bg-background p-1 text-primary hover:!bg-muted-foreground/10;
+  @apply rounded-md bg-background p-1 text-primary hover:!bg-secondary;
 }
 .ce-popover-item--active,
 .ce-inline-tool--active {
   @apply bg-muted-foreground/20 text-primary;
 }
 .ce-popover-item__icon {
-  @apply mr-2 rounded-md border border-input bg-background text-primary shadow-none;
+  @apply mr-2 rounded-md border border-secondary bg-background text-primary shadow-none;
 }
 /* this is custom icon from lucide icon */
 .ce-popover-item__icon svg.lc {
@@ -29,12 +29,12 @@
 /* Editor trigger button */
 .ce-toolbar__plus,
 .ce-toolbar__settings-btn {
-  @apply h-8 w-8 rounded-md border border-input bg-background text-primary shadow-sm hover:!bg-muted-foreground/10 dark:bg-stone-800;
+  @apply h-8 w-8 rounded-md border border-secondary bg-background text-primary shadow-sm hover:!bg-secondary dark:bg-stone-800;
 }
 
 /* Editor block popover */
 .ce-popover {
-  @apply rounded-md border border-input bg-background p-1 shadow-sm;
+  @apply rounded-md border border-secondary bg-background p-1 shadow-sm;
 }
 
 .ce-popover__nothing-found-message {
@@ -52,7 +52,7 @@
 
 /* Editor block popover search */
 .cdx-search-field {
-  @apply rounded-md border border-input bg-transparent text-primary;
+  @apply rounded-md border border-secondary bg-transparent text-primary;
 }
 
 .cdx-search-field__input {
@@ -69,31 +69,36 @@
 
 /* Editor inline toolbar*/
 .ce-inline-toolbar {
-  @apply border !border-input bg-background text-primary shadow-sm dark:bg-stone-800;
+  @apply border !border-secondary bg-background text-primary shadow-sm dark:bg-stone-800;
 }
 .ce-inline-tool {
-  @apply w-6 py-1 hover:!bg-muted-foreground/10;
+  @apply w-7 py-1 hover:!bg-secondary dark:hover:!bg-muted-foreground/10;
 }
 .ce-inline-toolbar__dropdown {
-  @apply hover:!bg-muted-foreground/10;
+  @apply border-r-secondary hover:!bg-secondary dark:border-r-muted-foreground/10 dark:hover:!bg-muted-foreground/10;
 }
 .ce-inline-toolbar__dropdown-content svg.lc {
   @apply h-4 w-4;
 }
 
 /* Editor convertion tool*/
-.ce-conversion-toolbar {
-  @apply rounded-md border border-input bg-background shadow-sm;
+.ce-conversion-toolbar__tools {
+  @apply p-1;
 }
-
+.ce-conversion-toolbar {
+  @apply rounded-md border border-secondary bg-background shadow-sm;
+}
 .ce-conversion-toolbar__label {
   @apply capitalize text-muted-foreground;
 }
+.ce-conversion-tool:not(:last-of-type) {
+  @apply mb-[1px];
+}
 .ce-conversion-tool {
-  @apply p-1 text-sm font-medium text-primary;
+  @apply rounded-md p-1 text-sm font-medium text-primary hover:bg-secondary;
 }
 .ce-conversion-tool__icon {
-  @apply mr-2 rounded-md border border-input bg-background text-primary shadow-none;
+  @apply mr-2 rounded-md border border-secondary bg-background text-primary shadow-none;
 }
 /* this is custom icon from lucide icon */
 .ce-conversion-tool__icon svg.lc {
@@ -101,7 +106,7 @@
 }
 
 .ce-conversion-tool.ce-conversion-tool--focused {
-  @apply !bg-muted-foreground/20;
+  @apply !bg-muted-foreground/20 shadow-none;
 }
 
 /* Marker tool*/

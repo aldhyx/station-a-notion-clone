@@ -46,7 +46,9 @@ export default function SettingsPage() {
       </ChangeProfileDialog>
 
       <section>
-        <h2 className="mb-2 border-b pb-2 text-xs font-medium ">My setting</h2>
+        <h2 className="mb-2 border-b border-b-secondary pb-2 text-xs font-medium ">
+          My setting
+        </h2>
         <ModeToggle>
           <Button
             size="lg"
@@ -71,7 +73,9 @@ export default function SettingsPage() {
       </section>
 
       <section>
-        <h2 className="mb-2 border-b pb-2 text-xs font-medium">Accounts security</h2>
+        <h2 className="mb-2 border-b border-b-secondary pb-2 text-xs font-medium">
+          Accounts security
+        </h2>
 
         <ChangeEmailDialog>
           <Button
@@ -107,7 +111,9 @@ export default function SettingsPage() {
       </section>
 
       <section>
-        <h2 className="mb-2 border-b pb-2 text-xs font-medium">Support</h2>
+        <h2 className="mb-2 border-b border-b-secondary pb-2 text-xs font-medium">
+          Support
+        </h2>
 
         <SignOutDialog scope="others">
           <Button
