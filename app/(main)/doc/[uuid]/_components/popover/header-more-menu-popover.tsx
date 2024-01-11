@@ -6,7 +6,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover"
 import { useDocStore } from "@/store/use-doc-store"
-import { CopyIcon, LockIcon, Trash2Icon } from "lucide-react"
+import { CopyIcon, LockIcon, Trash2Icon, UnlockIcon } from "lucide-react"
 import { PropsWithChildren, useRef } from "react"
 import MoveToTrashDialog from "@/components/dialog/move-trash-dialog"
 import { useCopyToClipboard } from "usehooks-ts"
@@ -59,14 +59,20 @@ export default function HeaderMoreMenuPopover({ children }: PropsWithChildren) {
           </section>
 
           <section className="border-b px-1 py-1">
-            <div className="flex h-8 w-full items-center justify-start px-2 text-xs font-normal">
-              <LockIcon className="mr-2 h-4 w-4" />
-              {isLocked ? "Locked" : "Unlock"}
-
+            <div className="w-full ">
               <label
-                className="ml-auto flex items-center justify-center gap-x-2 text-sm"
+                className="flex h-8 w-full cursor-pointer items-center justify-between px-2 text-xs font-normal"
                 htmlFor="toggle-lock"
               >
+                <span className="flex">
+                  {isLocked ? (
+                    <UnlockIcon className="mr-2" size={16} />
+                  ) : (
+                    <LockIcon className="mr-2" size={16} />
+                  )}
+                  {isLocked ? "Unlock page" : "Lock page"}
+                </span>
+
                 <Switch
                   checked={isLocked}
                   id="toggle-lock"
