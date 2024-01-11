@@ -12,7 +12,7 @@ import { useParams } from "next/navigation"
 export default function Cover() {
   const params = useParams()
   const uuid = params.uuid as string
-  const { loadingDoc, doc, updateDocAsync } = useDocStore()
+  const { loadingDoc, doc, updateDocAsync, isLocked } = useDocStore()
   const emoji = doc?.emoji ? (doc.emoji as Emoji) : null
 
   const bgColor = doc?.image_url
@@ -51,12 +51,13 @@ export default function Cover() {
                   onEmojiSelect={(emoji, event) => updateDocAsync(uuid, { emoji })}
                   onClickRemove={() => updateDocAsync(uuid, { emoji: null })}
                 >
-                  <span
+                  <button
                     role="button"
                     className="block rounded-md py-2 text-5xl hover:bg-primary/10 md:text-6xl"
+                    disabled={isLocked}
                   >
                     {emoji.native}
-                  </span>
+                  </button>
                 </EmojiPickerPopover>
               </div>
             )}
@@ -68,6 +69,7 @@ export default function Cover() {
                     variant="secondary"
                     size="sm"
                     className="h-auto p-[6px] text-xs font-normal transition md:opacity-0 md:group-hover/cover:opacity-100"
+                    disabled={isLocked}
                   >
                     <ImagePlusIcon className="mr-2 h-4 w-4" />
                     Change cover
@@ -79,6 +81,7 @@ export default function Cover() {
                   size="sm"
                   className="h-auto p-[6px] text-xs font-normal transition md:opacity-0 md:group-hover/cover:opacity-100"
                   onClick={() => updateDocAsync(uuid, { image_url: null })}
+                  disabled={isLocked}
                 >
                   <Trash2Icon className="h-4 w-4" />
                 </Button>

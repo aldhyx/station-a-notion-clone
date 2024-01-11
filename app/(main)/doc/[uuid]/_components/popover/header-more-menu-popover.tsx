@@ -11,11 +11,12 @@ import { PropsWithChildren, useRef } from "react"
 import MoveToTrashDialog from "@/components/dialog/move-trash-dialog"
 import { useCopyToClipboard } from "usehooks-ts"
 import { timeAgo } from "@/lib/date"
+import { Switch } from "@/components/ui/switch"
 
 export default function HeaderMoreMenuPopover({ children }: PropsWithChildren) {
   const [_, copy] = useCopyToClipboard()
   const ref = useRef<HTMLButtonElement | null>(null)
-  const { doc } = useDocStore()
+  const { doc, isLocked, toggleLock } = useDocStore()
 
   const createdAt = doc
     ? timeAgo(doc.created_at as unknown as Date, { withAgo: true })
@@ -44,14 +45,6 @@ export default function HeaderMoreMenuPopover({ children }: PropsWithChildren) {
               Copy link
             </Button>
 
-            <Button
-              variant="ghost"
-              className="h-8 w-full items-center justify-start px-2 text-xs font-normal"
-            >
-              <LockIcon className="mr-2 h-4 w-4" />
-              Lock
-            </Button>
-
             {doc && !doc.is_deleted && (
               <MoveToTrashDialog uuid={doc?.uuid!}>
                 <Button
@@ -63,6 +56,26 @@ export default function HeaderMoreMenuPopover({ children }: PropsWithChildren) {
                 </Button>
               </MoveToTrashDialog>
             )}
+          </section>
+
+          <section className="border-b px-1 py-1">
+            <div className="flex h-8 w-full items-center justify-start px-2 text-xs font-normal">
+              <LockIcon className="mr-2 h-4 w-4" />
+              {isLocked ? "Locked" : "Unlock"}
+
+              <label
+                className="ml-auto flex items-center justify-center gap-x-2 text-sm"
+                htmlFor="toggle-lock"
+              >
+                <Switch
+                  checked={isLocked}
+                  id="toggle-lock"
+                  onClick={() => {
+                    toggleLock()
+                  }}
+                />
+              </label>
+            </div>
           </section>
 
           <section className="p-3">

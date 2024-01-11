@@ -10,7 +10,7 @@ export default function Title() {
   const uuid = params.uuid as string
 
   const textRef = useRef<HTMLTextAreaElement | null>(null)
-  const { loadingDoc, doc, updateDocAsync } = useDocStore()
+  const { loadingDoc, doc, updateDocAsync, isLocked } = useDocStore()
   const { delayedCallback } = useDebounceCallback(1000)
 
   const changeHandler = (e: React.ChangeEvent<HTMLTextAreaElement>) =>
@@ -42,6 +42,7 @@ export default function Title() {
         placeholder="Untitled"
         defaultValue={defaultValue}
         onChange={changeHandler}
+        disabled={isLocked}
       />
     </div>
   )

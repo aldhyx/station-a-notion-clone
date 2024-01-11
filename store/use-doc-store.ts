@@ -15,6 +15,7 @@ type DocState = {
   >
   loadingDoc: boolean
   doc: Page | null
+  isLocked: boolean
 }
 
 type DocAction = {
@@ -29,6 +30,7 @@ type DocAction = {
     doc: Page
   }): void
   _updateDoc(doc: Page): void
+  toggleLock: () => void
 }
 
 const initialState: DocState = {
@@ -36,10 +38,15 @@ const initialState: DocState = {
   loadingDoc: true,
   doc: null,
   failedSaveData: {},
+  //TODO: persist in db
+  isLocked: false,
 }
 
 export const useDocStore = create<DocState & DocAction>()((set, get) => ({
   ...initialState,
+  toggleLock() {
+    set({ isLocked: !get().isLocked })
+  },
   setSaveStatus(status) {
     set({ saveStatus: status })
   },
