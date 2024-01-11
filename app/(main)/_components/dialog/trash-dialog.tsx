@@ -99,7 +99,7 @@ export default function TrashDialog({ children }: PropsWithChildren) {
                     title="Click to open"
                     key={item.uuid}
                     role="button"
-                    className="relative flex h-9 max-w-full items-center gap-x-2 border-b px-3 transition hover:bg-primary/5"
+                    className="relative flex h-9 max-w-full items-center gap-x-2 border-b border-b-secondary px-3 transition hover:bg-secondary"
                     onClick={() => onClickItemHandler(item.uuid)}
                   >
                     {emoji?.native ? (
