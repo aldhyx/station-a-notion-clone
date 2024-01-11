@@ -1,6 +1,6 @@
 "use client"
 
-import SignOutDialog from "@/components/dialogs/sign-out-dialog"
+import SignOutDialog from "@/components/dialog/sign-out-dialog"
 import ModeToggle from "@/components/mode-toogle"
 import { Button } from "@/components/ui/button"
 import { useUserStore } from "@/store/use-user-store"

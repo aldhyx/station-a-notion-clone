@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button"
 import Image from "next/image"
-import NewDocDialog from "../_components/dialogs/new-doc-dialog"
+import NewDocDialog from "../_components/dialog/new-doc-dialog"
 
 export default function DocPage() {
   return (

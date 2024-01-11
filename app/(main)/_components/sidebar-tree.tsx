@@ -13,7 +13,7 @@ import {
 import { useParams, useRouter } from "next/navigation"
 import { useEffectOnce } from "usehooks-ts"
 import { useSidebarStore } from "../../../store/use-sidebar-store"
-import SidebarMoreMenuPopover from "./popovers/sidebar-more-menu-popover"
+import SidebarMoreMenuPopover from "./popover/sidebar-more-menu-popover"
 import { useLayoutStore } from "@/store/use-layout-store"
 import { getSidebarTreeData } from "@/helper/data.helper"
 

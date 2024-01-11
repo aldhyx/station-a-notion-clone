@@ -1,4 +1,4 @@
-import DeleteDialog from "@/app/(main)/_components/dialogs/delete-dialog"
+import DeleteDialog from "@/app/(main)/_components/dialog/delete-dialog"
 import { Button } from "@/components/ui/button"
 import { useDocStore } from "@/store/use-doc-store"
 import { useTrashStore } from "@/store/use-trash-store"

@@ -8,7 +8,7 @@ import {
 import { useDocStore } from "@/store/use-doc-store"
 import { CopyIcon, LockIcon, Trash2Icon } from "lucide-react"
 import { PropsWithChildren, useRef } from "react"
-import MoveToTrashDialog from "../../../_components/dialogs/move-trash-dialog"
+import MoveToTrashDialog from "@/components/dialog/move-trash-dialog"
 import { useCopyToClipboard } from "usehooks-ts"
 import { timeAgo } from "@/lib/date"
 

@@ -1,8 +1,8 @@
 import { Button } from "@/components/ui/button"
 import { HomeIcon, PlusCircleIcon, SearchIcon, Trash2Icon } from "lucide-react"
-import NewDocDialog from "./dialogs/new-doc-dialog"
-import SearchDialog from "./dialogs/search-dialog"
-import TrashDialog from "./dialogs/trash-dialog"
+import NewDocDialog from "./dialog/new-doc-dialog"
+import SearchDialog from "./dialog/search-dialog"
+import TrashDialog from "./dialog/trash-dialog"
 import { useRouter } from "next/navigation"
 import { useLayoutStore } from "@/store/use-layout-store"
 

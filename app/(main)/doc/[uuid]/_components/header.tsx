@@ -12,7 +12,7 @@ import {
   XCircleIcon,
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import HeaderMoreMenuPopover from "./header-more-menu-popover"
+import HeaderMoreMenuPopover from "./popover/header-more-menu-popover"
 
 export default function DocDetailHeader() {
   const path = usePathname()
