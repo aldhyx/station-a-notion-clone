@@ -103,3 +103,12 @@
 .ce-conversion-tool.ce-conversion-tool--focused {
   @apply !bg-muted-foreground/20;
 }
+
+/* Marker tool*/
+mark.cdx-marker {
+  @apply !bg-yellow-200/90;
+}
+/* Inline code tool*/
+code.inline-code {
+  @apply bg-destructive/10 font-mono text-red-500;
+}
