@@ -35,10 +35,10 @@ export default function Title() {
   if (loadingDoc) return <Title.Skeleton />
 
   return (
-    <div className="relative mx-auto mb-3 max-w-3xl px-4 md:px-0">
+    <div className="relative mx-auto max-w-3xl px-4 md:px-0">
       <TextareaAutosize
         ref={textRef}
-        className="w-full resize-none bg-background text-3xl font-bold selection:bg-muted-foreground/30 focus-visible:outline-none"
+        className="w-full resize-none bg-background text-3xl font-bold selection:bg-muted-foreground/30 focus-visible:outline-none md:text-4xl"
         placeholder="Untitled"
         defaultValue={defaultValue}
         onChange={changeHandler}

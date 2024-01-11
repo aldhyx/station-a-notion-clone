@@ -3,13 +3,13 @@
 }
 
 h1.ce-heading {
-  @apply mb-3 mt-6 text-3xl;
+  @apply mb-1 mt-6 text-3xl;
 }
 h2.ce-heading {
-  @apply my-2 text-2xl;
+  @apply mb-1 mt-5 text-2xl;
 }
 h3.ce-heading {
-  @apply mt-2 text-xl;
+  @apply mb-1 mt-4 text-xl;
 }
 
 .ce-heading[contentEditable="true"][data-placeholder]::before {

@@ -19,7 +19,7 @@ export default function Action() {
     : null
 
   return (
-    <div className="mx-auto mb-8 flex w-full max-w-3xl gap-x-2 px-4 md:px-0">
+    <div className="mx-auto mb-6 flex w-full max-w-3xl gap-x-2 px-4 md:px-0">
       {!doc?.emoji && (
         <EmojiPickerPopover onEmojiSelect={emoji => updateDocAsync(uuid, { emoji })}>
           <Button
