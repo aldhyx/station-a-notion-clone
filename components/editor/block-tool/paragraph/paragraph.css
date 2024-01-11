@@ -1,0 +1,45 @@
+.ce-paragraph {
+  @apply leading-6 outline-none;
+}
+
+.ce-paragraph[data-placeholder]:empty::before {
+  @apply font-normal text-primary opacity-0 content-[attr(data-placeholder)];
+}
+
+/** Show placeholder at the first paragraph if Editor is empty */
+.codex-editor--empty .ce-block:first-child .ce-paragraph[data-placeholder]:empty::before {
+  @apply opacity-100;
+}
+
+.codex-editor--toolbox-opened
+  .ce-block:first-child
+  .ce-paragraph[data-placeholder]:empty::before,
+.codex-editor--empty
+  .ce-block:first-child
+  .ce-paragraph[data-placeholder]:empty:focus::before {
+  @apply opacity-0;
+}
+
+.ce-paragraph p:first-of-type {
+  @apply mt-0;
+}
+
+.ce-paragraph p:last-of-type {
+  @apply mb-0;
+}
+
+.ce-paragraph--right {
+  @apply text-right;
+}
+
+.ce-paragraph--left {
+  @apply text-left;
+}
+
+.ce-paragraph--center {
+  @apply text-center;
+}
+
+.ce-paragraph--justify {
+  @apply text-justify;
+}

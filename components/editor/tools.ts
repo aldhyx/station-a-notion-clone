@@ -1,12 +1,19 @@
 import { ToolConstructable, ToolSettings } from "@editorjs/editorjs"
-import { Heading } from "./block-tool/"
 // @ts-ignore
 import NestedList from "@editorjs/nested-list"
 // @ts-ignore
 import Marker from "@editorjs/marker"
 // @ts-ignore
 import InlineCode from "@editorjs/inline-code"
+
+import { Heading, Paragraph } from "./block-tool/"
+
 export const tools: Record<string, ToolConstructable | ToolSettings> = {
+  paragraph: {
+    //@ts-ignore
+    class: Paragraph,
+    inlineToolbar: true,
+  },
   heading: {
     //@ts-ignore
     class: Heading,
