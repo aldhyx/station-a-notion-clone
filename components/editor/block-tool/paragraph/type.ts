@@ -1,10 +1,12 @@
-import { BlockToolConstructorOptions } from "@editorjs/editorjs"
+import { type BlockToolConstructorOptions } from "@editorjs/editorjs"
+import { type Align } from "../../utility/alignment"
 
 export type ParagraphData = {
   /** Paragraph's content. Can include HTML tags: <a><b><i> */
   text: string
-  alignment: "left" | "right" | "center" | "justify"
+  alignment: Align
 }
+
 export type ParagraphConfig = {
   /** Block's placeholder */
   placeholder?: string

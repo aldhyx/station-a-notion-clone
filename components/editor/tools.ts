@@ -18,6 +18,9 @@ export const tools: Record<string, ToolConstructable | ToolSettings> = {
     //@ts-ignore
     class: Heading,
     inlineToolbar: ["italic"],
+    config: {
+      defaultLevel: 2,
+    },
   },
   nestedList: {
     class: NestedList,
