@@ -60,7 +60,7 @@ export default function SidebarMoreMenuPopover({
             return
           }}
         >
-          <section className="border-b border-b-secondary px-1 pb-1 ">
+          <section className="border-b px-1 pb-1 ">
             <NewDocDialog uuid={uuid} emitActionStatus={emitActionStatusHandler}>
               <Button
                 size="icon"

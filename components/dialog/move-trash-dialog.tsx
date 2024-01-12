@@ -43,7 +43,7 @@ export default function MoveToTrashDialog({ children, uuid, emitActionStatus }: 
             Are you sure, do you want to move this page to trash?
           </DialogDescription>
         </DialogHeader>
-        <DialogFooter className="w-full flex-row gap-0 border-t border-t-secondary">
+        <DialogFooter className="w-full flex-row gap-0 border-t">
           <Button
             type="button"
             size="lg"
@@ -53,7 +53,7 @@ export default function MoveToTrashDialog({ children, uuid, emitActionStatus }: 
           >
             Yes
           </Button>
-          <div className="!m-0 box-border h-full w-[1px] border-r border-r-secondary p-0" />
+          <div className="!m-0 box-border h-full w-[1px] border-r p-0" />
           <DialogClose asChild className="!m-0">
             <Button
               type="button"

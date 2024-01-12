@@ -3,7 +3,9 @@
 .ce-toolbar__content {
   @apply max-w-[unset];
 }
-
+.ce-popover__overlay {
+  @apply bg-stone-900 opacity-30;
+}
 /* Editor blocktool item */
 .ce-popover-item {
   @apply rounded-md bg-background p-1 text-primary hover:!bg-secondary;
@@ -13,7 +15,7 @@
   @apply bg-muted-foreground/20 text-primary;
 }
 .ce-popover-item__icon {
-  @apply mr-2 rounded-md border border-secondary bg-background text-primary shadow-none;
+  @apply mr-2 rounded-md border bg-background text-primary shadow-none;
 }
 /* this is custom icon from lucide icon */
 .ce-popover-item__icon svg.lc {
@@ -29,12 +31,12 @@
 /* Editor trigger button */
 .ce-toolbar__plus,
 .ce-toolbar__settings-btn {
-  @apply h-8 w-8 rounded-md border border-secondary bg-background text-primary shadow-sm hover:!bg-secondary dark:bg-stone-800;
+  @apply h-8 w-8 rounded-md border border-input bg-background text-primary shadow-sm hover:!bg-secondary dark:bg-stone-800;
 }
 
 /* Editor block popover */
 .ce-popover {
-  @apply rounded-md border border-secondary bg-background p-1 shadow-sm;
+  @apply rounded-md border border-input bg-background p-1 shadow-sm;
 }
 
 .ce-popover__nothing-found-message {
@@ -52,7 +54,7 @@
 
 /* Editor block popover search */
 .cdx-search-field {
-  @apply rounded-md border border-secondary bg-transparent text-primary;
+  @apply rounded-md border border-input bg-secondary text-primary;
 }
 
 .cdx-search-field__input {
@@ -69,13 +71,13 @@
 
 /* Editor inline toolbar*/
 .ce-inline-toolbar {
-  @apply border !border-secondary bg-background text-primary shadow-sm dark:bg-stone-800;
+  @apply border border-input bg-background text-primary shadow-sm dark:bg-stone-800;
 }
 .ce-inline-tool {
   @apply w-7 py-1 hover:!bg-secondary dark:hover:!bg-muted-foreground/10;
 }
 .ce-inline-toolbar__dropdown {
-  @apply border-r-secondary hover:!bg-secondary dark:border-r-muted-foreground/10 dark:hover:!bg-muted-foreground/10;
+  @apply border-r hover:!bg-secondary dark:border-r-muted-foreground/10 dark:hover:!bg-muted-foreground/10;
 }
 .ce-inline-toolbar__dropdown-content svg.lc {
   @apply h-4 w-4;
@@ -86,7 +88,7 @@
   @apply p-1;
 }
 .ce-conversion-toolbar {
-  @apply rounded-md border border-secondary bg-background shadow-sm;
+  @apply rounded-md border border-input bg-background shadow-sm;
 }
 .ce-conversion-toolbar__label {
   @apply capitalize text-muted-foreground;
@@ -98,7 +100,7 @@
   @apply rounded-md p-1 text-sm font-medium text-primary hover:bg-secondary;
 }
 .ce-conversion-tool__icon {
-  @apply mr-2 rounded-md border border-secondary bg-background text-primary shadow-none;
+  @apply mr-2 rounded-md border bg-background text-primary shadow-none;
 }
 /* this is custom icon from lucide icon */
 .ce-conversion-tool__icon svg.lc {
@@ -107,6 +109,9 @@
 
 .ce-conversion-tool.ce-conversion-tool--focused {
   @apply !bg-muted-foreground/20 shadow-none;
+}
+.ce-conversion-toolbar__label {
+  @apply m-0 pt-2;
 }
 
 /* Marker tool*/
