@@ -7,45 +7,9 @@ import {
   PasteEvent,
 } from "@editorjs/editorjs"
 import { type HeadingConstructor, type HeadingLevel, type HeadingData } from "./type"
+import Alignment from "../../utility/alignment"
 
 export default class Heading implements BlockTool {
-  /**
-   * Allow Header to be converted to/from other blocks
-   */
-  static get conversionConfig() {
-    return {
-      export: "text", // use 'text' property for other blocks
-      import: "text", // fill 'text' property from other block's export string
-    }
-  }
-
-  /**
-   * Sanitizer Rules
-   */
-  static get sanitize() {
-    return {
-      level: false,
-      text: {},
-    }
-  }
-
-  /**
-   * Returns true to notify core that read-only is supported
-   */
-  static get isReadOnlySupported() {
-    return true
-  }
-
-  /**
-   * Get Tool toolbox settings
-   */
-  static get toolbox(): ToolboxConfig {
-    return {
-      title: "Heading",
-      icon: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" class="lc"><path d="M6 12h12"/><path d="M6 20V4"/><path d="M18 20V4"/></svg>`,
-    }
-  }
-
   /**
    * Editor.js API
    */
@@ -61,7 +25,7 @@ export default class Heading implements BlockTool {
   /**
    * Initial heading data
    */
-  private _initialData
+  private _data
   /**
    * Heading element
    */
@@ -80,7 +44,7 @@ export default class Heading implements BlockTool {
     }
 
     this._config = config || {}
-    this._initialData = this._normalizeData(data)
+    this._data = this._normalizeData(data)
     this._holderNode = this._drawHolderNode()
   }
 
@@ -92,12 +56,14 @@ export default class Heading implements BlockTool {
       return {
         text: data.text || "",
         level: Number(data.level) || this.defaultLevel.level,
+        alignment: data.alignment || Alignment.DEFAULT,
       }
     }
 
     return {
       text: "",
       level: this.defaultLevel.level,
+      alignment: Alignment.DEFAULT,
     }
   }
 
@@ -114,7 +80,7 @@ export default class Heading implements BlockTool {
     /**
      * Add text to block
      */
-    heading.innerHTML = this._initialData.text
+    heading.innerHTML = this._data.text
 
     /**
      * Add styles class
@@ -122,9 +88,16 @@ export default class Heading implements BlockTool {
     heading.classList.add(this._CSS.wrapper)
 
     /**
+     * Add text alignment
+     */
+    heading.dataset.alignment = this._data.alignment
+
+    /**
      * Make tag editable
      */
-    heading.contentEditable = this.readOnly ? "false" : "true"
+    if (!this.readOnly) {
+      heading.contentEditable = "true"
+    }
 
     /**
      * Add Placeholder
@@ -145,13 +118,43 @@ export default class Heading implements BlockTool {
    * Returns header block tunes config
    */
   renderSettings() {
-    return this.levels.map(item => ({
-      icon: item.svg,
-      label: this.api.i18n.t(`Heading ${item.level}`),
-      onActivate: () => this.setLevel(item.level),
-      closeOnActivate: true,
-      isActive: this.currentLevel.level === item.level,
-    }))
+    const settings = []
+    // create level setting
+    for (let i = 0; i < this.levels.length; i++) {
+      const item = this.levels[i]
+      settings.push({
+        icon: item.svg,
+        label: this.api.i18n.t(`Heading ${item.level}`),
+        onActivate: () => this.setLevel(item.level),
+        closeOnActivate: true,
+        isActive: this.data.level === item.level,
+      })
+    }
+
+    // create alignment setting
+    for (let i = 0; i < Alignment.SETTINGS.length; i++) {
+      const item = Alignment.SETTINGS[i]
+      settings.push({
+        icon: item.svg,
+        label: this.api.i18n.t(`Align ${item.name}`),
+        onActivate: () => this.setAlignment(item.name),
+        closeOnActivate: true,
+        isActive: this.data.alignment === item.name,
+      })
+    }
+
+    return settings
+  }
+
+  /**
+   * Callback for Block's settings buttons
+   */
+  setAlignment(alignment: HeadingData["alignment"]) {
+    this.data = {
+      level: this.data.level,
+      text: this.data.text,
+      alignment,
+    }
   }
 
   /**
@@ -161,6 +164,7 @@ export default class Heading implements BlockTool {
     this.data = {
       level: level,
       text: this.data.text,
+      alignment: this.data.alignment,
     }
   }
 
@@ -178,7 +182,8 @@ export default class Heading implements BlockTool {
   save(toolsContent: HTMLHeadingElement): HeadingData {
     return {
       text: toolsContent.innerHTML,
-      level: this.currentLevel.level,
+      level: this.data.level,
+      alignment: this.data.alignment,
     }
   }
 
@@ -190,28 +195,64 @@ export default class Heading implements BlockTool {
     const newData = {
       text: `${this.data.text}${data.text}`,
       level: this.data.level,
+      alignment: this.data.alignment,
     }
 
     this.data = newData
   }
 
   /**
+   * Handle H1-H3 tags on paste to substitute it with header Tool
+   */
+  onPaste(event: PasteEvent) {
+    //@ts-ignore
+    const content = event.detail.data
+    let level = this.defaultLevel.level
+
+    switch (content.tagName) {
+      case "H1":
+        level = 1
+        break
+      case "H2":
+        level = 2
+        break
+      case "H3":
+        level = 3
+        break
+    }
+
+    this.data = {
+      level,
+      text: content.innerHTML,
+      alignment: this.data.alignment,
+    }
+  }
+
+  /**
+   * Get current alignment
+   */
+  get currentAlignment() {
+    return Alignment.currentAlignment(this._holderNode)
+  }
+
+  /**
    * Get current Tools`s data
    */
   get data(): HeadingData {
-    this._initialData.text = this._holderNode.innerHTML
-    this._initialData.level = this.currentLevel.level
+    this._data.text = this._holderNode.innerHTML
+    this._data.level = this.currentLevel.level
+    this._data.alignment = this.currentAlignment
 
-    return this._initialData
+    return this._data
   }
 
   /**
    * Store data in plugin:
-   * - at the this._initialData property
+   * - at the this._data property
    * - at the HTML
    */
   set data(data: HeadingData) {
-    this._initialData = this._normalizeData(data)
+    this._data = this._normalizeData(data)
 
     /**
      * If level is set and block in DOM
@@ -243,7 +284,7 @@ export default class Heading implements BlockTool {
    * Get current level
    */
   get currentLevel(): HeadingLevel {
-    const level = this.levels.find(item => item.level === this._initialData.level)
+    const level = this.levels.find(item => item.level === this._data.level)
     return level ? level : this.defaultLevel
   }
 
@@ -292,38 +333,49 @@ export default class Heading implements BlockTool {
   }
 
   /**
-   * Handle H1-H3 tags on paste to substitute it with header Tool
-   */
-  onPaste(event: PasteEvent) {
-    //@ts-ignore
-    const content = event.detail.data
-    let level = this.defaultLevel.level
-
-    switch (content.tagName) {
-      case "H1":
-        level = 1
-        break
-      case "H2":
-        level = 2
-        break
-      case "H3":
-        level = 3
-        break
-    }
-
-    this.data = {
-      level,
-      text: content.innerHTML,
-    }
-  }
-
-  /**
    * Used by Editor.js paste handling API.
    * Provides configuration to handle H1-H3 tags.
    */
   static get pasteConfig(): PasteConfig {
     return {
       tags: ["H1", "H2", "H3"],
+    }
+  }
+
+  /**
+   * Allow Header to be converted to/from other blocks
+   */
+  static get conversionConfig() {
+    return {
+      export: "text", // use 'text' property for other blocks
+      import: "text", // fill 'text' property from other block's export string
+    }
+  }
+
+  /**
+   * Sanitizer Rules
+   */
+  static get sanitize() {
+    return {
+      level: false,
+      text: {},
+    }
+  }
+
+  /**
+   * Returns true to notify core that read-only is supported
+   */
+  static get isReadOnlySupported() {
+    return true
+  }
+
+  /**
+   * Get Tool toolbox settings
+   */
+  static get toolbox(): ToolboxConfig {
+    return {
+      title: "Heading",
+      icon: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" class="lc"><path d="M6 12h12"/><path d="M6 20V4"/><path d="M18 20V4"/></svg>`,
     }
   }
 }

@@ -1,10 +1,12 @@
-import { BlockToolConstructorOptions } from "@editorjs/editorjs"
+import { type BlockToolConstructorOptions } from "@editorjs/editorjs"
+import { type Align } from "../../utility/alignment"
 
 export type HeadingData = {
   /** Header's content */
   text: string
   /** Header's level from 1 to3 */
   level: number
+  alignment: Align
 }
 
 export type HeadingLevel = {

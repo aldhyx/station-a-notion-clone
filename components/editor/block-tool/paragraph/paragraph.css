@@ -28,18 +28,6 @@
   @apply mb-0;
 }
 
-.ce-paragraph--right {
-  @apply text-right;
-}
-
-.ce-paragraph--left {
-  @apply text-left;
-}
-
-.ce-paragraph--center {
-  @apply text-center;
-}
-
-.ce-paragraph--justify {
-  @apply text-justify;
+.ce-paragraph {
+  @apply data-[alignment=left]:text-left data-[alignment=center]:text-center data-[alignment=right]:text-right data-[alignment=justify]:text-justify;
 }
