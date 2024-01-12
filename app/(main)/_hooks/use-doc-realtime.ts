@@ -33,6 +33,7 @@ export default function useDocRealtime() {
                 is_deleted: doc.is_deleted,
                 created_at: doc.created_at,
                 updated_at: doc.updated_at,
+                is_locked: doc.is_locked,
               },
             })
           }

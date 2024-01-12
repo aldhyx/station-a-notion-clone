@@ -8,7 +8,7 @@ import { create } from "zustand"
 
 type Page = Pick<
   Database["public"]["Tables"]["pages"]["Row"],
-  "uuid" | "title" | "emoji" | "parent_uuid" | "created_at" | "updated_at"
+  "uuid" | "title" | "emoji" | "parent_uuid" | "created_at" | "updated_at" | "is_locked"
 >
 type SidebarAction = {
   childExistInSidebarTree(uuid: string): boolean
@@ -67,7 +67,7 @@ export const useSidebarStore = create<SidebarState & SidebarAction>()((set, get)
     try {
       let query = client
         .from("pages")
-        .select("uuid, title, emoji, parent_uuid, created_at, updated_at")
+        .select("uuid, title, emoji, parent_uuid, created_at, updated_at, is_locked")
 
       if (uuid) query = query.eq("parent_uuid", uuid)
       else query = query.is("parent_uuid", null)

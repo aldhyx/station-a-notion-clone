@@ -6,24 +6,19 @@ import {
   CheckCircle2Icon,
   FileIcon,
   LoaderIcon,
-  LockIcon,
   MoreHorizontalIcon,
   Share2Icon,
   StarIcon,
-  UnlockIcon,
   XCircleIcon,
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import HeaderMoreMenuPopover from "./popover/header-more-menu-popover"
-import { Switch } from "@/components/ui/switch"
-import { useDocStore } from "@/store/use-doc-store"
 
 export default function DocDetailHeader() {
   const path = usePathname()
   const params = useParams()
   const segment = useSelectedLayoutSegment()
   const { saveStatus, title, doc, showLoadingIndicator, emoji } = useHeader()
-  const { toggleLock, isLocked } = useDocStore()
 
   if (segment === "doc" && path.startsWith("/doc") && params.uuid) {
     return (
@@ -44,30 +39,28 @@ export default function DocDetailHeader() {
               <FileIcon className="h-4 w-4 shrink-0" />
             )}
 
-            <p className="block max-w-[130px] truncate pl-1 text-sm">{title}</p>
+            <p className="block max-w-[100px] truncate pl-1 text-sm md:max-w-[250px]">
+              {title}
+            </p>
 
             {saveStatus === "start" && (
               <p className="flex gap-x-1 align-bottom text-xs text-muted-foreground">
                 <LoaderIcon className="inline-block animate-spin" size={14} />
+                <span className="hidden md:block">Saving</span>
               </p>
             )}
 
             {saveStatus === "success" && (
               <p className="flex gap-x-1 align-bottom text-xs text-green-600">
                 <CheckCircle2Icon className="inline-block" size={14} />
+                <span className="hidden md:block">Save success</span>
               </p>
             )}
 
             {saveStatus === "failed" && (
               <p className="flex gap-x-1 align-bottom text-xs text-destructive">
                 <XCircleIcon className="inline-block" size={14} />
-                <span className="inline-block">Save failed</span>
-              </p>
-            )}
-
-            {isLocked && (
-              <p className="flex items-center justify-center gap-x-2 text-sm">
-                <LockIcon className="h-4 w-4" />
+                <span className="hidden md:block">Save failed</span>
               </p>
             )}
           </div>
