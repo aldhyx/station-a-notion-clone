@@ -99,7 +99,7 @@ export default function LayoutWrapper({
         ref={topbarRef}
         className={cn(
           "fixed left-60 right-0 top-0 w-[calc(100vw-240px)] bg-background",
-          "z-10 border-b border-b-secondary data-[state=closed]:left-0 data-[state=closed]:w-full",
+          "z-1 border-b border-b-secondary data-[state=closed]:left-0 data-[state=closed]:w-full",
           "duration-300",
           isMobile && "!left-0 !w-full",
         )}

@@ -42,7 +42,7 @@ export default function SearchDialog({ children }: Props) {
   return (
     <Dialog>
       <DialogTrigger asChild>{children}</DialogTrigger>
-      <DialogContent className="top-[5%] flex w-[90%] translate-y-[0] flex-col gap-0 rounded-xl bg-background p-0 md:!max-w-xl">
+      <DialogContent className="top-[5%] flex w-[90%] translate-y-[0] flex-col gap-0 rounded-xl p-0 md:!max-w-xl">
         <SearchDialog.Title />
         <div className="px-3 pb-3">
           <Input
@@ -73,7 +73,7 @@ export default function SearchDialog({ children }: Props) {
                   <div
                     key={item.uuid}
                     role="button"
-                    className="group flex h-9 max-w-full items-center gap-x-2 border-b border-b-secondary px-3 transition hover:bg-secondary"
+                    className="group flex h-9 max-w-full items-center gap-x-2 border-b px-3 transition first-of-type:border-t hover:bg-secondary"
                     onClick={() => onClickItemHandler(item.uuid)}
                   >
                     {emoji?.native ? (
@@ -144,14 +144,12 @@ SearchDialog.EmptySearchResult = function EmptySearch(props: {
 }) {
   if (props.isShow) {
     return (
-      <div className="flex h-28 items-center justify-center text-muted-foreground">
-        <p className="text-sm">
-          No result found for{" "}
-          <span className="inline-block max-w-[100px] truncate align-middle font-medium italic text-primary">
-            {props.keyword}
-          </span>
-        </p>
-      </div>
+      <p className="flex h-28  items-center justify-center text-sm text-muted-foreground">
+        No result found for{" "}
+        <span className="ml-1 max-w-[100px] truncate align-middle font-medium italic text-primary">
+          {props.keyword}
+        </span>
+      </p>
     )
   }
   return null
@@ -183,14 +181,14 @@ SearchDialog.LoadMore = function LoadMore(props: {
         <div className="grid place-items-center py-3">
           <Button
             type="button"
-            variant="secondary"
+            variant="outline"
             size="sm"
-            className="h-9 font-normal"
+            className="font-normal"
             disabled={props.loading}
             onClick={props.onClickHandler}
           >
+            {props.loading && <LoaderIcon className="mr-2 h-4 w-4 animate-spin" />}
             Load more
-            {props.loading && <LoaderIcon className="ml-2 h-4 w-4 animate-spin" />}
           </Button>
         </div>
       )}
