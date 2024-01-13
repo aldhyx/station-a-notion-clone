@@ -9,7 +9,7 @@ import {
 import { type HeadingConstructor, type HeadingLevel, type HeadingData } from "./type"
 import Alignment from "../../utility/alignment"
 
-export default class Heading implements BlockTool {
+export default class HeadingBlock implements BlockTool {
   /**
    * Editor.js API
    */

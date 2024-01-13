@@ -1,4 +1,4 @@
-import Heading from "./heading/heading"
-import Paragraph from "./paragraph/paragraph"
+import HeadingBlock from "./heading/heading"
+import ParagraphBlock from "./paragraph/paragraph"
 
-export { Heading, Paragraph }
+export { HeadingBlock, ParagraphBlock }

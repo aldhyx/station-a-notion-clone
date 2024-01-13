@@ -3,7 +3,7 @@ import "./paragraph.css"
 import { type ParagraphConstructor, type ParagraphData } from "./type"
 import Alignment from "../../utility/alignment"
 
-export default class Paragraph implements BlockTool {
+export default class ParagraphBlock implements BlockTool {
   /**
    * Editor.js API
    */
