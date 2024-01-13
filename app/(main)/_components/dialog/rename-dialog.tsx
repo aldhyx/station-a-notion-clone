@@ -49,9 +49,9 @@ export default function RenameDialog({ children, uuid, emitActionStatus }: Props
         <RenameDialog.Title />
 
         {isLocked && (
-          <p className="flex items-center gap-x-2 px-3 pb-3 text-xs text-sky-800 dark:text-sky-600">
-            <LockIcon size={16} />
-            Page is locked, unlock it to rename
+          <p className="mb-3 flex items-center justify-center gap-x-2 bg-sky-100 p-[6px] text-xs text-sky-800 dark:bg-sky-600/30 dark:text-sky-100">
+            <LockIcon size={14} />
+            Page is locked, unlock to rename
           </p>
         )}
 
@@ -69,11 +69,9 @@ export default function RenameDialog({ children, uuid, emitActionStatus }: Props
                 disabled={isLocked}
               >
                 {form.getValues("emoji.native") ? (
-                  <span className={cn("text-xl", isLocked && "opacity-80")}>
-                    {form.getValues("emoji.native")}
-                  </span>
+                  <span className="text-xl">{form.getValues("emoji.native")}</span>
                 ) : (
-                  <SmilePlusIcon className={cn("w-5", isLocked && "opacity-80")} />
+                  <SmilePlusIcon className="w-5" />
                 )}
               </Button>
             </EmojiPickerPopover>

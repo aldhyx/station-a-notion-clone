@@ -7,9 +7,9 @@ export default function Locked() {
   if (!isLocked) return null
 
   return (
-    <p className="sticky top-0 z-10 flex w-full items-center justify-center gap-x-2 bg-sky-100/60 p-2 text-sm text-sky-800 backdrop-blur-md dark:bg-sky-600/50 dark:text-sky-50">
+    <p className="sticky top-0 z-10 flex w-full items-center justify-center gap-x-2 bg-sky-200/50 p-[6px] text-xs text-sky-800 backdrop-blur-md dark:bg-sky-600/30 dark:text-sky-100">
       <LockIcon size={14} />
-      Locked
+      Page is locked
     </p>
   )
 }
