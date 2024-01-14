@@ -1,13 +1,15 @@
 import "./heading.css"
 
 import {
-  PasteConfig,
+  type PasteConfig,
   type BlockTool,
   type ToolboxConfig,
-  PasteEvent,
+  type HTMLPasteEvent,
+  type ConversionConfig,
+  type SanitizerConfig,
 } from "@editorjs/editorjs"
-import { type HeadingConstructor, type HeadingLevel, type HeadingData } from "./type"
-import Alignment from "../../utility/alignment"
+import { type TunesMenuConfig } from "@editorjs/editorjs/types/tools"
+import { type Heading } from "../index.type"
 
 export default class HeadingBlock implements BlockTool {
   /**
@@ -35,7 +37,7 @@ export default class HeadingBlock implements BlockTool {
    */
   private _CSS
 
-  constructor({ data, config, api, readOnly }: HeadingConstructor) {
+  constructor({ data, config, api, readOnly }: Heading["Constructor"]) {
     this.api = api
     this.readOnly = readOnly
 
@@ -51,19 +53,17 @@ export default class HeadingBlock implements BlockTool {
   /**
    * Normalize input data
    */
-  private _normalizeData(data: HeadingData): HeadingData {
+  private _normalizeData(data: Heading["Data"]): Heading["Data"] {
     if (typeof data === "object") {
       return {
         text: data.text || "",
         level: Number(data.level) || this.defaultLevel.level,
-        alignment: data.alignment || Alignment.DEFAULT,
       }
     }
 
     return {
       text: "",
       level: this.defaultLevel.level,
-      alignment: Alignment.DEFAULT,
     }
   }
 
@@ -88,11 +88,6 @@ export default class HeadingBlock implements BlockTool {
     heading.classList.add(this._CSS.wrapper)
 
     /**
-     * Add text alignment
-     */
-    heading.dataset.alignment = this._data.alignment
-
-    /**
      * Make tag editable
      */
     if (!this.readOnly) {
@@ -107,17 +102,11 @@ export default class HeadingBlock implements BlockTool {
     return heading
   }
 
-  /**
-   * Return Tool's view
-   */
   render(): HTMLHeadingElement {
     return this._holderNode
   }
 
-  /**
-   * Returns header block tunes config
-   */
-  renderSettings() {
+  renderSettings(): HTMLElement | TunesMenuConfig {
     const settings = []
     // create level setting
     for (let i = 0; i < this.levels.length; i++) {
@@ -131,81 +120,40 @@ export default class HeadingBlock implements BlockTool {
       })
     }
 
-    // create alignment setting
-    for (let i = 0; i < Alignment.SETTINGS.length; i++) {
-      const item = Alignment.SETTINGS[i]
-      settings.push({
-        icon: item.svg,
-        label: this.api.i18n.t(`Align ${item.name}`),
-        onActivate: () => this.setAlignment(item.name),
-        closeOnActivate: true,
-        isActive: this.data.alignment === item.name,
-      })
-    }
-
     return settings
   }
 
   /**
    * Callback for Block's settings buttons
    */
-  setAlignment(alignment: HeadingData["alignment"]) {
-    this.data = {
-      level: this.data.level,
-      text: this.data.text,
-      alignment,
-    }
-  }
-
-  /**
-   * Callback for Block's settings buttons
-   */
-  setLevel(level: HeadingLevel["level"]): void {
+  setLevel(level: Heading["Data"]["level"]): void {
     this.data = {
       level: level,
       text: this.data.text,
-      alignment: this.data.alignment,
     }
   }
 
-  /**
-   * Validate Text block data:
-   * - check for emptiness
-   */
-  validate(blockData: HeadingData): boolean {
+  validate(blockData: Heading["Data"]): boolean {
     return blockData.text.trim() !== ""
   }
 
-  /**
-   * Extract Tool's data from the view
-   */
-  save(toolsContent: HTMLHeadingElement): HeadingData {
+  save(toolsContent: HTMLHeadingElement): Heading["Data"] {
     return {
       text: toolsContent.innerHTML,
       level: this.data.level,
-      alignment: this.data.alignment,
     }
   }
 
-  /**
-   * Method that specified how to merge two similar blocks.
-   * Called by Editor.js by backspace at the beginning of the Block
-   */
-  merge(data: HeadingData): void {
+  merge(data: Heading["Data"]): void {
     const newData = {
       text: `${this.data.text}${data.text}`,
       level: this.data.level,
-      alignment: this.data.alignment,
     }
 
     this.data = newData
   }
 
-  /**
-   * Handle H1-H3 tags on paste to substitute it with header Tool
-   */
-  onPaste(event: PasteEvent) {
-    //@ts-ignore
+  onPaste(event: HTMLPasteEvent): void {
     const content = event.detail.data
     let level = this.defaultLevel.level
 
@@ -224,24 +172,15 @@ export default class HeadingBlock implements BlockTool {
     this.data = {
       level,
       text: content.innerHTML,
-      alignment: this.data.alignment,
     }
-  }
-
-  /**
-   * Get current alignment
-   */
-  get currentAlignment() {
-    return Alignment.currentAlignment(this._holderNode)
   }
 
   /**
    * Get current Tools`s data
    */
-  get data(): HeadingData {
+  get data(): Heading["Data"] {
     this._data.text = this._holderNode.innerHTML
     this._data.level = this.currentLevel.level
-    this._data.alignment = this.currentAlignment
 
     return this._data
   }
@@ -251,7 +190,7 @@ export default class HeadingBlock implements BlockTool {
    * - at the this._data property
    * - at the HTML
    */
-  set data(data: HeadingData) {
+  set data(data) {
     this._data = this._normalizeData(data)
 
     /**
@@ -283,7 +222,7 @@ export default class HeadingBlock implements BlockTool {
   /**
    * Get current level
    */
-  get currentLevel(): HeadingLevel {
+  get currentLevel(): Heading["Level"] {
     const level = this.levels.find(item => item.level === this._data.level)
     return level ? level : this.defaultLevel
   }
@@ -291,7 +230,7 @@ export default class HeadingBlock implements BlockTool {
   /**
    * Get default level from header config, default h1
    */
-  get defaultLevel(): HeadingLevel {
+  get defaultLevel(): Heading["Level"] {
     /** User can specify own default level value */
     const defaultLevel = this._config.defaultLevel
 
@@ -311,7 +250,7 @@ export default class HeadingBlock implements BlockTool {
   /**
    * Available header levels
    */
-  get levels(): HeadingLevel[] {
+  get levels(): Heading["Level"][] {
     return [
       {
         tag: "H1",
@@ -333,8 +272,7 @@ export default class HeadingBlock implements BlockTool {
   }
 
   /**
-   * Used by Editor.js paste handling API.
-   * Provides configuration to handle H1-H3 tags.
+   * Paste substitutions configuration
    */
   static get pasteConfig(): PasteConfig {
     return {
@@ -343,9 +281,9 @@ export default class HeadingBlock implements BlockTool {
   }
 
   /**
-   * Allow Header to be converted to/from other blocks
+   * Rules that specified how this Tool can be converted into/from another Tool
    */
-  static get conversionConfig() {
+  static get conversionConfig(): ConversionConfig {
     return {
       export: "text", // use 'text' property for other blocks
       import: "text", // fill 'text' property from other block's export string
@@ -353,9 +291,9 @@ export default class HeadingBlock implements BlockTool {
   }
 
   /**
-   * Sanitizer Rules
+   * Sanitizer rules description
    */
-  static get sanitize() {
+  static get sanitize(): SanitizerConfig {
     return {
       level: false,
       text: {},
@@ -363,14 +301,14 @@ export default class HeadingBlock implements BlockTool {
   }
 
   /**
-   * Returns true to notify core that read-only is supported
+   * Returns true to notify the core that read-only mode is supported
    */
-  static get isReadOnlySupported() {
+  static get isReadOnlySupported(): boolean {
     return true
   }
 
   /**
-   * Get Tool toolbox settings
+   * Tool's Toolbox settings
    */
   static get toolbox(): ToolboxConfig {
     return {

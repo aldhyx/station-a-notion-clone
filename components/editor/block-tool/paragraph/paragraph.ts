@@ -1,7 +1,14 @@
-import { type BlockTool, type PasteEvent, type ToolboxConfig } from "@editorjs/editorjs"
 import "./paragraph.css"
-import { type ParagraphConstructor, type ParagraphData } from "./type"
-import Alignment from "../../utility/alignment"
+
+import {
+  type PasteConfig,
+  type BlockTool,
+  type ToolboxConfig,
+  type HTMLPasteEvent,
+  type ConversionConfig,
+  type SanitizerConfig,
+} from "@editorjs/editorjs"
+import { type Paragraph } from "../index.type"
 
 export default class ParagraphBlock implements BlockTool {
   /**
@@ -29,7 +36,7 @@ export default class ParagraphBlock implements BlockTool {
    */
   private _CSS
 
-  constructor({ data, config, api, readOnly }: ParagraphConstructor) {
+  constructor({ data, config, api, readOnly }: Paragraph["Constructor"]) {
     this.api = api
     this.readOnly = readOnly
 
@@ -53,14 +60,12 @@ export default class ParagraphBlock implements BlockTool {
   /**
    * Normalize input data
    */
-  private _normalizeData(data: ParagraphData): ParagraphData {
+  private _normalizeData(data: Paragraph["Data"]): Paragraph["Data"] {
     if (typeof data === "object") {
-      return {
-        text: data.text || "",
-        alignment: data.alignment || Alignment.DEFAULT,
-      }
+      return { text: data.text || "" }
     }
-    return { text: "", alignment: Alignment.DEFAULT }
+
+    return { text: "" }
   }
 
   /**
@@ -76,11 +81,6 @@ export default class ParagraphBlock implements BlockTool {
      * Add text to block
      */
     paragraph.innerHTML = this._data.text
-
-    /**
-     * Add text alignment
-     */
-    paragraph.dataset.alignment = this._data.alignment
 
     /**
      * Add styles class
@@ -111,45 +111,15 @@ export default class ParagraphBlock implements BlockTool {
     }
   }
 
-  /**
-   * Clean up event listener
-   */
   destroy(): void {
     this._holderNode.removeEventListener("keyup", this.onKeyUp)
   }
 
-  /**
-   * Return Tool's view
-   */
   render(): HTMLParagraphElement {
     return this._holderNode
   }
 
-  /**
-   * Returns alignment block tunes config
-   */
-  renderSettings() {
-    return Alignment.SETTINGS.map(item => ({
-      icon: item.svg,
-      label: this.api.i18n.t(`Align ${item.name}`),
-      onActivate: () => this.setAlignment(item.name),
-      closeOnActivate: true,
-      isActive: this.data.alignment === item.name,
-    }))
-  }
-
-  setAlignment(alignment: ParagraphData["alignment"]) {
-    this.data = {
-      text: this.data.text,
-      alignment,
-    }
-  }
-
-  /**
-   * Validate paragraph block data:
-   * - check for emptiness
-   */
-  validate(savedData: ParagraphData): boolean {
+  validate(savedData: Paragraph["Data"]): boolean {
     if (savedData.text.trim() === "" && !this._config.preserveBlank) {
       return false
     }
@@ -157,53 +127,27 @@ export default class ParagraphBlock implements BlockTool {
     return true
   }
 
-  /**
-   * Extract Tool's data from the view
-   */
-  save(toolsContent: HTMLParagraphElement): ParagraphData {
-    return {
-      text: toolsContent.innerHTML,
-      alignment: this.data.alignment,
-    }
+  save(toolsContent: HTMLParagraphElement): Paragraph["Data"] {
+    return { text: toolsContent.innerHTML }
   }
 
-  /**
-   * Method that specified how to merge two Text blocks.
-   * Called by Editor.js by backspace at the beginning of the Block
-   */
-  merge(data: ParagraphData): void {
-    const newData = {
-      text: `${this.data.text}${data.text}`,
-      alignment: this.data.alignment,
-    }
+  merge(data: Paragraph["Data"]): void {
+    const newData = { text: `${this.data.text}${data.text}` }
 
     this.data = newData
   }
 
-  /**
-   * On paste callback fired from Editor.
-   */
-  onPaste(event: PasteEvent) {
-    const data = {
-      //@ts-ignore
-      text: event.detail.data.innerHTML,
-      alignment: this.data.alignment,
-    }
+  onPaste(event: HTMLPasteEvent): void {
+    const data = { text: event.detail.data.innerHTML }
 
     this.data = data
-  }
-
-  /** Get current alignment */
-  get currentAlignment() {
-    return Alignment.currentAlignment(this._holderNode)
   }
 
   /**
    * Get current Tools`s data
    */
-  get data() {
+  get data(): Paragraph["Data"] {
     this._data.text = this._holderNode.innerHTML
-    this._data.alignment = this.currentAlignment
 
     return this._data
   }
@@ -213,7 +157,7 @@ export default class ParagraphBlock implements BlockTool {
    * - at the this._data property
    * - at the HTML
    */
-  set data(data: ParagraphData) {
+  set data(data) {
     this._data = this._normalizeData(data)
 
     /**
@@ -243,18 +187,18 @@ export default class ParagraphBlock implements BlockTool {
   }
 
   /**
-   * Used by Editor paste handling API.
-   * Provides configuration to handle P tags.
+   * Paste substitutions configuration
    */
-  static get pasteConfig() {
+  static get pasteConfig(): PasteConfig {
     return {
       tags: ["P"],
     }
   }
+
   /**
-   * Enable Conversion Toolbar. Paragraph can be converted to/from other tools
+   * Rules that specified how this Tool can be converted into/from another Tool
    */
-  static get conversionConfig() {
+  static get conversionConfig(): ConversionConfig {
     return {
       export: "text", // to convert Paragraph to other block, use 'text' property of saved data
       import: "text", // to covert other block's exported string to Paragraph, fill 'text' property of tool data
@@ -262,27 +206,25 @@ export default class ParagraphBlock implements BlockTool {
   }
 
   /**
-   * Sanitizer rules
+   * Sanitizer rules description
    */
-  static get sanitize() {
+  static get sanitize(): SanitizerConfig {
     return {
       text: {
         br: true,
       },
-      alignment: false,
     }
   }
 
   /**
    * Returns true to notify the core that read-only mode is supported
-
    */
-  static get isReadOnlySupported() {
+  static get isReadOnlySupported(): boolean {
     return true
   }
 
   /**
-   * Icon and title for displaying at the Toolbox
+   * Tool's Toolbox settings
    */
   static get toolbox(): ToolboxConfig {
     return {
