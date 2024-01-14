@@ -8,12 +8,13 @@ import {
 } from "@/components/ui/dialog"
 import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { LoaderIcon, PlusCircleIcon, SmilePlusIcon } from "lucide-react"
+import { LoaderIcon, LockIcon, PlusCircleIcon, SmilePlusIcon } from "lucide-react"
 import { type PropsWithChildren } from "react"
 import useRename from "../../_hooks/use-rename"
 import EmojiPickerPopover, { type Emoji } from "@/components/popover/emoji-picker-popover"
 import { useSidebarStore } from "@/store/use-sidebar-store"
 import { type EmitActionStatus } from "@/types"
+import { cn } from "@/lib/utils"
 
 type Props = PropsWithChildren & {
   uuid: string
@@ -36,6 +37,7 @@ export default function RenameDialog({ children, uuid, emitActionStatus }: Props
     emoji: (selected?.emoji as Emoji) ?? null,
     emitActionStatus,
   })
+  const isLocked = !!selected?.is_locked
 
   return (
     <Dialog onOpenChange={openDialogHandler}>
@@ -45,6 +47,13 @@ export default function RenameDialog({ children, uuid, emitActionStatus }: Props
         className="top-[5%] flex w-[90%] translate-y-[0] flex-col gap-0 rounded-xl bg-background p-0 md:!max-w-xl"
       >
         <RenameDialog.Title />
+
+        {isLocked && (
+          <p className="mb-3 flex items-center justify-center gap-x-2 bg-sky-100 p-[6px] text-xs text-sky-800 dark:bg-sky-600/30 dark:text-sky-100">
+            <LockIcon size={14} />
+            Page is locked, unlock to rename
+          </p>
+        )}
 
         <Form {...form}>
           <form
@@ -57,6 +66,7 @@ export default function RenameDialog({ children, uuid, emitActionStatus }: Props
                 variant="outline"
                 size="lg"
                 className="h-11 w-11 shrink-0 rounded-xl p-0"
+                disabled={isLocked}
               >
                 {form.getValues("emoji.native") ? (
                   <span className="text-xl">{form.getValues("emoji.native")}</span>
@@ -69,6 +79,7 @@ export default function RenameDialog({ children, uuid, emitActionStatus }: Props
             <FormField
               control={form.control}
               name="title"
+              disabled={isLocked}
               render={({ field }) => (
                 <FormItem className="w-full space-y-0">
                   <FormControl>
@@ -86,18 +97,20 @@ export default function RenameDialog({ children, uuid, emitActionStatus }: Props
               )}
             />
 
-            <Button
-              size="lg"
-              className="w-20 rounded-xl"
-              type="submit"
-              disabled={isDisableSubmit}
-            >
-              {isLoadingSubmit ? (
-                <LoaderIcon className="h-4 w-4 animate-spin" />
-              ) : (
-                "Submit"
-              )}
-            </Button>
+            {!isLocked && (
+              <Button
+                size="lg"
+                className="w-20 rounded-xl"
+                type="submit"
+                disabled={isDisableSubmit}
+              >
+                {isLoadingSubmit ? (
+                  <LoaderIcon className="h-4 w-4 animate-spin" />
+                ) : (
+                  "Submit"
+                )}
+              </Button>
+            )}
           </form>
         </Form>
 

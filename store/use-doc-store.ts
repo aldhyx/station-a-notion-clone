@@ -38,14 +38,35 @@ const initialState: DocState = {
   loadingDoc: true,
   doc: null,
   failedSaveData: {},
-  //TODO: persist in db
   isLocked: false,
 }
 
 export const useDocStore = create<DocState & DocAction>()((set, get) => ({
   ...initialState,
-  toggleLock() {
-    set({ isLocked: !get().isLocked })
+  async toggleLock() {
+    const oldDoc = get().doc
+    if (!oldDoc) return
+
+    try {
+      const { error } = await client
+        .from("pages")
+        .update({
+          is_locked: !oldDoc.is_locked,
+        })
+        .eq("uuid", oldDoc.uuid)
+
+      if (error) throw new Error(error.message)
+      set({
+        doc: { ...oldDoc, is_locked: !oldDoc.is_locked },
+        isLocked: !oldDoc.is_locked,
+      })
+    } catch (error) {
+      toastError({
+        title: "Lock failed",
+        description:
+          "Something went wrong. Please check your internet connection & try again.",
+      })
+    }
   },
   setSaveStatus(status) {
     set({ saveStatus: status })
@@ -75,7 +96,7 @@ export const useDocStore = create<DocState & DocAction>()((set, get) => ({
 
       if (error) throw new Error(error.message)
 
-      set({ loadingDoc: false, doc: data })
+      set({ loadingDoc: false, doc: data, isLocked: !!data.is_locked })
       return { uuid: data.uuid, parent_uuid: data.parent_uuid }
     } catch (error) {
       toastError({

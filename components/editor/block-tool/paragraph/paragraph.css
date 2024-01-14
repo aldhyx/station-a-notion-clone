@@ -27,7 +27,3 @@
 .ce-paragraph p:last-of-type {
   @apply mb-0;
 }
-
-.ce-paragraph {
-  @apply data-[alignment=left]:text-left data-[alignment=center]:text-center data-[alignment=right]:text-right data-[alignment=justify]:text-justify;
-}
