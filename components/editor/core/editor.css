@@ -4,11 +4,11 @@
   @apply max-w-[unset];
 }
 .ce-popover__overlay {
-  @apply bg-stone-900 opacity-30;
+  @apply bg-stone-900 opacity-0;
 }
 /* Editor blocktool item */
 .ce-popover-item {
-  @apply rounded-md bg-background p-1 text-primary hover:!bg-secondary;
+  @apply rounded-md bg-background p-1 text-primary transition hover:!bg-secondary;
 }
 .ce-popover-item--active,
 .ce-inline-tool--active {
@@ -126,6 +126,23 @@ code.inline-code b {
   @apply !font-normal;
 }
 
+/* Editor block*/
+.ce-block__content {
+  /* Apply data aligment on block tools from block tunes */
+  @apply data-[alignment=left]:text-left data-[alignment=center]:text-center data-[alignment=right]:text-right data-[alignment=justify]:text-justify;
+}
+
 .ce-stub {
   @apply rounded-md border-none bg-secondary p-3 text-muted-foreground shadow-none;
+}
+
+/* Editor settings */
+.cdx-horizontal__wrapper {
+  @apply flex gap-x-1 pb-1 pt-1 md:px-1;
+}
+.cdx-horizontal-button {
+  @apply flex h-9 w-9 items-center justify-center rounded-md border border-input transition hover:bg-secondary md:h-8 md:w-8;
+}
+.cdx-horizontal-button--active {
+  @apply bg-muted-foreground/20;
 }

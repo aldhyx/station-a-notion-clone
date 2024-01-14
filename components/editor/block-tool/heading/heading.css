@@ -23,6 +23,3 @@ h3.ce-heading {
 .ce-heading[contentEditable="true"][data-placeholder]:empty:focus::before {
   @apply hidden;
 }
-.ce-heading {
-  @apply data-[alignment=left]:text-left data-[alignment=center]:text-center data-[alignment=right]:text-right data-[alignment=justify]:text-justify;
-}
