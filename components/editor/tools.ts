@@ -3,6 +3,8 @@ import {
   type EditorConfig,
   type ToolConfig,
 } from "@editorjs/editorjs"
+import { type HeadingConfig, type ParagraphConfig } from "./block-tool/@types"
+
 // @ts-ignore
 import NestedList from "@editorjs/nested-list"
 // @ts-ignore
@@ -10,22 +12,23 @@ import Marker from "@editorjs/marker"
 // @ts-ignore
 import InlineCode from "@editorjs/inline-code"
 
-import { HeadingBlock, ParagraphBlock } from "./block-tool/"
-import { type Paragraph, type Heading } from "./block-tool/index.type"
-import { AlignmentTune } from "./block-tune"
+import ParagraphBlock from "./block-tool/paragraph"
+import HeadingBlock from "./block-tool/heading"
+
+import AlignmentTune from "./block-tune/alignment"
 
 export const tools: EditorConfig["tools"] = {
   alignment: AlignmentTune,
   paragraph: {
     class: ParagraphBlock as unknown as BlockToolConstructable,
     inlineToolbar: true,
-    config: { preserveBlank: true } as ToolConfig<Paragraph["Config"]>,
+    config: { preserveBlank: true } as ToolConfig<ParagraphConfig>,
     tunes: ["alignment"],
   },
   heading: {
     class: HeadingBlock as unknown as BlockToolConstructable,
     inlineToolbar: ["italic"],
-    config: { defaultLevel: 2 } as ToolConfig<Heading["Config"]>,
+    config: { defaultLevel: 2 } as ToolConfig<HeadingConfig>,
     tunes: ["alignment"],
   },
   nestedList: {
