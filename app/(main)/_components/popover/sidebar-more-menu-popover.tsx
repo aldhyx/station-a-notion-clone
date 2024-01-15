@@ -9,6 +9,7 @@ import {
   AppWindowIcon,
   CopyIcon,
   FormInputIcon,
+  LockIcon,
   PlusCircleIcon,
   StarIcon,
   Trash2Icon,
@@ -26,10 +27,12 @@ export default function SidebarMoreMenuPopover({
   uuid,
   created_at,
   updated_at,
+  is_locked,
 }: PropsWithChildren & {
   uuid: string
   created_at: string
   updated_at: string
+  is_locked: boolean | null
 }) {
   const isMobile = useMediaQuery("(max-width: 468px)")
   const [_, copy] = useCopyToClipboard()
@@ -116,18 +119,40 @@ export default function SidebarMoreMenuPopover({
               Open in new tab
             </Button>
 
-            <RenameDialog uuid={uuid} emitActionStatus={emitActionStatusHandler}>
+            {!is_locked && (
+              <RenameDialog uuid={uuid} emitActionStatus={emitActionStatusHandler}>
+                <Button
+                  variant="ghost"
+                  className="h-8 w-full items-center justify-start px-2 text-xs font-normal"
+                >
+                  <FormInputIcon className="mr-2 h-4 w-4" />
+                  Rename
+                </Button>
+              </RenameDialog>
+            )}
+
+            {is_locked && (
               <Button
                 variant="ghost"
                 className="h-8 w-full items-center justify-start px-2 text-xs font-normal"
+                disabled
               >
                 <FormInputIcon className="mr-2 h-4 w-4" />
                 Rename
               </Button>
-            </RenameDialog>
+            )}
           </section>
 
-          <section className="p-3 ">
+          {is_locked && (
+            <section className="border-b p-3">
+              <p className="flex items-center justify-between gap-x-2 text-xs text-sky-800 dark:text-sky-600">
+                Page is locked
+                <LockIcon size={14} />
+              </p>
+            </section>
+          )}
+
+          <section className="p-3">
             <p className="mb-2 flex flex-col text-muted-foreground">
               <span className="text-[10px]">Created {createdAt}</span>
             </p>

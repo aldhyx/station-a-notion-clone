@@ -2,7 +2,7 @@ import { Database } from "@/lib/supabase/database.types"
 
 type Page = Pick<
   Database["public"]["Tables"]["pages"]["Row"],
-  "uuid" | "title" | "emoji" | "parent_uuid" | "created_at" | "updated_at"
+  "uuid" | "title" | "emoji" | "parent_uuid" | "created_at" | "updated_at" | "is_locked"
 >
 
 export const getSidebarTreeData = (

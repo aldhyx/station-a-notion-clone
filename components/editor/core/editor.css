@@ -138,7 +138,7 @@ code.inline-code b {
 
 /* Editor settings */
 .cdx-horizontal__wrapper {
-  @apply flex gap-x-1 pb-1 pt-1 md:px-1;
+  @apply flex gap-x-2 pb-1 pt-1 md:px-1;
 }
 .cdx-horizontal-button {
   @apply flex h-9 w-9 items-center justify-center rounded-md border border-input transition hover:bg-secondary md:h-8 md:w-8;
