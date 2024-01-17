@@ -15,18 +15,21 @@ import ParagraphBlock, { type ParagraphConfig } from "./block-tool/paragraph"
 import HeadingBlock, { type HeadingConfig } from "./block-tool/heading"
 
 import AlignmentTune from "./block-tune/alignment"
+import { BoldInlineTool } from "./inline-tool/bold"
+import { ItalicInlineTool } from "./inline-tool/inline"
+import { UnderlineInlineTool } from "./inline-tool/underline"
 
 export const tools: EditorConfig["tools"] = {
   alignment: AlignmentTune,
   paragraph: {
     class: ParagraphBlock as unknown as BlockToolConstructable,
-    inlineToolbar: true,
+    inlineToolbar: ["bold", "italic", "underline", "marker", "inlineCode"],
     config: { preserveBlank: true } as ToolConfig<ParagraphConfig>,
     tunes: ["alignment"],
   },
   heading: {
     class: HeadingBlock as unknown as BlockToolConstructable,
-    inlineToolbar: ["italic"],
+    inlineToolbar: ["italic", "underline"],
     config: { defaultLevel: 2 } as ToolConfig<HeadingConfig>,
     tunes: ["alignment"],
   },
@@ -45,4 +48,7 @@ export const tools: EditorConfig["tools"] = {
     class: InlineCode,
     shortcut: "CMD+E",
   },
+  bold: BoldInlineTool,
+  italic: ItalicInlineTool,
+  underline: UnderlineInlineTool,
 }
