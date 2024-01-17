@@ -6,10 +6,6 @@ import {
 
 // @ts-ignore
 import NestedList from "@editorjs/nested-list"
-// @ts-ignore
-import Marker from "@editorjs/marker"
-// @ts-ignore
-import InlineCode from "@editorjs/inline-code"
 
 import ParagraphBlock, { type ParagraphConfig } from "./block-tool/paragraph"
 import HeadingBlock, { type HeadingConfig } from "./block-tool/heading"

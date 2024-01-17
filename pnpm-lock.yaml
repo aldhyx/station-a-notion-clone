@@ -8,12 +8,6 @@ dependencies:
   '@editorjs/editorjs':
     specifier: ^2.28.2
     version: 2.28.2
-  '@editorjs/inline-code':
-    specifier: ^1.5.0
-    version: 1.5.0
-  '@editorjs/marker':
-    specifier: ^1.4.0
-    version: 1.4.0
   '@editorjs/nested-list':
     specifier: ^1.4.2
     version: 1.4.2
@@ -425,10 +419,6 @@ packages:
     resolution: {integrity: sha512-KdeKj3TwaTHqM3IXd5YjeJP39PBUZTb+dtHjGlf5+b0VgsxYD4qzsZkb11lzopZbAuDsHaZJmAYQ8LFligIT6Q==}
     dev: false
 
-  /@codexteam/icons@0.0.5:
-    resolution: {integrity: sha512-s6H2KXhLz2rgbMZSkRm8dsMJvyUNZsEjxobBEg9ztdrb1B2H3pEzY6iTwI4XUPJWJ3c3qRKwV4TrO3J5jUdoQA==}
-    dev: false
-
   /@commitlint/cli@18.4.3(typescript@5.2.2):
     resolution: {integrity: sha512-zop98yfB3A6NveYAZ3P1Mb6bIXuCeWgnUfVNkH4yhIMQpQfzFwseadazOuSn0OOfTt0lWuFauehpm9GcqM5lww==}
     engines: {node: '>=v18'}
@@ -595,18 +585,6 @@ packages:
 
   /@editorjs/editorjs@2.28.2:
     resolution: {integrity: sha512-g6V0Nd3W9IIWMpvxDNTssQ6e4kxBp1Y0W4GIf8cXRlmcBp3TUjrgCYJQmNy3l2a6ZzhyBAoVSe8krJEq4g7PQw==}
-    dev: false
-
-  /@editorjs/inline-code@1.5.0:
-    resolution: {integrity: sha512-5i6BCOG8eOg4/6qGoLJuL6XSZZg834zIByDW8K80doM1L7ss/VqtLY0nrB2Q5bfs1KA0tOlVHOfjE4JD4438FQ==}
-    dependencies:
-      '@codexteam/icons': 0.0.5
-    dev: false
-
-  /@editorjs/marker@1.4.0:
-    resolution: {integrity: sha512-5ipEXfL44jTTRzgNp/p/YjMO7jT08S5z4V8qA3FFJTfdhKgQyM3mvP1zpdYKw47ZZpVWMCncvk5Nto3BxihEtg==}
-    dependencies:
-      '@codexteam/icons': 0.0.5
     dev: false
 
   /@editorjs/nested-list@1.4.2:
