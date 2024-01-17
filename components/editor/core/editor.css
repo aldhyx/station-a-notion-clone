@@ -107,13 +107,6 @@
 mark.cdx-marker {
   @apply !bg-yellow-200/90;
 }
-/* Inline code tool*/
-code.inline-code {
-  @apply bg-destructive/10 font-mono font-normal text-red-500;
-}
-code.inline-code b {
-  @apply !font-normal;
-}
 
 /* this is custom icon from lucide icon */
 .ce-conversion-tool__icon svg.lc,
@@ -124,11 +117,6 @@ code.inline-code b {
 }
 
 /* Editor block*/
-.ce-block__content {
-  /* Apply data aligment on block tools from block tunes */
-  @apply data-[alignment=left]:text-left data-[alignment=center]:text-center data-[alignment=right]:text-right data-[alignment=justify]:text-justify;
-}
-
 .ce-stub {
   @apply rounded-md border-none bg-secondary p-3 text-muted-foreground shadow-none;
 }
