@@ -1,5 +1,17 @@
-import { type BlockTune } from "@editorjs/editorjs"
-import { type BlockTuneConstructorOptions } from "../@types"
+import {
+  type API,
+  type ToolConfig,
+  type BlockTune,
+  type BlockAPI,
+} from "@editorjs/editorjs"
+import { type BlockTuneData } from "@editorjs/editorjs/types/block-tunes/block-tune-data"
+
+type BlockTuneConstructorOptions<Config extends object = any> = {
+  api: API
+  config?: ToolConfig<Config>
+  block: BlockAPI
+  data?: BlockTuneData
+}
 
 export default class AlignmentTune implements BlockTune {
   /**

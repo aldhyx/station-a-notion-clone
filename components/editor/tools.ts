@@ -3,7 +3,6 @@ import {
   type EditorConfig,
   type ToolConfig,
 } from "@editorjs/editorjs"
-import { type HeadingConfig, type ParagraphConfig } from "./block-tool/@types"
 
 // @ts-ignore
 import NestedList from "@editorjs/nested-list"
@@ -12,8 +11,8 @@ import Marker from "@editorjs/marker"
 // @ts-ignore
 import InlineCode from "@editorjs/inline-code"
 
-import ParagraphBlock from "./block-tool/paragraph"
-import HeadingBlock from "./block-tool/heading"
+import ParagraphBlock, { type ParagraphConfig } from "./block-tool/paragraph"
+import HeadingBlock, { type HeadingConfig } from "./block-tool/heading"
 
 import AlignmentTune from "./block-tune/alignment"
 
