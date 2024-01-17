@@ -1,0 +1,4 @@
+.ce-block__content {
+  /* Apply data aligment on block tools from block tunes */
+  @apply data-[alignment=left]:text-left data-[alignment=center]:text-center data-[alignment=right]:text-right data-[alignment=justify]:text-justify;
+}

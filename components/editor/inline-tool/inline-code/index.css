@@ -1,0 +1,4 @@
+code.cdx-code {
+  letter-spacing: 0.3px;
+  @apply inline-block rounded-sm bg-destructive/10 p-1 font-mono text-xs font-normal leading-none text-red-500;
+}
