@@ -3,6 +3,7 @@ import {
   type EditorConfig,
   type ToolConfig,
 } from "@editorjs/editorjs"
+
 // @ts-ignore
 import NestedList from "@editorjs/nested-list"
 // @ts-ignore
@@ -10,22 +11,26 @@ import Marker from "@editorjs/marker"
 // @ts-ignore
 import InlineCode from "@editorjs/inline-code"
 
-import { HeadingBlock, ParagraphBlock } from "./block-tool/"
-import { type Paragraph, type Heading } from "./block-tool/index.type"
-import { AlignmentTune } from "./block-tune"
+import ParagraphBlock, { type ParagraphConfig } from "./block-tool/paragraph"
+import HeadingBlock, { type HeadingConfig } from "./block-tool/heading"
+
+import AlignmentTune from "./block-tune/alignment"
+import { BoldInlineTool } from "./inline-tool/bold"
+import { ItalicInlineTool } from "./inline-tool/inline"
+import { UnderlineInlineTool } from "./inline-tool/underline"
 
 export const tools: EditorConfig["tools"] = {
   alignment: AlignmentTune,
   paragraph: {
     class: ParagraphBlock as unknown as BlockToolConstructable,
-    inlineToolbar: true,
-    config: { preserveBlank: true } as ToolConfig<Paragraph["Config"]>,
+    inlineToolbar: ["bold", "italic", "underline", "marker", "inlineCode"],
+    config: { preserveBlank: true } as ToolConfig<ParagraphConfig>,
     tunes: ["alignment"],
   },
   heading: {
     class: HeadingBlock as unknown as BlockToolConstructable,
-    inlineToolbar: ["italic"],
-    config: { defaultLevel: 2 } as ToolConfig<Heading["Config"]>,
+    inlineToolbar: ["italic", "underline"],
+    config: { defaultLevel: 2 } as ToolConfig<HeadingConfig>,
     tunes: ["alignment"],
   },
   nestedList: {
@@ -43,4 +48,7 @@ export const tools: EditorConfig["tools"] = {
     class: InlineCode,
     shortcut: "CMD+E",
   },
+  bold: BoldInlineTool,
+  italic: ItalicInlineTool,
+  underline: UnderlineInlineTool,
 }

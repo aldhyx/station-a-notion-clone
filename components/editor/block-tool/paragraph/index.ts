@@ -1,4 +1,4 @@
-import "./paragraph.css"
+import "./index.css"
 
 import {
   type PasteConfig,
@@ -7,8 +7,20 @@ import {
   type HTMLPasteEvent,
   type ConversionConfig,
   type SanitizerConfig,
+  type BlockToolConstructorOptions,
 } from "@editorjs/editorjs"
-import { type Paragraph } from "../index.type"
+
+type ParagraphData = {
+  /** Paragraph's content. Can include HTML tags: <a><b><i> */
+  text: string
+}
+
+export type ParagraphConfig = {
+  /** Block's placeholder */
+  placeholder?: string
+  /** Whether or not to keep blank paragraphs when saving editor data */
+  preserveBlank?: boolean
+}
 
 export default class ParagraphBlock implements BlockTool {
   /**
@@ -36,7 +48,12 @@ export default class ParagraphBlock implements BlockTool {
    */
   private _CSS
 
-  constructor({ data, config, api, readOnly }: Paragraph["Constructor"]) {
+  constructor({
+    data,
+    config,
+    api,
+    readOnly,
+  }: BlockToolConstructorOptions<ParagraphData, ParagraphConfig>) {
     this.api = api
     this.readOnly = readOnly
 
@@ -60,7 +77,7 @@ export default class ParagraphBlock implements BlockTool {
   /**
    * Normalize input data
    */
-  private _normalizeData(data: Paragraph["Data"]): Paragraph["Data"] {
+  private _normalizeData(data: ParagraphData): ParagraphData {
     if (typeof data === "object") {
       return { text: data.text || "" }
     }
@@ -119,7 +136,7 @@ export default class ParagraphBlock implements BlockTool {
     return this._holderNode
   }
 
-  validate(savedData: Paragraph["Data"]): boolean {
+  validate(savedData: ParagraphData): boolean {
     if (savedData.text.trim() === "" && !this._config.preserveBlank) {
       return false
     }
@@ -127,11 +144,11 @@ export default class ParagraphBlock implements BlockTool {
     return true
   }
 
-  save(toolsContent: HTMLParagraphElement): Paragraph["Data"] {
+  save(toolsContent: HTMLParagraphElement): ParagraphData {
     return { text: toolsContent.innerHTML }
   }
 
-  merge(data: Paragraph["Data"]): void {
+  merge(data: ParagraphData): void {
     const newData = { text: `${this.data.text}${data.text}` }
 
     this.data = newData
@@ -146,7 +163,7 @@ export default class ParagraphBlock implements BlockTool {
   /**
    * Get current Tools`s data
    */
-  get data(): Paragraph["Data"] {
+  get data(): ParagraphData {
     this._data.text = this._holderNode.innerHTML
 
     return this._data

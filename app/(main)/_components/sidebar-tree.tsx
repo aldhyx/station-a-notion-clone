@@ -125,6 +125,7 @@ export default function SidebarTree({ uuid, level = 0 }: Props) {
                 uuid={item.uuid}
                 created_at={item.created_at}
                 updated_at={item.updated_at}
+                is_locked={item.is_locked}
               >
                 <Button
                   type="button"

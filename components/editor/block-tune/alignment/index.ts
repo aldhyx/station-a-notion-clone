@@ -1,6 +1,17 @@
-import { BlockTune } from "@editorjs/editorjs"
-import { TunesMenuConfig } from "@editorjs/editorjs/types/tools"
-import { BlockTuneConstructorOptions } from "../index.type"
+import {
+  type API,
+  type ToolConfig,
+  type BlockTune,
+  type BlockAPI,
+} from "@editorjs/editorjs"
+import { type BlockTuneData } from "@editorjs/editorjs/types/block-tunes/block-tune-data"
+
+type BlockTuneConstructorOptions<Config extends object = any> = {
+  api: API
+  config?: ToolConfig<Config>
+  block: BlockAPI
+  data?: BlockTuneData
+}
 
 export default class AlignmentTune implements BlockTune {
   /**
@@ -164,6 +175,8 @@ export default class AlignmentTune implements BlockTune {
 
   render(): HTMLDivElement {
     const wrapper = document.createElement("div")
+    this._wrapper = wrapper
+
     wrapper.classList.add(this._CSS.wrapper)
     wrapper.append(...this.createAlignmentButton())
 
@@ -192,7 +205,6 @@ export default class AlignmentTune implements BlockTune {
       }
     })
 
-    this._wrapper = wrapper
-    return wrapper
+    return this._wrapper
   }
 }

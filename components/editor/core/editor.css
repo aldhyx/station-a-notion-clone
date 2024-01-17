@@ -17,10 +17,6 @@
 .ce-popover-item__icon {
   @apply mr-2 rounded-md border bg-background text-primary shadow-none;
 }
-/* this is custom icon from lucide icon */
-.ce-popover-item__icon svg.lc {
-  @apply h-4 w-4;
-}
 .ce-popover-item__title {
   @apply text-sm font-medium;
 }
@@ -79,9 +75,6 @@
 .ce-inline-toolbar__dropdown {
   @apply border-r hover:!bg-secondary dark:border-r-muted-foreground/10 dark:hover:!bg-muted-foreground/10;
 }
-.ce-inline-toolbar__dropdown-content svg.lc {
-  @apply h-4 w-4;
-}
 
 /* Editor convertion tool*/
 .ce-conversion-toolbar__tools {
@@ -101,10 +94,6 @@
 }
 .ce-conversion-tool__icon {
   @apply mr-2 rounded-md border bg-background text-primary shadow-none;
-}
-/* this is custom icon from lucide icon */
-.ce-conversion-tool__icon svg.lc {
-  @apply h-4 w-4;
 }
 
 .ce-conversion-tool.ce-conversion-tool--focused {
@@ -126,6 +115,14 @@ code.inline-code b {
   @apply !font-normal;
 }
 
+/* this is custom icon from lucide icon */
+.ce-conversion-tool__icon svg.lc,
+.ce-inline-tool svg.lc,
+.ce-inline-toolbar__dropdown-content svg.lc,
+.ce-popover-item__icon svg.lc {
+  @apply h-4 w-4 text-primary;
+}
+
 /* Editor block*/
 .ce-block__content {
   /* Apply data aligment on block tools from block tunes */
@@ -138,7 +135,7 @@ code.inline-code b {
 
 /* Editor settings */
 .cdx-horizontal__wrapper {
-  @apply flex gap-x-1 pb-1 pt-1 md:px-1;
+  @apply flex gap-x-2 pb-1 pt-1 md:px-1;
 }
 .cdx-horizontal-button {
   @apply flex h-9 w-9 items-center justify-center rounded-md border border-input transition hover:bg-secondary md:h-8 md:w-8;

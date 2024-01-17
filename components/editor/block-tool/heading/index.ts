@@ -1,4 +1,4 @@
-import "./heading.css"
+import "./index.css"
 
 import {
   type PasteConfig,
@@ -7,9 +7,32 @@ import {
   type HTMLPasteEvent,
   type ConversionConfig,
   type SanitizerConfig,
+  type BlockToolConstructorOptions,
 } from "@editorjs/editorjs"
 import { type TunesMenuConfig } from "@editorjs/editorjs/types/tools"
-import { type Heading } from "../index.type"
+
+type HeadingData = {
+  /** Header's content */
+  text: string
+  /** Header's level from 1 to 3 */
+  level: number
+}
+
+type HeadingLevel = {
+  /** Level number */
+  level: number
+  /** Tag corresponds with level number */
+  tag: "H1" | "H2" | "H3"
+  /** SVG Icon */
+  svg: string
+}
+
+export type HeadingConfig = {
+  /** Block's placeholder */
+  placeholder?: string
+  /** Default heading level */
+  defaultLevel?: HeadingLevel["level"]
+}
 
 export default class HeadingBlock implements BlockTool {
   /**
@@ -37,7 +60,12 @@ export default class HeadingBlock implements BlockTool {
    */
   private _CSS
 
-  constructor({ data, config, api, readOnly }: Heading["Constructor"]) {
+  constructor({
+    data,
+    config,
+    api,
+    readOnly,
+  }: BlockToolConstructorOptions<HeadingData, HeadingConfig>) {
     this.api = api
     this.readOnly = readOnly
 
@@ -53,7 +81,7 @@ export default class HeadingBlock implements BlockTool {
   /**
    * Normalize input data
    */
-  private _normalizeData(data: Heading["Data"]): Heading["Data"] {
+  private _normalizeData(data: HeadingData): HeadingData {
     if (typeof data === "object") {
       return {
         text: data.text || "",
@@ -126,25 +154,25 @@ export default class HeadingBlock implements BlockTool {
   /**
    * Callback for Block's settings buttons
    */
-  setLevel(level: Heading["Data"]["level"]): void {
+  setLevel(level: HeadingData["level"]): void {
     this.data = {
       level: level,
       text: this.data.text,
     }
   }
 
-  validate(blockData: Heading["Data"]): boolean {
+  validate(blockData: HeadingData): boolean {
     return blockData.text.trim() !== ""
   }
 
-  save(toolsContent: HTMLHeadingElement): Heading["Data"] {
+  save(toolsContent: HTMLHeadingElement): HeadingData {
     return {
       text: toolsContent.innerHTML,
       level: this.data.level,
     }
   }
 
-  merge(data: Heading["Data"]): void {
+  merge(data: HeadingData): void {
     const newData = {
       text: `${this.data.text}${data.text}`,
       level: this.data.level,
@@ -178,7 +206,7 @@ export default class HeadingBlock implements BlockTool {
   /**
    * Get current Tools`s data
    */
-  get data(): Heading["Data"] {
+  get data(): HeadingData {
     this._data.text = this._holderNode.innerHTML
     this._data.level = this.currentLevel.level
 
@@ -222,7 +250,7 @@ export default class HeadingBlock implements BlockTool {
   /**
    * Get current level
    */
-  get currentLevel(): Heading["Level"] {
+  get currentLevel(): HeadingLevel {
     const level = this.levels.find(item => item.level === this._data.level)
     return level ? level : this.defaultLevel
   }
@@ -230,7 +258,7 @@ export default class HeadingBlock implements BlockTool {
   /**
    * Get default level from header config, default h1
    */
-  get defaultLevel(): Heading["Level"] {
+  get defaultLevel(): HeadingLevel {
     /** User can specify own default level value */
     const defaultLevel = this._config.defaultLevel
 
@@ -250,7 +278,7 @@ export default class HeadingBlock implements BlockTool {
   /**
    * Available header levels
    */
-  get levels(): Heading["Level"][] {
+  get levels(): HeadingLevel[] {
     return [
       {
         tag: "H1",
