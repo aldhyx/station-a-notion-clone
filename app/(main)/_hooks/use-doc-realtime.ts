@@ -22,7 +22,7 @@ export default function useDocRealtime() {
           const doc = payload.new as Page
 
           if (doc) {
-            docRealtimeHandler({ eventType, doc })
+            docRealtimeHandler({ eventType, doc, old: payload.old })
             sidebarTreeRealtimeHandler({
               eventType,
               doc: {
