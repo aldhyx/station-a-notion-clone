@@ -27,7 +27,7 @@ export default function Deleted() {
           Restore page
         </Button>
 
-        <DeleteDialog uuid={doc.uuid}>
+        <DeleteDialog uuid={doc.uuid} redirectTo="/doc">
           <Button size="sm" className="h-7 gap-x-2 px-2 text-xs" variant="secondary">
             <Trash2Icon size={16} />
             Delete permanently

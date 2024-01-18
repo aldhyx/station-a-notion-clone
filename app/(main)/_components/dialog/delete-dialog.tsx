@@ -12,16 +12,23 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog"
 import { useTrashStore } from "@/store/use-trash-store"
+import { useRouter } from "next/navigation"
 import { PropsWithChildren, useRef } from "react"
 
 export default function DeleteDialog({
   children,
   uuid,
+  redirectTo,
 }: PropsWithChildren & {
   uuid: string
+  /**
+   * redirect url, example /doc
+   */
+  redirectTo?: string
 }) {
   const { deletePagePermanent } = useTrashStore()
   const ref = useRef<HTMLButtonElement>(null)
+  const router = useRouter()
 
   return (
     <Dialog modal>
@@ -46,6 +53,7 @@ export default function DeleteDialog({
             onClick={() => {
               deletePagePermanent(uuid)
               ref.current?.click()
+              if (redirectTo) router.replace(redirectTo)
             }}
           >
             Yes
