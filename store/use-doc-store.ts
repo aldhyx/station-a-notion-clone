@@ -78,7 +78,7 @@ export const useDocStore = create<DocState & DocAction>()((set, get) => ({
   },
   _deletedDoc(doc) {
     const oldDoc = get().doc
-    if (!oldDoc || oldDoc.uuid !== doc.uuid) {
+    if (oldDoc && oldDoc.uuid === doc.uuid) {
       // permanently delete opened page, reset doc state
       set({ ...initialState })
     }
