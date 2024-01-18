@@ -28,9 +28,10 @@ type DocAction = {
   docRealtimeHandler(opt: {
     eventType: `${REALTIME_POSTGRES_CHANGES_LISTEN_EVENT}`
     doc: Page
+    old: { id?: number }
   }): void
   _updateDoc(doc: Page): void
-  _deletedDoc(doc: Page): void
+  _deleteDoc(id?: number): void
   toggleLock: () => void
 }
 
@@ -72,13 +73,13 @@ export const useDocStore = create<DocState & DocAction>()((set, get) => ({
   setSaveStatus(status) {
     set({ saveStatus: status })
   },
-  docRealtimeHandler({ eventType, doc }) {
-    if (eventType === "DELETE") return get()._deletedDoc(doc)
+  docRealtimeHandler({ eventType, doc, old }) {
+    if (eventType === "DELETE") return get()._deleteDoc(old.id)
     if (eventType === "UPDATE") return get()._updateDoc(doc)
   },
-  _deletedDoc(doc) {
+  _deleteDoc(id) {
     const oldDoc = get().doc
-    if (oldDoc && oldDoc.uuid === doc.uuid) {
+    if (oldDoc && id && oldDoc.id === id) {
       // permanently delete opened page, reset doc state
       set({ ...initialState })
     }
