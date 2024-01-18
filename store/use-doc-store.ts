@@ -72,8 +72,8 @@ export const useDocStore = create<DocState & DocAction>()((set, get) => ({
     set({ saveStatus: status })
   },
   docRealtimeHandler({ eventType, doc }) {
-    // Todo: handle deleted document
-    // if (eventType === "DELETE") return get()._deleteFromSidebarTree(doc)
+    // permanently delete opened page, reset doc state
+    if (eventType === "DELETE") return set({ ...initialState })
     if (eventType === "UPDATE") return get()._updateDoc(doc)
   },
   _updateDoc(doc) {
