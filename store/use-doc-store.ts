@@ -30,6 +30,7 @@ type DocAction = {
     doc: Page
   }): void
   _updateDoc(doc: Page): void
+  _deletedDoc(doc: Page): void
   toggleLock: () => void
 }
 
@@ -72,9 +73,15 @@ export const useDocStore = create<DocState & DocAction>()((set, get) => ({
     set({ saveStatus: status })
   },
   docRealtimeHandler({ eventType, doc }) {
-    // permanently delete opened page, reset doc state
-    if (eventType === "DELETE") return set({ ...initialState })
+    if (eventType === "DELETE") return get()._deletedDoc(doc)
     if (eventType === "UPDATE") return get()._updateDoc(doc)
+  },
+  _deletedDoc(doc) {
+    const oldDoc = get().doc
+    if (!oldDoc || oldDoc.uuid !== doc.uuid) {
+      // permanently delete opened page, reset doc state
+      set({ ...initialState })
+    }
   },
   _updateDoc(doc) {
     const oldDoc = get().doc
