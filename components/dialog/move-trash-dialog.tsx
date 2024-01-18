@@ -10,6 +10,7 @@ import {
   DialogHeader,
   DialogTrigger,
 } from "@/components/ui/dialog"
+import { useDocStore } from "@/store/use-doc-store"
 import { useSidebarStore } from "@/store/use-sidebar-store"
 import { type EmitActionStatus } from "@/types"
 import { useRouter } from "next/navigation"
@@ -24,13 +25,14 @@ export default function MoveToTrashDialog({ children, uuid, emitActionStatus }: 
   const router = useRouter()
   const closeButtonRef = useRef<HTMLButtonElement>(null)
   const { deleteDocAsync } = useSidebarStore()
+  const { doc } = useDocStore()
 
   const deleteDocHandler = async () => {
     closeButtonRef.current?.click()
     emitActionStatus?.("success")
 
     deleteDocAsync(uuid)
-    router.push(`/doc`)
+    if (doc && doc.uuid === uuid) router.push(`/doc`)
   }
 
   return (
