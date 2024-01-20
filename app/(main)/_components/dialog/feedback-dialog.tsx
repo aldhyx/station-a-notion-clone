@@ -33,17 +33,17 @@ export default function FeedbackDialog({ children }: Props) {
         <FeedbackDialog.Title />
 
         <div className="mb-6 mt-3 flex flex-col items-center px-3">
-          <p className="mb-2 text-sm">
+          <p className="mb-1 text-sm">
             What do you feel when using <strong>Station Note</strong>?
           </p>
           <RadioGroup
-            className="flex gap-x-1 md:gap-x-4"
+            className="flex gap-x-2 md:gap-x-3"
             onValueChange={v => contentChangeHandler({ feel: FEEL[Number(v)] ?? null })}
           >
             <div className="flex items-center">
               <RadioGroupItem hidden value="1" id="feel-one" className="peer" />
               <Label
-                className="flex cursor-pointer flex-col gap-y-1 text-center text-xs grayscale transition hover:grayscale-0 peer-[[data-state=checked]]:grayscale-0"
+                className="flex shrink-0 cursor-pointer flex-col gap-y-1 text-center text-xs grayscale transition hover:grayscale-0 peer-[[data-state=checked]]:grayscale-0"
                 htmlFor="feel-one"
               >
                 <Image
@@ -51,7 +51,7 @@ export default function FeedbackDialog({ children }: Props) {
                   alt=""
                   height={56}
                   width={56}
-                  className="scale-110 md:scale-125"
+                  className="scale-125"
                 />
                 Terrible
               </Label>
@@ -59,7 +59,7 @@ export default function FeedbackDialog({ children }: Props) {
             <div className="flex items-center">
               <RadioGroupItem hidden value="2" id="feel-two" className="peer" />
               <Label
-                className="flex cursor-pointer flex-col gap-y-1 text-center text-xs grayscale transition hover:grayscale-0 peer-[[data-state=checked]]:grayscale-0"
+                className="flex shrink-0 cursor-pointer flex-col gap-y-1 text-center text-xs grayscale transition hover:grayscale-0 peer-[[data-state=checked]]:grayscale-0"
                 htmlFor="feel-two"
               >
                 <Image
@@ -67,7 +67,7 @@ export default function FeedbackDialog({ children }: Props) {
                   alt=""
                   height={56}
                   width={56}
-                  className="scale-110 md:scale-125"
+                  className="scale-125"
                 />
                 Bad
               </Label>
@@ -75,7 +75,7 @@ export default function FeedbackDialog({ children }: Props) {
             <div className="flex items-center">
               <RadioGroupItem hidden value="3" id="feel-three" className="peer" />
               <Label
-                className="flex cursor-pointer flex-col gap-y-1 text-center text-xs grayscale transition hover:grayscale-0 peer-[[data-state=checked]]:grayscale-0"
+                className="flex shrink-0 cursor-pointer flex-col gap-y-1 text-center text-xs grayscale transition hover:grayscale-0 peer-[[data-state=checked]]:grayscale-0"
                 htmlFor="feel-three"
               >
                 <Image
@@ -83,7 +83,7 @@ export default function FeedbackDialog({ children }: Props) {
                   alt=""
                   height={56}
                   width={56}
-                  className="scale-110 md:scale-125"
+                  className="scale-125"
                 />
                 Okay
               </Label>
@@ -91,7 +91,7 @@ export default function FeedbackDialog({ children }: Props) {
             <div className="flex items-center">
               <RadioGroupItem hidden value="4" id="feel-four" className="peer" />
               <Label
-                className="flex cursor-pointer flex-col gap-y-1 text-center text-xs grayscale transition hover:grayscale-0 peer-[[data-state=checked]]:grayscale-0"
+                className="flex shrink-0 cursor-pointer flex-col gap-y-1 text-center text-xs grayscale transition hover:grayscale-0 peer-[[data-state=checked]]:grayscale-0"
                 htmlFor="feel-four"
               >
                 <Image
@@ -99,7 +99,7 @@ export default function FeedbackDialog({ children }: Props) {
                   alt=""
                   height={56}
                   width={56}
-                  className="scale-110 md:scale-125"
+                  className="scale-125"
                 />
                 Good
               </Label>
@@ -107,7 +107,7 @@ export default function FeedbackDialog({ children }: Props) {
             <div className="flex items-center">
               <RadioGroupItem hidden value="5" id="feel-five" className="peer" />
               <Label
-                className="flex cursor-pointer flex-col gap-y-1 text-center text-xs grayscale transition hover:grayscale-0 peer-[[data-state=checked]]:grayscale-0"
+                className="flex shrink-0 cursor-pointer flex-col gap-y-1 text-center text-xs grayscale transition hover:grayscale-0 peer-[[data-state=checked]]:grayscale-0"
                 htmlFor="feel-five"
               >
                 <Image
@@ -115,7 +115,7 @@ export default function FeedbackDialog({ children }: Props) {
                   alt=""
                   height={56}
                   width={56}
-                  className="scale-110 md:scale-125"
+                  className="scale-125"
                 />
                 Amazing
               </Label>
