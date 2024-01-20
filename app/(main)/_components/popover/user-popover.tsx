@@ -8,10 +8,11 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover"
-import { LogOutIcon, Settings2Icon } from "lucide-react"
+import { LogOutIcon, MessageCircleQuestionIcon, Settings2Icon } from "lucide-react"
 import { usePathname, useRouter } from "next/navigation"
 import { PropsWithChildren, useRef } from "react"
 import { useLayoutStore } from "@/store/use-layout-store"
+import FeedbackDialog from "../dialog/feedback-dialog"
 
 type Props = PropsWithChildren & {
   fullname: string | null
@@ -60,6 +61,16 @@ export default function UserPopover({ children, fullname, username }: Props) {
           </section>
 
           <section className="w-full p-1">
+            <FeedbackDialog>
+              <Button
+                variant="ghost"
+                className="h-8 w-full justify-start px-2 text-xs font-normal"
+              >
+                <MessageCircleQuestionIcon className="mr-3 h-4 w-4" />
+                Give feedback
+              </Button>
+            </FeedbackDialog>
+
             <Button
               variant="ghost"
               className="h-8 w-full justify-start px-2 text-xs font-normal"

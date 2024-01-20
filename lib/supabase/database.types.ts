@@ -9,6 +9,33 @@ export type Json =
 export interface Database {
   public: {
     Tables: {
+      feedback: {
+        Row: {
+          created_at: string
+          feel: Database["public"]["Enums"]["FEEDBACK_FEEL"]
+          id: number
+          is_contacted: boolean | null
+          message: string | null
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          feel: Database["public"]["Enums"]["FEEDBACK_FEEL"]
+          id?: number
+          is_contacted?: boolean | null
+          message?: string | null
+          user_id?: string
+        }
+        Update: {
+          created_at?: string
+          feel?: Database["public"]["Enums"]["FEEDBACK_FEEL"]
+          id?: number
+          is_contacted?: boolean | null
+          message?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
       pages: {
         Row: {
           content: Json | null
@@ -108,7 +135,7 @@ export interface Database {
       [_ in never]: never
     }
     Enums: {
-      [_ in never]: never
+      FEEDBACK_FEEL: "TERRIBLE" | "BAD" | "OKAY" | "GOOD" | "AMAZING"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -195,3 +222,4 @@ export type Enums<
   : PublicEnumNameOrOptions extends keyof Database["public"]["Enums"]
   ? Database["public"]["Enums"][PublicEnumNameOrOptions]
   : never
+
