@@ -1,0 +1,18 @@
+.ce-divider {
+  @apply w-full text-center;
+}
+
+.ce-divider.ce-divider-line {
+  @apply relative py-6;
+}
+
+.ce-divider.ce-divider-line::before {
+  content: "";
+  @apply absolute left-0 top-[50%] inline-block h-[1px] w-full bg-input;
+}
+
+.ce-divider.ce-divider-star::before {
+  content: "***";
+  letter-spacing: 0.2em;
+  @apply inline-block h-7 text-3xl leading-relaxed text-primary;
+}
