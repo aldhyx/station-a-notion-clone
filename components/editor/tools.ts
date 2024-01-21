@@ -12,7 +12,7 @@ import HeadingBlock, { type HeadingConfig } from "./block-tool/heading"
 
 import AlignmentTune from "./block-tune/alignment"
 import { BoldInlineTool } from "./inline-tool/bold"
-import { ItalicInlineTool } from "./inline-tool/inline"
+import { ItalicInlineTool } from "./inline-tool/italic"
 import { UnderlineInlineTool } from "./inline-tool/underline"
 import { CodeInlineTool } from "./inline-tool/inline-code"
 

@@ -24,7 +24,7 @@ export class BoldInlineTool implements InlineTool {
 
   /**
    * Sanitizer Rule
-   * Leave <strong> tags
+   * Leave <strong> tags & <b> tag
    */
   static get sanitize(): SanitizerConfig {
     return { strong: {}, b: {} }

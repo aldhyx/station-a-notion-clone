@@ -26,7 +26,7 @@ export class CodeInlineTool implements InlineTool {
 
   /**
    * Sanitizer Rule
-   * Leave <strong> tags
+   * Leave <code> tags with class-name
    */
   static get sanitize(): SanitizerConfig {
     return {

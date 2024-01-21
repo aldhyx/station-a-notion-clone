@@ -24,7 +24,7 @@ export class UnderlineInlineTool implements InlineTool {
 
   /**
    * Sanitizer Rule
-   * Leave <strong> tags
+   * Leave <u> tags
    */
   static get sanitize(): SanitizerConfig {
     return { u: {} }
