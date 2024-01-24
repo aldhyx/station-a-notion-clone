@@ -28,15 +28,14 @@ export default function PasswordRecruitment({
     checkPassword(password)
   }, [password])
 
-  if (Object.values(matchPassword).every(v => v)) return null
-
   return (
     <div className="rounded-md bg-sky-500/10 p-3 text-xs text-primary">
       <p className="mb-2 flex items-center gap-x-2 font-medium">
         <InfoIcon size={16} />
         <span>{`${prefix || "Password"} must contain at least:`}</span>
       </p>
-      <ul className="flex flex-col gap-1">
+
+      <ul className="flex flex-col gap-1 text-primary/90">
         <li className="flex gap-x-3">
           <span className="w-3">
             {matchPassword.length ? <CheckIcon size={16} /> : <DotIcon size={16} />}
@@ -59,7 +58,7 @@ export default function PasswordRecruitment({
           <span className="w-3">
             {matchPassword.digit ? <CheckIcon size={16} /> : <DotIcon size={16} />}
           </span>
-          <span>1 one digit (0-9)</span>
+          <span>1 digit (0-9)</span>
         </li>
       </ul>
     </div>

@@ -27,7 +27,7 @@ export default function InputPassword({ placeholder, error, field }: Props) {
         type="button"
         variant="link"
         className={cn(
-          "w-15 grid h-11 cursor-pointer items-center rounded-l-none border-y border-r bg-secondary",
+          "w-15 grid h-11 cursor-pointer items-center rounded-l-none border-y border-r border-accent bg-accent",
           "peer-focus-visible:bg-background",
           error && "border-destructive",
         )}

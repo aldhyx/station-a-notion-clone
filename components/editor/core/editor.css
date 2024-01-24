@@ -50,7 +50,10 @@
 
 /* Editor block popover search */
 .cdx-search-field {
-  @apply rounded-md border border-input bg-secondary text-primary;
+  @apply focus-within:bg-background;
+}
+.cdx-search-field {
+  @apply rounded-md border border-accent bg-accent text-primary;
 }
 
 .cdx-search-field__input {

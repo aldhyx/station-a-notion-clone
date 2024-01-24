@@ -32,7 +32,7 @@ export default function FeedbackDialog({ children }: Props) {
       >
         <FeedbackDialog.Title />
 
-        <div className="mb-6 mt-3 flex flex-col items-center px-3">
+        <div className="mb-7 mt-4 flex flex-col items-center px-3">
           <p className="mb-1 text-sm">
             What do you feel when using <strong>Station Note</strong>?
           </p>
@@ -49,8 +49,8 @@ export default function FeedbackDialog({ children }: Props) {
                 <Image
                   src="/assets/emoji/1F620.svg"
                   alt=""
-                  height={56}
-                  width={56}
+                  height={48}
+                  width={48}
                   className="scale-125"
                 />
                 Terrible
@@ -65,8 +65,8 @@ export default function FeedbackDialog({ children }: Props) {
                 <Image
                   src="/assets/emoji/2639.svg"
                   alt=""
-                  height={56}
-                  width={56}
+                  height={48}
+                  width={48}
                   className="scale-125"
                 />
                 Bad
@@ -81,8 +81,8 @@ export default function FeedbackDialog({ children }: Props) {
                 <Image
                   src="/assets/emoji/1F610.svg"
                   alt=""
-                  height={56}
-                  width={56}
+                  height={48}
+                  width={48}
                   className="scale-125"
                 />
                 Okay
@@ -97,8 +97,8 @@ export default function FeedbackDialog({ children }: Props) {
                 <Image
                   src="/assets/emoji/1F642.svg"
                   alt=""
-                  height={56}
-                  width={56}
+                  height={48}
+                  width={48}
                   className="scale-125"
                 />
                 Good
@@ -113,8 +113,8 @@ export default function FeedbackDialog({ children }: Props) {
                 <Image
                   src="/assets/emoji/1F600.svg"
                   alt=""
-                  height={56}
-                  width={56}
+                  height={48}
+                  width={48}
                   className="scale-125"
                 />
                 Amazing
@@ -134,13 +134,13 @@ export default function FeedbackDialog({ children }: Props) {
               value={message}
               onChange={e => contentChangeHandler({ message: e.target.value })}
               id="message"
-              className="bg-muted focus-within:bg-transparent focus-within:!ring-transparent"
+              className="focus-within:bg-transparent focus-within:!ring-transparent"
             />
           </div>
         )}
 
         {feel && (
-          <div className="mb-6 flex items-center gap-x-2 px-3">
+          <div className="mb-3 flex items-center gap-x-2 px-3">
             <Checkbox
               id="is-contacted"
               onCheckedChange={v => contentChangeHandler({ isContacted: !!v })}
@@ -176,7 +176,7 @@ export default function FeedbackDialog({ children }: Props) {
 
 FeedbackDialog.Title = function Title() {
   return (
-    <div className="mb-1 flex items-center justify-start p-3">
+    <div className="flex items-center justify-start p-3">
       <MessageCircleQuestionIcon className="mr-2 h-4 w-4" />
       <p className="text-base font-medium leading-none">Give feedback</p>
     </div>

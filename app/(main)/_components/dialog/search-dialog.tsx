@@ -73,7 +73,7 @@ export default function SearchDialog({ children }: Props) {
                   <div
                     key={item.uuid}
                     role="button"
-                    className="group flex h-9 max-w-full items-center gap-x-2 border-b px-3 transition first-of-type:border-t hover:bg-secondary"
+                    className="group flex h-10 max-w-full items-center gap-x-2 border-b px-3 transition hover:bg-secondary"
                     onClick={() => onClickItemHandler(item.uuid)}
                   >
                     {emoji?.native ? (
