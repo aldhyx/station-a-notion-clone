@@ -15,7 +15,6 @@ import { LoaderIcon, PartyPopperIcon } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { useResetPassword } from "./_hooks/use-reset-password"
 import InputPassword from "@/components/form/input-password"
-import PasswordRecruitment from "@/components/form/password-recruitment"
 
 export default function ResetPasswordPage() {
   const router = useRouter()
@@ -72,7 +71,8 @@ export default function ResetPasswordPage() {
                 </FormControl>
 
                 <FormMessage />
-                <PasswordRecruitment prefix="New password" password={field.value} />
+
+                <InputPassword.Validation prefix="New password" password={field.value} />
               </FormItem>
             )}
           />

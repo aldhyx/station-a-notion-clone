@@ -21,7 +21,6 @@ import { LoaderIcon, LockKeyholeIcon } from "lucide-react"
 import { PropsWithChildren } from "react"
 import { useResetPassword } from "../_hooks/use-reset-password"
 import InputPassword from "@/components/form/input-password"
-import PasswordRecruitment from "@/components/form/password-recruitment"
 
 export default function ChangePasswordDialog({ children }: PropsWithChildren) {
   const {
@@ -64,7 +63,10 @@ export default function ChangePasswordDialog({ children }: PropsWithChildren) {
                   </FormControl>
 
                   <FormMessage />
-                  <PasswordRecruitment password={field.value} prefix="New password" />
+                  <InputPassword.Validation
+                    password={field.value}
+                    prefix="New password"
+                  />
                 </FormItem>
               )}
             />
