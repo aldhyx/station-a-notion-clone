@@ -1,7 +1,6 @@
 "use client"
 
 import ErrorBlock from "@/components/error-block"
-import InputPasswordWrapper from "@/components/input-password-wrapper"
 import { Button } from "@/components/ui/button"
 import {
   Form,
@@ -18,6 +17,7 @@ import Footer from "../_components/footer"
 import { GoogleButton } from "../_components/oauth-button"
 import { useLogin } from "./_hooks/use-login"
 import { useAuthStore } from "@/store/use-auth-store"
+import InputPassword from "@/components/form/input-password"
 
 export default function LoginPage() {
   const { errors, form, isLoadingSubmit, submitHandler } = useLogin()
@@ -63,7 +63,7 @@ export default function LoginPage() {
               <FormItem>
                 <FormLabel>Password</FormLabel>
                 <FormControl>
-                  <Input placeholder={"********"} type={"password"} {...field} />
+                  <InputPassword error={fieldState.error} field={field} />
                 </FormControl>
 
                 <FormMessage />

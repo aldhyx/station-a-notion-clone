@@ -2,7 +2,6 @@
 
 import SignOutDialog from "@/components/dialog/sign-out-dialog"
 import ErrorBlock from "@/components/error-block"
-import InputPasswordWrapper from "@/components/input-password-wrapper"
 import { Button } from "@/components/ui/button"
 import {
   Form,
@@ -12,10 +11,10 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
-import { LoaderIcon, LockKeyholeIcon, PartyPopperIcon } from "lucide-react"
+import { LoaderIcon, PartyPopperIcon } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { useResetPassword } from "./_hooks/use-reset-password"
+import InputPassword from "@/components/form/input-password"
 
 export default function ResetPasswordPage() {
   const router = useRouter()
@@ -64,16 +63,10 @@ export default function ResetPasswordPage() {
               <FormItem>
                 <FormLabel>New Password</FormLabel>
                 <FormControl>
-                  <InputPasswordWrapper
+                  <InputPassword
+                    placeholder="Enter new password..."
                     error={fieldState.error}
-                    render={({ showPassword }) => (
-                      <Input
-                        className="peer border-0 "
-                        placeholder={showPassword ? "Enter your password..." : "********"}
-                        type={showPassword ? "text" : "password"}
-                        {...field}
-                      />
-                    )}
+                    field={field}
                   />
                 </FormControl>
 
@@ -89,18 +82,10 @@ export default function ResetPasswordPage() {
               <FormItem className="mb-2">
                 <FormLabel>Confirm New Password</FormLabel>
                 <FormControl>
-                  <InputPasswordWrapper
+                  <InputPassword
+                    placeholder="Enter confirm new password..."
                     error={fieldState.error}
-                    render={({ showPassword }) => (
-                      <Input
-                        className="peer border-0 "
-                        placeholder={
-                          showPassword ? "Enter your confirm password..." : "********"
-                        }
-                        type={showPassword ? "text" : "password"}
-                        {...field}
-                      />
-                    )}
+                    field={field}
                   />
                 </FormControl>
 

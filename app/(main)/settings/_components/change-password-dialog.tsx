@@ -1,7 +1,6 @@
 "use client"
 
 import ErrorBlock from "@/components/error-block"
-import InputPasswordWrapper from "@/components/input-password-wrapper"
 import { Button } from "@/components/ui/button"
 import {
   Dialog,
@@ -18,10 +17,10 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
 import { LoaderIcon, LockKeyholeIcon } from "lucide-react"
 import { PropsWithChildren } from "react"
 import { useResetPassword } from "../_hooks/use-reset-password"
+import InputPassword from "@/components/form/input-password"
 
 export default function ChangePasswordDialog({ children }: PropsWithChildren) {
   const {
@@ -56,7 +55,11 @@ export default function ChangePasswordDialog({ children }: PropsWithChildren) {
                 <FormItem>
                   <FormLabel>New password</FormLabel>
                   <FormControl>
-                    <Input placeholder={"********"} type={"password"} {...field} />
+                    <InputPassword
+                      placeholder="Enter new password..."
+                      error={fieldState.error}
+                      field={field}
+                    />
                   </FormControl>
 
                   <FormMessage />
@@ -71,7 +74,11 @@ export default function ChangePasswordDialog({ children }: PropsWithChildren) {
                 <FormItem>
                   <FormLabel>Confirm new password</FormLabel>
                   <FormControl>
-                    <Input placeholder={"********"} type={"password"} {...field} />
+                    <InputPassword
+                      placeholder="Enter confirm new password..."
+                      error={fieldState.error}
+                      field={field}
+                    />
                   </FormControl>
 
                   <FormMessage />
