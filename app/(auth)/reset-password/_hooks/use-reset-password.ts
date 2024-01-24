@@ -20,13 +20,11 @@ export const useResetPassword = () => {
     else setIsSuccess(true)
   })
 
-  const { password: formPassword, confirm_password: formConfirmPassword } = form.watch()
-
   return {
     form,
     errors: form.formState.errors,
     isLoadingSubmit: form.formState.isSubmitting,
-    isDisableSubmit: form.formState.isSubmitting || !formConfirmPassword || !formPassword,
+    isDisableSubmit: form.formState.isSubmitting,
     submitHandler,
     isSuccess,
   }

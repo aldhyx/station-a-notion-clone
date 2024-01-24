@@ -21,7 +21,7 @@ export const useResetPassword = () => {
 
   const resetFormHandler = () => {
     form.reset()
-    form.clearErrors(["confirm_password", "password"])
+    form.clearErrors(["password"])
   }
 
   return {

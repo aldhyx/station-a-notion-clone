@@ -17,6 +17,7 @@ import { GoogleButton } from "../_components/oauth-button"
 import { useSignUp } from "./_hooks/use-signup"
 import { useAuthStore } from "@/store/use-auth-store"
 import InputPassword from "@/components/form/input-password"
+import PasswordRecruitment from "@/components/form/password-recruitment"
 
 export default function SignUpPage() {
   const { errors, form, isLoadingSubmit, submitHandler } = useSignUp()
@@ -61,6 +62,7 @@ export default function SignUpPage() {
                   <InputPassword error={fieldState.error} field={field} />
                 </FormControl>
                 <FormMessage />
+                <PasswordRecruitment password={field.value} />
               </FormItem>
             )}
           />

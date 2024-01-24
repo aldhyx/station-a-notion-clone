@@ -1,25 +1,24 @@
+import { PASSWORD_REGEX } from "@/constants/regex"
 import { z } from "zod"
 
 export const signUpSchema = z.object({
   email: z
     .string()
-    .min(1, { message: 'Required'})
+    .min(1, { message: "Invalid email address" })
     .email({ message: "Invalid email address" })
-    .toLowerCase()
-    .trim(),
+    .trim()
+    .toLowerCase(),
   password: z
     .string()
     .min(8, {
-      message: "Must contain at least 8 character(s), one lowercase letter, one uppercase letter, and one digit (0-9).",
+      message: "Invalid password",
     })
     .max(72, {
       message: "Must contain at most 72 character(s)",
     })
-    .regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+/, {
-      message:
-        "Must contain at least 8 character(s), one lowercase letter, one uppercase letter, and one digit (0-9).",
-    })
-    .trim(),
+    .regex(PASSWORD_REGEX, {
+      message: "Invalid password",
+    }),
 })
 
 export type SignUpSchema = z.infer<typeof signUpSchema>
