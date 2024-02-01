@@ -11,8 +11,6 @@ type Profile = {
   fullname: string | null
 }
 
-export const revalidate = 0
-
 export default async function WelcomePage() {
   const cookiesStore = cookies()
   const server = createClient(cookiesStore)
