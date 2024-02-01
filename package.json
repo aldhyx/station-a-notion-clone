@@ -1,11 +1,12 @@
 {
   "name": "station_note",
-  "description": "Realtime, free & open source note taking app like notion",
+  "description": "Realtime, free & open source note taking app for everybody",
   "version": "0.1.0",
   "private": true,
   "license": "MIT",
   "engines": {
-    "node": ">=20.9.0"
+    "node": ">=20.9.0",
+    "pnpm": ">=8.10.2"
   },
   "packageManager": "pnpm@8.10.2",
   "scripts": {
