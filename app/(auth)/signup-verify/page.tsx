@@ -1,13 +1,11 @@
-"use client"
-
 import FullScreenLoading from "@/components/full-screen-loading"
 import dynamic from "next/dynamic"
 import { redirect } from "next/navigation"
 import { emailSchema } from "./_schema"
 
 const SignUpVerifyPage = dynamic(() => import("./signup-verify"), {
-  ssr: false,
   loading: () => <FullScreenLoading />,
+  ssr: false,
 })
 
 type Props = {
