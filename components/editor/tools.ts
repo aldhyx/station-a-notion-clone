@@ -18,7 +18,7 @@ import { CodeInlineTool } from "./inline-tool/inline-code"
 import { StrikethroughInlineTool } from "./inline-tool/strikethrough"
 import DividerBlock from "./block-tool/divider"
 import ListBlock from "./block-tool/list"
-
+//@ts-ignore
 import Checklist from "@editorjs/checklist"
 
 export const tools: EditorConfig["tools"] = {
