@@ -20,8 +20,8 @@
     "prepare": "husky install"
   },
   "dependencies": {
+    "@codexteam/icons": "^0.3.0",
     "@editorjs/editorjs": "^2.28.2",
-    "@editorjs/nested-list": "^1.4.2",
     "@emoji-mart/data": "^1.1.2",
     "@emoji-mart/react": "^1.1.1",
     "@hookform/resolvers": "^3.3.2",
