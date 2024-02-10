@@ -17,6 +17,7 @@ import { UnderlineInlineTool } from "./inline-tool/underline"
 import { CodeInlineTool } from "./inline-tool/inline-code"
 import { StrikethroughInlineTool } from "./inline-tool/strikethrough"
 import DividerBlock from "./block-tool/divider"
+import ListBlock from "./block-tool/list"
 
 export const tools: EditorConfig["tools"] = {
   alignment: AlignmentTune,
@@ -32,14 +33,11 @@ export const tools: EditorConfig["tools"] = {
     config: { defaultLevel: 2 } as ToolConfig<HeadingConfig>,
     tunes: ["alignment"],
   },
-  divider: DividerBlock,
-  nestedList: {
-    class: NestedList,
-    inlineToolbar: true,
-    config: {
-      defaultStyle: "unordered",
-    },
+  list: {
+    class: ListBlock as unknown as BlockToolConstructable,
+    inlineToolbar: ["bold", "italic", "underline", "inlineCode", "strikethrough"],
   },
+  divider: DividerBlock,
   bold: BoldInlineTool,
   italic: ItalicInlineTool,
   underline: UnderlineInlineTool,

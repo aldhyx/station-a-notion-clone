@@ -1,0 +1,15 @@
+.cdx-list {
+  @apply ml-5 outline-none;
+}
+
+.cdx-list__item {
+  @apply py-[2px];
+}
+
+ul.cdx-list {
+  @apply list-disc;
+}
+
+ol.cdx-list {
+  @apply list-decimal;
+}
