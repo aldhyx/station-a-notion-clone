@@ -81,17 +81,14 @@ export default class ListBlock implements BlockTool {
   }
 
   renderSettings(): HTMLElement | TunesMenuConfig {
-    return this.listStyles.map(item => ({
-      icon: item.svg,
-      label: this.api.i18n.t(`${item.label}`),
+    return this.listStyles.map(({ icon, label, style }) => ({
+      icon,
+      label: this.api.i18n.t(`${label}`),
       onActivate: () => {
-        this.data = {
-          style: item.style,
-          items: this.data.items,
-        }
+        this.data = { style, items: this.data.items }
       },
       closeOnActivate: true,
-      isActive: this.data.style === item.style,
+      isActive: this.data.style === style,
     }))
   }
 
@@ -185,14 +182,14 @@ export default class ListBlock implements BlockTool {
     return [
       {
         style: "unordered",
-        label: "Unordered",
-        svg: `
+        label: "Bullet list",
+        icon: `
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" class="lc"><line x1="8" x2="21" y1="6" y2="6"/><line x1="8" x2="21" y1="12" y2="12"/><line x1="8" x2="21" y1="18" y2="18"/><line x1="3" x2="3.01" y1="6" y2="6"/><line x1="3" x2="3.01" y1="12" y2="12"/><line x1="3" x2="3.01" y1="18" y2="18"/></svg>`,
       },
       {
         style: "ordered",
-        label: "Ordered",
-        svg: `
+        label: "Number list",
+        icon: `
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" class="lc"><line x1="10" x2="21" y1="6" y2="6"/><line x1="10" x2="21" y1="12" y2="12"/><line x1="10" x2="21" y1="18" y2="18"/><path d="M4 6h1v4"/><path d="M4 10h2"/><path d="M6 18H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg>`,
       },
     ]
@@ -389,11 +386,24 @@ export default class ListBlock implements BlockTool {
   /**
    * Tool's Toolbox settings
    */
-  static get toolbox(): ToolboxConfig {
-    return {
-      title: "List",
-      icon: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" class="lc"><line x1="8" x2="21" y1="6" y2="6"/><line x1="8" x2="21" y1="12" y2="12"/><line x1="8" x2="21" y1="18" y2="18"/><line x1="3" x2="3.01" y1="6" y2="6"/><line x1="3" x2="3.01" y1="12" y2="12"/><line x1="3" x2="3.01" y1="18" y2="18"/></svg>`,
-    }
+  static get toolbox(): ToolboxConfig[] {
+    return [
+      {
+        title: "Bullet list",
+        icon: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" class="lc"><line x1="8" x2="21" y1="6" y2="6"/><line x1="8" x2="21" y1="12" y2="12"/><line x1="8" x2="21" y1="18" y2="18"/><line x1="3" x2="3.01" y1="6" y2="6"/><line x1="3" x2="3.01" y1="12" y2="12"/><line x1="3" x2="3.01" y1="18" y2="18"/></svg>`,
+        data: {
+          style: "unordered",
+        },
+      },
+      {
+        title: "Number list",
+        icon: `
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" class="lc"><line x1="10" x2="21" y1="6" y2="6"/><line x1="10" x2="21" y1="12" y2="12"/><line x1="10" x2="21" y1="18" y2="18"/><path d="M4 6h1v4"/><path d="M4 10h2"/><path d="M6 18H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg>`,
+        data: {
+          style: "ordered",
+        },
+      },
+    ]
   }
 
   /**
