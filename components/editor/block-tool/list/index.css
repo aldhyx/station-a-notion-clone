@@ -1,5 +1,5 @@
 .cdx-list {
-  @apply ml-5 outline-none;
+  @apply ml-5 outline-none selection:bg-muted-foreground/20;
 }
 
 .cdx-list__item {
