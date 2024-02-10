@@ -8,6 +8,9 @@ dependencies:
   '@codexteam/icons':
     specifier: ^0.3.0
     version: 0.3.0
+  '@editorjs/checklist':
+    specifier: ^1.6.0
+    version: 1.6.0
   '@editorjs/editorjs':
     specifier: ^2.28.2
     version: 2.28.2
@@ -603,6 +606,12 @@ packages:
     dependencies:
       chalk: 4.1.2
     dev: true
+
+  /@editorjs/checklist@1.6.0:
+    resolution: {integrity: sha512-hRNP36DInr73mSK3noHBQeoQb7DA12ANfqTXufEkTgQzx+k4mRJ0HdeGukTIR4JbwjHJ9ecUBnnQqIEGnxCFEg==}
+    dependencies:
+      '@codexteam/icons': 0.3.0
+    dev: false
 
   /@editorjs/editorjs@2.28.2:
     resolution: {integrity: sha512-g6V0Nd3W9IIWMpvxDNTssQ6e4kxBp1Y0W4GIf8cXRlmcBp3TUjrgCYJQmNy3l2a6ZzhyBAoVSe8krJEq4g7PQw==}

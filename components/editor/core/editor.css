@@ -119,9 +119,23 @@ mark.cdx-marker {
   @apply h-4 w-4 text-primary;
 }
 
-/* Editor block*/
+/* Editor blocktool */
 .ce-stub {
   @apply rounded-md border-none bg-secondary p-3 text-muted-foreground shadow-none;
+}
+
+/* Editor checklist blocktool */
+.cdx-checklist__item-text {
+  @apply selection:bg-muted-foreground/20;
+}
+.cdx-checklist__item-checkbox-check {
+  @apply dark:!border-secondary dark:!bg-primary-foreground;
+}
+.cdx-checklist__item--checked .cdx-checklist__item-checkbox-check {
+  @apply !border-secondary-foreground !bg-secondary-foreground dark:!border-secondary dark:!bg-secondary;
+}
+.cdx-checklist__item-checkbox-check:before {
+  @apply !bg-secondary-foreground/30;
 }
 
 /* Editor settings */
