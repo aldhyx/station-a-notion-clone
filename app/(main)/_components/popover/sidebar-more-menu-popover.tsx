@@ -75,13 +75,13 @@ export default function SidebarMoreMenuPopover({
               </Button>
             </NewDocDialog>
 
-            <Button
+            {/* <Button
               variant="ghost"
               className="h-8 w-full items-center justify-start px-2 text-xs font-normal"
             >
               <StarIcon className="mr-2 h-4 w-4" />
               Add to favorite
-            </Button>
+            </Button> */}
 
             <Button
               size="icon"

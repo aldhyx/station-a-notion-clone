@@ -68,21 +68,21 @@ export default function DocDetailHeader() {
 
         {!showLoadingIndicator && doc && (
           <div className="flex items-center justify-center">
-            <Button
+            {/* <Button
               variant="ghost"
               size="sm"
               className="hidden h-7 text-sm font-normal md:block"
             >
               Share
             </Button>
-
+            
             <Button variant="ghost" size="icon" className="h-7 w-7 md:hidden">
               <Share2Icon className="h-4 w-4" />
             </Button>
 
             <Button variant="ghost" size="icon" className="h-7 w-7">
               <StarIcon className="h-4 w-4" />
-            </Button>
+            </Button> */}
 
             <HeaderMoreMenuPopover>
               <Button variant="ghost" size="icon" className="h-7 w-7">
