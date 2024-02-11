@@ -43,6 +43,7 @@
     "add": "^2.0.6",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
+    "editorjs-undo": "^2.0.26",
     "emoji-mart": "^5.5.2",
     "lucide-react": "^0.312.0",
     "ms": "^2.1.3",
