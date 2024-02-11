@@ -16,6 +16,7 @@ type DocState = {
   loadingDoc: boolean
   doc: Page | null
   isLocked: boolean
+  undoRedoInstance: any
 }
 
 type DocAction = {
@@ -33,6 +34,7 @@ type DocAction = {
   _updateDoc(doc: Page): void
   _deleteDoc(id?: number): void
   toggleLock: () => void
+  setUndoRedoInstance: (undoRedoInstance: any) => void
 }
 
 const initialState: DocState = {
@@ -41,10 +43,14 @@ const initialState: DocState = {
   doc: null,
   failedSaveData: {},
   isLocked: false,
+  undoRedoInstance: null,
 }
 
 export const useDocStore = create<DocState & DocAction>()((set, get) => ({
   ...initialState,
+  setUndoRedoInstance(undoRedoInstance) {
+    set({ undoRedoInstance })
+  },
   async toggleLock() {
     const oldDoc = get().doc
     if (!oldDoc) return
@@ -89,7 +95,7 @@ export const useDocStore = create<DocState & DocAction>()((set, get) => ({
     if (!oldDoc || oldDoc.uuid !== doc.uuid) return
 
     // Todo: handle CDRT, https://en.wikipedia.org/wiki/Conflict-free_replicated_data_type
-    console.log("update", doc)
+    console.log("saved to db =>", doc)
     set({ doc })
   },
   async getDocAsync(uuid) {
