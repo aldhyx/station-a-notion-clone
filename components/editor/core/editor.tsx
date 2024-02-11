@@ -10,9 +10,10 @@ import React, { createRef, type PropsWithChildren } from "react"
 import { tools } from "../tools"
 
 type Props = PropsWithChildren &
-  Omit<EditorConfig, "onChange" | "initialBlock" | "holderId"> & {
+  Omit<EditorConfig, "onChange" | "initialBlock" | "holderId" | "onReady"> & {
     onChangeHandler?(api: API, event: BlockMutationEvent | BlockMutationEvent[]): void
     onSaveHandler?(output?: OutputData): void
+    onReadyHandler(editor: EditorJS | null): void
   }
 
 export class EditorCore extends React.PureComponent<Props> {
@@ -69,6 +70,7 @@ export class EditorCore extends React.PureComponent<Props> {
       holder: holderNode,
       onChange: (api, event) => this.onChange(api, event),
       tools: tools,
+      onReady: () => this.props.onReadyHandler(this.editor),
       ...config,
     })
   }
