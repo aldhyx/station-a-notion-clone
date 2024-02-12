@@ -37,20 +37,22 @@ export default function HeaderMoreMenuPopover({ children }: PropsWithChildren) {
     ? timeAgo(doc.updated_at as unknown as Date, { withAgo: true })
     : null
 
+  const setUndoRedoStatus = () =>
+    setRules({
+      canRedo: undoRedoInstance.canRedo(),
+      canUndo: undoRedoInstance.canUndo(),
+    })
+
   const undoRedoHandler = (type: "undo" | "redo") => {
     if (!undoRedoInstance) return
 
     if (type === "undo" && rules.canUndo) undoRedoInstance.undo()
     if (type === "redo" && rules.canRedo) undoRedoInstance.redo()
+    setUndoRedoStatus()
   }
 
   const openChangeHandler = (open: boolean) => {
-    if (open && undoRedoInstance) {
-      setRules({
-        canRedo: undoRedoInstance.canRedo(),
-        canUndo: undoRedoInstance.canUndo(),
-      })
-    }
+    if (open && undoRedoInstance) setUndoRedoStatus()
   }
 
   return (
@@ -103,6 +105,7 @@ export default function HeaderMoreMenuPopover({ children }: PropsWithChildren) {
                 <Button
                   variant="ghost"
                   className="h-8 w-full items-center justify-start px-2 text-xs font-normal"
+                  disabled={isLocked}
                 >
                   <Trash2Icon className="mr-2 h-4 w-4" />
                   Move to trash
@@ -117,7 +120,7 @@ export default function HeaderMoreMenuPopover({ children }: PropsWithChildren) {
               variant="ghost"
               className="h-8 w-full items-center justify-start px-2 text-xs font-normal"
               onClick={() => undoRedoHandler("undo")}
-              disabled={!rules.canUndo}
+              disabled={!rules.canUndo || isLocked}
             >
               <UndoIcon className="mr-2 h-4 w-4" />
               Undo
@@ -127,7 +130,7 @@ export default function HeaderMoreMenuPopover({ children }: PropsWithChildren) {
               variant="ghost"
               className="h-8 w-full items-center justify-start px-2 text-xs font-normal"
               onClick={() => undoRedoHandler("redo")}
-              disabled={!rules.canRedo}
+              disabled={!rules.canRedo || isLocked}
             >
               <RedoIcon className="mr-2 h-4 w-4" />
               Redo

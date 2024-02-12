@@ -100,6 +100,7 @@ export default function SidebarMoreMenuPopover({
               <Button
                 variant="ghost"
                 className="h-8 w-full items-center justify-start px-2 text-xs font-normal"
+                disabled={!!is_locked}
               >
                 <Trash2Icon className="mr-2 h-4 w-4" />
                 Move to trash

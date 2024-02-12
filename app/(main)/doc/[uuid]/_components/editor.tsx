@@ -3,7 +3,7 @@ import { useDocStore } from "@/store/use-doc-store"
 import { useParams } from "next/navigation"
 import { EditorCore } from "@/components/editor/core/editor"
 import EditorJS, { type OutputData } from "@editorjs/editorjs"
-import { useCallback, useRef, useState } from "react"
+import { useCallback, useEffect, useRef, useState } from "react"
 import { Json } from "@/lib/supabase/database.types"
 // @ts-ignore
 import Undo from "editorjs-undo"
@@ -26,17 +26,16 @@ export default function Editor() {
 
   const readyHandler = useCallback(
     (editor: EditorJS | null) => {
-      console.count("ready handler")
       if (!editor) return
 
-      // TODO: configure debounce here
-      const undo = new Undo({ editor })
+      const config = { debounceTimer: 500 }
+      const undo = new Undo({ editor, config })
       if (init) undo.initialize(init)
 
       editorRef.current = editor
       setUndoRedoInstance(undo)
     },
-    [init],
+    [setUndoRedoInstance, init],
   )
 
   if (loadingDoc) return null
@@ -48,7 +47,7 @@ export default function Editor() {
         onReadyHandler={readyHandler}
         onSaveHandler={data => {
           updateHandler(data)
-          console.log("onSaveHandler", data)
+          // console.log("onSaveHandler", data)
         }}
         onChangeHandler={async (api, event) => {
           // if (event && !Array.isArray(event)) {
